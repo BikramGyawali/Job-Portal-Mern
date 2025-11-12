@@ -20,7 +20,7 @@ function Home() {
 					}}
 				></div>
 
-				{/* Foreground content */}
+
 				<div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-5">
 					<h1 className="text-4xl md:text-5xl font-bold text-white">
 						Find Your Dream Job in Nepal With{' '}

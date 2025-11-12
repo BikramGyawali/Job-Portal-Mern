@@ -72,4 +72,5 @@ css
    html
    <!-- in public/index.html, just before the closing </body> tag -->
    <script src="./node_modules/flowbite/dist/flowbite.min.js"></script>
+
 # frontend-react

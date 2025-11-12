@@ -6,7 +6,7 @@ import { faHourglassEnd, faLocation, faLocationDot } from "@fortawesome/free-sol
 export function CardComp() {
 	return (
 		<Card href="#" className="max-w-sm !bg-white">
-			<h5 className="text-2xl font-bold tracking-tight text-gray-900">
+			<h5 className="text-2xl font-bold tracking-wide text-gray-900">
 				MERN Stack Developer
 			</h5>
 			<div className="flex flex-wrap items-center gap-2 text-gray-800">

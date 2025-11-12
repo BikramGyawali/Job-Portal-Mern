@@ -1,17 +1,13 @@
-import React from 'react';
-import NavbarComp from '../components/NavbarComp';
-import bgImg from '../assets/image/home3.png';
+import React from 'react'
 
-function Home() {
+function BackgroundSection() {
 	return (
-		<>
-			<NavbarComp />
-
+		<div>
 			<div
 				className="relative h-[50vh] bg-cover bg-center bg-no-repeat"
 				style={{ backgroundImage: `url(${bgImg})` }}
 			>
-				{/* Overlay with your RGBA color */}
+				{/* Overlay of image */}
 				<div
 					className="absolute inset-0"
 					style={{
@@ -20,7 +16,7 @@ function Home() {
 					}}
 				></div>
 
-				{/* Foreground content */}
+				{/* For content */}
 				<div className="relative z-10 flex flex-col items-center justify-center h-full text-center px-5">
 					<h1 className="text-4xl md:text-5xl font-bold text-white">
 						Find Your Dream Job in Nepal With{' '}
@@ -31,8 +27,8 @@ function Home() {
 					</p>
 				</div>
 			</div>
-		</>
-	);
+		</div>
+	)
 }
 
-export default Home;
+export default BackgroundSection

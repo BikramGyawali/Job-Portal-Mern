@@ -15,7 +15,8 @@ function NavbarComp() {
 				<NavbarBrand href="/">
 					<img
 						src={logo}
-						className="mr-2 h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover"
+						className="mr-2 h-10 w-10 sm:h-44 sm:w-12 rounded-full object-cover"
+
 						alt="Company Logo"
 					/>
 					<span className="self-center whitespace-nowrap text-2xl font-bold text-gray-800">

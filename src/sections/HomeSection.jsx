@@ -17,7 +17,7 @@ function HomeSection() {
 	}
 	]
 	return (
-    <InfoSection section={section}/>
+		<InfoSection section={section} />
 	)
 }
 

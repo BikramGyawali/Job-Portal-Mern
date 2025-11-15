@@ -13,7 +13,7 @@ function BackgroundSection({ title, explain }) {
 				></div>
 				<div className='z-10 relative flex flex-col items-center text-center justify-center h-full px-5'>
 					<h1 className="text-5xl md:text-4xl font-bold text-white ">
-						{title}{'  '}
+						{title}{'   '}
 						<span className="text-fuchsia-600 ">Hamro Job</span>
 					</h1>
 					<p className="mt-4 text-2xl font-bold md:text-3xl text-gray-200 ">

@@ -7,7 +7,7 @@ function DynamicBlock({ item }) {
 	if (item.image) {
 		return (
 			<div className="w-full flex justify-center items-center rounded-xl py-5">
-				<div className="backdrop-blur-lg bg-white/10 shadow-lg rounded-2xl p-8 w-full border border-white/10">
+				<div className="backdrop-blur-lg bg-white/10 shadow-lg rounded-2xl p-8 w-full border border-white/10 duration-500 hover:scale-x-105">
 
 					<div className="flex flex-col md:flex-row items-center gap-8">
 
@@ -15,7 +15,7 @@ function DynamicBlock({ item }) {
 							<img
 								src={item.image}
 								alt={item.title}
-								className="h-36 w-36 drop-shadow-lg rounded-full object-cover"
+								className="h-40 w-40 drop-shadow-lg rounded-[10px] object-contain"
 							/>
 						</div>
 
@@ -24,7 +24,7 @@ function DynamicBlock({ item }) {
 								{item.title}
 							</h1>
 
-							<p className="text-xl tracking-tight text-justify px-4 transition-all font-sans duration-500 hover:scale-x-105">
+							<p className="text-xl tracking-tight text-justify px-4 transition-all font-sans ">
 								{item.description}
 							</p>
 						</div>
@@ -39,13 +39,13 @@ function DynamicBlock({ item }) {
 	// If no image → Description layout
 	return (
 		<div className="w-full flex justify-center items-center py-5">
-			<div className="backdrop-blur-lg bg-white/10 shadow-lg rounded-2xl p-6 w-full border border-white/10">
+			<div className="backdrop-blur-lg bg-white/10 shadow-lg rounded-2xl p-6 w-full border border-white/10 duration-500 hover:scale-x-105">
 
 				<p className="text-2xl font-semibold text-center tracking-wide mb-2">
 					{item.title}
 				</p>
 
-				<p className="text-xl tracking-tight text-justify px-4 transition-all font-sans duration-500 hover:scale-x-105">
+				<p className="text-xl tracking-tight text-justify px-4 transition-all font-sans ">
 					{item.description}
 				</p>
 

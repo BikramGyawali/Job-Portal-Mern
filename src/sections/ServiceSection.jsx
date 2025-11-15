@@ -1,12 +1,12 @@
 import React from 'react'
-import logo from "../assets/image/logo.png";
+import jobPost from "../assets/image/jobs.jpeg";
 import InfoSection from '../components/InfoSection';
 function ServiceSection() {
 	const section = [
 		{
 			title: "Job Posting",
 			description: "We offer a platform for employers to post job vacancies and reach a wide audience of potential candidates across Nepal. Jobs are categorized by industry and experience level, ensuring the right match for every role.",
-			image: logo
+			image: jobPost
 
 		},
 		{

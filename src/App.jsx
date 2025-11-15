@@ -10,8 +10,8 @@ export default function App() {
 	return (
 
 		<div>
-			{/* <Home/> */}
-			<AboutUS />
+			<Home />
+			{/* <AboutUS /> */}
 		</div>
 
 

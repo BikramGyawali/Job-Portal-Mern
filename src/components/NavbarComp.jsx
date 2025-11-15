@@ -13,7 +13,7 @@ function NavbarComp() {
 		<div>
 			<Navbar fluid rounded className="!bg-white shadow-md">
 				<NavbarBrand href="/">
-					<img src={logo} className="mr-3 p-0 h-18  sm:h-20 rounded-full" alt="Company Logo" />
+					<img src={logo} className="mr-3 p-0 h-10  sm:h-20 rounded-full" alt="Company Logo" />
 					<span className="self-center whitespace-nowrap text-xl font-semibold !text-black">
 						MyCompany
 					</span>

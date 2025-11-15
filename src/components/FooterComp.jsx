@@ -16,26 +16,41 @@ import {
 	BsFacebook,
 	BsGithub,
 	BsInstagram,
-	BsTwitter
+	BsTwitter,
 } from "react-icons/bs";
 
-import { FaFacebook } from "react-icons/fa";
+import logo from "../assets/image/logo.png";
 
 export function FooterComp() {
 	return (
-		<Footer container>
+		<Footer container className="bg-gray-900 text-white">
 			<div className="w-full">
-				<div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
-					<div>
-						<FooterBrand
-							href="https://flowbite.com"
-							src="https://flowbite.com/docs/images/logo.svg"
-							alt="Flowbite Logo"
-							name="Flowbite"
-						/>
+
+				<div className="flex flex-col gap-10 md:flex-row md:justify-between">
+
+
+					<div className="flex flex-col gap-4 w-full md:w-[50%] lg:w-[40%]">
+						<div className="flex items-center gap-3">
+							<FooterBrand
+								href="#"
+								src={logo}
+								alt="Hamro Job Logo"
+								name="Hamro Job"
+							/>
+
+						</div>
+
+						<p className="text-gray-300 text-justify leading-relaxed">
+							Hamro Job, a premier, legally certified Human Resource consulting firm since
+							2014, operates with unwavering ethics, prioritizing client value. This commitment
+							resonates as it navigates the professional landscape, addressing both
+							"Job Vacancies in Nepal" and the specific dynamics of "Jobs in Kathmandu".
+						</p>
 					</div>
 
-					<div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
+					{/* LINKS SECTION */}
+					<div className="grid grid-cols-4  gap-8 w-full md:w-[50%] lg:w-[60%]">
+
 						<div>
 							<FooterTitle title="About" />
 							<FooterLinkGroup col>
@@ -59,16 +74,26 @@ export function FooterComp() {
 								<FooterLink href="#">Terms & Conditions</FooterLink>
 							</FooterLinkGroup>
 						</div>
+
+						<div>
+							<FooterTitle title="Quick Links" />
+							<FooterLinkGroup col>
+								<FooterLink href="#">Contact Us</FooterLink>
+								<FooterLink href="#">About Us</FooterLink>
+							</FooterLinkGroup>
+						</div>
+
 					</div>
 				</div>
 
 				<FooterDivider />
 
-				<div className="w-full sm:flex sm:items-center sm:justify-between">
-					<FooterCopyright href="#" by="Flowbite™" year={2022} />
+				{/* BOTTOM COPYRIGHT + ICONS */}
+				<div className="flex flex-col-reverse items-center justify-between gap-4 sm:flex-row">
+					<FooterCopyright href="#" by="Hamro Job™" year={2024} />
 
-					<div className="mt-4 flex space-x-6 sm:mt-0 sm:justify-center">
-						<FooterIcon href="#" icon={FaFacebook} />
+					<div className="flex space-x-6">
+						<FooterIcon href="#" icon={BsFacebook} />
 						<FooterIcon href="#" icon={BsInstagram} />
 						<FooterIcon href="#" icon={BsTwitter} />
 						<FooterIcon href="#" icon={BsGithub} />

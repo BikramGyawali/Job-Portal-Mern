@@ -23,7 +23,7 @@ import logo from "../assets/image/logo.png";
 
 export function FooterComp() {
 	return (
-		<Footer container className="bg-gray-900 text-white">
+		<Footer container className="!bg-gray-900 ">
 			<div className="w-full">
 
 				<div className="flex flex-col gap-10 md:flex-row md:justify-between">
@@ -48,7 +48,7 @@ export function FooterComp() {
 						</p>
 					</div>
 
-					{/* LINKS SECTION */}
+
 					<div className="grid grid-cols-4  gap-8 w-full md:w-[50%] lg:w-[60%]">
 
 						<div>

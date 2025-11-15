@@ -13,7 +13,7 @@ export default function App() {
 		<div>
 			{/* <Home /> */}
 			{/* <AboutUS /> */}
-			<Services/>
+			<Services />
 		</div>
 
 

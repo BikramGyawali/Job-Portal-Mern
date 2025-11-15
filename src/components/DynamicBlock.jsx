@@ -15,7 +15,7 @@ function DynamicBlock({ item }) {
 							<img
 								src={item.image}
 								alt={item.title}
-								className="h-40 w-40 drop-shadow-lg rounded-[10px] object-contain"
+								className="h-[60%]  w-[60%] drop-shadow-lg rounded-[10px] object-contain"
 							/>
 						</div>
 

@@ -6,7 +6,7 @@ import { FooterComp } from '../components/FooterComp'
 function Services() {
 	return (
 		<div>
-			<NavbarComp />
+		
 			<ServiceSection />
 			<FooterComp />
 		</div>

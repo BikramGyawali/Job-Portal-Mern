@@ -1,6 +1,9 @@
 import React from 'react'
 import jobPost from "../assets/image/jobs.jpeg";
+import resume from "../assets/image/resume.webp";
+import jobAlert from "../assets/image/jobsAlert.jpg";
 import InfoSection from '../components/InfoSection';
+import BackgroundSection from '../components/BackgroundSection';
 function ServiceSection() {
 	const section = [
 		{
@@ -11,15 +14,24 @@ function ServiceSection() {
 		},
 		{
 			title: "Resume Database Access",
-			description: "Employers can access our extensive resume database to find the best candidates for their job openings. Advanced filters help them search by skills, education, experience, and location to quickly identify top talent."
+			description: "Employers can access our extensive resume database to find the best candidates for their job openings. Advanced filters help them search by skills, education, experience, and location to quickly identify top talent.",
+			image: resume
 		},
 		{
 			title: "Jobs Alert",
-			description: "Jobseekers can sign up for job alerts to receive notifications about new job postings that match their preferences. Alerts can be customized by job title, location, industry, and experience level, ensuring timely updates."
+			description: "Jobseekers can sign up for job alerts to receive notifications about new job postings that match their preferences. Alerts can be customized by job title, location, industry, and experience level, ensuring timely updates.",
+			image: jobAlert
 		}
 
 	]
-	return <InfoSection section={section} />
+	const title = "Our Services at";
+	const explain = "We provide a range of services to help jobseekers and employers connect easily and effectively"
+	return (
+		<>
+			<BackgroundSection title={title} explain={explain} />
+			<InfoSection section={section} />
+		</>
+	)
 }
 
 export default ServiceSection

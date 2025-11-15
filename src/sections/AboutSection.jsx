@@ -5,7 +5,13 @@ function AboutSection() {
 	const section = [{
 		title: "Discover Top Online Jobs in Nepal with Hamro Job",
 		description: "At Hamro Job, we make your job search smarter and easier. Whether you're in Kathmandu, Pokhara, Lalitpur, or anywhere in Nepal, our platform connects you to thousands of verified online job listings from leading employers. With a sleek, user-friendly interface and real-time updates, finding your next opportunity has never been more seamless."
-	}]
+	},
+	{
+		title: "Early Growth and Funding",
+		description: "After launching, Hamro Job quickly gained traction among Nepali jobseekers and employers alike. Within the first year, we saw rapid user growth through word-of-mouth and community engagement. Our commitment to trust and transparency helped us build a loyal user base."
+	}
+	]
+
 	return (
 		<div>
 			<Description section={section} />

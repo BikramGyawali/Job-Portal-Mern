@@ -1,5 +1,6 @@
 import React from 'react'
-import Description from '../components/Description'
+import InfoSection from '../components/InfoSection'
+
 
 function HomeSection() {
 	const section = [{
@@ -16,7 +17,7 @@ function HomeSection() {
 	}
 	]
 	return (
-		<Description section={section} />
+    <InfoSection section={section}/>
 	)
 }
 

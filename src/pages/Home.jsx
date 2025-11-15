@@ -1,7 +1,7 @@
 import React from 'react';
 import BackgroundSection from '../components/BackgroundSection';
 import { CardComp } from '../components/CardComp';
-import Description from '../components/Description';
+
 import HomeSection from '../sections/HomeSection';
 import { FooterComp } from '../components/FooterComp';
 

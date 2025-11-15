@@ -1,20 +1,19 @@
 import React from 'react'
-
 import BackgroundSection from '../components/BackgroundSection'
-import AboutSection from '../sections/AboutSection';
-import Explainaton from '../components/Explainaton';
-import { FooterComp } from '../components/FooterComp';
+import { FooterComp } from '../components/FooterComp'
+import AboutSection from '../sections/AboutSection'
 
 function AboutUS() {
-	const title = "Trusted Job Provider for Nepali People - ";
-	const explain = "Helping Nepali jobseekers find the right opportunities."
-
 	return (
 		<div>
+			<BackgroundSection
+				title="Trusted Job Provider for Nepali People"
+				explain="Helping Nepali jobseekers find the right opportunities."
+			/>
 
-			<BackgroundSection title={title} explain={explain} />
+			{/* Reuse AboutSection from sections folder */}
 			<AboutSection />
-			<Explainaton />
+
 			<FooterComp />
 		</div>
 	)

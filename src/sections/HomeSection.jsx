@@ -16,8 +16,11 @@ function HomeSection() {
 		description: "Start your career journey today with Hamro Job! Create a free account, upload your resume, and begin applying to thousands of job opportunities with just a few clicks. Whether you’re seeking jobs in Kathmandu, Pokhara, Lalitpur, Bhaktapur, or any other region across Nepal, Hamro Job is here to help you connect with the right career path. Your dream job is just a click away — register with Hamro Job and take the first step toward a brighter future."
 	}
 	]
+
 	return (
+		<>
 		<InfoSection section={section} />
+		</>
 	)
 }
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import logo from "../assets/image/logo.png";
 import InfoSection from '../components/InfoSection'
+import BackgroundSection from '../components/BackgroundSection';
 
 function AboutSection() {
 	const section = [
@@ -18,8 +19,15 @@ function AboutSection() {
 			image: logo
 		}
 	];
+	const title = "Trusted Job Provider for Nepali People"
+	const explain = "Helping Nepali jobseekers find the right opportunities."
 
-	return <InfoSection section={section} />
+	return (
+		<>
+			<BackgroundSection title={title} explain={explain} />
+			<InfoSection section={section} />
+		</>
+	)
 }
 
 export default AboutSection;

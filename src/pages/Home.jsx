@@ -13,7 +13,7 @@ function Home() {
 		<>
 			<BackgroundSection title={title} explain={explain} />
 			<div className=' grid grid-row-2 items-center justify-center mt-2'>
-				<p className='text-3xl text-black text-center'>Featured Jobs</p>
+				<p className='text-3xl font-bold text-fuchsia-600 text-center'>Featured Jobs</p>
 				<div className=' grid gap-7 p-6 md:grid-cols-4 sm:grid-cols-2'>
 					<CardComp />
 					<CardComp />

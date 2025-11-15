@@ -28,8 +28,12 @@ function ServiceSection() {
 	const explain = "We provide a range of services to help jobseekers and employers connect easily and effectively"
 	return (
 		<>
+
 			<BackgroundSection title={title} explain={explain} />
+
+			<p className='text-3xl font-bold text-fuchsia-600 text-center'>Our Services</p>
 			<InfoSection section={section} />
+
 		</>
 	)
 }

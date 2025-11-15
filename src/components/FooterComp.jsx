@@ -54,8 +54,8 @@ export function FooterComp() {
 						<div>
 							<FooterTitle title="About" />
 							<FooterLinkGroup col>
-								<FooterLink href="#">Flowbite</FooterLink>
-								<FooterLink href="#">Tailwind CSS</FooterLink>
+								<FooterLink href="#">JobSeekers</FooterLink>
+								<FooterLink href="#">Employers</FooterLink>
 							</FooterLinkGroup>
 						</div>
 

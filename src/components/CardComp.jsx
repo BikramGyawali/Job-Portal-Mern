@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHourglassEnd, faLocation, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 export function CardComp() {
 	return (
-		<Card href="#" className="max-w-sm !bg-white">
+		<Card href="#" className="max-w-sm !bg-white transition-transform duration-300 hover:scale-105 cursor-pointer">
 			<h5 className="text-2xl font-bold tracking-wide text-gray-900">
 				MERN Stack Developer
 			</h5>

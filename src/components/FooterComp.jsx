@@ -90,7 +90,7 @@ export function FooterComp() {
 
 				{/* BOTTOM COPYRIGHT + ICONS */}
 				<div className="flex flex-col-reverse items-center justify-between gap-4 sm:flex-row">
-					<FooterCopyright href="#" by="Hamro Job™" year={2024} />
+					<FooterCopyright href="#" by="Hamro Job™" year={2025} />
 
 					<div className="flex space-x-6">
 						<FooterIcon href="#" icon={BsFacebook} />

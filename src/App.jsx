@@ -9,6 +9,7 @@ import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import Jobseekers from "./pages/Jobseekers";
 import Employers from "./pages/Employers";
+import RegisterComp from "./components/RegisterComp";
 
 export default function App() {
 	return (
@@ -23,6 +24,7 @@ export default function App() {
 					<Route path="/contact" element={<Contact />} />
 					<Route path="/jobseeker" element={<Jobseekers />} />
 					<Route path="/employers" element={<Employers />} />
+					<Route path="/register" element={<RegisterComp />} />
 				</Routes>
 			</BrowserRouter>
 		</div>

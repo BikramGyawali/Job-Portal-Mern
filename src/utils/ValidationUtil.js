@@ -4,13 +4,16 @@ export const ValidateUtil = (form) => {
 
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	const phoneRegex = /^[0-9]{10}$/;
+	const stringCheck = /^[A-Za-z]+$/;
+	const companyCheck = /^[A-Za-z0-9 .&-]+$/
+
 
 	// First Name
 	if ('fname' in form) {
 		if (!form.fname) {
 			error.fname = "First name is required";
 			valid = false;
-		} else if (typeof form.fname !== "string") {
+		} else if (!stringCheck.test(form.fname)) {
 			error.fname = "First name must be text";
 			valid = false;
 		}
@@ -21,7 +24,7 @@ export const ValidateUtil = (form) => {
 		if (!form.sname) {
 			error.sname = "Second name is required";
 			valid = false;
-		} else if (typeof form.sname !== "string") {
+		} else if (!stringCheck.test(form.sname)) {
 			error.sname = "Second name must be text";
 			valid = false;
 		}
@@ -87,8 +90,8 @@ export const ValidateUtil = (form) => {
 		if (!form.company) {
 			error.company = "Company name is required";
 			valid = false;
-		} else if (typeof form.company !== "string") {
-			error.company = "Company name must be text";
+		} else if (!companyCheck.test(form.company)) {
+			error.company = "Company name can contain letters, numbers, spaces, . & -";
 			valid = false;
 		}
 	}

@@ -5,21 +5,47 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import register from "../assets/image/EResgister.png";
 import { Link } from 'react-router-dom';
 
-function RegisterComp({ LoginData }) {
+function RegisterComp() {
 
 	const [showPassword, setShowPassword] = useState(false);
+
+	// ✅ FIX: Correct initial state
+	const [form, setForm] = useState({
+		email: "",
+		pass: "",
+		cPass: ""
+	});
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		// console.log(form);
+
+		// Reset properly
+		setForm({
+			email: "",
+			pass: "",
+			cPass: ""
+		});
+	};
+
+	const handleChange = (e) => {
+		setForm({
+			...form,
+			[e.target.name]: e.target.value
+		});
+	};
 
 	const RegisterData = [
 		{
 			title: "Password",
 			placeHolder: "Enter Your Password",
-			name: "password"
+			name: "pass"
 		},
 		{
 			title: "Confirm Password",
 			placeHolder: "Confirm Your Password",
 			name: "cPass"
-		},
+		}
 	];
 
 	return (
@@ -38,41 +64,58 @@ function RegisterComp({ LoginData }) {
 				<p className='text-2xl text-center font-bold text-black tracking-tight'>
 					Welcome to Hamro Jobs
 				</p>
-				<div className="w-full flex flex-col mb-1">
 
-					<label className="text-2xl font-semibold mb-2">Email</label>
-					<input
-						type="text"
-						placeholder="Your Email"
-						className="w-full text-xl p-3 rounded-2xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
-					/>
-				</div>
+				<form onSubmit={handleSubmit} className="w-full max-w-md">
 
-				{/* PASSWORD INPUTS */}
-				{RegisterData.map((item, i) => (
-					<div key={i} className="w-full flex flex-col mb-3">
-						<label className="text-2xl font-semibold mb-2" htmlFor={item.name}>
-							{item.title}
-						</label>
 
-						<div className="relative w-full">
-							<input
-								type={showPassword ? "text" : "password"}
-								placeholder={item.placeHolder}
-								id={item.name}
-								className="w-full text-xl p-3 rounded-2xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-							/>
-
-							<button
-								type="button"
-								onClick={() => setShowPassword(!showPassword)}
-								className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-900"
-							>
-								<FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-							</button>
-						</div>
+					<div className="w-full flex flex-col mb-1">
+						<label className="text-2xl font-semibold mb-2">Email</label>
+						<input
+							type="text"
+							name='email'
+							placeholder="Your Email"
+							className="w-full text-xl p-3 rounded-2xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
+							onChange={handleChange}
+							value={form.email}
+						/>
 					</div>
-				))}
+
+					{/* Passwords */}
+					{RegisterData.map((item, i) => (
+						<div key={i} className="w-full flex flex-col mb-3">
+							<label className="text-2xl font-semibold mb-2" htmlFor={item.name}>
+								{item.title}
+							</label>
+
+							<div className="relative w-full">
+								<input
+									type={showPassword ? "text" : "password"}
+									placeholder={item.placeHolder}
+									id={item.name}
+									name={item.name}
+									className="w-full text-xl p-3 rounded-2xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
+									onChange={handleChange}
+									value={form[item.name]}
+								/>
+
+								<button
+									type="button"
+									onClick={() => setShowPassword(!showPassword)}
+									className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-900"
+								>
+									<FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+								</button>
+							</div>
+						</div>
+					))}
+
+					<button
+						type="submit"
+						className="bg-blue-600 text-white py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition w-full"
+					>
+						Submit
+					</button>
+				</form>
 
 				<p className='text-2xl p-3 m-3'>
 					Already have Account?{" "}
@@ -80,7 +123,6 @@ function RegisterComp({ LoginData }) {
 						Create Account
 					</Link>
 				</p>
-
 			</div>
 		</div>
 	);

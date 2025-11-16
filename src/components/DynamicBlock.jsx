@@ -1,9 +1,9 @@
 import React from "react";
 
 function DynamicBlock({ item }) {
-	if (!item) return null; // prevent undefined crash
+	if (!item) return null; // prevent undefined 
 
-	// If image exists → Explanation layout
+
 	if (item.image) {
 		return (
 			<div className="w-full flex justify-center items-center rounded-xl py-5">
@@ -36,7 +36,7 @@ function DynamicBlock({ item }) {
 		);
 	}
 
-	// If no image → Description layout
+	// Run when there is no image
 	return (
 		<div className="w-full flex justify-center items-center py-5">
 			<div className="backdrop-blur-lg bg-white/10 shadow-lg rounded-2xl p-6 w-full border border-white/10 duration-500 hover:scale-x-105">

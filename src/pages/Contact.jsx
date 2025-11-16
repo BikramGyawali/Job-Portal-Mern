@@ -1,6 +1,7 @@
 import React from 'react'
 import BackgroundSection from '../components/BackgroundSection'
 import { FooterComp } from '../components/FooterComp'
+import ContactSection from '../sections/ContactSection'
 
 function Contact() {
 	const title = "Get in Touch With"
@@ -8,6 +9,7 @@ function Contact() {
 	return (
 		<>
 			<BackgroundSection title={title} explain={explain} />
+			<ContactSection />
 			<FooterComp />
 		</>
 	)

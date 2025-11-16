@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FaPaperPlane } from 'react-icons/fa';
 import { HiMail, HiPhone, HiLocationMarker } from "react-icons/hi";
+import { ValidateUtil } from '../utils/ValidationUtil';
 
 function ContactSection() {
 	const [form, setForm] = useState({
@@ -10,14 +11,15 @@ function ContactSection() {
 		phone: "",
 		message: "",
 	});
-
 	const [error, setError] = useState({
 		fname: "",
 		sname: "",
 		email: "",
 		phone: "",
-		message: ""
+		message: "",
 	});
+
+
 
 	const ContactData = [
 		{ name: "fname", label: "First Name", placeHolder: "Your First Name", type: "text" },
@@ -31,65 +33,23 @@ function ContactSection() {
 			...form,
 			[e.target.name]: e.target.value
 		});
-		setError({
-			...error,
-			[e.target.name]: ""
-		});
+
 	};
 
-	const validate = () => {
-		let valid = true;
-		const newError = { fname: "", sname: "", email: "", phone: "", message: "" };
 
-		const nameRegex = /^[A-Za-z]+$/;
-		if (!form.fname) {
-			newError.fname = "First name is required";
-			valid = false;
-		} else if (!nameRegex.test(form.fname)) {
-			newError.fname = "First name must contain only letters";
-			valid = false;
-		}
-
-		if (!form.sname) {
-			newError.sname = "Second name is required";
-			valid = false;
-		} else if (!nameRegex.test(form.sname)) {
-			newError.sname = "Second name must contain only letters";
-			valid = false;
-		}
-
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (!form.email) {
-			newError.email = "Email is required";
-			valid = false;
-		} else if (!emailRegex.test(form.email)) {
-			newError.email = "Invalid email format";
-			valid = false;
-		}
-
-		const phoneRegex = /^[0-9]{10}$/;
-		if (!form.phone) {
-			newError.phone = "Phone number is required";
-			valid = false;
-		} else if (!phoneRegex.test(form.phone)) {
-			newError.phone = "Phone number must be 10 digits";
-			valid = false;
-		}
-
-		if (!form.message) {
-			newError.message = "Message is required";
-			valid = false;
-		}
-
-		setError(newError);
-		return valid;
-	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		if (validate()) {
-			console.log("Form submitted:", form);
-			setForm({ fname: "", sname: "", email: "", phone: "", message: "" });
+		const { error, valid } = ValidateUtil(form);
+		setError(error);
+		if (valid) {
+			setForm({
+				fname: "",
+				sname: "",
+				email: "",
+				phone: "",
+				message: ""
+			});
 		}
 	};
 

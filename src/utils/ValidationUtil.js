@@ -1,15 +1,9 @@
 
 
-export const validateContactForm = (form) => {
+export const ValidateUtil = (form) => {
 	let valid = true;
 
-	const error = {
-		fname: "",
-		sname: "",
-		email: "",
-		phone: "",
-		message: ""
-	};
+	let error = {}
 
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	const phoneRegex = /^[0-9]{10}$/;

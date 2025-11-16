@@ -19,25 +19,48 @@ function RegisterComp() {
 		cPass: "",
 		company: ""
 	});
-
-	const handleSubmit = (e) => {
-		e.preventDefault();
-
-		setForm({
-			email: "",
-			pass: "",
-			cPass: "",
-			company: ""
-		});
-
-		console.log(form);
-	};
+	const [error, setError] = useState({
+		email: ""
+	});
 
 	const handleChange = (e) => {
 		setForm({
 			...form,
 			[e.target.name]: e.target.value
 		});
+	};
+
+	const validate = () => {
+		let valid = true;
+		const newError = {
+			email: ""
+		}
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!form.email) {
+			newError.email = "Email is Required";
+			valid = false
+		}
+		else if (!emailRegex.test(form.email)) {
+			newError.email = "Invalide Email Format";
+			valid = false
+		}
+
+		setError(newError)
+		return valid
+	}
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		if (validate()) {
+			setForm({
+				email: "",
+				pass: "",
+				cPass: "",
+				company: ""
+			});
+		}
+
+		console.log(form);
 	};
 
 	const RegisterData = [
@@ -105,6 +128,7 @@ function RegisterComp() {
 							onChange={handleChange}
 							value={form.email}
 						/>
+						{error.email && <p className="text-red-600 text-[20px] ">*{error.email}</p>}
 
 						{/* Password Inputs */}
 						{RegisterData.map((item, i) => (

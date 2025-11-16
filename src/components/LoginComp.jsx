@@ -10,22 +10,44 @@ function LoginComp({ LoginData }) {
 		email: "",
 		pass: ""
 	});
-
+	const [error, setError] = useState({
+		email: ""
+	});
 	const handleChange = (e) => {
 		setForm({
 			...form,
 			[e.target.name]: e.target.value
 		});
 	};
+	//for Validation
+	const validate = () => {
+		let valid = true;
+		const newError = {
+			email: ""
+		}
+		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+		if (!form.email) {
+			newError.email = "Email is Required";
+			valid = false
+		}
+		else if (!emailRegex.test(form.email)) {
+			newError.email = "Invalide Email Format";
+			valid = false
+		}
 
+		setError(newError)
+		return valid
+	}
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(form);
 
-		setForm({
-			email: "",
-			pass: ""
-		});
+
+		if (validate()) {
+			setForm({
+				email: "",
+				pass: ""
+			});
+		}
 	};
 
 	const { title, explain, image, role } = LoginData;
@@ -33,7 +55,7 @@ function LoginComp({ LoginData }) {
 	return (
 		<div className="flex items-center justify-center w-screen h-screen gap-6 px-4">
 
-			{/* IMAGE */}
+
 			<div className="hidden md:block">
 				<img
 					src={image}
@@ -42,7 +64,7 @@ function LoginComp({ LoginData }) {
 				/>
 			</div>
 
-			{/* FORM CARD */}
+
 			<div className="flex flex-col items-center bg-white/10 md:bg-[#CBE4FF] backdrop-blur-md p-8 rounded-2xl shadow-xl w-full max-w-lg">
 
 
@@ -68,6 +90,7 @@ function LoginComp({ LoginData }) {
 						name="email"
 						className="w-full text-base p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
 					/>
+					{error.email && <p className="text-red-600 text-[20px] ">*{error.email}</p>}
 
 					<label className="text-lg font-semibold mb-1 block">Password</label>
 					<div className="relative w-full">

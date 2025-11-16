@@ -6,6 +6,7 @@ import login from "../assets/image/login.png"
 import register from "../assets/image/EResgister.png";
 import { Link } from 'react-router-dom';
 import RegisterComp from './RegisterComp';
+import ButtonComp from './ButtonComp';
 
 function LoginComp({ LoginData }) {
 	const [showPassword, setShowPassword] = useState(false)
@@ -77,6 +78,7 @@ function LoginComp({ LoginData }) {
 							</button>
 						</div>
 					</div>
+					<ButtonComp name="Login" />
 				</form>
 				<p className='text-2xl p-3 m-3 '>New to Hamro Job  {' '}
 					<Link to="/register" className='text-blue-900 underline'

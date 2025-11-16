@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 import register from "../assets/image/EResgister.png";
 import { Link } from 'react-router-dom';
+import ButtonComp from './ButtonComp';
 
 function RegisterComp() {
 
@@ -109,12 +110,7 @@ function RegisterComp() {
 						</div>
 					))}
 
-					<button
-						type="submit"
-						className="bg-blue-600 text-white py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition w-full"
-					>
-						Submit
-					</button>
+					<ButtonComp name="Register" />
 				</form>
 
 				<p className='text-2xl p-3 m-3'>

@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import ButtonComp from './ButtonComp';
+import { ValidateUtil } from '../utils/ValidationUtil';
 
 function LoginComp({ LoginData }) {
 	const [showPassword, setShowPassword] = useState(false);
@@ -21,33 +22,16 @@ function LoginComp({ LoginData }) {
 		});
 	};
 	//for Validation
-	const validate = () => {
-		let valid = true;
-		const newError = {
-			email: "",
-			pass: "",
-		}
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (!form.email) {
-			newError.email = "Email is Required";
-			valid = false
-		}
-		else if (!emailRegex.test(form.email)) {
-			newError.email = "Invalide Email Format";
-			valid = false
-		}
-		if (!form.pass) {
-			newError.pass = "Password is Required";
-			valid = false
-		}
-		setError(newError)
-		return valid
-	}
+
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
+		const { error, valid } = ValidateUtil(form);
+		console.log(error.email);
 
-		if (validate()) {
+		setError(error)
+		if (valid) {
 			setForm({
 				email: "",
 				pass: ""
@@ -95,7 +79,7 @@ function LoginComp({ LoginData }) {
 						name="email"
 						className="w-full text-base p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
 					/>
-					{error.email && <p className="text-red-600 text-[20px] ">*{error.email}</p>}
+					{error.email && <p className="text-red-600 text-[14px] ">*{error.email}</p>}
 
 					<label className="text-lg font-semibold mb-1 block">Password</label>
 					<div className="relative w-full">
@@ -107,7 +91,7 @@ function LoginComp({ LoginData }) {
 							name="pass"
 							className="w-full text-base p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
 						/>
-						{error.pass && <p className="text-red-600 text-[20px] ">*{error.pass}</p>}
+						{error.pass && <p className="text-red-600 text-[14px] ">*{error.pass}</p>}
 
 						<button
 							type="button"

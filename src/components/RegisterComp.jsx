@@ -6,6 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import ButtonComp from './ButtonComp';
 import NavbarComp from './NavbarComp';
 import { FooterComp } from './FooterComp';
+import { ValidateUtil } from '../utils/ValidationUtil';
 
 function RegisterComp() {
 	const { state } = useLocation();
@@ -21,7 +22,9 @@ function RegisterComp() {
 	});
 	const [error, setError] = useState({
 		email: "",
-		pass: ""
+		pass: "",
+		cpass: "",
+		company: ""
 	});
 
 	const handleChange = (e) => {
@@ -31,32 +34,15 @@ function RegisterComp() {
 		});
 	};
 
-	const validate = () => {
-		let valid = true;
-		const newError = {
-			email: "",
-			pass: "",
-		}
-		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		if (!form.email) {
-			newError.email = "Email is Required";
-			valid = false
-		}
-		else if (!emailRegex.test(form.email)) {
-			newError.email = "Invalide Email Format";
-			valid = false
-		}
-		if (!form.pass) {
-			newError.pass = "Password is Required";
-			valid = false
-		}
-		setError(newError)
-		return valid
-	}
+
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		if (validate()) {
+		const { error, valid } = ValidateUtil(form);
+		setError({
+			...error,
+			[e.target.name]: ""
+		})
+		if (valid) {
 			setForm({
 				email: "",
 				pass: "",
@@ -118,6 +104,7 @@ function RegisterComp() {
 									name="company"
 									className="w-full text-base p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
 								/>
+								{error.company && <p className="text-red-600 text-[14px] ">*{error.company}</p>}
 							</>
 						)}
 
@@ -133,7 +120,7 @@ function RegisterComp() {
 							onChange={handleChange}
 							value={form.email}
 						/>
-						{error.email && <p className="text-red-600 text-[20px] ">*{error.email}</p>}
+						{error.email && <p className="text-red-600 text-[14px] ">*{error.email}</p>}
 
 						{/* Password Inputs */}
 						{RegisterData.map((item, i) => (
@@ -155,7 +142,7 @@ function RegisterComp() {
 										onChange={handleChange}
 										value={form[item.name]}
 									/>
-									{error.pass && <p className="text-red-600 text-[20px] ">*{error.pass}</p>}
+									{error[item.name] && <p className="text-red-600 text-[14px] ">*{error[item.name]}</p>}
 
 									<button
 										type="button"

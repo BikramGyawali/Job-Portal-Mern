@@ -11,7 +11,7 @@ function NavbarComp() {
 		{ name: "About", path: "/about" },
 		{ name: "Services", path: "/services" },
 		{ name: "Contact", path: "/contact" },
-		{ name: "JobSeeker", path: "#" },
+		{ name: "JobSeeker", path: "/jobseeker" },
 		{ name: "Employers", path: "#" },
 	];
 

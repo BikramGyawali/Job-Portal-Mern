@@ -1,100 +1,113 @@
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
-import login from "../assets/image/login.png"
-
-import register from "../assets/image/EResgister.png";
 import { Link } from 'react-router-dom';
-import RegisterComp from './RegisterComp';
 import ButtonComp from './ButtonComp';
 
 function LoginComp({ LoginData }) {
-	const [showPassword, setShowPassword] = useState(false)
+	const [showPassword, setShowPassword] = useState(false);
 	const [form, setForm] = useState({
 		email: "",
 		pass: ""
-	})
+	});
 
 	const handleChange = (e) => {
 		setForm({
-
 			...form,
-			[e.target.name]: [e.target.value]
-		})
-	}
+			[e.target.name]: e.target.value
+		});
+	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		console.log(form);
+
 		setForm({
 			email: "",
 			pass: ""
-		})
-	}
+		});
+	};
 
 	const { title, explain, image, role } = LoginData;
-	console.log(role);
-
 
 	return (
-		<div
-			className="flex items-center justify-center w-screen h-screen  gap-4"
+		<div className="flex items-center justify-center w-screen h-screen gap-6 px-4">
 
-		>
-			<div className="">
-				<img src={image} alt="login image" className='h-full rounded-2xl w-auto object-cover p-3 hidden md:block' />
+			{/* IMAGE */}
+			<div className="hidden md:block">
+				<img
+					src={image}
+					alt="login"
+					className="h-[70vh] rounded-2xl w-auto object-contain"
+				/>
 			</div>
-			<div className="flex flex-col items-center bg-white/10 md:!bg-gradient-to-r from-blue-100 to-blue-200 backdrop-blur-md p-6 rounded-2xl shadow-lg">
-				<p className='text-2xl text-center font-bold text-black tracking-tight'>{title}</p>
-				<p className='text-[20px] text-center  text-black mt-2'>{explain}</p>
-				<form action="" className="w-full max-w-md" onSubmit={handleSubmit}>
-					<div className="w-full flex flex-col mb-1">
 
-						<label className="text-2xl font-semibold mb-2 ">Email</label>
+			{/* FORM CARD */}
+			<div className="flex flex-col items-center bg-white/10 md:bg-[#CBE4FF] backdrop-blur-md p-8 rounded-2xl shadow-xl w-full max-w-lg">
+
+
+				<p className="text-4xl font-extrabold text-gray-900 text-center tracking- mb-2.5">
+					{title}
+				</p>
+
+
+				<p className="text-lg text-gray-700 text-center mt-2 leading-snug">
+					{explain}
+				</p>
+
+
+				<form className="w-full mt-4" onSubmit={handleSubmit}>
+
+
+					<label className="text-lg font-semibold mb-1 block">Email</label>
+					<input
+						type="text"
+						placeholder="Your Email"
+						onChange={handleChange}
+						value={form.email}
+						name="email"
+						className="w-full text-base p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
+					/>
+
+					<label className="text-lg font-semibold mb-1 block">Password</label>
+					<div className="relative w-full">
 						<input
-							type="text"
-							placeholder="Your Email"
+							type={showPassword ? "text" : "password"}
+							placeholder="Your Password"
 							onChange={handleChange}
-							value={form.email}
-							name='email'
-							className="w-full text-xl p-3 rounded-2xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
+							value={form.pass}
+							name="pass"
+							className="w-full text-base p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
 						/>
 
+						<button
+							type="button"
+							onClick={() => setShowPassword(!showPassword)}
+							className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600 hover:text-gray-900"
+						>
+							<FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+						</button>
 					</div>
-					<div className="w-full flex flex-col mb-3">
-						<label className="text-2xl font-semibold mb-2">Password</label>
-						<div className="relative w-full">
-							<input
-								type={showPassword ? "text" : "password"}
-								placeholder="Your Password"
-								onChange={handleChange}
-								value={form.pass}
-								name='pass'
-								className="w-full text-xl p-3 rounded-2xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
-							/>
-							<button
-								type="button"
-								onClick={() => setShowPassword(!showPassword)}
-								className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-gray-900"
-							>
-								<FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-							</button>
-						</div>
+
+					<div className='mt-5'>
+						<ButtonComp name="Login" />
 					</div>
-					<ButtonComp name="Login" />
 				</form>
-				<p className='text-2xl p-3 m-3 '>New to Hamro Job  {' '}
-					<Link to="/register" className='text-blue-900 underline'
+
+				<p className="text-lg mt-5">
+					New to Hamro Job?{" "}
+					<Link
+						to="/register"
 						state={{ role: role }}
+						className="text-blue-900 underline font-semibold"
 					>
 						Create Account
 					</Link>
 				</p>
 			</div>
 
-
 		</div>
-	)
+	);
 }
 
-export default LoginComp
+export default LoginComp;

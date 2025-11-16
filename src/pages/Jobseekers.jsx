@@ -5,7 +5,7 @@ import { FooterComp } from '../components/FooterComp'
 import login from "../assets/image/login.png";
 function Jobseekers() {
 	const LoginData = {
-		title: "Welcome to Hamro Job",
+		title: "Welcome to Jobseekers Dashboard",
 		explain: "Get started with latest job vacancies in Nepal for free.",
 		image: login,
 		role: "jobseeker"

@@ -1,6 +1,6 @@
 
 import { Card } from "flowbite-react";
-import cardImg from '../assets/image/translator.webp'
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHourglassEnd, faLocation, faLocationDot } from "@fortawesome/free-solid-svg-icons";
 export function CardComp() {

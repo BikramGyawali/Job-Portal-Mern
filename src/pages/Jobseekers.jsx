@@ -7,7 +7,8 @@ function Jobseekers() {
 	const LoginData = {
 		title: "Welcome to Hamro Job",
 		explain: "Get started with latest job vacancies in Nepal for free.",
-		image: login
+		image: login,
+		role: "jobseeker"
 	}
 	return (
 		<div>

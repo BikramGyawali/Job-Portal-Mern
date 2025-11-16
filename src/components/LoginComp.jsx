@@ -32,7 +32,9 @@ function LoginComp({ LoginData }) {
 		})
 	}
 
-	const { title, explain, image } = LoginData;
+	const { title, explain, image, role } = LoginData;
+	console.log(role);
+
 
 	return (
 		<div
@@ -47,6 +49,7 @@ function LoginComp({ LoginData }) {
 				<p className='text-[20px] text-center  text-black mt-2'>{explain}</p>
 				<form action="" className="w-full max-w-md" onSubmit={handleSubmit}>
 					<div className="w-full flex flex-col mb-1">
+
 						<label className="text-2xl font-semibold mb-2 ">Email</label>
 						<input
 							type="text"
@@ -82,7 +85,8 @@ function LoginComp({ LoginData }) {
 				</form>
 				<p className='text-2xl p-3 m-3 '>New to Hamro Job  {' '}
 					<Link to="/register" className='text-blue-900 underline'
-						onClick={RegisterComp}>
+						state={{ role: role }}
+					>
 						Create Account
 					</Link>
 				</p>

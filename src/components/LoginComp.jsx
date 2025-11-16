@@ -11,7 +11,8 @@ function LoginComp({ LoginData }) {
 		pass: ""
 	});
 	const [error, setError] = useState({
-		email: ""
+		email: "",
+		pass: ""
 	});
 	const handleChange = (e) => {
 		setForm({
@@ -23,7 +24,8 @@ function LoginComp({ LoginData }) {
 	const validate = () => {
 		let valid = true;
 		const newError = {
-			email: ""
+			email: "",
+			pass: "",
 		}
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!form.email) {
@@ -34,7 +36,10 @@ function LoginComp({ LoginData }) {
 			newError.email = "Invalide Email Format";
 			valid = false
 		}
-
+		if (!form.pass) {
+			newError.pass = "Password is Required";
+			valid = false
+		}
 		setError(newError)
 		return valid
 	}
@@ -102,6 +107,7 @@ function LoginComp({ LoginData }) {
 							name="pass"
 							className="w-full text-base p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
 						/>
+						{error.pass && <p className="text-red-600 text-[20px] ">*{error.pass}</p>}
 
 						<button
 							type="button"

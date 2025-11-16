@@ -10,6 +10,13 @@ function ContactSection() {
 		phone: "",
 		message: "",
 	});
+	const [error, setError] = useState({
+			fname: "",
+		sname: "",
+		email: "",
+		phone: "",
+		message: "",
+	});
 
 	const ContactData = [
 		{ name: "fname", label: "First Name", placeHolder: "Your First Name", type: "text" },
@@ -27,7 +34,8 @@ function ContactSection() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		console.log(form); // you can send form data to backend here
+
+
 	};
 
 	return (

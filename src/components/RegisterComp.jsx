@@ -20,7 +20,8 @@ function RegisterComp() {
 		company: ""
 	});
 	const [error, setError] = useState({
-		email: ""
+		email: "",
+		pass: ""
 	});
 
 	const handleChange = (e) => {
@@ -33,7 +34,8 @@ function RegisterComp() {
 	const validate = () => {
 		let valid = true;
 		const newError = {
-			email: ""
+			email: "",
+			pass: "",
 		}
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		if (!form.email) {
@@ -44,7 +46,10 @@ function RegisterComp() {
 			newError.email = "Invalide Email Format";
 			valid = false
 		}
-
+		if (!form.pass) {
+			newError.pass = "Password is Required";
+			valid = false
+		}
 		setError(newError)
 		return valid
 	}
@@ -60,7 +65,7 @@ function RegisterComp() {
 			});
 		}
 
-		console.log(form);
+
 	};
 
 	const RegisterData = [
@@ -150,6 +155,7 @@ function RegisterComp() {
 										onChange={handleChange}
 										value={form[item.name]}
 									/>
+									{error.pass && <p className="text-red-600 text-[20px] ">*{error.pass}</p>}
 
 									<button
 										type="button"

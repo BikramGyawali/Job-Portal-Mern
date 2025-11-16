@@ -4,8 +4,11 @@ import React, { useState } from 'react'
 import login from "../assets/image/login.png";
 import { Link } from 'react-router-dom';
 
-function LoginComp() {
+function LoginComp({ LoginData }) {
 	const [showPassword, setShowPassword] = useState(false)
+	// console.log(loginData);
+
+	const { title, explain, image } = LoginData;
 
 	return (
 		<div
@@ -13,11 +16,11 @@ function LoginComp() {
 
 		>
 			<div className="">
-				<img src={login} alt="login image" className='h-full rounded-2xl w-auto p-3 hidden md:block' />
+				<img src={image} alt="login image" className='h-full rounded-2xl w-auto object-cover p-3 hidden md:block' />
 			</div>
 			<div className="flex flex-col items-center bg-white/10 md:!bg-gradient-to-r from-blue-100 to-blue-200 backdrop-blur-md p-6 rounded-2xl shadow-lg">
-				<p className='text-2xl text-center font-bold text-black tracking-tight'>Welcome to Hamro Job</p>
-				<p className='text-[20px] text-center  text-black mt-2'>Get started with latest job vacancies in Nepal for free.</p>
+				<p className='text-2xl text-center font-bold text-black tracking-tight'>{title}</p>
+				<p className='text-[20px] text-center  text-black mt-2'>{explain}</p>
 				<label className="text-2xl font-semibold mb-2 ">Email</label>
 				<input
 					type="text"

@@ -12,7 +12,7 @@ function NavbarComp() {
 		{ name: "Services", path: "/services" },
 		{ name: "Contact", path: "/contact" },
 		{ name: "JobSeeker", path: "/jobseeker" },
-		{ name: "Employers", path: "#" },
+		{ name: "Employers", path: "/employers" },
 	];
 
 	return (

@@ -8,6 +8,7 @@ import AboutUS from "./pages/AboutUS";
 import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import Jobseekers from "./pages/Jobseekers";
+import Employers from "./pages/Employers";
 
 export default function App() {
 	return (
@@ -21,6 +22,7 @@ export default function App() {
 					<Route path="/services" element={<Services />} />
 					<Route path="/contact" element={<Contact />} />
 					<Route path="/jobseeker" element={<Jobseekers />} />
+					<Route path="/employers" element={<Employers />} />
 				</Routes>
 			</BrowserRouter>
 		</div>

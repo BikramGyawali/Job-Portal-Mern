@@ -20,7 +20,6 @@ function ContactSection() {
 	});
 
 
-
 	const ContactData = [
 		{ name: "fname", label: "First Name", placeHolder: "Your First Name", type: "text" },
 		{ name: "sname", label: "Second Name", placeHolder: "Your Second Name", type: "text" },

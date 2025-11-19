@@ -11,6 +11,7 @@ import { ValidateUtil } from '../utils/ValidationUtil';
 function RegisterComp() {
 	const { state } = useLocation();
 	const role = state?.role;
+
 	const navigate = useNavigate();
 	const [showPassword, setShowPassword] = useState(false);
 
@@ -20,12 +21,7 @@ function RegisterComp() {
 		cPass: "",
 		company: ""
 	});
-	const [error, setError] = useState({
-		email: "",
-		pass: "",
-		cPass: "",
-		company: ""
-	});
+	const [error, setError] = useState({});
 
 	const handleChange = (e) => {
 		setForm({
@@ -37,11 +33,8 @@ function RegisterComp() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const { error, valid } = ValidateUtil(form);
-		setError({
-			...error,
-			[e.target.name]: ""
-		})
+		const { error: validateError, valid } = ValidateUtil(form);
+		setError(validateError)
 		if (valid) {
 			setForm({
 				email: "",
@@ -49,9 +42,14 @@ function RegisterComp() {
 				cPass: "",
 				company: ""
 			});
-			navigate("/profile");
+			if (role === 'jobseeker') {
+				navigate("/profile");
+			} else if (role === 'employers') {
+				navigate("/employer-profile"); // your employer route
+			}
 		}
 
+	
 
 	};
 
@@ -71,6 +69,8 @@ function RegisterComp() {
 
 	//function to check whether the error object is enmpty or not 
 	const hasError = Object.values(error).some(err => err !== "")  //true if not empty for if empty
+
+
 	const isFormEmpty = !form.email && !form.pass && !form.cPass && !form.company;
 
 	return (

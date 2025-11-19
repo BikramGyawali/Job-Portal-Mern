@@ -1,4 +1,5 @@
 import React from "react";
+import ButtonComp from "../ButtonComp";
 
 function ReusableForm({ form, errors, onChange, onSubmit, fields }) {
 	return (
@@ -49,13 +50,25 @@ function ReusableForm({ form, errors, onChange, onSubmit, fields }) {
 					)}
 				</div>
 			))}
+			<div className="flex justify-between gap-5">
 
-			<button
-				type="submit"
-				className="bg-blue-600 text-white py-2 rounded-xl col-span-2"
-			>
-				Save Profile
-			</button>
+				{/* <button
+					type="submit"
+					className="bg-blue-600 text-white p-2 rounded-xl col-span-2"
+				>
+					Previous
+				</button>
+
+				<button type="submit"
+					className="bg-blue-600 text-white p-2 rounded-xl col-span-2">
+					Next
+				</button> */}
+
+				<ButtonComp name="Previous" />
+				<ButtonComp name="Next" />
+
+
+			</div>
 		</form>
 	);
 }

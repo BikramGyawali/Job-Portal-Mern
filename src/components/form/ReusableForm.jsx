@@ -7,7 +7,7 @@ function ReusableForm({ form, errors, onChange, onSubmit, fields }) {
 			{fields.map((field, i) => (
 				<div
 					key={i}
-					className={`flex flex-col gap-1 ${field.type === "textarea" ? "col-span-2" : ""}`}
+					className={`flex flex-col gap-1  ${field.type === "textarea" ? "col-span-2" : "col-span-1"}`}
 				>
 					<label className="text-[16px] font-medium">
 						{field.label} {field.required && "*"}
@@ -40,6 +40,7 @@ function ReusableForm({ form, errors, onChange, onSubmit, fields }) {
 							value={form[field.name]}
 							onChange={onChange}
 							className="p-2 border rounded-xl"
+							max={new Date().toISOString().split("T")[0]}
 						/>
 					)}
 

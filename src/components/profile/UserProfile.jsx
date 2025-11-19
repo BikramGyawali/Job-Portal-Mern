@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ReusableForm from "../form/ReusableForm";
 import { ProfileFields } from "../../data/ProfileFields";
+import { ValidateUtil } from "../../utils/ValidationUtil";
 
 function UserProfile() {
 
@@ -16,19 +17,18 @@ function UserProfile() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		const { error, valid } = ValidateUtil(form, ProfileFields)
 
-		// validation example
-		let temp = {};
-		ProfileFields.forEach(f => {
-			if (f.required && !form[f.name]) {
-				temp[f.name] = `${f.label} is required`;
-			}
-		});
-		setErrors(temp);
 
-		if (Object.keys(temp).length === 0) {
-			console.log("SAVE PROFILE:", form);
+
+		setErrors(
+			error
+		);
+		if (valid) {
+			console.log(form);
+
 		}
+
 	};
 
 	return (

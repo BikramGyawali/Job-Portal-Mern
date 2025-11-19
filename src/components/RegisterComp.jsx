@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import register from "../assets/image/EResgister.png";
-import { Link, Links, useLocation } from 'react-router-dom';
+import { Link, Links, useLocation, useNavigate } from 'react-router-dom';
 import ButtonComp from './ButtonComp';
 import NavbarComp from './NavbarComp';
 import { FooterComp } from './FooterComp';
@@ -11,7 +11,7 @@ import { ValidateUtil } from '../utils/ValidationUtil';
 function RegisterComp() {
 	const { state } = useLocation();
 	const role = state?.role;
-
+	const navigate = useNavigate();
 	const [showPassword, setShowPassword] = useState(false);
 
 	const [form, setForm] = useState({
@@ -49,6 +49,7 @@ function RegisterComp() {
 				cPass: "",
 				company: ""
 			});
+			navigate("/profile");
 		}
 
 
@@ -160,17 +161,10 @@ function RegisterComp() {
 							</div>
 						))}
 
-						{!hasError && !isFormEmpty&&(
-							<Link to="/profile">
-								<ButtonComp name="Register" />
-							</Link>
-
-
-						)
-
-
-
-						}
+						<button type="submit" className="bg-blue-600 text-white py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition w-full"
+						>
+							Register
+						</button>
 
 					</form>
 

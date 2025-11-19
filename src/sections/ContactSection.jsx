@@ -11,20 +11,14 @@ function ContactSection() {
 		phone: "",
 		message: "",
 	});
-	const [error, setError] = useState({
-		fname: "",
-		sname: "",
-		email: "",
-		phone: "",
-		message: "",
-	});
+	const [error, setError] = useState({});
 
 
 	const ContactData = [
-		{ name: "fname", label: "First Name", placeHolder: "Your First Name", type: "text" },
-		{ name: "sname", label: "Second Name", placeHolder: "Your Second Name", type: "text" },
-		{ name: "email", label: "Email", placeHolder: "Your Email", type: "text" },
-		{ name: "phone", label: "Contact", placeHolder: "Your Phone Number", type: "text" },
+		{ name: "fname", label: "First Name", placeHolder: "Your First Name", type: "text", required: true },
+		{ name: "sname", label: "Second Name", placeHolder: "Your Second Name", type: "text", required: true },
+		{ name: "email", label: "Email", placeHolder: "Your Email", type: "text", required: true },
+		{ name: "phone", label: "Contact", placeHolder: "Your Phone Number", type: "text", required: true },
 	];
 
 	const handleChange = (e) => {
@@ -39,7 +33,7 @@ function ContactSection() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const { error, valid } = ValidateUtil(form);
+		const { error, valid } = ValidateUtil(form, ContactData);
 		setError(error);
 		if (valid) {
 			setForm({
@@ -59,7 +53,7 @@ function ContactSection() {
 				<form onSubmit={handleSubmit} className='grid gap-3 grid-cols-1 sm:grid-cols-2'>
 					{ContactData.map((item, i) => (
 						<div key={i} className='flex flex-col gap-1'>
-							<label htmlFor={item.name} className='text-[18px] font-medium'>{item.label}</label>
+							<label htmlFor={item.name} className='text-[18px] font-medium'>{item.label}*</label>
 							<input
 								type={item.type}
 								id={item.name}

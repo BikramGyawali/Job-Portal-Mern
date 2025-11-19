@@ -103,7 +103,11 @@ function LoginComp({ LoginData }) {
 					</div>
 
 					<div className='mt-5'>
+
+
+
 						<ButtonComp name="Login" />
+
 					</div>
 				</form>
 

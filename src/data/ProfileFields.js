@@ -22,7 +22,7 @@ export const ProfileFields = [
     options: ["Yes", "No"], required: true
   },
 
-  { name: "industry", label: "Industry", type: "text" },
+ 
   { name: "jobType", label: "Preferred Job Type", type: "text" },
 
   { name: "gender", label: "Gender", type: "select",

@@ -10,7 +10,7 @@ export const ValidateUtil = (form) => {
 
 	// First Name
 	if ('fname' in form) {
-		if (!form.fname) {
+		if (!form.fname.trim()) {
 			error.fname = "First name is required";
 			valid = false;
 		} else if (!stringCheck.test(form.fname)) {
@@ -21,7 +21,7 @@ export const ValidateUtil = (form) => {
 
 	// Second Name
 	if ('sname' in form) {
-		if (!form.sname) {
+		if (!form.sname.trim()) {
 			error.sname = "Second name is required";
 			valid = false;
 		} else if (!stringCheck.test(form.sname)) {
@@ -32,7 +32,7 @@ export const ValidateUtil = (form) => {
 
 	// Email
 	if ('email' in form) {
-		if (!form.email) {
+		if (!form.email.trim()) {
 			error.email = "Email is required";
 			valid = false;
 		} else if (!emailRegex.test(form.email)) {
@@ -43,7 +43,7 @@ export const ValidateUtil = (form) => {
 
 	// Phone
 	if ('phone' in form) {
-		if (!form.phone) {
+		if (!form.phone.trim()) {
 			error.phone = "Phone number is required";
 			valid = false;
 		} else if (!phoneRegex.test(form.phone)) {
@@ -54,7 +54,7 @@ export const ValidateUtil = (form) => {
 
 	// Message
 	if ('message' in form) {
-		if (!form.message) {
+		if (!form.message.trim()) {
 			error.message = "Message is required";
 			valid = false;
 		} else if (typeof form.message !== "string") {
@@ -65,7 +65,7 @@ export const ValidateUtil = (form) => {
 
 	// Password
 	if ('pass' in form) {
-		if (!form.pass) {
+		if (!form.pass.trim()) {
 			error.pass = "Password is required";
 			valid = false;
 		} else if (form.pass.length < 6) {
@@ -76,7 +76,7 @@ export const ValidateUtil = (form) => {
 
 	// Confirm Password
 	if ('cPass' in form) {
-		if (!form.cPass) {
+		if (!form.cPass.trim()) {
 			error.cPass = "Confirm password is required";
 			valid = false;
 		} else if (form.pass && form.cPass !== form.pass) {
@@ -87,7 +87,7 @@ export const ValidateUtil = (form) => {
 
 	// Company Name
 	if ('company' in form) {
-		if (!form.company) {
+		if (!form.company.trim()) {
 			error.company = "Company name is required";
 			valid = false;
 		} else if (!companyCheck.test(form.company)) {

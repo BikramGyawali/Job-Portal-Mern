@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import register from "../assets/image/EResgister.png";
-import { Link, useLocation } from 'react-router-dom';
+import { Link, Links, useLocation } from 'react-router-dom';
 import ButtonComp from './ButtonComp';
 import NavbarComp from './NavbarComp';
 import { FooterComp } from './FooterComp';
@@ -23,7 +23,7 @@ function RegisterComp() {
 	const [error, setError] = useState({
 		email: "",
 		pass: "",
-		cpass: "",
+		cPass: "",
 		company: ""
 	});
 
@@ -66,6 +66,11 @@ function RegisterComp() {
 			name: "cPass"
 		}
 	];
+
+
+	//function to check whether the error object is enmpty or not 
+	const hasError = Object.values(error).some(err => err !== "")  //true if not empty for if empty
+	const isFormEmpty = !form.email && !form.pass && !form.cPass && !form.company;
 
 	return (
 		<>
@@ -155,7 +160,17 @@ function RegisterComp() {
 							</div>
 						))}
 
-						<ButtonComp name="Register" />
+						{!hasError && !isFormEmpty&&(
+							<Link to="/profile">
+								<ButtonComp name="Register" />
+							</Link>
+
+
+						)
+
+
+
+						}
 
 					</form>
 

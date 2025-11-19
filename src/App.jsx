@@ -11,6 +11,7 @@ import Jobseekers from "./pages/Jobseekers";
 import Employers from "./pages/Employers";
 import RegisterComp from "./components/RegisterComp";
 import UserProfile from "./components/profile/UserProfile";
+import JobseekersProfile from "./components/profile/JobseekersProfile";
 
 export default function App() {
 	return (
@@ -27,6 +28,7 @@ export default function App() {
 					<Route path="/employers" element={<Employers />} />
 					<Route path="/register" element={<RegisterComp />} />
 					<Route path="/profile" element={<UserProfile />} />
+					<Route path="/jobseeker-profile" element={<JobseekersProfile />} />
 				</Routes>
 			</BrowserRouter>
 		</div>

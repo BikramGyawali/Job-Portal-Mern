@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import React, { useState, useEffect } from 'react';
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import register from "../assets/image/EResgister.png";
-import { Link, Links, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ButtonComp from './ButtonComp';
 import NavbarComp from './NavbarComp';
 import { FooterComp } from './FooterComp';
@@ -10,11 +10,10 @@ import { ValidateUtil } from '../utils/ValidationUtil';
 
 function RegisterComp() {
 	const { state } = useLocation();
-	const role = state?.role;
-
+	const roleFromState = state?.role;
 	const navigate = useNavigate();
-	const [showPassword, setShowPassword] = useState(false);
 
+	const [showPassword, setShowPassword] = useState(false);
 	const [form, setForm] = useState({
 		email: "",
 		pass: "",
@@ -23,6 +22,15 @@ function RegisterComp() {
 	});
 	const [error, setError] = useState({});
 
+	// Determine role (fallback to jobseeker if missing)
+	const role = roleFromState || "jobseeker";
+
+	// Debug: log role on mount
+	useEffect(() => {
+		console.log("Role from state:", roleFromState);
+		console.log("Final role used:", role);
+	}, [roleFromState, role]);
+
 	const handleChange = (e) => {
 		setForm({
 			...form,
@@ -30,74 +38,61 @@ function RegisterComp() {
 		});
 	};
 
-
 	const handleSubmit = (e) => {
 		e.preventDefault();
+
 		const { error: validateError, valid } = ValidateUtil(form);
-		setError(validateError)
-		if (valid) {
-			setForm({
-				email: "",
-				pass: "",
-				cPass: "",
-				company: ""
-			});
-			if (role === 'jobseeker') {
-				navigate("/profile");
-			} else if (role === 'employers') {
-				navigate("/employer-profile"); // your employer route
-			}
+		setError(validateError);
+
+		// Only navigate if valid
+		if (!valid) return;
+
+		// Log role for debugging
+		console.log("Navigating as role:", role);
+
+		// Reset form
+		setForm({
+			email: "",
+			pass: "",
+			cPass: "",
+			company: ""
+		});
+
+		// Navigate after state updates
+		if (role === "jobseeker") {
+			// go to jobseeker-specific profile route
+			navigate("/jobseeker-profile");
+		} else if (role === "employers") {
+			navigate("/employer-profile");
 		}
-
-	
-
 	};
 
 	const RegisterData = [
-		{
-			title: "Password",
-			placeHolder: "Enter Your Password",
-			name: "pass"
-		},
-		{
-			title: "Confirm Password",
-			placeHolder: "Confirm Your Password",
-			name: "cPass"
-		}
+		{ title: "Password", placeHolder: "Enter Your Password", name: "pass" },
+		{ title: "Confirm Password", placeHolder: "Confirm Your Password", name: "cPass" }
 	];
-
-
-	//function to check whether the error object is enmpty or not 
-	const hasError = Object.values(error).some(err => err !== "")  //true if not empty for if empty
-
-
-	const isFormEmpty = !form.email && !form.pass && !form.cPass && !form.company;
 
 	return (
 		<>
 			<NavbarComp />
 
 			<div className="flex items-center justify-center w-full h-full gap-6 p-6">
-
 				<div className="hidden md:block">
 					<img
 						src={register}
-						alt="login"
+						alt="register"
 						className="h-[90vh] rounded-full w-auto object-contain"
 					/>
 				</div>
 
-				<div className="flex flex-col items-center bg-white/10  md:bg-[#C2E6FF] backdrop-blur-md p-8 rounded-2xl shadow-xl w-full max-w-lg">
-
-					{/* Title */}
+				<div className="flex flex-col items-center bg-white/10 md:bg-[#C2E6FF] backdrop-blur-md p-8 rounded-2xl shadow-xl w-full max-w-lg">
 					<p className="text-4xl font-extrabold text-gray-900 text-center mb-6">
 						Welcome to Hamro Jobs
 					</p>
 
 					<form onSubmit={handleSubmit} className="w-full">
-
-						{/* Company Name (Employer only) */}
-						{role === 'employers' && (
+						{/* Company Name only for employers */}
+						{role === "employers" && (
 							<>
 								<label className="text-lg font-semibold mb-1" htmlFor="company">
 									Company Name
@@ -110,7 +105,9 @@ function RegisterComp() {
 									name="company"
 									className="w-full text-base p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
 								/>
-								{error.company && <p className="text-red-600 text-[14px] ">*{error.company}</p>}
+								{error.company && (
+									<p className="text-red-600 text-[14px] ">*{error.company}</p>
+								)}
 							</>
 						)}
 
@@ -122,22 +119,18 @@ function RegisterComp() {
 							type="text"
 							name="email"
 							placeholder="Your Email"
-							className="w-full text-base p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
 							onChange={handleChange}
 							value={form.email}
+							className="w-full text-base p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
 						/>
 						{error.email && <p className="text-red-600 text-[14px] ">*{error.email}</p>}
 
-						{/* Password Inputs */}
+						{/* Password & Confirm Password */}
 						{RegisterData.map((item, i) => (
 							<div key={i} className="mb-4">
-								<label
-									className="text-lg font-semibold mb-1 block"
-									htmlFor={item.name}
-								>
+								<label className="text-lg font-semibold mb-1 block" htmlFor={item.name}>
 									{item.title}
 								</label>
-
 								<div className="relative w-full">
 									<input
 										type={showPassword ? "text" : "password"}
@@ -148,7 +141,9 @@ function RegisterComp() {
 										onChange={handleChange}
 										value={form[item.name]}
 									/>
-									{error[item.name] && <p className="text-red-600 text-[14px] ">*{error[item.name]}</p>}
+									{error[item.name] && (
+										<p className="text-red-600 text-[14px] ">*{error[item.name]}</p>
+									)}
 
 									<button
 										type="button"
@@ -161,20 +156,19 @@ function RegisterComp() {
 							</div>
 						))}
 
-						<button type="submit" className="bg-blue-600 text-white py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition w-full"
-						>
-							Register
-						</button>
-
+						{/* Register Button */}
+						<ButtonComp name="Register" type="submit" className="w-full" />
 					</form>
 
 					<p className="text-lg mt-5">
 						Already have an account?{" "}
-						<Link to="/jobseeker" className="text-blue-900 underline font-semibold">
+						<Link
+							to="/jobseeker"
+							className="text-blue-900 underline font-semibold"
+						>
 							Login Here
 						</Link>
 					</p>
-
 				</div>
 			</div>
 

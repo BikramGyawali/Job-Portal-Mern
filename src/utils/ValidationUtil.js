@@ -28,11 +28,20 @@ export const ValidateUtil = (form, fields = []) => {
 	}
 
 	// Email
-	if ('email' in form && form.email?.trim() && !emailRegex.test(form.email)) {
-		error.email = "Invalid email format";
-		valid = false;
-	}
+	// if ('email' in form && form.email?.trim() && !emailRegex.test(form.email)) {
+	// 	error.email = "Invalid email format";
+	// 	valid = false;
 
+	if ('email' in form) {
+		if (!form.email?.trim()) {
+			error.email = "Email is required";
+			valid = false;
+		}
+		else if (!emailRegex.test(form.email)) {
+			error.email = "Invalid email format";
+			valid = false;
+		}
+	}
 	// Phone
 	if ('phone' in form && form.phone?.trim() && !phoneRegex.test(form.phone)) {
 		error.phone = "Phone must be 10 digits";

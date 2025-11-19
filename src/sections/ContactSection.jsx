@@ -19,6 +19,7 @@ function ContactSection() {
 		{ name: "sname", label: "Second Name", placeHolder: "Your Second Name", type: "text", required: true },
 		{ name: "email", label: "Email", placeHolder: "Your Email", type: "text", required: true },
 		{ name: "phone", label: "Contact", placeHolder: "Your Phone Number", type: "text", required: true },
+		{ name: "message", label: "Message", placeHolder: "Your Message", type: "textarea", required: true },
 	];
 
 	const handleChange = (e) => {
@@ -52,33 +53,39 @@ function ContactSection() {
 				<p className='text-3xl font-semibold mb-4'>Contact Our Team</p>
 				<form onSubmit={handleSubmit} className='grid gap-3 grid-cols-1 sm:grid-cols-2'>
 					{ContactData.map((item, i) => (
-						<div key={i} className='flex flex-col gap-1'>
+						<div key={i} className={`flex flex-col gap-1 ${item.name == "message" ? "col-span-2" : ""}`}>
 							<label htmlFor={item.name} className='text-[18px] font-medium'>{item.label}*</label>
-							<input
-								type={item.type}
-								id={item.name}
-								name={item.name}
-								placeholder={item.placeHolder}
-								value={form[item.name]}
-								onChange={handleChange}
-								className='p-2 text-[15px] bg-white border rounded-2xl focus:text-black'
-							/>
-							{error[item.name] && <p className="text-red-600 text-[14px]">{error[item.name]}</p>}
+							{
+								item.type == "textarea" ? (
+									<textarea
+										type={item.type}
+										id={item.name}
+										name={item.name}
+										placeholder={item.placeHolder}
+										value={form[item.name]}
+										onChange={handleChange}
+										className='p-2 text-[15px] bg-white border rounded-2xl focus:text-black'
+										rows={5}
+
+									></textarea>
+
+
+								) : (
+									<input
+										type={item.type}
+										id={item.name}
+										name={item.name}
+										placeholder={item.placeHolder}
+										value={form[item.name]}
+										onChange={handleChange}
+										className='p-2 text-[15px] bg-white border rounded-2xl focus:text-black'
+
+									/>)}
+							{error[item.name] && (<p className="text-red-600 text-[14px]">{error[item.name]}</p>)}
+
 						</div>
 					))}
-					<div className="col-span-2 flex flex-col gap-1">
-						<label htmlFor="message" className="text-[18px] font-medium">Message</label>
-						<textarea
-							id="message"
-							name="message"
-							placeholder="Enter your message..."
-							value={form.message}
-							onChange={handleChange}
-							rows="4"
-							className="p-3 text-[15px] bg-white border rounded-2xl focus:text-black resize-none"
-						></textarea>
-						{error.message && <p className="text-red-600 text-[14px]">{error.message}</p>}
-					</div>
+
 					<button
 						type="submit"
 						className="sm:col-span-2 bg-blue-600 text-white py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition"

@@ -34,6 +34,7 @@ function UserProfile() {
 	return (
 		<div className="p-6 bg-white rounded-xl shadow">
 			<h2 className="text-2xl font-bold mb-4">User Profile</h2>
+       
 
 			<ReusableForm
 				form={form}
@@ -42,6 +43,7 @@ function UserProfile() {
 				onSubmit={handleSubmit}
 				fields={ProfileFields}
 			/>
+
 		</div>
 	);
 }

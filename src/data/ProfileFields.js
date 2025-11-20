@@ -1,4 +1,5 @@
 export const ProfileFields = [
+	{ name: "image", label: "Change Photo", type: "file" },
 	{ name: "fname", label: "First Name", type: "text", required: true },
 	{ name: "mname", label: "Middle Name", type: "text" },
 	{ name: "sname", label: "Last Name", type: "text", required: true },
@@ -44,5 +45,5 @@ export const ProfileFields = [
 
 	{ name: "salary", label: "Expected Salary", type: "text" },
 
-	{ name: "about", label: "About You", type: "textarea" }
+	{ name: "about", label: "About You", type: "textarea" },
 ];

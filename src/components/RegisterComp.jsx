@@ -61,9 +61,9 @@ function RegisterComp() {
 		// Navigate after state updates
 		if (role === "jobseeker") {
 			// go to jobseeker-specific profile route
-			navigate("/jobseeker-profile");
+			navigate("/profile");
 		} else if (role === "employers") {
-			navigate("/employer-profile");
+			navigate("/profile");
 		}
 	};
 

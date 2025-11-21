@@ -1,4 +1,4 @@
-export default Education = [
+export const Education = [
 	{
 		label: "Degree",
 		name: "degree",
@@ -91,6 +91,6 @@ export default Education = [
 		required: true,
 		placeholder: "2024"
 	}
-];
+]
 
 

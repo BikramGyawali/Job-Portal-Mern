@@ -1,4 +1,4 @@
-export default JAddDetails = [
+export const JAddDetails = [
 	{
 		section: "Skills",
 		type: "tags", // input type can be tag input

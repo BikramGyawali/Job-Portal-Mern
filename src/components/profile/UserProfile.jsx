@@ -2,15 +2,17 @@ import React, { useState } from "react";
 import ReusableForm from "../form/ReusableForm";
 import { ProfileFields } from "../../data/jobseekers/ProfileFields";
 import { ValidateUtil } from "../../utils/ValidationUtil";
-import Experience from "../../data/jobseekers/Experience";
-import Education from "../../data/jobseekers/Education";
-import JAddDetails from "../../data/jobseekers/JAddDetails";
+import { Experience } from "../../data/jobseekers/Experience";
+import { Education } from "../../data/jobseekers/Education";
+import { JAddDetails } from "../../data/jobseekers/JAddDetails";
 
 function UserProfile() {
 
 	const [form, setForm] = useState({});
 	const [errors, setErrors] = useState({});
-	const [elist, setElist] = useState({});
+	const [elist, setElist] = useState([{}]);
+	const [currentIndex, setCurrentIndex] = useState(0);
+
 	const [step, setStep] = useState(1);
 	const steps = [
 		{ id: 1, fields: ProfileFields },
@@ -22,16 +24,23 @@ function UserProfile() {
 	const addExperience = () => {
 		setElist([...elist, {}])
 	}
+	// currentIndex=elist.find(list=>list.id==)
 	const handleChange = (e) => {
 		setForm({
 			...form,
 			[e.target.name]: e.target.value
 		});
+		const updatedList = [...elist];
+		updatedList[currentIndex] = {
+			...updatedList[currentIndex],
+			[e.target.name]: e.target.value
+		};
+		setElist(updatedList);
 	};
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		const { error, valid } = ValidateUtil(form, ProfileFields)
+		const { error, valid } = ValidateUtil(form, currentFields)
 
 
 
@@ -56,7 +65,7 @@ function UserProfile() {
 
 
 			<ReusableForm
-				form={elist[curentIndex]}
+				form={elist[currentIndex]}
 				errors={errors}
 				onChange={handleChange}
 				onSubmit={handleSubmit}

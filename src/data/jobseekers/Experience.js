@@ -1,4 +1,4 @@
-export default Experience = [
+export const Experience = [
 	{
 		name: "postion", label: "Postin", type: "text", required: true
 	},

@@ -10,17 +10,17 @@ function UserProfile() {
 
 	const [form, setForm] = useState({});
 	const [errors, setErrors] = useState({});
-	const[elist,setElist]=useState({});
-	const [step,setStep]=useState(1);
-   const steps=[
-	{id:1,fields:ProfileFields},
-	{id:2,fields:Experience},
-	{id:3,fields:Education},
-	{id:4,fields:JAddDetails}
-   ];
-   const currentFields=steps.find(s=>s.id===step)?.fields;
-	const addExperience=()=>{
-		setElist([...elist,{}])
+	const [elist, setElist] = useState({});
+	const [step, setStep] = useState(1);
+	const steps = [
+		{ id: 1, fields: ProfileFields },
+		{ id: 2, fields: Experience },
+		{ id: 3, fields: Education },
+		{ id: 4, fields: JAddDetails }
+	];
+	const currentFields = steps.find(s => s.id === step)?.fields;
+	const addExperience = () => {
+		setElist([...elist, {}])
 	}
 	const handleChange = (e) => {
 		setForm({
@@ -38,14 +38,14 @@ function UserProfile() {
 		setErrors(
 			error
 		);
-		if(!valid) return;
-		if (step<steps.length) {
-		setStep(step+1);
+		if (!valid) return;
+		if (step < steps.length) {
+			setStep(step + 1);
 
 		}
-		else{
+		else {
 			console.log("Form submit");
-			
+
 		}
 
 	};
@@ -63,7 +63,7 @@ function UserProfile() {
 				fields={currentFields}
 				step={step}
 				setStep={setStep}
-				totalStep={step.length}
+				totalSteps={step.length}
 				addSection={addExperience}
 				mutipleEntries={true}
 

@@ -23,7 +23,7 @@ export default Experience = [
 		name: "sdate", label: "Start Date", type: "date", required: true
 	},
 	{
-		name: "edate", label: "End Date", type: "date", required: true
+		name: "edate", label: "End Date", type: "date", required: true, disableIf: "cworking"
 	},
 	{
 		name: "cworking", type: "checkbox", label: "I am currently working here"

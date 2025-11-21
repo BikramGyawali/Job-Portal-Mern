@@ -3,17 +3,22 @@ import ReusableForm from "../form/ReusableForm";
 import { ProfileFields } from "../../data/jobseekers/ProfileFields";
 import { ValidateUtil } from "../../utils/ValidationUtil";
 import Experience from "../../data/jobseekers/Experience";
+import Education from "../../data/jobseekers/Education";
+import JAddDetails from "../../data/jobseekers/JAddDetails";
 
 function UserProfile() {
 
 	const [form, setForm] = useState({});
 	const [errors, setErrors] = useState({});
 	const[elist,setElist]=useState({});
-   const step=[
+	const [step,setStep]=useState(1);
+   const steps=[
 	{id:1,fields:ProfileFields},
 	{id:2,fields:Experience},
-	{id:3,fields:}
-   ]
+	{id:3,fields:Education},
+	{id:4,fields:JAddDetails}
+   ];
+   const currentFields=steps.find(s=>s.id===step)?.fields;
 	const addExperience=()=>{
 		setElist([...elist,{}])
 	}
@@ -33,9 +38,14 @@ function UserProfile() {
 		setErrors(
 			error
 		);
-		if (valid) {
-			console.log(form);
+		if(!valid) return;
+		if (step<steps.length) {
+		setStep(step+1);
 
+		}
+		else{
+			console.log("Form submit");
+			
 		}
 
 	};
@@ -50,7 +60,7 @@ function UserProfile() {
 				errors={errors}
 				onChange={handleChange}
 				onSubmit={handleSubmit}
-				fields={ProfileFields}
+				fields={currentFields}
 				step={step}
 				setStep={setStep}
 				totalStep={step.length}

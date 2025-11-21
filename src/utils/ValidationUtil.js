@@ -137,11 +137,12 @@ export const ValidateUtil = (form, fields = []) => {
 		}
 		if (f.type === "date" && form[f.name]) {
 			const today = new Date().toISOString().split("T")[0];
-			if (f.preventFuture && form[f.name] > today) {
+			if ((f.name === "dob" || f.name === "sdate") && form[f.name] > today) {
 				error[f.name] = `${f.label} cannot be in the future`;
 				valid = false;
 			}
 		}
+
 	});
 	return { valid, error };
 };

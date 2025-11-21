@@ -2,7 +2,13 @@ import React from "react";
 import ButtonComp from "../ButtonComp";
 
 function ReusableForm({ form, errors, onChange, onSubmit, fields }) {
-	const handlePrevious = () => { }
+	const handlePrevious = () => {
+		
+
+	}
+	const handleNext = () => {
+		alert("hehe")
+	}
 	return (
 		<form onSubmit={onSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4 backdrop-blur-lg bg-white/10 shadow-lg shadow-gray-700 rounded-2xl p-8 w-full border border-white/10 duration-500 
 					">
@@ -62,20 +68,23 @@ function ReusableForm({ form, errors, onChange, onSubmit, fields }) {
 			))}
 			<div className="flex justify-between gap-5">
 
-				{/* <button
+				<button
 					type="submit"
-					className="bg-blue-600 text-white p-2 rounded-xl col-span-2"
+					className="bg-blue-600 text-white py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition w-full"
+					onClick={handlePrevious}
 				>
 					Previous
 				</button>
 
 				<button type="submit"
-					className="bg-blue-600 text-white p-2 rounded-xl col-span-2">
+					className="bg-blue-600 text-white py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition w-full"
+					onClick={handleNext}
+				>
 					Next
-				</button> */}
+				</button>
 
-				<ButtonComp name="Previous" />
-				<ButtonComp name="Next" />
+				{/* <ButtonComp name="Previous" onClick={handlePrevious} /> */}
+				{/* <ButtonComp name="Next"  onClick={handleNext}/> */}
 
 
 			</div>

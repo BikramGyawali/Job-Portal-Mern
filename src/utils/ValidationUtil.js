@@ -26,6 +26,10 @@ export const ValidateUtil = (form, fields = []) => {
 		error.sname = "Second name must be text";
 		valid = false;
 	}
+	if ('mname' in form && form.mname?.trim() && !stringCheck.test(form.mname)) {
+		error.mname = "Middle name must be text";
+		valid = false;
+	}
 
 	// Email
 	// if ('email' in form && form.email?.trim() && !emailRegex.test(form.email)) {

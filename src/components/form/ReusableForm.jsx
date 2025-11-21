@@ -1,120 +1,69 @@
 import React from "react";
 import ButtonComp from "../ButtonComp";
 
-function ReusableForm({ form, errors, onChange, onSubmit, fields, step, setStep, totalSteps, addSection, multipleEntries = false }) {
-	const handlePrevious = () => {
-		if (step > 1)
-			setStep(step - 1)
+function ReusableForm({ form, errors, onChange, onSubmit, fields, step, setStep, totalSteps, addSection, entriesCount, setCurrentEntryIndex, currentEntryIndex }) {
+	const maxDate = new Date().toISOString().split("T")[0];
 
+	const handlePrev = (e) => {
+		e.preventDefault();
+		if (step > 1) setStep(step - 1);
 	};
-	// const handleNext = () => {
-	// 	alert("hehe")
-	// }
+
+	const handleNextOrSubmit = (e) => {
+		e.preventDefault();
+		onSubmit(e);
+	};
+
 	return (
-		<form onSubmit={onSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4 backdrop-blur-lg bg-white/10 shadow-lg shadow-gray-700 rounded-2xl p-8 w-full border border-white/10 duration-500 
-					">
+		<form onSubmit={handleNextOrSubmit} className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-6 bg-white/10 rounded-2xl">
+			{entriesCount > 1 && (
+				<div className="col-span-2 flex gap-2">
+					{Array.from({ length: entriesCount }).map((_, idx) => (
+						<button key={idx} type="button" onClick={() => setCurrentEntryIndex(idx)} className={`px-3 py-1 rounded ${idx === currentEntryIndex ? "bg-blue-600 text-white" : "bg-gray-200"}`}>
+							{idx + 1}
+						</button>
+					))}
+				</div>
+			)}
 
-			{fields.map((field, i) => {
-				const isDisable = field.disableIf && form[field.disableIf] === true;
-				return (
-					<div
-						key={i}
-						className={`flex flex-col gap-1  ${field.type === "textarea" || field.type === "file" ? "col-span-2" : "col-span-1"} 				`}
-					>
-						<label className="text-[16px] font-medium">
-							{field.label} {field.required && "*"}
-						</label>
+			{fields.map((field, i) => (
+				<div key={i} className={`${field.type === "textarea" || field.type === "file" ? "col-span-2" : "col-span-1"} flex flex-col gap-1`}>
+					<label className="text-sm font-medium">{field.label}{field.required && " *"}</label>
 
-						{
-							field.type === "file" ? (
-								<input type={field.type}
-									name={field.name}
-									value={form[field.name]}
-									onChange={onChange}
-									className=" backdrop-blur-lg bg-white/10 shadow-lg shadow-white/10 rounded-3xl p-8 w-full border  duration-500" />
-							) : field.type === "select" ? (
-								<select
-									name={field.name}
-									value={form[field.name]}
-									onChange={onChange}
-									className="p-2 border rounded-xl"
-								>
-									<option value="">-- select --</option>
-									{field.options?.map((opt, idx) => (
-										<option key={idx} value={opt}>{opt}</option>
-									))}
-								</select>
-							)
-								: field.type === "textarea" ? (
-									<textarea
-										name={field.name}
-										value={form[field.name]}
-										onChange={onChange}
-										className="p-2 border rounded-xl resize-none"
-										rows="4"
-									></textarea>
-								) : field.type === "checkbox" ? (
-									<input
-										name={field.name}
-										value={form[field.name]}
-										checked={form[field.name] || false}
-										onChange={{
-											traget: {
-												name: field.name,
-												value: e.target.checked
-											}
-										}}
-										className="w-5 h-5"
-									/>
-								)
+					{field.type === "file" ? (
+						<input name={field.name} type="file" onChange={onChange} className="p-2 border rounded" />
+					) : field.type === "select" ? (
+						<select name={field.name} value={form[field.name] || ""} onChange={onChange} className="p-2 border rounded">
+							<option value="">-- select --</option>
+							{field.options?.map((opt, idx) => <option key={idx} value={opt}>{opt}</option>)}
+						</select>
+					) : field.type === "textarea" ? (
+						<textarea name={field.name} value={form[field.name] || ""} onChange={onChange} rows="4" className="p-2 border rounded resize-none" />
+					) : field.type === "checkbox" ? (
+						<input type="checkbox" name={field.name} checked={!!form[field.name]} onChange={(e) => onChange({ target: { name: field.name, value: e.target.checked } })} />
+					) : (
+						<input
+							type={field.type}
+							name={field.name}
+							value={form[field.name] || ""}
+							onChange={onChange}
+							max={field.type === "date" ? maxDate : undefined}
+							className="p-2 border rounded"
+						/>
+					)}
 
-									: (
-										<input
-											type={field.type}
-											name={field.name}
-											value={form[field.name] || ""}
-											onChange={onChange}
-											disabled={isDisable}
-											// max={new Date().toISOString().split("T")[0]}
-											className={`p-2 border rounded-xl ${isDisable ? "bg-gray-200" : ""}`}
+					{errors && errors[field.name] && <p className="text-red-600 text-sm">{errors[field.name]}</p>}
+				</div>
+			))}
 
-										/>
-									)}
-
-						{errors[field.name] && (
-							<p className="text-red-600 text-sm">{errors[field.name]}</p>
-						)}
-					</div>
-				)
-			})}
-			<div className="flex justify-between gap-5">
-
-				{step > 1 && (<button
-					type="submit"
-					className="bg-blue-600 text-white py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition w-full"
-					onClick={handlePrevious}
-				>
-					Previous
-				</button>)}
-
-				<button type="submit"
-					className="bg-blue-600 text-white py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition w-full"
-
-				>
-					{step === totalSteps ? "Finish" : "Next"}
-				</button>
-
-
+			<div className="col-span-2 flex gap-4">
+				{step > 1 && <button onClick={handlePrev} className="bg-gray-600 text-white py-2 rounded w-full">Previous</button>}
+				<button type="submit" className="bg-blue-600 text-white py-2 rounded w-full">{step === totalSteps ? "Finish" : "Next"}</button>
 			</div>
-			{multipleEntries && (
-				<div>
-					<button type="button"
-						className="bg-blue-600 text-white py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition w-full"
-						onClick={addSection}
 
-					>
-						+ Add Another
-					</button>
+			{addSection && (
+				<div className="col-span-2">
+					<button type="button" onClick={addSection} className="bg-green-600 text-white py-2 rounded w-full">+ Add Another</button>
 				</div>
 			)}
 		</form>

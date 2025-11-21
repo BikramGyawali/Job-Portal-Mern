@@ -56,7 +56,7 @@ function UserProfile() {
 
 
 			<ReusableForm
-				form={form}
+				form={elist[curentIndex]}
 				errors={errors}
 				onChange={handleChange}
 				onSubmit={handleSubmit}

@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import ButtonComp from './ButtonComp';
-import { ValidateUtil } from '../utils/ValidationUtil';
+import { contactLoginValidate } from '../utils/contactLoginValidate';
+// import { ValidateUtil } from '../utils/ValidationUtil';
 
 function LoginComp({ LoginData }) {
 	const [showPassword, setShowPassword] = useState(false);
@@ -27,7 +28,7 @@ function LoginComp({ LoginData }) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		const { error, valid } = ValidateUtil(form);
+		const { error, valid } = contactLoginValidate(form);
 		console.log(error.email);
 
 		setError(error)

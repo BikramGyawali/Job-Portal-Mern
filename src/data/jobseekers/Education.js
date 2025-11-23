@@ -72,17 +72,18 @@ export const Education = [
 
 	{
 		label: "Joined Year",
-		name: "joinedYear",
+		name: "sdate",
 		type: "date",
 		required: true
 	},
 	{
 		label: "Passed Year",
-		name: "passedYear",
+		name: "edate",
 		type: "date",
-		required: true
+		required: false,
+		disableIf: "cStuding"
 	},
-	
+
 	{
 		label: "I am currently studying here",
 		name: "cStudying",

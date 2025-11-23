@@ -23,15 +23,24 @@ export const ValidateUtil = (form, fields = []) => {
 		}
 
 		// 2️⃣ Text only validation
-		if ((f.type === "text" || f.type === "textarea") && f.onlyLetters && value) {
-			if (!textOnly.test(value)) {
-				error[f.name] = `${f.label} must contain letters only`;
-				valid = false;
-			}
+		if ('fname' in form && form.fname?.trim() && !textOnly.test(form.fname)) {
+			error.fname = "First name must be text";
+			valid = false;
 		}
 
+		// Second Name
+		if ('sname' in form && form.sname?.trim() && !textOnly.test(form.sname)) {
+			error.sname = "Second name must be text";
+			valid = false;
+		}
+		if ('mname' in form && form.mname?.trim() && !textOnly.test(form.mname)) {
+			error.mname = "Middle name must be text";
+			valid = false;
+		}
+
+
 		// 3️⃣ Email validation
-		if (f.type === "email" && value && !emailRegex.test(value)) {
+		if (f.name === "email" && value && !emailRegex.test(value)) {
 			error[f.name] = "Invalid email format";
 			valid = false;
 		}
@@ -52,10 +61,7 @@ export const ValidateUtil = (form, fields = []) => {
 
 		// 6️⃣ Message field
 		if (f.name === "message") {
-			if (!value) {
-				error.message = "Message is required";
-				valid = false;
-			} else if (typeof form.message !== "string") {
+			if (typeof form.message !== "string") {
 				error.message = "Message must be text";
 				valid = false;
 			}
@@ -84,15 +90,7 @@ export const ValidateUtil = (form, fields = []) => {
 		}
 
 		// 9️⃣ Company Name validation
-		if (f.name === "company") {
-			if (!value) {
-				error.company = "Company name is required";
-				valid = false;
-			} else if (!companyCheck.test(value)) {
-				error.company = "Company name can contain letters, numbers, spaces, . & -";
-				valid = false;
-			}
-		}
+
 	});
 
 	return { valid, error };

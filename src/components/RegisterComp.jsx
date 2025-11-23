@@ -7,6 +7,7 @@ import ButtonComp from './ButtonComp';
 import NavbarComp from './NavbarComp';
 import { FooterComp } from './FooterComp';
 import { ValidateUtil } from '../utils/ValidationUtil';
+import { contactLoginValidate } from '../utils/contactLoginValidate';
 
 function RegisterComp() {
 	const { state } = useLocation();
@@ -41,7 +42,7 @@ function RegisterComp() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		const { error: validateError, valid } = ValidateUtil(form);
+		const { error: validateError, valid } = contactLoginValidate(form)
 		setError(validateError);
 
 		// Only navigate if valid

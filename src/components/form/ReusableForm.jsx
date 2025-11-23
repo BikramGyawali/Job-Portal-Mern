@@ -10,31 +10,38 @@ function ReusableForm({
 	setStep,
 	totalSteps,
 	addSection,
-	entriesCount = 1,
-	setCurrentEntryIndex = () => { },
-	currentEntryIndex = 0,
-	multipleEntries = false
+	entriesCount,
+	setCurrentEntryIndex,
+	currentEntryIndex,
 }) {
-	const today = new Date().toISOString().split("T")[0];
+	const maxDate = new Date().toISOString().split("T")[0];
 
-	const handlePrevious = (e) => {
+	const handlePrev = (e) => {
 		e.preventDefault();
 		if (step > 1) setStep(step - 1);
 	};
 
+	const handleNextOrSubmit = (e) => {
+		e.preventDefault();
+		onSubmit(e);
+	};
+
 	return (
 		<form
-			onSubmit={onSubmit}
+			onSubmit={handleNextOrSubmit}
 			className="grid grid-cols-1 sm:grid-cols-2 gap-4 backdrop-blur-lg bg-white/10 shadow-lg shadow-gray-700 rounded-2xl p-8 w-full border border-white/10 duration-500"
 		>
+			{/* MULTIPLE ENTRY INDEX BUTTONS */}
 			{entriesCount > 1 && (
-				<div className="col-span-2 flex gap-2 mb-2">
+				<div className="col-span-2 flex gap-2">
 					{Array.from({ length: entriesCount }).map((_, idx) => (
 						<button
 							key={idx}
 							type="button"
 							onClick={() => setCurrentEntryIndex(idx)}
-							className={`px-3 py-1 rounded ${idx === currentEntryIndex ? "bg-blue-600 text-white" : "bg-gray-200"
+							className={`px-3 py-1 rounded-xl ${idx === currentEntryIndex
+									? "bg-blue-600 text-white"
+									: "bg-gray-200 text-gray-700"
 								}`}
 						>
 							{idx + 1}
@@ -43,24 +50,28 @@ function ReusableForm({
 				</div>
 			)}
 
+			{/* FIELDS */}
 			{fields.map((field, i) => (
 				<div
 					key={i}
-					className={`flex flex-col gap-1 ${field.type === "textarea" || field.type === "file" ? "col-span-2" : "col-span-1"
+					className={`flex flex-col gap-1 ${field.type === "textarea" || field.type === "file"
+							? "col-span-2"
+							: "col-span-1"
 						}`}
 				>
 					<label className="text-[16px] font-medium">
 						{field.label} {field.required && "*"}
 					</label>
 
-					{/* FILE: do NOT bind value to file inputs (causes the "filename" error) */}
+					{/* FILE INPUT */}
 					{field.type === "file" ? (
 						<input
 							type="file"
 							name={field.name}
 							onChange={onChange}
-							className="backdrop-blur-lg bg-white/10 shadow-lg shadow-white/10 rounded-3xl p-5 w-full border duration-500"
+							className="p-2 border rounded-xl"
 						/>
+
 					) : field.type === "select" ? (
 						<select
 							name={field.name}
@@ -75,6 +86,7 @@ function ReusableForm({
 								</option>
 							))}
 						</select>
+
 					) : field.type === "textarea" ? (
 						<textarea
 							name={field.name}
@@ -82,24 +94,31 @@ function ReusableForm({
 							onChange={onChange}
 							rows="4"
 							className="p-2 border rounded-xl resize-none"
-						/>
+						></textarea>
+
 					) : field.type === "checkbox" ? (
 						<input
 							type="checkbox"
 							name={field.name}
 							checked={!!form[field.name]}
-							onChange={(e) => onChange({ target: { name: field.name, value: e.target.checked } })}
-							className="w-5 h-5"
+							onChange={(e) =>
+								onChange({
+									target: { name: field.name, value: e.target.checked },
+								})
+							}
+							className="h-5 w-5"
 						/>
+
 					) : field.type === "date" ? (
 						<input
 							type="date"
 							name={field.name}
 							value={form[field.name] ?? ""}
 							onChange={onChange}
-							max={field.name === "dob" || field.name === "sdate" ? today : undefined} // restrict future for dob/sdate
+							max={maxDate}
 							className="p-2 border rounded-xl"
 						/>
+
 					) : (
 						<input
 							type={field.type}
@@ -110,18 +129,19 @@ function ReusableForm({
 						/>
 					)}
 
+					{/* ERRORS */}
 					{errors && errors[field.name] && (
 						<p className="text-red-600 text-sm">{errors[field.name]}</p>
 					)}
 				</div>
 			))}
 
-			<div className="flex justify-between gap-5 col-span-2">
+			{/* BUTTONS */}
+			<div className="col-span-2 flex gap-5">
 				{step > 1 && (
 					<button
-						type="button"
-						onClick={handlePrevious}
-						className="bg-blue-600 text-white py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition w-full"
+						className="bg-blue-600 text-white py-2 rounded-xl w-full hover:bg-blue-700"
+						onClick={handlePrev}
 					>
 						Previous
 					</button>
@@ -129,18 +149,19 @@ function ReusableForm({
 
 				<button
 					type="submit"
-					className="bg-blue-600 text-white py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition w-full"
+					className="bg-blue-600 text-white py-2 rounded-xl w-full hover:bg-blue-700"
 				>
 					{step === totalSteps ? "Finish" : "Next"}
 				</button>
 			</div>
 
-			{multipleEntries && addSection && (
-				<div className="col-span-2 mt-2">
+			{/* ADD SECTION */}
+			{addSection && (
+				<div className="col-span-2">
 					<button
 						type="button"
 						onClick={addSection}
-						className="bg-blue-600 text-white py-2 rounded-xl cursor-pointer hover:bg-blue-700 transition w-full"
+						className="bg-green-600 text-white py-2 rounded-xl w-full hover:bg-green-700"
 					>
 						+ Add Another
 					</button>

@@ -145,7 +145,7 @@ function UserProfile() {
 			return;
 		}
 
-		// go to next or finalize
+		//increase the step 
 		if (step < totalSteps) {
 			setStep((s) => s + 1);
 		} else {
@@ -161,7 +161,7 @@ function UserProfile() {
 		}
 	};
 
-	// current form data and handlers for the active step
+	// current form according to the steps
 	const currentForm =
 		step === 1
 			? profile
@@ -171,7 +171,14 @@ function UserProfile() {
 					? educationList[eduIndex] || createEmptyEntry(Education)
 					: addDetailsList[addIndex] || createEmptyEntry(JAddDetails);
 
-	const changeHandler = step === 1 ? handleProfileChange : step === 2 ? handleExperienceChange : step === 3 ? handleEducationChange : handleAddDetailsChange;
+	const changeHandler =
+		step === 1
+			? handleProfileChange
+			: step === 2
+				? handleExperienceChange
+				: step === 3
+					? handleEducationChange
+					: handleAddDetailsChange;
 
 	return (
 		<div className="p-6 bg-white rounded-xl shadow">
@@ -188,8 +195,8 @@ function UserProfile() {
 				totalSteps={totalSteps}
 				addSection={step === 2 ? addExperience : step === 3 ? addEducation : step === 4 ? addDetailSection : undefined}
 				entriesCount={step === 2 ? experiences.length : step === 3 ? educationList.length : step === 4 ? addDetailsList.length : 1}
-				setCurrentEntryIndex={step === 2 ? setExpIndex : step === 3 ? setEduIndex : step === 4 ? setAddIndex : () => { }}
-				currentEntryIndex={step === 2 ? expIndex : step === 3 ? eduIndex : step === 4 ? addIndex : 0}
+				setCurrentEntryIndex={step === 2 ? setExpIndex : step === 3 ? setEduIndex : step === 4 ? setAddIndex : () => { }}  // the callback function is just for profile because it doesnt have multiple entries 
+				currentEntryIndex={step === 2 ? expIndex : step === 3 ? eduIndex : step === 4 ? addIndex : 0}  //for profile there is 0
 				multipleEntries={true}
 			/>
 		</div>

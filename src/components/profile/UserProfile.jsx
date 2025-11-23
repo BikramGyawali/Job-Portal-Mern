@@ -91,11 +91,11 @@ function UserProfile() {
 		});
 	};
 
-	// --- add another entry functions ---
+	// add another entry functions 
 	const addExperience = () => {
 		setExperiences((prev) => {
 			const next = [...prev, createEmptyEntry(Experience)];
-			setExpIndex(next.length - 1);
+			setExpIndex(next.length - 1);  //this help to create a new entry
 			return next;
 		});
 	};
@@ -116,7 +116,7 @@ function UserProfile() {
 		});
 	};
 
-	// --- submit / next logic ---
+	//  submit  logic
 	const handleSubmit = (e) => {
 		e.preventDefault();
 

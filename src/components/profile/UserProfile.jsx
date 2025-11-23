@@ -22,7 +22,7 @@ const createEmptyEntry = (fields) =>
 
 function UserProfile() {
 	// initialize each form piece with an object that has all fields (prevents controlled <-> uncontrolled)
-	const [profile, setProfile] = useState(createEmptyEntry(ProfileFields));
+	const [profile, setProfile] = useState(createEmptyEntry(ProfileFields));  // help to make intially empty object of data 
 	const [experiences, setExperiences] = useState([createEmptyEntry(Experience)]);
 	const [educationList, setEducationList] = useState([createEmptyEntry(Education)]);
 	const [addDetailsList, setAddDetailsList] = useState([createEmptyEntry(JAddDetails)]);
@@ -47,23 +47,37 @@ function UserProfile() {
 	// --- change handlers ---
 	const handleProfileChange = (e) => {
 		const { name, value, files, type, checked } = e.target;
-		setProfile((prev) => ({ ...prev, [name]: type === "file" ? files?.[0] ?? null : type === "checkbox" ? checked : value }));
+
+		setProfile((prev) => ({
+			...prev,
+			[name]:
+				type === "file"
+					? files?.[0] ?? null
+					: type === "checkbox"
+						? checked
+						: value   // if it is not file nor checkbox then we are sending the value for other such as name phone etc 
+		}));
 	};
+
 
 	const handleExperienceChange = (e) => {
 		const { name, value, type, checked } = e.target;
 		setExperiences((prev) => {
 			const copy = [...prev];
-			copy[expIndex] = { ...copy[expIndex], [name]: type === "checkbox" ? checked : value };
+			copy[expIndex] = {
+				...copy[expIndex],
+				[name]: type === "checkbox" ? checked
+					: value
+			};
 			return copy;
 		});
 	};
 
 	const handleEducationChange = (e) => {
-		const { name, value } = e.target;
+		const { name, value, type, checked } = e.target;
 		setEducationList((prev) => {
 			const copy = [...prev];
-			copy[eduIndex] = { ...copy[eduIndex], [name]: value };
+			copy[eduIndex] = { ...copy[eduIndex], [name]: type === "checkbox" ? checked : value };
 			return copy;
 		});
 	};

@@ -100,7 +100,7 @@ function ReusableForm({
 						<input
 							type="checkbox"
 							name={field.name}
-							checked={form[field.name]}
+							checked={!!form[field.name]}
 							onChange={(e) =>
 								onChange({
 									target: { name: field.name, value: e.target.checked },

@@ -49,7 +49,7 @@ function RegisterComp() {
 		if (!valid) return;
 
 		// Log role for debugging
-		console.log("Navigating as role:", role);
+		// console.log("Navigating as role:", role);
 
 		// Reset form
 		setForm({
@@ -60,11 +60,12 @@ function RegisterComp() {
 		});
 
 		// Navigate after state updates
-		if (role === "jobseeker") {
+		if (role === "employers") {
 			// go to jobseeker-specific profile route
 			navigate("/profile");
-		} else if (role === "employers") {
+		} else if (role === "jobseeker") {
 			navigate("/profile");
+			
 		}
 	};
 

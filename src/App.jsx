@@ -10,8 +10,10 @@ import Contact from "./pages/Contact";
 import Jobseekers from "./pages/Jobseekers";
 import Employers from "./pages/Employers";
 import RegisterComp from "./components/RegisterComp";
-import UserProfile from "./components/profile/UserProfile";
+// import UserProfile from "./components/profile/UserProfile";
 import JobseekersProfile from "./components/profile/JobseekersProfile";
+import EmployersProfile from "./components/profile/EmployersProfile";
+// import employerProfile from "./components/profile/";
 
 export default function App() {
 	return (
@@ -27,8 +29,9 @@ export default function App() {
 					<Route path="/jobseeker" element={<Jobseekers />} />
 					<Route path="/employers" element={<Employers />} />
 					<Route path="/register" element={<RegisterComp />} />
-					<Route path="/profile" element={<UserProfile />} />
+					{/* <Route path="/profile" element={<UserProfile />} /> */}
 					<Route path="/jobseeker-profile" element={<JobseekersProfile />} />
+					<Route path="employer-profile" element={<EmployersProfile />} />
 				</Routes>
 			</BrowserRouter>
 		</div>

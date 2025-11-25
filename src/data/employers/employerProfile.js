@@ -26,7 +26,7 @@ export const employerProfile = [
 		name: "panCard",
 		type: "text",
 		required: true,
-		placeholder: "1-1-21-31"
+		placeholder: "615801553"
 	},
 
 	{

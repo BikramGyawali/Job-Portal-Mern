@@ -40,8 +40,8 @@ function ReusableForm({
 							type="button"
 							onClick={() => setCurrentEntryIndex(idx)}
 							className={`px-3 py-1 rounded-xl ${idx === currentEntryIndex
-									? "bg-blue-600 text-white"
-									: "bg-gray-200 text-gray-700"
+								? "bg-blue-600 text-white"
+								: "bg-gray-200 text-gray-700"
 								}`}
 						>
 							{idx + 1}
@@ -55,8 +55,8 @@ function ReusableForm({
 				<div
 					key={i}
 					className={`flex flex-col gap-1 ${field.type === "textarea" || field.type === "file"
-							? "col-span-2"
-							: "col-span-1"
+						? "col-span-2"
+						: "col-span-1"
 						}`}
 				>
 					<label className="text-[16px] font-medium">
@@ -69,7 +69,7 @@ function ReusableForm({
 							type="file"
 							name={field.name}
 							onChange={onChange}
-							className="p-2 border rounded-xl"
+							className="p-5 border rounded-xl"
 						/>
 
 					) : field.type === "select" ? (
@@ -81,7 +81,7 @@ function ReusableForm({
 						>
 							<option value="">-- select --</option>
 							{field.options?.map((opt, idx) => (
-								<option key={idx} value={opt}>
+								<option key={idx} value={opt} className="  bg-white !hover:bg-red-800">
 									{opt}
 								</option>
 							))}
@@ -129,7 +129,7 @@ function ReusableForm({
 						/>
 					)}
 
-					{/* ERRORS */}
+					
 					{errors && errors[field.name] && (
 						<p className="text-red-600 text-sm">{errors[field.name]}</p>
 					)}

@@ -1,6 +1,6 @@
 import React from 'react'
 import LoginComp from './auth/LoginComp'
-import NavbarComp from '../components/NavbarComp'
+import NavbarComp from '../layout/NavbarComp'
 import { FooterComp } from '../layout/FooterComp'
 import login from "../assets/image/login.png";
 function Jobseekers() {

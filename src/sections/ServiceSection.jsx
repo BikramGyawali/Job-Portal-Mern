@@ -2,8 +2,8 @@ import React from 'react'
 import jobPost from "../assets/image/jobs.jpeg";
 import resume from "../assets/image/resume.webp";
 import jobAlert from "../assets/image/jobsAlert.jpg";
-import InfoSection from '../components/InfoSection';
-import BackgroundSection from '../components/BackgroundSection';
+import InfoSection from '../components/common/InfoSection';
+import BackgroundSection from '../components/common/BackgroundSection';
 function ServiceSection() {
 	const section = [
 		{

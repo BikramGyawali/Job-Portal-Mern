@@ -1,5 +1,5 @@
 import React from 'react'
-import InfoSection from '../components/InfoSection'
+import InfoSection from '../components/common/InfoSection'
 
 
 function HomeSection() {
@@ -19,7 +19,7 @@ function HomeSection() {
 
 	return (
 		<>
-		<InfoSection section={section} />
+			<InfoSection section={section} />
 		</>
 	)
 }

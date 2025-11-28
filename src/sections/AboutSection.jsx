@@ -1,7 +1,7 @@
 import React from 'react'
 import logo from "../assets/image/logo.png";
-import InfoSection from '../components/InfoSection'
-import BackgroundSection from '../components/BackgroundSection';
+import InfoSection from '../components/common/InfoSection'
+import BackgroundSection from '../components/common/BackgroundSection';
 
 function AboutSection() {
 	const section = [

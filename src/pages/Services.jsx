@@ -1,5 +1,5 @@
 import React from 'react'
-import NavbarComp from '../components/NavbarComp'
+import NavbarComp from '../layout/NavbarComp'
 import ServiceSection from '../sections/ServiceSection'
 import { FooterComp } from '../layout/FooterComp'
 

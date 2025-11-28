@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import register from "../assets/image/EResgister.png";
+import register from "../../assets/image/EResgister.png";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import ButtonComp from '../../components/ButtonComp';
-import NavbarComp from '../../components/NavbarComp';
+import ButtonComp from '../../components/common/ButtonComp';
+import NavbarComp from '../../layout/NavbarComp';
 import { FooterComp } from '../../layout/FooterComp';
 import { ValidateUtil } from '../../utils/ValidationUtil';
 import { contactLoginValidate } from '../../utils/contactLoginValidate';

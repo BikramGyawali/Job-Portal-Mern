@@ -2,7 +2,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
-import ButtonComp from '../../components/ButtonComp';
+import ButtonComp from '../../components/common/ButtonComp';
 import { contactLoginValidate } from '../../utils/contactLoginValidate';
 // import { ValidateUtil } from '../utils/ValidationUtil';
 

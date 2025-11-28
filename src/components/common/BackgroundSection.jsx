@@ -1,6 +1,6 @@
 import React from 'react'
-import NavbarComp from '../components/NavbarComp';
-import bgImg from '../assets/image/home3.png';
+import NavbarComp from '../../layout/NavbarComp';
+import bgImg from '../../assets/image/home3.png';
 function BackgroundSection({ title, explain }) {
 	return (
 		<>

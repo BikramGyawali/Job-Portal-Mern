@@ -68,6 +68,7 @@ function ReusableForm({
 						<input
 							type="file"
 							name={field.name}
+							placeholder={field.placeholder}
 							onChange={onChange}
 							className="p-5 border rounded-xl"
 						/>
@@ -92,6 +93,7 @@ function ReusableForm({
 							name={field.name}
 							value={form[field.name] ?? ""}
 							onChange={onChange}
+							placeholder={field.placeholder}
 							rows="4"
 							className="p-2 border rounded-xl resize-none"
 						></textarea>
@@ -107,6 +109,7 @@ function ReusableForm({
 								})
 							}
 							className="h-5 w-5"
+							placeholder={field.placeholder}
 						/>
 
 					) : field.type === "date" ? (
@@ -116,6 +119,7 @@ function ReusableForm({
 							value={form[field.name] ?? ""}
 							onChange={onChange}
 							max={maxDate}
+							placeholder={field.placeholder}
 							className="p-2 border rounded-xl"
 						/>
 
@@ -125,11 +129,12 @@ function ReusableForm({
 							name={field.name}
 							value={form[field.name] ?? ""}
 							onChange={onChange}
+							placeholder={field.placeholder}
 							className="p-2 border rounded-xl"
 						/>
 					)}
 
-					
+
 					{errors && errors[field.name] && (
 						<p className="text-red-600 text-sm">{errors[field.name]}</p>
 					)}

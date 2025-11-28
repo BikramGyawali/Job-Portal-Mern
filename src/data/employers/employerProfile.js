@@ -19,7 +19,7 @@ export const employerProfile = [
 		name: "sname",
 		type: "text",
 		required: true,
-		placeholder: "enter your company address"
+		placeholder: "Enter your company address"
 	},
 	{
 		label: "PAN card ",

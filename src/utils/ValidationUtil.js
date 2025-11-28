@@ -6,7 +6,9 @@ export const ValidateUtil = (form, fields = []) => {
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	const phoneRegex = /^[0-9]{10}$/; // adjust length if needed
 	const textOnly = /^[A-Za-z\s]+$/; // allow letters and spaces
-	const companyCheck = /^[A-Za-z0-9 .&-]+$/;
+	const panCardCheck = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
+	const officePhoneCheck = "^\d{2}-\d{7}$";
+	const websiteCheck = "^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/.*)?$";
 
 	// Get today's date for date validation
 	const today = new Date().toISOString().split("T")[0];
@@ -89,7 +91,24 @@ export const ValidateUtil = (form, fields = []) => {
 			}
 		}
 
-		// 9️⃣ Company Name validation
+		//for empolyers
+
+		if (f.name === 'panCard' && value && !panCardCheck.test(value)) {
+			error[f.name] = "Invalid Pan card format";
+			valid = false;
+		}
+
+		//office Phone
+
+		if (f.name === 'officePhone' && value && !officePhoneCheck.test(value)) {
+			error[f.name] = "Invalid format";
+			valid = false;
+		}
+
+  if(f.name==='companyWebsite' && value && !websiteCheck.test(value)){
+	error[f.name]="Invalid webiste format";
+	valid=false;
+  }
 
 	});
 

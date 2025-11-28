@@ -1,14 +1,14 @@
 export const employerProfile = [
 	{
 		label: "Company Logo",
-		name: "companyLogo",
+		name: "image",
 		type: "file",
 		required: false
 	},
 
 	{
 		label: "Company Name",
-		name: "companyName",
+		name: "fname",
 		type: "text",
 		required: true,
 		placeholder: "Enter your Company name"
@@ -16,7 +16,7 @@ export const employerProfile = [
 
 	{
 		label: "Company Address",
-		name: "companyAddress",
+		name: "sname",
 		type: "text",
 		required: true,
 		placeholder: "enter your company address"
@@ -82,7 +82,7 @@ export const employerProfile = [
 
 	{
 		label: "Contact Person Full Name",
-		name: "contactFullName",
+		name: "fname",
 		type: "text",
 		required: true,
 		placeholder: "Enter Contact Person full name"
@@ -90,7 +90,7 @@ export const employerProfile = [
 
 	{
 		label: "Mobile Number",
-		name: "contactMobile",
+		name: "phone",
 		type: "text",
 		required: true,
 		placeholder: "9745989898"

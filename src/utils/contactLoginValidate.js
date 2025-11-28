@@ -8,6 +8,7 @@ export const contactLoginValidate = (form) => {
 	const phoneRegex = /^[0-9]{10}$/;
 	const stringCheck = /^[A-Za-z]+$/;
 	const companyCheck = /^[A-Za-z0-9 .&-]+$/;
+	
 
 
 
@@ -91,7 +92,7 @@ export const contactLoginValidate = (form) => {
 	}
 
 
-
+	
 	return { valid, error };
 };
 

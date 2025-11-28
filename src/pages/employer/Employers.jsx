@@ -1,9 +1,9 @@
 import React from 'react'
-import LoginComp from './auth/LoginComp'
-import login from "../assets/image/EmployeLogin.png";
+import LoginComp from '../auth/LoginComp'
+import login from "../../assets/image/EmployeLogin.png";
 
-import NavbarComp from '../layout/NavbarComp';
-import { FooterComp } from '../layout/FooterComp';
+import NavbarComp from '../../layout/NavbarComp';
+import { FooterComp } from '../../layout/FooterComp';
 function Employers() {
 	const LoginData = {
 		title: "Welcome to Employer Dashboard",

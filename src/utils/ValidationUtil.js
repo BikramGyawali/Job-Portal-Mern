@@ -6,9 +6,10 @@ export const ValidateUtil = (form, fields = []) => {
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	const phoneRegex = /^[0-9]{10}$/; // adjust length if needed
 	const textOnly = /^[A-Za-z\s]+$/; // allow letters and spaces
-	const panCardCheck = "[A-Z]{5}[0-9]{4}[A-Z]{1}";
-	const officePhoneCheck = "^\d{2}-\d{7}$";
-	const websiteCheck = "^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/.*)?$";
+	const panCardCheck = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+const officePhoneCheck = /^\d{2}-\d{7}$/;
+const websiteCheck = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/.*)?$/;
+
 
 	// Get today's date for date validation
 	const today = new Date().toISOString().split("T")[0];
@@ -105,10 +106,10 @@ export const ValidateUtil = (form, fields = []) => {
 			valid = false;
 		}
 
-  if(f.name==='companyWebsite' && value && !websiteCheck.test(value)){
-	error[f.name]="Invalid webiste format";
-	valid=false;
-  }
+		if (f.name === 'companyWebsite' && value && !websiteCheck.test(value)) {
+			error[f.name] = "Invalid webiste format";
+			valid = false;
+		}
 
 	});
 

@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { employerProfile } from '../../data/employers/employerProfile';
 import ReusableForm from '../form/ReusableForm';
 import { ValidateUtil } from '../../utils/ValidationUtil';
-import { contactLoginValidate } from '../../utils/contactLoginValidate';
 
 function EmployersProfile() {
 	const createEmptyEntry = (fields) =>

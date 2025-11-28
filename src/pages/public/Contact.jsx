@@ -1,7 +1,7 @@
 import React from 'react'
-import BackgroundSection from '../components/common/BackgroundSection'
-import { FooterComp } from '../layout/FooterComp'
-import ContactSection from '../sections/ContactSection'
+import BackgroundSection from '../../components/common/BackgroundSection'
+import { FooterComp } from '../../layout/FooterComp'
+import ContactSection from '../../sections/ContactSection'
 
 function Contact() {
 	const title = "Get in Touch With"

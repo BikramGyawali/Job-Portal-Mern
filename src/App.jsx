@@ -3,10 +3,10 @@
 import React from "react";
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom";
 
-import Home from "./pages/Home";
-import AboutUS from "./pages/AboutUS";
-import Services from "./pages/Services";
-import Contact from "./pages/Contact";
+import Home from "./pages/public/Home";
+import AboutUS from "./pages/public/AboutUS";
+import Services from "./pages/public/Services";
+import Contact from "./pages/public/Contact";
 import Jobseekers from "./pages/Jobseekers";
 import Employers from "./pages/Employers";
 import RegisterComp from "./pages/auth/RegisterComp";

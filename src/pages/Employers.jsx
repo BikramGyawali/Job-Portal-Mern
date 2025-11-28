@@ -1,5 +1,5 @@
 import React from 'react'
-import LoginComp from '../components/LoginComp'
+import LoginComp from './auth/LoginComp'
 import login from "../assets/image/EmployeLogin.png";
 
 import NavbarComp from '../components/NavbarComp';

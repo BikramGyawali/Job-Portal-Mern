@@ -3,11 +3,11 @@ import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import register from "../assets/image/EResgister.png";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import ButtonComp from './ButtonComp';
-import NavbarComp from './NavbarComp';
-import { FooterComp } from '../layout/FooterComp';
-import { ValidateUtil } from '../utils/ValidationUtil';
-import { contactLoginValidate } from '../utils/contactLoginValidate';
+import ButtonComp from '../../components/ButtonComp';
+import NavbarComp from '../../components/NavbarComp';
+import { FooterComp } from '../../layout/FooterComp';
+import { ValidateUtil } from '../../utils/ValidationUtil';
+import { contactLoginValidate } from '../../utils/contactLoginValidate';
 
 function RegisterComp() {
 	const { state } = useLocation();

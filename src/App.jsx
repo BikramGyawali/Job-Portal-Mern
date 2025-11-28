@@ -9,7 +9,7 @@ import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import Jobseekers from "./pages/Jobseekers";
 import Employers from "./pages/Employers";
-import RegisterComp from "./components/RegisterComp";
+import RegisterComp from "./pages/auth/RegisterComp";
 // import UserProfile from "./components/profile/UserProfile";
 import JobseekersProfile from "./components/profile/JobseekersProfile";
 import EmployersProfile from "./components/profile/EmployersProfile";

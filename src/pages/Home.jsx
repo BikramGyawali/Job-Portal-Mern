@@ -3,7 +3,7 @@ import BackgroundSection from '../components/BackgroundSection';
 import { CardComp } from '../components/CardComp';
 
 import HomeSection from '../sections/HomeSection';
-import { FooterComp } from '../components/FooterComp';
+import { FooterComp } from '../layout/FooterComp';
 
 
 function Home() {

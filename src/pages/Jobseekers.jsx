@@ -1,7 +1,7 @@
 import React from 'react'
 import LoginComp from '../components/LoginComp'
 import NavbarComp from '../components/NavbarComp'
-import { FooterComp } from '../components/FooterComp'
+import { FooterComp } from '../layout/FooterComp'
 import login from "../assets/image/login.png";
 function Jobseekers() {
 	const LoginData = {

@@ -3,7 +3,7 @@ import LoginComp from '../components/LoginComp'
 import login from "../assets/image/EmployeLogin.png";
 
 import NavbarComp from '../components/NavbarComp';
-import { FooterComp } from '../components/FooterComp';
+import { FooterComp } from '../layout/FooterComp';
 function Employers() {
 	const LoginData = {
 		title: "Welcome to Employer Dashboard",

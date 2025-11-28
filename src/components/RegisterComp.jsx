@@ -5,7 +5,7 @@ import register from "../assets/image/EResgister.png";
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ButtonComp from './ButtonComp';
 import NavbarComp from './NavbarComp';
-import { FooterComp } from './FooterComp';
+import { FooterComp } from '../layout/FooterComp';
 import { ValidateUtil } from '../utils/ValidationUtil';
 import { contactLoginValidate } from '../utils/contactLoginValidate';
 
@@ -65,7 +65,7 @@ function RegisterComp() {
 			navigate("/profile");
 		} else if (role === "jobseeker") {
 			navigate("/profile");
-			
+
 		}
 	};
 

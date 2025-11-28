@@ -1,12 +1,12 @@
 import React from 'react'
 import NavbarComp from '../components/NavbarComp'
 import ServiceSection from '../sections/ServiceSection'
-import { FooterComp } from '../components/FooterComp'
+import { FooterComp } from '../layout/FooterComp'
 
 function Services() {
 	return (
 		<div>
-		
+
 			<ServiceSection />
 			<FooterComp />
 		</div>

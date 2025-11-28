@@ -1,6 +1,6 @@
 import React from 'react'
 import BackgroundSection from '../components/BackgroundSection'
-import { FooterComp } from '../components/FooterComp'
+import { FooterComp } from '../layout/FooterComp'
 import ContactSection from '../sections/ContactSection'
 
 function Contact() {

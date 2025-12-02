@@ -29,7 +29,7 @@ function LoginComp({ LoginData }) {
 		e.preventDefault();
 
 		const { error, valid } = contactLoginValidate(form);
-		// console.log(error.email);
+		console.log(error.email);
 
 		setError(error)
 		if (valid) {

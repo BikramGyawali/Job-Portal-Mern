@@ -6,6 +6,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import ButtonComp from '../../components/common/ButtonComp';
 import NavbarComp from '../../layout/NavbarComp';
 import { FooterComp } from '../../layout/FooterComp';
+import { ValidateUtil } from '../../utils/ValidationUtil';
 import { contactLoginValidate } from '../../utils/contactLoginValidate';
 
 function RegisterComp() {
@@ -60,18 +61,12 @@ function RegisterComp() {
 
 		// Navigate after state updates
 		if (role === "employers") {
+			// go to jobseeker-specific profile route
 			navigate("/employers-profile");
-		}
-		else if (role === "jobseeker") {
+		} else if (role === "jobseeker") {
 			navigate("/jobseekers-profile");
-		}
-		else if (role === "admin") {
-			navigate("/admin");
-		}
-		else {
-			navigate("/"); // fallback or error
-		}
 
+		}
 	};
 
 	const RegisterData = [

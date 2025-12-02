@@ -8,7 +8,7 @@ function Jobseekers() {
 		title: "Welcome to Jobseekers Dashboard",
 		explain: "Get started with latest job vacancies in Nepal for free.",
 		image: login,
-		role: "jobseeker"
+		role: "jobseekers"
 	}
 	return (
 		<div>

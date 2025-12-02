@@ -42,7 +42,7 @@ function RegisterComp() {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		const { error: validateError, valid } = contactLoginValidate(form)
+		const { error: validateError, valid } = contactLoginValidate(form, role)
 		setError(validateError);
 
 		// Only navigate if valid
@@ -61,11 +61,9 @@ function RegisterComp() {
 
 		// Navigate after state updates
 		if (role === "employers") {
-			// go to jobseeker-specific profile route
 			navigate("/employers-profile");
 		} else if (role === "jobseeker") {
 			navigate("/jobseekers-profile");
-
 		}
 	};
 

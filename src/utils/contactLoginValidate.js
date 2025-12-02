@@ -1,4 +1,4 @@
-export const contactLoginValidate = (form) => {
+export const contactLoginValidate = (form, role = null) => {
 
 
 	let valid = true;
@@ -8,7 +8,7 @@ export const contactLoginValidate = (form) => {
 	const phoneRegex = /^[0-9]{10}$/;
 	const stringCheck = /^[A-Za-z]+$/;
 	const companyCheck = /^[A-Za-z0-9 .&-]+$/;
-	
+
 
 
 
@@ -80,8 +80,8 @@ export const contactLoginValidate = (form) => {
 		}
 	}
 
-	// Company Name
-	if ('company' in form) {
+	// Company Name - only validate for employers
+	if (role === "employers" && 'company' in form) {
 		if (!form.company?.trim()) {
 			error.company = "Company name is required";
 			valid = false;
@@ -92,7 +92,7 @@ export const contactLoginValidate = (form) => {
 	}
 
 
-	
+
 	return { valid, error };
 };
 

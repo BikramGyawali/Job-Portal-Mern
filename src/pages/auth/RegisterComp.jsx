@@ -60,10 +60,10 @@ function RegisterComp() {
 
 		// Navigate after state updates
 		if (role === "employers") {
-			navigate("/employer-profile");
+			navigate("/employers-profile");
 		}
 		else if (role === "jobseeker") {
-			navigate("/jobseeker-profile");
+			navigate("/jobseekers-profile");
 		}
 		else if (role === "admin") {
 			navigate("/admin");

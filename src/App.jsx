@@ -31,7 +31,7 @@ export default function App() {
 					<Route path="/employers" element={<Employers />} />
 					<Route path="/register" element={<RegisterComp />} />
 					{/* <Route path="/profile" element={<UserProfile />} /> */}
-					<Route path="/jobseekers-profile" element={<JobseekerProfile />} />
+					<Route path="/jobseekers-profile" element={<JobseekersProfile />} />
 					<Route path="/employers-profile" element={<EmployersProfile />} />
 				</Routes>
 			</BrowserRouter>

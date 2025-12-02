@@ -6,12 +6,7 @@ import { Education } from "../../data/jobseekers/Education";
 import { JAddDetails } from "../../data/jobseekers/JAddDetails";
 import { ValidateUtil } from "../../utils/ValidationUtil";
 
-/**
- * Helper: create an empty entry object for given fields array.
- * - text/select/number/date => ""
- * - checkbox => false
- * - file => null
- */
+
 const createEmptyEntry = (fields) =>
 	fields.reduce((acc, f) => {
 		if (f.type === "checkbox") acc[f.name] = false;
@@ -21,7 +16,6 @@ const createEmptyEntry = (fields) =>
 	}, {});
 
 function JobseekersProfile() {
-	// initialize each form piece with an object that has all fields (prevents controlled <-> uncontrolled)
 	const [profile, setProfile] = useState(createEmptyEntry(ProfileFields));  // help to make intially empty object of data 
 	const [experiences, setExperiences] = useState([createEmptyEntry(Experience)]);
 	const [educationList, setEducationList] = useState([createEmptyEntry(Education)]);
@@ -145,23 +139,22 @@ function JobseekersProfile() {
 			return;
 		}
 
-		//increase the step 
 		if (step < totalSteps) {
 			setStep((s) => s + 1);
 		} else {
-			// final payload (send to API or console)
+			// final payload 
 			const payload = {
 				profile,
 				experiences,
 				educationList,
 				addDetailsList,
 			};
-			console.log("FINAL PAYLOAD", payload);
-			// TODO: send payload to backend
+			// console.log("FINAL PAYLOAD", payload);
+
 		}
 	};
 
-	// current form according to the steps
+
 	const currentForm =
 		step === 1
 			? profile

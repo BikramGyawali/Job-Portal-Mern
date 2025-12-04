@@ -9,7 +9,7 @@ export function SideDashboard() {
 	return (
 		<>
 			<DashboardNav />
-			<Sidebar aria-label="Sidebar with multi-level dropdown example">
+			<Sidebar aria-label="Sidebar with multi-level dropdown example" className="mt-3">
 				<SidebarItems>
 					<SidebarItemGroup>
 						<SidebarItem href="#" icon={HiChartPie}>

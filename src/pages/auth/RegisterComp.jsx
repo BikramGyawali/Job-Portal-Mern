@@ -26,11 +26,7 @@ function RegisterComp() {
 	// Determine role (fallback to jobseeker if missing)
 	const role = roleFromState || "jobseeker";
 
-	// Debug: log role on mount
-	useEffect(() => {
-		console.log("Role from state:", roleFromState);
-		console.log("Final role used:", role);
-	}, [roleFromState, role]);
+
 
 	const handleChange = (e) => {
 		setForm({
@@ -47,9 +43,6 @@ function RegisterComp() {
 
 		// Only navigate if valid
 		if (!valid) return;
-
-		// Log role for debugging
-		// console.log("Navigating as role:", role);
 
 		// Reset form
 		setForm({

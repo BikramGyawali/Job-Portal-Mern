@@ -149,7 +149,7 @@ function JobseekersProfile() {
 				educationList,
 				addDetailsList,
 			};
-			// console.log("FINAL PAYLOAD", payload);
+			console.log("FINAL PAYLOAD", payload);
 
 		}
 	};

@@ -10,11 +10,11 @@ import Contact from "./pages/public/Contact";
 import Jobseekers from "./pages/jobseeker/Jobseekers";
 import Employers from "./pages/employer/Employers";
 import RegisterComp from "./pages/auth/RegisterComp";
-// import UserProfile from "./components/profile/UserProfile";
+
 import JobseekersProfile from "./components/profile/JobseekersProfile";
 import EmployersProfile from "./components/profile/EmployersProfile";
-import JobseekerProfile from "./components/profile/JobseekerProfile";
-// import employerProfile from "./components/profile/";
+import { SideDashboard } from "./layout/SideDashboard";
+
 
 export default function App() {
 	return (
@@ -33,6 +33,7 @@ export default function App() {
 					{/* <Route path="/profile" element={<UserProfile />} /> */}
 					<Route path="/jobseekers-profile" element={<JobseekersProfile />} />
 					<Route path="/employers-profile" element={<EmployersProfile />} />
+					<Route path="/dashboard" element={<SideDashboard />} />
 				</Routes>
 			</BrowserRouter>
 		</div>

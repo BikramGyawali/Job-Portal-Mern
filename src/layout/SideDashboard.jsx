@@ -4,6 +4,7 @@
 import { Sidebar, SidebarCollapse, SidebarItem, SidebarItemGroup, SidebarItems } from "flowbite-react";
 import { HiArrowSmRight, HiChartPie, HiFlag, HiInbox, HiShoppingBag, HiTable, HiUser } from "react-icons/hi";
 import { DashboardNav } from "./DashboardNav";
+import { HiCog } from "react-icons/hi2";
 
 export function SideDashboard() {
 	return (
@@ -21,11 +22,9 @@ export function SideDashboard() {
 							<SidebarItem href="#">Post a Job</SidebarItem>
 							<SidebarItem href="#">All Application</SidebarItem>
 						</SidebarCollapse>
-						<SidebarItem href="#" icon={HiInbox}>
-							Inbox
-						</SidebarItem>
-						<SidebarItem href="#" icon={HiUser}>
-							Users
+
+						<SidebarItem href="#" icon={HiCog}>
+							Setting
 						</SidebarItem>
 
 						<SidebarItem href="#" icon={HiArrowSmRight}>

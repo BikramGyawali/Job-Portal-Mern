@@ -10,7 +10,7 @@ import {
 
 	NavbarToggle,
 } from "flowbite-react";
-import logo from "../assets/image/logo.png";
+import logo from "../assets/image/newLogo.png";
 
 export function DashboardNav() {
 	return (

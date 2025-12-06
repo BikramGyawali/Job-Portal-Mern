@@ -4,12 +4,16 @@ import { JDashboardData } from "../data/jobseekers/JDashboardData";
 import { EDashboardData } from "../data/employers/edashboardData";
 import { HiX } from "react-icons/hi";
 
-export function SideDashboard({ role = "employer", isOpen, onClose }) {
+export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 	const { pathname } = useLocation();
-	const menuData = role === "jobseeker" ? JDashboardData : EDashboardData;
+	const menuData = role === "Jobseeker" ? JDashboardData : EDashboardData;
 
 	const renderMenu = (closeOnClick = false) => (
 		<SidebarItems>
+			<p className="text-center text-3xl font-extrabold tracking-wide text-white text-transparent bg-clip-text">
+				{role} Dashboard
+			</p>
+
 			<SidebarItemGroup>
 				{menuData.map((item, i) => {
 					const { name, type, link, icon, children } = item;
@@ -44,13 +48,13 @@ export function SideDashboard({ role = "employer", isOpen, onClose }) {
 								className={`rounded-md ${collapseActive ? "bg-blue-600 text-white" : ""}`}
 							>
 								{children.map((child, j) => {
-									const childActive = pathname.startsWith(child.link);
+									const childActive = pathname === child.link;
 									return (
 										<SidebarItem
 											key={j}
 											href={child.link}
-												as={Link}
-								to={child.link}
+											as={Link}
+											to={child.link}
 											className={`rounded-md ml-4 ${childActive ? "bg-blue-500 text-white" : "hover:bg-gray-700"}`}
 											onClick={closeOnClick ? onClose : undefined}
 										>

@@ -47,13 +47,13 @@ export default function App() {
 					<Route path="/jobseekers" element={<Jobseekers />} />
 					<Route path="/employers" element={<Employers />} />
 					<Route path="/register" element={<RegisterComp />} />
-					{/* <Route path="/profile" element={<UserProfile />} /> */}
+					
 					<Route path="/jobseekers-profile" element={<JobseekersProfile />} />
 					<Route path="/employers-profile" element={<EmployersProfile />} />
 
 
 					{/* for jobseeker dashboard routes (nested under /jobseeker) */}
-					<Route path="jobseeker/*" element={<DashboardLayout role="jobseeker" />}>
+					<Route path="jobseeker/*" element={<DashboardLayout role="Jobseeker" />}>
 						<Route index element={<JobseekerDashboard />} />
 						<Route path="edit-profile" element={<EditProfile />} />
 						<Route path="documents" element={<MyDocument />} />
@@ -65,7 +65,7 @@ export default function App() {
 					</Route>
 
 					{/* employer dashboard routes (nested under /employer) */}
-					<Route path="employer/*" element={<DashboardLayout role="employer" />}>
+					<Route path="employer/*" element={<DashboardLayout role="Employer" />}>
 						<Route index element={<EmployerDashboard />} />
 						<Route path="job-board" element={<JobBoard />} />
 						<Route path="my-jobs" element={<MyJobs />} />
@@ -76,7 +76,7 @@ export default function App() {
 					</Route>
 
 					{/* legacy /dashboard route -> redirect to jobseeker dashboard layout (silence unmatched warning) */}
-					<Route path="/dashboard" element={<DashboardLayout role="jobseeker" />} />
+					<Route path="/dashboard" element={<DashboardLayout role="Jobseeker" />} />
 					{/* <Route path="/employers" element={<Employers />} /> */}
 				</Routes>
 			</BrowserRouter>

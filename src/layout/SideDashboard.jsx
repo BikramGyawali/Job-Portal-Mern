@@ -9,8 +9,8 @@ import { HiCog } from "react-icons/hi2";
 export function SideDashboard() {
 	return (
 		<>
-			<DashboardNav />
-			<Sidebar aria-label="Sidebar with multi-level dropdown example" className="mt-3">
+			{/* <DashboardNav /> */}
+			<Sidebar aria-label="Sidebar with multi-level dropdown example" >
 				<SidebarItems>
 					<SidebarItemGroup>
 						<SidebarItem href="#" icon={HiChartPie}>

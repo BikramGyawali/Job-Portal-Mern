@@ -2,12 +2,12 @@ import { DashboardNav } from "./DashboardNav"
 import { SideDashboard } from "./SideDashboard"
 
 const DashboardLayout = () => {
-	retutrn(
-		<div className="min-h-screen bg-gradient-to-br form-slate-5- via-blue-50 to-indigo-50 transition-all duration-500 ">
-			<div className="flex h-screen overflow-hidden">
-				<SideDashboard />
-				<div className="flex-1 flex flex-col overflow-hidden">
-		<DashboardNav/>
+	return (
+		<div className="min-h-screen bg-[#F3F4F6] transition-all duration-500 ">
+			<div className="flex flex-col h-screen overflow-hidden">
+				<DashboardNav />
+				<div className="flex-1 flex flex-row overflow-hidden">
+					<SideDashboard />
 				</div>
 			</div>
 

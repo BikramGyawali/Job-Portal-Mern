@@ -13,7 +13,8 @@ import RegisterComp from "./pages/auth/RegisterComp";
 
 import JobseekersProfile from "./components/profile/JobseekersProfile";
 import EmployersProfile from "./components/profile/EmployersProfile";
-import { SideDashboard } from "./layout/SideDashboard";
+// import { SideDashboard } from "./layout/SideDashboard";
+import DashboardLayout from "./layout/DashboardLayout";
 
 
 export default function App() {
@@ -33,7 +34,7 @@ export default function App() {
 					{/* <Route path="/profile" element={<UserProfile />} /> */}
 					<Route path="/jobseekers-profile" element={<JobseekersProfile />} />
 					<Route path="/employers-profile" element={<EmployersProfile />} />
-					<Route path="/dashboard" element={<SideDashboard />} />
+					<Route path="/dashboard" element={<DashboardLayout />} />
 				</Routes>
 			</BrowserRouter>
 		</div>

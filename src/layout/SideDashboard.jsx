@@ -10,7 +10,7 @@ export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 
 	const renderMenu = (closeOnClick = false) => (
 		<SidebarItems>
-			<p className="text-center text-3xl font-extrabold tracking-wide text-white text-transparent bg-clip-text">
+			<p className="text-center text-[15px] sm:text-2xl md:text-3xl font-extrabold tracking-wide   ">
 				{role} Dashboard
 			</p>
 

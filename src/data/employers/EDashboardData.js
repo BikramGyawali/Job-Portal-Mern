@@ -31,15 +31,9 @@ export const EDashboardData = [
 
 	{
 		type: "item",
-		name: "Sign In",
+		name: "Logout",
 		icon: HiArrowSmRight,
 		link: "/login",
 	},
 
-	{
-		type: "item",
-		name: "Sign Up",
-		icon: HiTable,
-		link: "/register",
-	},
 ];

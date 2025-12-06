@@ -44,7 +44,7 @@ export default function App() {
 					<Route path="/about" element={<AboutUS />} />
 					<Route path="/services" element={<Services />} />
 					<Route path="/contact" element={<Contact />} />
-					<Route path="/jobseeker" element={<Jobseekers />} />
+					<Route path="/jobseekers" element={<Jobseekers />} />
 					<Route path="/employers" element={<Employers />} />
 					<Route path="/register" element={<RegisterComp />} />
 					{/* <Route path="/profile" element={<UserProfile />} /> */}
@@ -72,10 +72,12 @@ export default function App() {
 						<Route path="post-job" element={<PostJob />} />
 						<Route path="applications" element={<Application />} />
 						<Route path="settings" element={<EmployerSetting />} />
+						<Route path="" />
 					</Route>
 
 					{/* legacy /dashboard route -> redirect to jobseeker dashboard layout (silence unmatched warning) */}
 					<Route path="/dashboard" element={<DashboardLayout role="jobseeker" />} />
+					{/* <Route path="/employers" element={<Employers />} /> */}
 				</Routes>
 			</BrowserRouter>
 		</div>

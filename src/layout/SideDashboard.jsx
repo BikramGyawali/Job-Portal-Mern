@@ -1,5 +1,5 @@
 import { Sidebar, SidebarItem, SidebarItemGroup, SidebarItems, SidebarCollapse } from "flowbite-react";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { JDashboardData } from "../data/jobseekers/JDashboardData";
 import { EDashboardData } from "../data/employers/edashboardData";
 import { HiX } from "react-icons/hi";
@@ -13,13 +13,15 @@ export function SideDashboard({ role = "employer", isOpen, onClose }) {
 			<SidebarItemGroup>
 				{menuData.map((item, i) => {
 					const { name, type, link, icon, children } = item;
-					const isActive = pathname.startsWith(link);
+					const isActive = pathname === link;
+
 
 					if (type === "item") {
 						return (
 							<SidebarItem
 								key={i}
-								href={link}
+								as={Link}
+								to={link}
 								icon={icon}
 								className={`rounded-md ${isActive ? "bg-blue-600 text-white" : "hover:bg-gray-700"}`}
 								onClick={closeOnClick ? onClose : undefined}
@@ -35,6 +37,8 @@ export function SideDashboard({ role = "employer", isOpen, onClose }) {
 						return (
 							<SidebarCollapse
 								key={i}
+								// 	as={Link}
+								// to="/link"
 								icon={icon}
 								label={name}
 								className={`rounded-md ${collapseActive ? "bg-blue-600 text-white" : ""}`}
@@ -45,6 +49,8 @@ export function SideDashboard({ role = "employer", isOpen, onClose }) {
 										<SidebarItem
 											key={j}
 											href={child.link}
+												as={Link}
+								to={child.link}
 											className={`rounded-md ml-4 ${childActive ? "bg-blue-500 text-white" : "hover:bg-gray-700"}`}
 											onClick={closeOnClick ? onClose : undefined}
 										>

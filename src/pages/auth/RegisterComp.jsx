@@ -156,7 +156,7 @@ function RegisterComp() {
 					<p className="text-lg mt-5">
 						Already have an account?{" "}
 						<Link
-							to="/jobseeker"
+							to="/jobseekers"
 							className="text-blue-900 underline font-semibold"
 						>
 							Login Here

@@ -8,6 +8,7 @@ import {
 	NavbarBrand,
 } from "flowbite-react";
 import logo from "../assets/image/newLogo.png";
+import { Link } from "react-router-dom";
 
 export function DashboardNav({ onMenuClick }) {
 	return (
@@ -21,7 +22,7 @@ export function DashboardNav({ onMenuClick }) {
 			</button>
 
 			{/* Brand */}
-			<NavbarBrand href="/" className="flex items-center">
+			<NavbarBrand as={Link} to="/" className="flex items-center">
 				<img src={logo} className="mr-3 h-6 sm:h-9" alt="Logo" />
 				<span className="self-center whitespace-nowrap text-xl font-semibold">
 					Hamro Job

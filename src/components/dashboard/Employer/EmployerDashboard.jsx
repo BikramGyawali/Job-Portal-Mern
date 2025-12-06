@@ -1,17 +1,13 @@
 import React from 'react'
 import DasCard from '../../common/DasCard'
+import DashBoxCard from '../../common/DashBoxCard'
 
 function EmployerDashboard() {
-	const data=[
-		{
-			number:1,
-			Content:"Total"
-		}
-	]
+
 	return (
 		<div>
 			<div >
-				<DasCard number="1" Content="Total" />
+				<DashBoxCard />
 			</div>
 		</div>
 	)

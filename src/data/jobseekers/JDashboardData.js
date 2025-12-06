@@ -53,12 +53,12 @@ export const JDashboardData = [
 		link: "/jobseeker/download-resume",
 	},
 
-	{
-		type: "item",
-		name: "Available Trainings",
-		icon: HiAcademicCap,
-		link: "/jobseeker/trainings",
-	},
+	// {
+	// 	type: "item",
+	// 	name: "Available Trainings",
+	// 	icon: HiAcademicCap,
+	// 	link: "/jobseeker/trainings",
+	// },
 
 	{
 		type: "item",

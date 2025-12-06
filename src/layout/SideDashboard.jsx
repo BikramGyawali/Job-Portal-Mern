@@ -64,34 +64,34 @@ export function SideDashboard({ role = "employer", isOpen, onClose }) {
 
 	return (
 		<>
-			{/* Desktop sidebar: in-flow, visible on lg and up */}
+
 			<div className="hidden lg:block w-64">
 				<Sidebar aria-label="Dashboard sidebar" className="bg-[#1E2939] text-white h-screen">
 					{renderMenu(false)}
 				</Sidebar>
 			</div>
 
-			{/* Mobile sidebar: fixed off-canvas, only visible on small screens */}
-			<div className={`lg:hidden`}>
+
+			<div className="lg:hidden">
 				<Sidebar
 					aria-label="Dashboard sidebar (mobile)"
 					className={`bg-[#1E2939] text-white h-screen fixed top-0 left-0 z-50 w-64 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
 				>
-					{/* Close button only for mobile */}
+
 					<div className="flex justify-end p-2">
 						<button
 							onClick={onClose}
 							className="p-2 bg-gray-200 rounded hover:bg-gray-300 text-gray-800"
 							aria-label="Close sidebar"
 						>
-							<HiX size={24} />
+							<HiX size={20} />
 						</button>
 					</div>
 
 					{renderMenu(true)}
 				</Sidebar>
 
-				{/* Mobile overlay */}
+
 				{isOpen && (
 					<div
 						className="fixed inset-0 bg-black/40 z-40"

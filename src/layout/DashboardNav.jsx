@@ -12,10 +12,10 @@ import logo from "../assets/image/newLogo.png";
 export function DashboardNav({ onMenuClick }) {
 	return (
 		<Navbar className="bg-[#1E2939] text-white shadow px-4 py-2 flex items-center justify-between">
-			{/* Hamburger button for mobile */}
+
 			<button
 				onClick={onMenuClick}
-				className="lg:hidden mr-2 p-2 rounded hover:bg-gray-200 text-gray-900"
+				className="lg:hidden mr-2 px-4 py-2 rounded hover:bg-gray-200 text-gray-900  bg-gray-50"
 			>
 				☰
 			</button>

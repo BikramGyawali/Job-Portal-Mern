@@ -7,7 +7,7 @@ const DashboardLayout = () => {
 			<div className="flex flex-col h-screen overflow-hidden">
 				<DashboardNav />
 				<div className="flex-1 flex flex-row overflow-hidden">
-					<SideDashboard />
+					<SideDashboard role="jobseeker" />
 				</div>
 			</div>
 

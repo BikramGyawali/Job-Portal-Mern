@@ -1,12 +1,14 @@
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ButtonComp from '../../components/common/ButtonComp';
 import { contactLoginValidate } from '../../utils/contactLoginValidate';
 // import { ValidateUtil } from '../utils/ValidationUtil';
 
 function LoginComp({ LoginData }) {
+	const { title, explain, image, role } = LoginData;
+	const navigate = useNavigate()
 	const [showPassword, setShowPassword] = useState(false);
 	const [form, setForm] = useState({
 		email: "",
@@ -29,7 +31,7 @@ function LoginComp({ LoginData }) {
 		e.preventDefault();
 
 		const { error, valid } = contactLoginValidate(form);
-		console.log(error.email);
+		// console.log(error.email);
 
 		setError(error)
 		if (valid) {
@@ -37,10 +39,11 @@ function LoginComp({ LoginData }) {
 				email: "",
 				pass: ""
 			});
+			(role === "jobseeker" ? navigate("/jobseeker") : navigate("/employer"))
 		}
 	};
 
-	const { title, explain, image, role } = LoginData;
+
 
 	return (
 		<div className="flex items-center justify-center w-screen h-screen gap-6 px-4">

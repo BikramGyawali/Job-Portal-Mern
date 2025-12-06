@@ -1,19 +1,23 @@
-import DashTable from "../../common/DashTable";
-import {
-	DashboardTableHeadData,
-	DashboardTableBody,
-} from "../../data/employers/DashboardData";
+import React from 'react'
+import DasCard from '../../common/DasCard'
+import DashBoxCard from '../../common/DashBoxCard'
+import DashTable from '../../common/DashTable'
+import { DashboardTableBody, DashboardTableHeadData } from '../../../data/employers/DashboardData'
 
 function EmployerDashboard() {
+
 	return (
-		<div className="flex flex-col gap-5">
-			<DashTable
-				title="Recent Applications"
-				headData={DashboardTableHeadData}
-				bodyData={DashboardTableBody}
-			/>
+		<div>
+			<div className='flex flex-col gap-5'>
+				<DashBoxCard />
+				<DashTable
+					title="Recent Applications"
+					headData={DashboardTableHeadData}
+					bodyData={DashboardTableBody}
+				/>
+			</div>
 		</div>
-	);
+	)
 }
 
-export default EmployerDashboard;
+export default EmployerDashboard

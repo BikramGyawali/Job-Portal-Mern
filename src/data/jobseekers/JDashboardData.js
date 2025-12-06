@@ -71,6 +71,6 @@ export const JDashboardData = [
 		type: "item",
 		name: "Log Out",
 		icon: HiLogout,
-		link: "/logout",
+		link: "/jobseekers",
 	},
 ];

@@ -61,7 +61,7 @@ export default function App() {
 						<Route path="saved-jobs" element={<SavedJobs />} />
 						<Route path="download-resume" element={<DownloadResume />} />
 						<Route path="settings" element={<Setting />} />
-						<Route path="logout" element={<Logout />} />
+						<Route path="jobseekers" element={<Jobseekers />} />
 					</Route>
 
 					{/* employer dashboard routes (nested under /employer) */}

@@ -33,7 +33,7 @@ export const EDashboardData = [
 		type: "item",
 		name: "Logout",
 		icon: HiArrowSmRight,
-		link: "/login",
+		link: "/employers",
 	},
 
 ];

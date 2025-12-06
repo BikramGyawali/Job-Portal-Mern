@@ -33,6 +33,7 @@ function LoginComp({ LoginData }) {
 		const { error, valid } = contactLoginValidate(form);
 		// console.log(error.email);
 
+		
 		setError(error)
 		if (valid) {
 			setForm({

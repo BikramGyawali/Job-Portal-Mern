@@ -7,7 +7,7 @@ export const EDashboardData = [
 		type: "item",
 		name: "Dashboard",
 		icon: HiChartPie,
-		link: "/employer/dashboard",
+		link: "/employer",
 	},
 
 	{

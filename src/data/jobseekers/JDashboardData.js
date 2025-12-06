@@ -15,7 +15,7 @@ export const JDashboardData = [
 		type: "item",
 		name: "Dashboard",
 		icon: HiChartPie,
-		link: "/jobseeker/dashboard",
+		link: "/jobseeker",
 	},
 
 	{

@@ -3,9 +3,27 @@ import DashTable from '../../../common/DashTable'
 import { ApplicantBody, ApplicantHead } from '../../../../data/employers/DashboardData'
 
 function Applicants() {
+	const handleViewApplicants = (row) => {
+		console.log("view");
+
+	}
+	const handleShortList = (row) => {
+		console.log("shortlisted", row);
+
+
+	}
+	const handleReject = (row) => {
+		console.log("Reject", row);
+
+	}
+	const actionHandler = {
+		View: handleViewApplicants,
+		ShortList: handleShortList,
+		Reject: handleReject
+	}
 	return (
 		<div>
-			<DashTable headData={ApplicantHead} bodyData={ApplicantBody} title="Applicant " />
+			<DashTable headData={ApplicantHead} bodyData={ApplicantBody} title="Applicant " actionHandler={actionHandler} />
 		</div>
 	)
 }

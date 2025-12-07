@@ -57,7 +57,7 @@ export const MyJobsTableBody = [{
 	"Pending": 5,
 	"In Review": 8,
 	"Processed": 5,
-	"actions": ["edit", "delete"]
+	"Actions": ["edit", "delete"]
 }]
 
 //for applicant data

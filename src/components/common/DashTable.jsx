@@ -58,9 +58,9 @@ function DashTable({ title, headData, bodyData }) {
 								{headData.map((key, j) => (
 									<TableCell key={j} className="!text-black">
 
-									{key === "Actions" ? (
+										{key === "Actions" ? (
 											<div className="flex items-center gap-3">
-												{row.actions?.map((action, idx) => {
+												{row[key]?.map((action, idx) => {
 													// Choose icon & color based on action type
 													let Icon, colorClass;
 													switch (action.toLowerCase()) {

@@ -11,8 +11,8 @@ function MyJobs() {
 
 	}
 	const actionHandler = {
-		Edit: handleEdit,
-		Delete: handleDelete
+		edit: handleEdit,
+		delete: handleDelete
 	}
 	return (
 		<div>

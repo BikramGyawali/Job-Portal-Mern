@@ -17,9 +17,9 @@ function Applicants() {
 
 	}
 	const actionHandler = {
-		View: handleViewApplicants,
-		ShortList: handleShortList,
-		Reject: handleReject
+		view: handleViewApplicants,
+		shortList: handleShortList,
+		reject: handleReject
 	}
 	return (
 		<div>

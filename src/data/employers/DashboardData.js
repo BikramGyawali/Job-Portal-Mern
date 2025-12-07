@@ -72,15 +72,15 @@ export const ApplicantBody = [
 		phone: "9801234567",
 		appliedOn: "2025-12-01",
 		status: "New",
-		action: ["View", "Shortlist", "Reject"],
+		action: ["view", "shortlist", "reject"],
 	},
 	{
 		name: "Jane Smith",
 		email: "jane@example.com",
-		phone: "9812345678",
+		phone: "9812345678",  
 		appliedOn: "2025-12-02",
 		status: "Shortlisted",
-		action: ["View", "Reject"],
+		action: ["view", "reject"],
 	},
 	{
 		name: "Bob Sharma",
@@ -88,7 +88,7 @@ export const ApplicantBody = [
 		phone: "9808765432",
 		appliedOn: "2025-12-03",
 		status: "New",
-		action: ["View", "Shortlist", "Reject"],
+		action: ["view", "shortlist", "reject"],
 	},
 ]
 

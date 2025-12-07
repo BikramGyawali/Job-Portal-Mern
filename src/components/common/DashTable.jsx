@@ -60,12 +60,18 @@ function DashTable({ title, headData, bodyData }) {
 
 										{key === "Actions" ? (
 											<div className="flex items-center gap-3">
-												<button onClick={() => handleEdit(row)} className="p-1 cursor-pointer hover:bg-green-500  rounded-full">
-													<MdModeEdit size={25} className="text-green-400 hover:text-white" />
-												</button>
-												<button onClick={() => handleDelete(row)} className="p-1  cursor-pointer hover:bg-red-500 rounded-full">
-													<MdDeleteForever size={25} className="text-red-400 hover:text-white" />
-												</button>
+
+											{row.actions?.map((action,idx)=>{
+                                       let colorClass,Icon;
+									   switch(action.toLowerCase()){
+                                            case "edit":
+												Icon=MdModeEdit ;
+												colorClass="text-green-400 hover:bg-grenn-500";
+												break;
+												case "delete":
+													Icon
+									   }
+											})}
 
 											</div>
 										)

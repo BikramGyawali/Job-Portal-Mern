@@ -1,8 +1,12 @@
 import React from 'react'
+import DashTable from '../../../common/DashTable'
+import { ApplicantBody, ApplicantHead } from '../../../../data/employers/DashboardData'
 
 function Applicants() {
 	return (
-		<div>Applicants</div>
+		<div>
+			<DashTable headData={ApplicantHead} bodyData={ApplicantBody} title="Applicant " />
+		</div>
 	)
 }
 

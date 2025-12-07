@@ -57,7 +57,7 @@ export const MyJobsTableBody = [{
 	"Pending": 5,
 	"In Review": 8,
 	"Processed": 5,
-	"Actions": ["edit", "delete"]
+	"actions": ["edit", "delete"]
 }]
 
 //for applicant data
@@ -65,7 +65,7 @@ export const ApplicantHead = ["Applicant Name", "Email", "Phone", "Applied On", 
 
 
 
-export const ApplicantTable = [
+export const ApplicantBody = [
 	{
 		name: "John Doe",
 		email: "john@example.com",

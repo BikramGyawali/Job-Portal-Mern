@@ -7,7 +7,7 @@ import {
 	TableRow,
 	TableCell,
 } from "flowbite-react";
-import { BsPen, BsTrash2 } from "react-icons/bs";
+import { BsPen, BsPenFill, BsTrash2 } from "react-icons/bs";
 import { MdDeleteForever, MdModeEdit } from "react-icons/md";
 
 function DashTable({ title, headData, bodyData }) {
@@ -58,26 +58,52 @@ function DashTable({ title, headData, bodyData }) {
 								{headData.map((key, j) => (
 									<TableCell key={j} className="!text-black">
 
-										{key === "Actions" ? (
+									{key === "Actions" ? (
 											<div className="flex items-center gap-3">
+												{row.actions?.map((action, idx) => {
+													// Choose icon & color based on action type
+													let Icon, colorClass;
+													switch (action.toLowerCase()) {
+														case "edit":
+															Icon = MdModeEdit;
+															colorClass = "text-green-400 hover:bg-green-500";
+															break;
+														case "delete":
+															Icon = MdDeleteForever;
+															colorClass = "text-red-400 hover:bg-red-500";
+															break;
+														case "view":
+															Icon = BsPen; // use a view icon if you like
+															colorClass = "text-blue-400 hover:bg-blue-500";
+															break;
+														case "shortlist":
+															Icon = BsPen;
+															colorClass = "text-green-400 hover:bg-green-500";
+															break;
+														case "reject":
+															Icon = MdDeleteForever;
+															colorClass = "text-red-400 hover:bg-red-500";
+															break;
+														default:
+															Icon = BsPen;
+															colorClass = "text-gray-400";
+													}
 
-											{row.actions?.map((action,idx)=>{
-                                       let colorClass,Icon;
-									   switch(action.toLowerCase()){
-                                            case "edit":
-												Icon=MdModeEdit ;
-												colorClass="text-green-400 hover:bg-grenn-500";
-												break;
-												case "delete":
-													Icon
-									   }
-											})}
-
+													return (
+														<button
+															key={idx}
+															className={`p-1 cursor-pointer rounded-full ${colorClass}`}
+															onClick={() => actionHandlers[action]?.(row)}
+														>
+															<Icon size={25} />
+														</button>
+													);
+												})}
 											</div>
-										)
+										) : (
+											row[key]
+										)}
 
-											: (row[key])
-										}
 									</TableCell>
 								))}
 							</TableRow>

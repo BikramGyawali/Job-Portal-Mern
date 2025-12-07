@@ -1,8 +1,11 @@
 import React from 'react'
+import EmployerDashboard from '../EmployerDashboard'
 
 function JobBoard() {
 	return (
-		<div>JobBoard</div>
+		<div>
+			<EmployerDashboard />
+		</div>
 	)
 }
 

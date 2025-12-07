@@ -47,7 +47,7 @@ export default function App() {
 					<Route path="/jobseekers" element={<Jobseekers />} />
 					<Route path="/employers" element={<Employers />} />
 					<Route path="/register" element={<RegisterComp />} />
-					
+
 					<Route path="/jobseekers-profile" element={<JobseekersProfile />} />
 					<Route path="/employers-profile" element={<EmployersProfile />} />
 

@@ -7,8 +7,8 @@ export const ValidateUtil = (form, fields = []) => {
 	const phoneRegex = /^[0-9]{10}$/; // adjust length if needed
 	const textOnly = /^[A-Za-z\s]+$/; // allow letters and spaces
 	const panCardCheck = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-const officePhoneCheck = /^\d{2}-\d{7}$/;
-const websiteCheck = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/.*)?$/;
+	const officePhoneCheck = /^\d{2}-\d{7}$/;
+	const websiteCheck = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/.*)?$/;
 
 
 	// Get today's date for date validation
@@ -108,6 +108,12 @@ const websiteCheck = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/.*)
 
 		if (f.name === 'companyWebsite' && value && !websiteCheck.test(value)) {
 			error[f.name] = "Invalid webiste format";
+			valid = false;
+		}
+
+		//for dashboard jobtitle 
+		if ('jobTitle' in form && form.jobTitle?.trim() && !textOnly.test(form.jobTitle)) {
+			error.jobTitle = "Job Title must be text";
 			valid = false;
 		}
 

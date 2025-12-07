@@ -11,12 +11,21 @@ import { BsPen, BsTrash2 } from "react-icons/bs";
 import { MdDeleteForever, MdModeEdit } from "react-icons/md";
 
 function DashTable({ title, headData, bodyData }) {
+	const handleEdit = (row) => {
+		console.log("Edit");
+
+	}
+	const handleDelete = (row) => {
+		console.log("Delete");
+
+	}
+	const isActive = title === "Recent Applications";
 	return (
 		<div className=" p-4 rounded-2xl shadow-md min-w-full overflow-x-scroll">
 
 			<div className="flex justify-between mb-4">
 				< p className="text-[20px] font-semibold" > {title}</p >
-				<p className="text-[20px] font-semibold cursor-pointer hover:underline">
+				<p className={isActive ? "text-[20px] font-semibold cursor-pointer hover:underline" : "hidden"}>
 					View All
 				</p>
 			</div >
@@ -48,8 +57,7 @@ function DashTable({ title, headData, bodyData }) {
 							<TableRow key={i} className=" hover:!bg-gray-50">
 								{headData.map((key, j) => (
 									<TableCell key={j} className="!text-black">
-										{console.log(key)
-										}
+
 										{key === "Actions" ? (
 											<div className="flex items-center gap-3">
 												<button onClick={() => handleEdit(row)} className="p-1 cursor-pointer hover:bg-green-500  rounded-full">

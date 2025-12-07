@@ -7,7 +7,7 @@ const DashboardLayout = ({ children, role = "employer" }) => {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	return (
-		<div className="min-h-screen flex flex-col bg-[#F3F4F6]">
+		<div className="h-screen flex flex-col bg-[#F3F4F6] mb-10">
 
 			<DashboardNav onMenuClick={() => setSidebarOpen(true)} />
 
@@ -19,7 +19,7 @@ const DashboardLayout = ({ children, role = "employer" }) => {
 					onClose={() => setSidebarOpen(false)}
 				/>
 
-				<main className="flex-1 overflow-auto p-6 bg-white">
+				<main className="flex-1 overflow-y-auto p-6 bg-white">
 					<Outlet />
 				</main>
 			</div>

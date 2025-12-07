@@ -29,7 +29,7 @@ function ReusableForm({
 	return (
 		<form
 			onSubmit={handleNextOrSubmit}
-			className="grid grid-cols-1 sm:grid-cols-2 gap-4 backdrop-blur-lg bg-white/10 shadow-lg shadow-gray-700 rounded-2xl p-8 w-full border border-white/10 duration-500"
+			className="grid grid-cols-1 sm:grid-cols-2 gap-4 backdrop-blur-lg bg-white/10 shadow-lg shadow-gray-700 rounded-2xl p-8 w-full border border-white/10 duration-500 "
 		>
 			{/* MULTIPLE ENTRY INDEX BUTTONS */}
 			{entriesCount > 1 && (

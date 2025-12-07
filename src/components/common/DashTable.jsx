@@ -73,16 +73,16 @@ function DashTable({ title, headData, bodyData, actionHandler }) {
 															colorClass = "text-red-400 hover:bg-red-500 hover:text-white";
 															break;
 														case "view":
-															Icon = BsPen; // use a view icon if you like
-															colorClass = "text-blue-400 hover:text-white hover:bg-blue-500";
+															Icon = null; // use a view icon if you like
+															colorClass = "text-blue-400 hover:text-blue-700";
 															break;
 														case "shortlist":
-															Icon = BsPen;
-															colorClass = "text-green-400 hover:text-white hover:bg-green-500";
+															Icon = null;
+															colorClass = "text-green-400 hover:text-green-700 ";
 															break;
 														case "reject":
-															Icon = MdDeleteForever;
-															colorClass = "text-red-400 hover:text-white hover:bg-red-500";
+															Icon = null;
+															colorClass = "text-red-400 hover:text-red-700 ";
 															break;
 														default:
 															Icon = BsPen;
@@ -95,9 +95,11 @@ function DashTable({ title, headData, bodyData, actionHandler }) {
 															className={`p-1 cursor-pointer rounded-full ${colorClass}`}
 															onClick={() => actionHandler[action]?.(row)}
 														>
-															<Icon size={25} />
+															{Icon === null ? action : <Icon size={25} />}
 														</button>
+
 													);
+
 												})}
 											</div>
 										) : (

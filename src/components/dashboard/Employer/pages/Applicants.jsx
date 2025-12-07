@@ -4,7 +4,7 @@ import { ApplicantBody, ApplicantHead } from '../../../../data/employers/Dashboa
 
 function Applicants() {
 	const handleViewApplicants = (row) => {
-		console.log("view");
+		console.log("view",row);
 
 	}
 	const handleShortList = (row) => {
@@ -18,7 +18,7 @@ function Applicants() {
 	}
 	const actionHandler = {
 		view: handleViewApplicants,
-		shortList: handleShortList,
+		shortlist: handleShortList,
 		reject: handleReject
 	}
 	return (

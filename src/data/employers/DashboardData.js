@@ -60,7 +60,48 @@ export const MyJobsTableBody = [{
 	"Actions": ["edit", "delete"]
 }]
 
+//for applicant data
+export const ApplicantHead = ["Applicant Name", "Email", "Phone", "Applied On", "Status", "Action"]
 
+
+
+export const ApplicantTable = [
+	{
+		name: "John Doe",
+		email: "john@example.com",
+		phone: "9801234567",
+		appliedOn: "2025-12-01",
+		status: "New",
+		action: ["View", "Shortlist", "Reject"],
+	},
+	{
+		name: "Jane Smith",
+		email: "jane@example.com",
+		phone: "9812345678",
+		appliedOn: "2025-12-02",
+		status: "Shortlisted",
+		action: ["View", "Reject"],
+	},
+	{
+		name: "Bob Sharma",
+		email: "9808765432",
+		phone: "9808765432",
+		appliedOn: "2025-12-03",
+		status: "New",
+		action: ["View", "Shortlist", "Reject"],
+	},
+]
+
+
+
+
+
+
+
+
+
+
+// for job creation
 export const CreateJobsData = [
 
 	// ----- BASIC JOB INFO -----

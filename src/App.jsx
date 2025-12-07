@@ -29,8 +29,9 @@ import EmployerDashboard from "./components/dashboard/Employer/EmployerDashboard
 import JobBoard from "./components/dashboard/Employer/pages/JobBoard";
 import MyJobs from "./components/dashboard/Employer/pages/MyJobs";
 import PostJob from "./components/dashboard/Employer/pages/PostJob";
-import Application from "./components/dashboard/Employer/pages/Application";
+
 import EmployerSetting from "./components/dashboard/Employer/pages/Setting";
+import Applicants from "./components/dashboard/Employer/pages/Applicants";
 
 
 export default function App() {
@@ -70,7 +71,7 @@ export default function App() {
 						<Route path="job-board" element={<JobBoard />} />
 						<Route path="my-jobs" element={<MyJobs />} />
 						<Route path="post-job" element={<PostJob />} />
-						<Route path="applications" element={<Application />} />
+						<Route path="applicants" element={<Applicants />} />
 						<Route path="settings" element={<EmployerSetting />} />
 						<Route path="" />
 					</Route>

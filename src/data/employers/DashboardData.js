@@ -67,30 +67,16 @@ export const ApplicantHead = ["Applicant Name", "Email", "Phone", "Applied On", 
 
 export const ApplicantBody = [
 	{
-		name: "John Doe",
-		email: "john@example.com",
-		phone: "9801234567",
-		appliedOn: "2025-12-01",
-		status: "New",
-		action: ["view", "shortlist", "reject"],
+		"Applicant Name": "John Doe",
+		"Email": "john@example.com",
+		"Phone": "9801234567",
+		"Applied On": "2025-12-01",
+		"Status": "New",
+		"Action": ["view", "shortlist", "reject"],
 	},
-	{
-		name: "Jane Smith",
-		email: "jane@example.com",
-		phone: "9812345678",  
-		appliedOn: "2025-12-02",
-		status: "Shortlisted",
-		action: ["view", "reject"],
-	},
-	{
-		name: "Bob Sharma",
-		email: "9808765432",
-		phone: "9808765432",
-		appliedOn: "2025-12-03",
-		status: "New",
-		action: ["view", "shortlist", "reject"],
-	},
-]
+
+];
+
 
 
 

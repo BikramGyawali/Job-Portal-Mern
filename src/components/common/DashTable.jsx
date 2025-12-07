@@ -10,7 +10,7 @@ import {
 import { BsPen, BsPenFill, BsTrash2 } from "react-icons/bs";
 import { MdDeleteForever, MdModeEdit } from "react-icons/md";
 
-function DashTable({ title, headData, bodyData }) {
+function DashTable({ title, headData, bodyData, actionHandler }) {
 	const handleEdit = (row) => {
 		console.log("Edit");
 
@@ -66,23 +66,23 @@ function DashTable({ title, headData, bodyData }) {
 													switch (action.toLowerCase()) {
 														case "edit":
 															Icon = MdModeEdit;
-															colorClass = "text-green-400 hover:bg-green-500";
+															colorClass = "text-green-400 hover:bg-green-500  hover:text-white";
 															break;
 														case "delete":
 															Icon = MdDeleteForever;
-															colorClass = "text-red-400 hover:bg-red-500";
+															colorClass = "text-red-400 hover:bg-red-500 hover:text-white";
 															break;
 														case "view":
 															Icon = BsPen; // use a view icon if you like
-															colorClass = "text-blue-400 hover:bg-blue-500";
+															colorClass = "text-blue-400 hover:text-white hover:bg-blue-500";
 															break;
 														case "shortlist":
 															Icon = BsPen;
-															colorClass = "text-green-400 hover:bg-green-500";
+															colorClass = "text-green-400 hover:text-white hover:bg-green-500";
 															break;
 														case "reject":
 															Icon = MdDeleteForever;
-															colorClass = "text-red-400 hover:bg-red-500";
+															colorClass = "text-red-400 hover:text-white hover:bg-red-500";
 															break;
 														default:
 															Icon = BsPen;
@@ -93,7 +93,7 @@ function DashTable({ title, headData, bodyData }) {
 														<button
 															key={idx}
 															className={`p-1 cursor-pointer rounded-full ${colorClass}`}
-															onClick={() => actionHandlers[action]?.(row)}
+															onClick={() => actionHandler[action]?.(row)}
 														>
 															<Icon size={25} />
 														</button>

@@ -81,13 +81,13 @@ export const Education = [
 		name: "edate",
 		type: "date",
 		required: false,
-		disableIf: "cStuding"
+
 	},
 
-	{
-		label: "I am currently studying here",
-		name: "cStudying",
-		type: "checkbox"
-	},
+	// {
+	// 	label: "I am currently studying here",
+	// 	name: "cStudying",
+	// 	type: "checkbox"
+	// },
 
 ];

@@ -98,41 +98,43 @@ function ReusableForm({
 							className="p-2 border rounded-xl resize-none"
 						></textarea>
 
-					) : field.type === "checkbox" ? (
-						<input
-							type="checkbox"
-							name={field.name}
-							checked={!!form[field.name]}
-							onChange={(e) =>
-								onChange({
-									target: { name: field.name, value: e.target.checked },
-								})
-							}
-							className="h-5 w-5"
-							placeholder={field.placeholder}
-						/>
+					)
+						// : field.type === "checkbox" ? (
+						// 	<input
+						// 		type="checkbox"
+						// 		name={field.name}
+						// 		checked={!!form[field.name]}
+						// 		onChange={(e) =>
+						// 			onChange({
+						// 				target: { name: field.name, value: e.target.checked },
+						// 			})
+						// 		}
+						// 		className="h-5 w-5"
+						// 		placeholder={field.placeholder}
+						// 	/>
 
-					) : field.type === "date" ? (
-						<input
-							type="date"
-							name={field.name}
-							value={form[field.name] ?? ""}
-							onChange={onChange}
-							max={maxDate}
-							placeholder={field.placeholder}
-							className="p-2 border rounded-xl"
-						/>
-
-					) : (
-						<input
-							type={field.type}
-							name={field.name}
-							value={form[field.name] ?? ""}
-							onChange={onChange}
-							placeholder={field.placeholder}
-							className="p-2 border rounded-xl"
-						/>
-					)}
+						// ) 
+						: field.type === "date" ? (
+							<input
+								type="date"
+								name={field.name}
+								value={form[field.name] ?? ""}
+								onChange={onChange}
+								max={maxDate}
+								placeholder={field.placeholder}
+								className="p-2 border rounded-xl"
+							/>
+						)
+							: (
+								<input
+									type={field.type}
+									name={field.name}
+									value={form[field.name] ?? ""}
+									onChange={onChange}
+									placeholder={field.placeholder}
+									className="p-2 border rounded-xl"
+								/>
+							)}
 
 
 					{errors && errors[field.name] && (

@@ -10,7 +10,7 @@ function JobseekerDashboard() {
 	const navigate = useNavigate();
 	const handleView = (row) => {
 		// console.log("row", row);
-		navigate('/jobseeker/joblisting')
+		navigate('/jobseeker/job-listing')
 
 	}
 	const actionHandler = {

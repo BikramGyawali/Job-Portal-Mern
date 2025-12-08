@@ -32,6 +32,7 @@ import PostJob from "./components/dashboard/Employer/pages/PostJob";
 
 import EmployerSetting from "./components/dashboard/Employer/pages/Setting";
 import Applicants from "./components/dashboard/Employer/pages/Applicants";
+import JobListing from "./components/dashboard/Jobseeker/pages/JobListing";
 
 
 export default function App() {
@@ -63,6 +64,7 @@ export default function App() {
 						<Route path="download-resume" element={<DownloadResume />} />
 						<Route path="settings" element={<Setting />} />
 						<Route path="jobseekers" element={<Jobseekers />} />
+						<Route path="job-listing" element={<JobListing />} />
 					</Route>
 
 					{/* employer dashboard routes (nested under /employer) */}

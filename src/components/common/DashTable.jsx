@@ -11,14 +11,7 @@ import { BsPen, BsPenFill, BsTrash2 } from "react-icons/bs";
 import { MdDeleteForever, MdModeEdit } from "react-icons/md";
 
 function DashTable({ title, headData, bodyData, actionHandler }) {
-	const handleEdit = (row) => {
-		console.log("Edit");
 
-	}
-	const handleDelete = (row) => {
-		console.log("Delete");
-
-	}
 	const isActive = title === "Recent Applications";
 	return (
 		<div className=" p-4 rounded-2xl shadow-md min-w-full overflow-x-scroll">

@@ -1,8 +1,12 @@
 import React from 'react'
+import JobseekersProfile from '../../../profile/JobseekersProfile'
+
 
 function EditProfile() {
 	return (
-		<div>EditProfile</div>
+		<div>
+			<JobseekersProfile/>
+		</div>
 	)
 }
 

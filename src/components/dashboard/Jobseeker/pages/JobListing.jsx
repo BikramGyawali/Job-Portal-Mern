@@ -2,8 +2,11 @@ import React from "react";
 import logo from "../../../../assets/image/logo.png";
 import { jobData, JobListingData, ListingTitle } from "../../../../data/jobseekers/DashboardData";
 import ButtonComp from "../../../common/ButtonComp";
+import { useLocation } from "react-router-dom";
 
 function JobListing() {
+	const { state } = useLocation();
+	const formApplied = state?.formApplied;
 	const handleClick = () => {
 		console.log("click");
 	};
@@ -47,9 +50,9 @@ function JobListing() {
 				))}
 			</div>
 
-			<div className="pt-4 w-fit ">
+			{!formApplied && (<div className="pt-4 w-fit ">
 				<ButtonComp name="Apply Job" click={handleClick} />
-			</div>
+			</div>)}
 		</div>
 	);
 }

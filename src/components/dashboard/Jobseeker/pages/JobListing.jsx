@@ -26,10 +26,15 @@ function JobListing() {
 			</div>
 			<h3 className='text-3xl font-bold tracking-wide '>Front-End Developer</h3>
 			<hr />
-			<div className='flex flex-col'>
+			<div className='grid grid-cols-2 gap-y-3 gap-x-10 mt-4'>
 				{ListingTitle.map((data, i) =>
 				(
-					<p key={i} className='ml-2 p-1 font-bold text-[18px]'>{data}:</p>
+					<React.Fragment key={i}>
+						<p key={i} className='font-semibold text-lg ml-2'>{data}:</p>
+						<p className='text-lg text-gray-700'>
+							{JobListingData[0]?.[data]}
+						</p>
+					</React.Fragment>
 				)
 					// console.log(data);
 
@@ -38,15 +43,7 @@ function JobListing() {
 				{/* for data */}
 
 			</div>
-			<div>
-				{JobListingData.map((row, i) => {
-					{
-						ListingTitle.map((key, j) => (
-							<h1 key={j}>{key}</h1>
-						))
-					}
-				})}
-			</div>
+
 			<hr />
 
 			{jobData.map((data, i) => {
@@ -64,7 +61,7 @@ function JobListing() {
 
 				)
 			})}
-			<div className='w-[200px]'>
+			<div className='w-[200px] mb-5'>
 				<ButtonComp name="Apply Job" click={handleClick} />
 			</div>
 		</div>

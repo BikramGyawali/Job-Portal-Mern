@@ -28,7 +28,7 @@ export const DashboardBodyData = [{
 export const ListingTitle=["Number of Opening","Industry","Category","Location"]
 export const JobListingData = [
 	{
-		"Number of Openings": "2",
+		"Number of Opening": "2",
 		"Industry": "Education",
 		"Category": "Admin",
 		"Location": "ktm"

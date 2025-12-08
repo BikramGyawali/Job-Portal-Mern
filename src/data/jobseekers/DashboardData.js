@@ -53,3 +53,18 @@ export const JobListingData = [
 			"HTML, CSS, JavaScript, React, Tailwind CSS, Git, Responsive Design"
 	}
 ];
+
+//for description 
+export const jobData = [
+	{
+		title: "Job Description",
+		content:
+			"We are seeking a skilled Front-End Developer to design and implement modern user interfaces. The ideal candidate should have strong knowledge of HTML, CSS, JavaScript, and React, and be passionate about building responsive and user-friendly web applications."
+	},
+	{
+		title: "Job Specification",
+		content:
+			"Strong understanding of React, Tailwind CSS, REST APIs, and version control systems. Ability to translate UI/UX designs into clean, efficient code. Experience working in Agile teams is a plus."
+	}
+];
+

@@ -10,59 +10,82 @@ const DownloadResume = () => {
 		if (!resumeRef.current) return;
 
 		const element = resumeRef.current;
-		const canvas = await html2canvas(element, { scale: 2 });
-		const imgData = canvas.toDataURL('image/png');
-		const pdf = new jsPDF('p', 'mm', 'a4');
-		const pdfWidth = pdf.internal.pageSize.getWidth();
-		const pdfHeight = pdf.internal.pageSize.getHeight();
-		const imgProps = pdf.getImageProperties(imgData);
-		const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-		let heightLeft = imgHeight;
-		let position = 0;
+		try {
+			const canvas = await html2canvas(element, {
+				scale: 2,
+				useCORS: true,
+				allowTaint: true,
+				backgroundColor: '#ffffff', // important
+			});
+			const imgData = canvas.toDataURL('image/png');
+			const pdf = new jsPDF('p', 'mm', 'a4');
+			const pdfWidth = pdf.internal.pageSize.getWidth();
+			const pdfHeight = pdf.internal.pageSize.getHeight();
+			const imgProps = pdf.getImageProperties(imgData);
+			const imgHeight = (imgProps.height * pdfWidth) / imgProps.width;
 
-		pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
-		heightLeft -= pdfHeight;
+			let heightLeft = imgHeight;
+			let position = 0;
 
-		while (heightLeft > 0) {
-			position = heightLeft - imgHeight;
-			pdf.addPage();
 			pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
 			heightLeft -= pdfHeight;
-		}
 
-		pdf.save('resume.pdf');
+			while (heightLeft > 0) {
+				position = heightLeft - imgHeight;
+				pdf.addPage();
+				pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, imgHeight);
+				heightLeft -= pdfHeight;
+			}
+
+			pdf.save('resume.pdf');
+		} catch (err) {
+			console.error('Error generating PDF:', err);
+		}
 	};
 
 	return (
 		<div className="p-3 mt-3 mx-3">
-			<div ref={resumeRef} className="grid grid-cols-1 gap-5">
+			{/* Resume Container */}
+			<div
+				ref={resumeRef}
+				style={{
+					backgroundColor: '#ffffff',
+					color: '#111111',
+					fontFamily: 'Arial, sans-serif',
+					fontSize: '13px',
+					lineHeight: '1.4',
+				}}
+				className="grid grid-cols-1 gap-5"
+			>
 				{CVSections.map((sec, i) => {
 					if (!sec.data || (Array.isArray(sec.data) && sec.data.length === 0)) return null;
 
 					return (
 						<div className="justify-center p-1" key={i}>
-							{/* Hide the title for Personal Header */}
+							{/* Hide title for Personal Header */}
 							{sec.section !== 'Personal Header' && (
 								<>
-									<h1 className="text-[20px] font-mono text-start font-semibold">{sec.section}</h1>
-									<hr className="mb-2" />
+									<h1 style={{ fontSize: '18px', fontWeight: 600 }}>{sec.section}</h1>
+									<hr style={{ marginBottom: '6px', borderColor: '#999999' }} />
 								</>
 							)}
 
+							{/* Text */}
 							{sec.type === 'text' && <p>{sec.data}</p>}
 
+							{/* Header */}
 							{sec.type === 'header' && sec.data && (
-								<div className="flex flex-row gap-7">
+								<div className="flex flex-col md:flex-row gap-5">
 									{sec.data.profileImage && (
 										<img
 											src={sec.data.profileImage}
 											alt={sec.data.name}
-											className="h-50 w-auto border-2 border-black p-3 rounded-sm"
+											style={{ height: '120px', width: 'auto', border: '2px solid #111', padding: '6px', borderRadius: '4px' }}
 										/>
 									)}
-									<div className="justify-center m-1 p-1 flex flex-col gap-1">
-										{sec.data.name && <h1 className="text-2xl font-bold text-center">{sec.data.name}</h1>}
+									<div className="flex flex-col gap-1 justify-center">
+										{sec.data.name && <h1 style={{ fontSize: '22px', fontWeight: 700 }}>{sec.data.name}</h1>}
 										{sec.data.address && <h2>Address: {sec.data.address}</h2>}
 										{sec.data.contact && <h2>Contact No: {sec.data.contact}</h2>}
 										{sec.data.email && <h2>Email: {sec.data.email}</h2>}
@@ -72,16 +95,17 @@ const DownloadResume = () => {
 								</div>
 							)}
 
+							{/* Table */}
 							{sec.type === 'table' && (
 								<>
 									{sec.data.map((obj, j) => (
 										<div key={j} className="p-1">
 											{(obj.startYear || obj.endYear) && (
-												<h2 className="text-[16px] font-semibold font-sans text-start">
+												<h2 style={{ fontSize: '16px', fontWeight: 600 }}>
 													{obj.startYear ? obj.startYear : ''} {obj.endYear ? '-' + obj.endYear : ''}
 												</h2>
 											)}
-											<p className="text-[18px] font-semibold">
+											<p style={{ fontSize: '15px', fontWeight: 600 }}>
 												{obj.degree
 													? `${obj.degree}${obj.field ? ' - ' + obj.field : ''}${obj.cgpa ? ' (CGPA ' + obj.cgpa + ')' : ''
 													}`
@@ -89,7 +113,7 @@ const DownloadResume = () => {
 														? `${obj.position}${obj.company ? ' - ' + obj.company : ''}`
 														: ''}
 											</p>
-											<p>
+											<p style={{ fontSize: '14px' }}>
 												{obj.institution
 													? `${obj.institution}${obj.boardOrUniversity ? ', ' + obj.boardOrUniversity : ''}${obj.location ? ', ' + obj.location : ''
 													}`
@@ -106,10 +130,11 @@ const DownloadResume = () => {
 								</>
 							)}
 
+							{/* List */}
 							{sec.type === 'list' && (
 								<>
 									{sec.data.map((obj, j) => (
-										<p key={j} className="list-disc">
+										<p key={j} style={{ marginLeft: '15px', listStyleType: 'disc' }}>
 											{obj.year ? obj.year + ' - ' : ''}
 											{obj.title ? obj.title + ' ' : ''}
 											{obj.provider ? '(' + obj.provider + ')' : ''}
@@ -120,6 +145,7 @@ const DownloadResume = () => {
 								</>
 							)}
 
+							{/* KeyValue */}
 							{sec.type === 'keyValue' && (
 								<div className="flex flex-col gap-1">
 									{sec.data.map((obj, j) => (
@@ -130,10 +156,19 @@ const DownloadResume = () => {
 								</div>
 							)}
 
+							{/* Tags */}
 							{sec.type === 'tags' && (
 								<div className="flex flex-wrap gap-2 mt-1">
 									{sec.data.map((tag, j) => (
-										<span key={j} className="bg-gray-200 px-2 py-1 rounded-md">
+										<span
+											key={j}
+											style={{
+												backgroundColor: '#e2e8f0',
+												padding: '2px 6px',
+												borderRadius: '4px',
+												fontSize: '13px',
+											}}
+										>
 											{tag}
 										</span>
 									))}
@@ -144,10 +179,17 @@ const DownloadResume = () => {
 				})}
 			</div>
 
+			{/* Download Button */}
 			<div className="mt-5 flex justify-center">
 				<button
 					onClick={handleDownload}
-					className="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition"
+					style={{
+						backgroundColor: '#2563eb',
+						color: '#fff',
+						padding: '8px 20px',
+						borderRadius: '5px',
+						fontWeight: 600,
+					}}
 				>
 					Download Resume
 				</button>

@@ -218,7 +218,7 @@ export const CVSections = [
 			{
 				name: "Bikram",
 				designation: "Developer",
-				company: "Change",
+				company: "Hamro Job",
 				contact: "hamrojobs@gmail.com"
 			}
 		]

@@ -25,12 +25,12 @@ export const JDashboardData = [
 		link: "/jobseeker/edit-profile",
 	},
 
-	{
-		type: "item",
-		name: "My Documents",
-		icon: HiDocumentText,
-		link: "/jobseeker/documents",
-	},
+	// {
+	// 	type: "item",
+	// 	name: "My Documents",
+	// 	icon: HiDocumentText,
+	// 	link: "/jobseeker/documents",
+	// },
 
 	{
 		type: "item",
@@ -60,12 +60,12 @@ export const JDashboardData = [
 	// 	link: "/jobseeker/trainings",
 	// },
 
-	{
-		type: "item",
-		name: "Setting",
-		icon: HiCog,
-		link: "/jobseeker/settings",
-	},
+	// {
+	// 	type: "item",
+	// 	name: "Setting",
+	// 	icon: HiCog,
+	// 	link: "/jobseeker/settings",
+	// },
 
 	{
 		type: "item",

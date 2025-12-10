@@ -8,9 +8,13 @@ import {
 	NavbarBrand,
 } from "flowbite-react";
 import logo from "../assets/image/newLogo.png";
-import { Link } from "react-router-dom";
+import { Link, Links, useNavigation } from "react-router-dom";
 
 export function DashboardNav({ onMenuClick }) {
+	// const naviagation = useNavigation();
+	// const handleClick = () => {
+	// 	naviagation("/jobseekers")
+	// }
 	return (
 		<Navbar className="bg-[#1E2939] text-white shadow px-4 py-2 flex items-center justify-between">
 
@@ -47,10 +51,10 @@ export function DashboardNav({ onMenuClick }) {
 							gyawalibikra7@gamil.com
 						</span>
 					</DropdownHeader>
-					<DropdownItem>Dashboard</DropdownItem>
-					<DropdownItem>Settings</DropdownItem>
+					<DropdownItem as={Link} to="/jobseeker">Dashboard</DropdownItem>
+
 					<DropdownDivider />
-					<DropdownItem>Sign out</DropdownItem>
+					<DropdownItem as={Link} to="/jobseekers">Sign out</DropdownItem>
 				</Dropdown>
 			</div>
 		</Navbar>

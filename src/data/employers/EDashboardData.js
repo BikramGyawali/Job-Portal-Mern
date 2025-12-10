@@ -22,12 +22,12 @@ export const EDashboardData = [
 		],
 	},
 
-	{
-		type: "item",
-		name: "Setting",
-		icon: HiCog,
-		link: "/employer/settings",
-	},
+	// {
+	// 	type: "item",
+	// 	name: "Setting",
+	// 	icon: HiCog,
+	// 	link: "/employer/settings",
+	// },
 
 	{
 		type: "item",

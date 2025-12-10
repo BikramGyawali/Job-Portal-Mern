@@ -69,13 +69,14 @@ export const jobData = [
 ];
 
 //for cv 
+import logo from "../../assets/image/logo.png";
 export const CVSections = [
 	{
 		section: "Personal Header",
 		type: "header",
 		data: {
 			name: "Bikram Gyawali",
-			profileImage: "path_to_logo_or_photo.png",
+			profileImage: logo,
 			address: "Dhungedhara",
 			contact: "9745923376",
 			email: "gyawalibikram7@gmail.com",

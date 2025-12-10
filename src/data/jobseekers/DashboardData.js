@@ -68,3 +68,158 @@ export const jobData = [
 	}
 ];
 
+//for cv 
+
+export const CVTitle = ['Objective', 'Education', 'Work Experience', 'Training/Certification', 'Jobs Perference', 'Skills', 'Award', ' Language', 'Personal Information', 'Socail Information', 'Other Information', 'References']
+
+export const Education = [
+	{
+		section: "Education",
+		data: [
+			{
+				startYear: 2024,
+				endYear: "Running",
+				degree: "Intermediate (10+2)",
+				field: "Management",
+				cgpa: 3.6,
+				institution: "Ramapur Secondary School",
+				boardOrUniversity: "NEB",
+				location: "Ramapur"
+			},
+			{
+				startYear: 2020,
+				endYear: 2025,
+				degree: "Bachelor",
+				field: "Computer Application",
+				cgpa: 3.6,
+				institution: "Saraswati Multiple Campus",
+				boardOrUniversity: "Tribhuwan University",
+				location: "Kathmandu"
+			}
+		]
+	}
+];
+
+
+export const WorkExperience = [
+	{
+		section: "Work Experience",
+		data: [
+			{
+				company: "Coding Journey",
+				position: "Manager",
+				employmentType: "Full Time",
+				startDate: "2025-12",
+				endDate: "2026-01",
+				currentlyWorking: false,
+				role: "Management",
+				location: "Nepal"
+			},
+			{
+				company: "Hamro Jobs",
+				position: "Frontend Developer",
+				employmentType: "Full Time",
+				startDate: "2025-12",
+				endDate: null,
+				currentlyWorking: true,
+				role: "Developer",
+				location: "Nepal"
+			}
+		]
+	}
+];
+
+
+export const TrainingCertificates = [
+	{
+		section: "Training / Certificates",
+		data: [
+			{
+				year: "2025",
+				title: "Figma",
+				provider: "Unibytes",
+				type: "Training",
+				credentialId: null,
+				credentialUrl: null
+			}
+		]
+	}
+];
+
+
+export const JobPreference = {
+	section: "Job Preference",
+	lookingFor: "Part Time",
+	jobCategories: ["Admin"],
+	availableFor: "Part Time"
+};
+
+export const Skills = {
+	section: "Skills",
+	items: ["Figma", "Canva", "Livewire"]
+};
+export const Awards = {
+	section: "Awards",
+	data: [
+		{
+			title: "Code For Change Hackathon",
+			achievement: "Participant",
+			year: 2025
+		}
+	]
+};
+
+export const Languages = {
+	section: "Languages",
+	data: [
+		{
+			language: "Nepali",
+			proficiency: {
+				reading: "Good",
+				writing: "Good",
+				speaking: "Good"
+			}
+		}
+	]
+};
+
+
+export const PersonalInformation = {
+	section: "Personal Information",
+	details: {
+		gender: "Male",
+		currentAddress: "Dhugedhara, Nagarjun, Kathmandu",
+		permanentAddress: "Tansingal, Rainadevi Chhahara, Palpa",
+		maritalStatus: "Unmarried"
+	}
+};
+
+export const SocialAccounts = {
+	section: "Social Accounts",
+	accounts: [
+		{
+			platform: "Bikram Gyawali",
+			handle: "BikraGyawali"
+		}
+	]
+};
+
+export const OtherInformation = {
+	section: "Other Information",
+	details: [
+		{ label: "License", value: "Yes" },
+		{ label: "Vehicle", value: "No" }
+	]
+};
+
+export const References = {
+	section: "References",
+	details: [
+		{
+			name: "Bikram",
+			designation: "Developer",
+			company: "Change",
+			contact: "hamrojobs@gmail.com"
+		}
+	]
+};

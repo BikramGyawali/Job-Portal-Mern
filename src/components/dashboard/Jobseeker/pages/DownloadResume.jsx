@@ -1,5 +1,6 @@
 import React from 'react'
 import logo from "../../../../assets/image/logo.png";
+import { CVSections } from '../../../../data/jobseekers/DashboardData';
 function DownloadResume() {
 	return (
 		<div className='grid grid-cols-1 gap-5 p-3 mt-3 mx-3'>
@@ -17,13 +18,40 @@ function DownloadResume() {
 
 			</div>
 
+			{CVSections.map((sec, i) => (
+				<div className='justify-center p-1' key={i}>
+					<h1 className='text-[20px] font-mono text-start font-semibold'>{sec.section}</h1>
+					<hr />
+					{sec.type === "text" && (
+						<p>{sec.data}</p>
 
-			<div className='justify-center p-1'>
-				<h1 className='text-[20px] font-mono text-start font-semibold'>Objective</h1>
-				<hr />
-				<p className='p-2 text-justify '>I am a software developer and a students so i want a part time job. For now i am building a job portal so i am
-					studying your system.</p>
-			</div>
+					)
+
+					}
+
+					{sec.type === "table" && (
+
+						<>
+							{sec.data.map((Object, j) => (
+								<div key={j}>
+									<h2 className='text-[16px] font-semibold font-sans text-start'>{Object.startYear + "-" + Object.endYear}</h2>
+									<p>
+										{
+											Object.degree
+												? `${Object.degree}-${Object.field}-CGPA ${Object.cgpa}`
+
+												:
+												`${Object.position}-${Object.company}`
+										}
+									</p>
+								</div>
+							))}
+						</>
+
+					)}
+				</div>
+			))}
+
 
 		</div>
 	)

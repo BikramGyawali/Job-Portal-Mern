@@ -70,145 +70,157 @@ export const jobData = [
 
 //for cv 
 export const CVSections = [
-  {
-    section: "Objective",
-    type: "text",
-    data: "I am a software developer and a student, so I want a part-time job. For now, I am building a job portal, so I am studying your system."
-  },
-  {
-    section: "Education",
-    type: "table",
-    data: [
-      {
-        startYear: 2024,
-        endYear: "Running",
-        degree: "Intermediate (10+2)",
-        field: "Management",
-        cgpa: 3.6,
-        institution: "Ramapur Secondary School",
-        boardOrUniversity: "NEB",
-        location: "Ramapur"
-      },
-      {
-        startYear: 2020,
-        endYear: 2025,
-        degree: "Bachelor",
-        field: "Computer Application",
-        cgpa: 3.6,
-        institution: "Saraswati Multiple Campus",
-        boardOrUniversity: "Tribhuwan University",
-        location: "Kathmandu"
-      }
-    ]
-  },
-  {
-    section: "Work Experience",
-    type: "table",
-    data: [
-      {
-        company: "Coding Journey",
-        position: "Manager",
-        employmentType: "Full Time",
-        startDate: "Dec, 2025",
-        endDate: "Jan, 2026",
-        currentlyWorking: false,
-        role: "Management",
-        location: "Nepal"
-      },
-      {
-        company: "Hamro Jobs",
-        position: "Frontend Developer",
-        employmentType: "Full Time",
-        startDate: "Dec, 2025",
-        endDate: null,
-        currentlyWorking: true,
-        role: "Developer",
-        location: "Nepal"
-      }
-    ]
-  },
-  {
-    section: "Training / Certificates",
-    type: "list",
-    data: [
-      {
-        year: "2025",
-        title: "Figma",
-        provider: "Unibytes",
-        type: "Training",
-        credentialId: null,
-        credentialUrl: null
-      }
-    ]
-  },
-  {
-    section: "Job Preference",
-    type: "keyValue",
-    data: [
-      { label: "Looking for", value: "Part Time" },
-      { label: "Job Categories", value: "Admin" },
-      { label: "Available for", value: "Part Time" }
-    ]
-  },
-  {
-    section: "Skills",
-    type: "tags",
-    data: ["Figma", "Canva", "Livewire"]
-  },
-  {
-    section: "Awards",
-    type: "list",
-    data: [
-      { title: "Code For Change Hackathon", achievement: "Participant", year: 2025 }
-    ]
-  },
-  {
-    section: "Languages",
-    type: "table",
-    data: [
-      {
-        language: "Nepali",
-        reading: "Good",
-        writing: "Good",
-        speaking: "Good"
-      }
-    ]
-  },
-  {
-    section: "Personal Information",
-    type: "keyValue",
-    data: [
-      { label: "Gender", value: "Male" },
-      { label: "Current Address", value: "Dhugedhara, Nagarjun, Kathmandu" },
-      { label: "Permanent Address", value: "Tansingal, Rainadevi Chhahara, Palpa" },
-      { label: "Marital Status", value: "Unmarried" }
-    ]
-  },
-  {
-    section: "Social Accounts",
-    type: "list",
-    data: [
-      { platform: "Bikram Gyawali", handle: "BikraGyawali" }
-    ]
-  },
-  {
-    section: "Other Information",
-    type: "keyValue",
-    data: [
-      { label: "License", value: "Yes" },
-      { label: "Vehicle", value: "No" }
-    ]
-  },
-  {
-    section: "References",
-    type: "table",
-    data: [
-      {
-        name: "Bikram",
-        designation: "Developer",
-        company: "Change",
-        contact: "hamrojobs@gmail.com"
-      }
-    ]
-  }
+	{
+		section: "Personal Header",
+		type: "header",
+		data: {
+			name: "Bikram Gyawali",
+			profileImage: "path_to_logo_or_photo.png",
+			address: "Dhungedhara",
+			contact: "9745923376",
+			email: "gyawalibikram7@gmail.com",
+			dateOfBirth: "May 29, 2006",
+			experience: "Fresher"
+		}
+	},
+	{
+		section: "Objective",
+		type: "text",
+		data: "I am a software developer and a student, so I want a part-time job. For now, I am building a job portal, so I am studying your system."
+	},
+	{
+		section: "Education",
+		type: "table",
+		data: [
+			{
+				startYear: 2024,
+				endYear: "Running",
+				degree: "Intermediate (+2)",
+				field: "Management",
+				cgpa: 3.6,
+				institution: "Ramapur Secondary School",
+				boardOrUniversity: "NEB",
+				location: "Ramapur"
+			},
+			{
+				startYear: 2020,
+				endYear: 2025,
+				degree: "Bachelor",
+				field: "Computer Application",
+				cgpa: 3.6,
+				institution: "Saraswati Multiple Campus",
+				boardOrUniversity: "Tribhuwan University",
+				location: "Kathmandu"
+			}
+		]
+	},
+	{
+		section: "Work Experience",
+		type: "table",
+		data: [
+			{
+				company: "Coding Journey",
+				position: "Manager",
+				employmentType: "Full Time",
+				startYear: "Dec, 2025",
+				endYear: "Jan, 2026",
+				currentlyWorking: false,
+				role: "Management",
+				location: "Nepal"
+			},
+			{
+				company: "Hamro Jobs",
+				position: "Frontend Developer",
+				employmentType: "Full Time",
+				startYear: "Dec, 2025",
+				endYear: "Running",
+				currentlyWorking: true,
+				role: "Developer",
+				location: "Nepal"
+			}
+		]
+	},
+	{
+		section: "Training / Certificates",
+		type: "list",
+		data: [
+			{
+				year: "2025",
+				title: "Figma",
+				provider: "Unibytes",
+				type: "Training"
+			}
+		]
+	},
+	{
+		section: "Job Preference",
+		type: "keyValue",
+		data: [
+			{ label: "Looking for", value: "Part Time" },
+			{ label: "Job Categories", value: "Admin" },
+			{ label: "Available for", value: "Part Time" }
+		]
+	},
+	{
+		section: "Skills",
+		type: "tags",
+		data: ["Figma", "Canva", "Livewire"]
+	},
+	{
+		section: "Awards",
+		type: "list",
+		data: [
+			{ title: "Code For Change Hackathon", achievement: "Participant", year: 2025 }
+		]
+	},
+	{
+		section: "Languages",
+		type: "table",
+		data: [
+			{
+				language: "Nepali",
+				reading: "Good",
+				writing: "Good",
+				speaking: "Good"
+			}
+		]
+	},
+	{
+		section: "Personal Information",
+		type: "keyValue",
+		data: [
+			{ label: "Gender", value: "Male" },
+			{ label: "Current Address", value: "Dhugedhara, Nagarjun, Kathmandu" },
+			{ label: "Permanent Address", value: "Tansingal, Rainadevi Chhahara, Palpa" },
+			{ label: "Marital Status", value: "Unmarried" }
+		]
+	},
+	{
+		section: "Social Accounts",
+		type: "list",
+		data: [
+			{ platform: "Bikram Gyawali", handle: "BikraGyawali" }
+		]
+	},
+	{
+		section: "Other Information",
+		type: "keyValue",
+		data: [
+			{ label: "License", value: "Yes" },
+			{ label: "Vehicle", value: "No" }
+		]
+	},
+	{
+		section: "References",
+		type: "table",
+		data: [
+			{
+				name: "Bikram",
+				designation: "Developer",
+				company: "Change",
+				contact: "hamrojobs@gmail.com"
+			}
+		]
+	}
 ];
+

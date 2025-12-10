@@ -147,7 +147,7 @@ const DownloadResume = () => {
 
 							{/* KeyValue */}
 							{sec.type === 'keyValue' && (
-								<div className="flex flex-col gap-1">
+								<div className="flex flex-col gap-1 text-[15px]">
 									{sec.data.map((obj, j) => (
 										<p key={j}>
 											<strong>{obj.label}:</strong> {obj.value}
@@ -158,17 +158,13 @@ const DownloadResume = () => {
 
 							{/* Tags */}
 							{sec.type === 'tags' && (
-								<div className="flex flex-wrap gap-2 mt-1">
+								<div className="flex flex-wrap gap-2 mt-1 ">
 									{sec.data.map((tag, j) => (
 										<span
 											key={j}
-											style={{
-												backgroundColor: '#e2e8f0',
-												padding: '2px 6px',
-												borderRadius: '4px',
-												fontSize: '13px',
-											}}
+											className='text-[14px] bg-[#e2e8f0] border-black rounded px-3 py-2 '
 										>
+
 											{tag}
 										</span>
 									))}
@@ -183,13 +179,7 @@ const DownloadResume = () => {
 			<div className="mt-5 flex justify-center">
 				<button
 					onClick={handleDownload}
-					style={{
-						backgroundColor: '#2563eb',
-						color: '#fff',
-						padding: '8px 20px',
-						borderRadius: '5px',
-						fontWeight: 600,
-					}}
+					className='bg-[#2563eb] px-5 py-2 text-[23px] cursor-pointer rounded-2xl text-white hover:scale-105'
 				>
 					Download Resume
 				</button>

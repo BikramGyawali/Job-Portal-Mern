@@ -63,29 +63,29 @@ const DownloadResume = () => {
 
 					return (
 						<div className="justify-center p-1" key={i}>
-							{/* Hide title for Personal Header */}
+
 							{sec.section !== 'Personal Header' && (
 								<>
-									<h1 style={{ fontSize: '18px', fontWeight: 600 }}>{sec.section}</h1>
-									<hr style={{ marginBottom: '6px', borderColor: '#999999' }} />
+									<h1 className='text-[18px] font-semibold'>{sec.section}</h1>
+									<hr className='mb-2 border-black' />
 								</>
 							)}
 
-							{/* Text */}
-							{sec.type === 'text' && <p>{sec.data}</p>}
 
-							{/* Header */}
+							{sec.type === 'text' && <p className='text-[16px] text-justify'>{sec.data}</p>}
+
+
 							{sec.type === 'header' && sec.data && (
 								<div className="flex flex-col md:flex-row gap-5">
 									{sec.data.profileImage && (
 										<img
 											src={sec.data.profileImage}
 											alt={sec.data.name}
-											style={{ height: '120px', width: 'auto', border: '2px solid #111', padding: '6px', borderRadius: '4px' }}
+											className="h-[200px] w-auto border-2 border-black p-1.5 rounded"
 										/>
 									)}
-									<div className="flex flex-col gap-1 justify-center">
-										{sec.data.name && <h1 style={{ fontSize: '22px', fontWeight: 700 }}>{sec.data.name}</h1>}
+									<div className="flex flex-col gap-1 justify-center text-[17px] text-justify">
+										{sec.data.name && <h1 className='text-[22px] font-bold'>{sec.data.name}</h1>}
 										{sec.data.address && <h2>Address: {sec.data.address}</h2>}
 										{sec.data.contact && <h2>Contact No: {sec.data.contact}</h2>}
 										{sec.data.email && <h2>Email: {sec.data.email}</h2>}
@@ -95,17 +95,17 @@ const DownloadResume = () => {
 								</div>
 							)}
 
-							{/* Table */}
+
 							{sec.type === 'table' && (
 								<>
 									{sec.data.map((obj, j) => (
 										<div key={j} className="p-1">
 											{(obj.startYear || obj.endYear) && (
-												<h2 style={{ fontSize: '16px', fontWeight: 600 }}>
+												<h2 className='text-[16px] font-semibold'>
 													{obj.startYear ? obj.startYear : ''} {obj.endYear ? '-' + obj.endYear : ''}
 												</h2>
 											)}
-											<p style={{ fontSize: '15px', fontWeight: 600 }}>
+											<p className='text-[16px] font-semibold'>
 												{obj.degree
 													? `${obj.degree}${obj.field ? ' - ' + obj.field : ''}${obj.cgpa ? ' (CGPA ' + obj.cgpa + ')' : ''
 													}`
@@ -113,7 +113,7 @@ const DownloadResume = () => {
 														? `${obj.position}${obj.company ? ' - ' + obj.company : ''}`
 														: ''}
 											</p>
-											<p style={{ fontSize: '14px' }}>
+											<p className='text-[14px]'>
 												{obj.institution
 													? `${obj.institution}${obj.boardOrUniversity ? ', ' + obj.boardOrUniversity : ''}${obj.location ? ', ' + obj.location : ''
 													}`
@@ -130,11 +130,11 @@ const DownloadResume = () => {
 								</>
 							)}
 
-							{/* List */}
+
 							{sec.type === 'list' && (
 								<>
 									{sec.data.map((obj, j) => (
-										<p key={j} style={{ marginLeft: '15px', listStyleType: 'disc' }}>
+										<p key={j} className='text-[16px] ml-[16px] list-disc'>
 											{obj.year ? obj.year + ' - ' : ''}
 											{obj.title ? obj.title + ' ' : ''}
 											{obj.provider ? '(' + obj.provider + ')' : ''}

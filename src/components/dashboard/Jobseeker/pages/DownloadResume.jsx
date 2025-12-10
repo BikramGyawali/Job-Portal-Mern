@@ -33,15 +33,22 @@ function DownloadResume() {
 
 						<>
 							{sec.data.map((Object, j) => (
-								<div key={j}>
+								<div key={j} className='p-1'>
 									<h2 className='text-[16px] font-semibold font-sans text-start'>{Object.startYear + "-" + Object.endYear}</h2>
-									<p>
+									<p className='text-[18px] font-semibold'>
 										{
 											Object.degree
 												? `${Object.degree}-${Object.field}-CGPA ${Object.cgpa}`
 
 												:
 												`${Object.position}-${Object.company}`
+										}
+									</p>
+									<p>
+										{
+											Object.institution
+												? `${Object.institution}, ${Object.boardOrUniversity} , ${Object.location}`
+												: `${Object.employmentType}`
 										}
 									</p>
 								</div>

@@ -14,15 +14,16 @@ export const DashboardCardData = [
 ]
 
 
-export const DashboardTableHeadData = ["S.N", "Name", "Email", "Details", "Actoins"];
+export const DashboardTableHeadData = ["S.N", "Name", "Email", "Role", "Actions"];
 
 export const DashboardBodyData = [
 	{
 		"S.N": "1",
-		"Name": "Bikam",
+		"Name": "Bikram Gyawali",
 		"Email": "gyawalibikram7@gamil.com",
-		"Details": ["view"],
-		"Actions": ["approve", "delete"]
+		"Role": "User",
+		// "Details": ["view"],
+		"Actions": ["approve", "reject", "view"]
 	}
 ]
 

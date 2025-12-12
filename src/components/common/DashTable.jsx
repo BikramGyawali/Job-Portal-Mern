@@ -73,6 +73,10 @@ function DashTable({ title, headData, bodyData, actionHandler }) {
 															Icon = null;
 															colorClass = "text-green-400 hover:text-green-700 ";
 															break;
+														case "approve":
+															Icon = null;
+															colorClass = "text-green-400 hover:text-green-700 ";
+															break;
 														case "reject":
 															Icon = null;
 															colorClass = "text-red-400 hover:text-red-700 ";

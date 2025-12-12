@@ -33,6 +33,9 @@ import PostJob from "./components/dashboard/Employer/pages/PostJob";
 import EmployerSetting from "./components/dashboard/Employer/pages/Setting";
 import Applicants from "./components/dashboard/Employer/pages/Applicants";
 import JobListing from "./components/dashboard/Jobseeker/pages/JobListing";
+import AdminDashboard from "./components/dashboard/Admin/AdminDashboard";
+import ApproveAccounts from "./components/dashboard/Admin/pages/ApproveAccounts";
+import ApprovePostJobs from "./components/dashboard/Admin/pages/ApprovePostJobs";
 
 
 export default function App() {
@@ -76,6 +79,13 @@ export default function App() {
 						<Route path="applicants" element={<Applicants />} />
 						<Route path="settings" element={<EmployerSetting />} />
 						<Route path="" />
+					</Route>
+
+					<Route path="admin/*" element={<DashboardLayout role="Admin" />}>
+						<Route index element={<AdminDashboard />} />
+						<Route path="approve-account" element={<ApproveAccounts />} />
+						<Route path="approve-jobs" element={<ApprovePostJobs />} />
+
 					</Route>
 
 					{/* legacy /dashboard route -> redirect to jobseeker dashboard layout (silence unmatched warning) */}

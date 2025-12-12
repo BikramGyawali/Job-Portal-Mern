@@ -3,13 +3,13 @@ import { DashboardNav } from "./DashboardNav";
 import { SideDashboard } from "./SideDashboard";
 import { Outlet } from "react-router-dom";
 
-const DashboardLayout = ({ children, role = "employer" }) => {
+const DashboardLayout = ({ children, role = "Employer" }) => {
 	const [sidebarOpen, setSidebarOpen] = useState(false);
 
 	return (
 		<div className="h-screen flex flex-col bg-[#F3F4F6] mb-10">
 
-			<DashboardNav role={role} onMenuClick={() => setSidebarOpen(true)}  />
+			<DashboardNav role={role} onMenuClick={() => setSidebarOpen(true)} />
 
 			<div className="flex flex-1 overflow-hidden">
 

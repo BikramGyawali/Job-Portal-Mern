@@ -17,9 +17,10 @@ export const JDashboardCardData = [
 	}
 ]
 
-export const DashboardHeadData = ["Job Title", "Job Level", "Remainig Days", "Actions"];
+export const DashboardHeadData = ["S.N","Job Title", "Job Level", "Remainig Days", "Actions"];
 
 export const DashboardBodyData = [{
+	"S.N":"1",
 	"Job Title": "Front-End Developer",
 	"Job Level": "Middle",
 	"Remainig Days": "16",

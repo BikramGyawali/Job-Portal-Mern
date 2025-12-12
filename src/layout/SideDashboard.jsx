@@ -3,10 +3,11 @@ import { Link, useLocation } from "react-router-dom";
 import { JDashboardData } from "../data/jobseekers/JDashboardData";
 import { EDashboardData } from "../data/employers/edashboardData";
 import { HiX } from "react-icons/hi";
+import { ADashboardSideData } from "../data/admin/Dashboarddata";
 
 export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 	const { pathname } = useLocation();
-	const menuData = role === "Jobseeker" ? JDashboardData : EDashboardData;
+	const menuData = role === "Jobseeker" ? JDashboardData : role == "Employer" ? EDashboardData : ADashboardSideData;
 
 	const renderMenu = (closeOnClick = false) => (
 		<SidebarItems>

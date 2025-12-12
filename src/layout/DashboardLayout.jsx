@@ -9,7 +9,7 @@ const DashboardLayout = ({ children, role = "employer" }) => {
 	return (
 		<div className="h-screen flex flex-col bg-[#F3F4F6] mb-10">
 
-			<DashboardNav onMenuClick={() => setSidebarOpen(true)} />
+			<DashboardNav role={role} onMenuClick={() => setSidebarOpen(true)}  />
 
 			<div className="flex flex-1 overflow-hidden">
 

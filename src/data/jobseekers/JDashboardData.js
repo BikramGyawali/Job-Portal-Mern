@@ -74,3 +74,11 @@ export const JDashboardData = [
 		link: "/jobseekers",
 	},
 ];
+
+
+export const JNavbarData = [
+	{
+		name: "Bikram Gyawali",
+		email: "gyawalibikram7@gmail.com"
+	}
+]

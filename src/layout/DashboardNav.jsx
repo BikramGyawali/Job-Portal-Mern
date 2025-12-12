@@ -8,13 +8,17 @@ import {
 	NavbarBrand,
 } from "flowbite-react";
 import logo from "../assets/image/newLogo.png";
-import { Link, Links, useNavigation } from "react-router-dom";
+import { Link, Links, useLocation, useNavigation } from "react-router-dom";
+import { NavbarData } from "../data/employers/edashboardData";
+import { JNavbarData } from "../data/jobseekers/JDashboardData";
 
-export function DashboardNav({ onMenuClick }) {
+export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 	// const naviagation = useNavigation();
 	// const handleClick = () => {
 	// 	naviagation("/jobseekers")
 	// }
+	const { pathname } = useLocation();
+	const myData = role === 'Jobseeker' ? JNavbarData : NavbarData;
 	return (
 		<Navbar className="bg-[#1E2939] text-white shadow px-4 py-2 flex items-center justify-between">
 
@@ -46,15 +50,22 @@ export function DashboardNav({ onMenuClick }) {
 					}
 				>
 					<DropdownHeader>
-						<span className="font-bold text-sm">Bikram Gyawali</span>
-						<span className="block truncate text-sm font-medium">
-							gyawalibikra7@gamil.com
-						</span>
+						{myData.map((item, i) => {
+							const { name, email } = item;
+							return (
+								<div key={i}>
+									<span className="font-bold text-sm">{name}</span>
+									<span className="block truncate text-sm font-medium">
+										{email}
+									</span>
+								</div>
+							)
+						})}
 					</DropdownHeader>
-					<DropdownItem as={Link} to="/jobseeker">Dashboard</DropdownItem>
+					<DropdownItem as={Link} to={`${role === "Jobseeker" ? "/jobseeker" : "/employer"}`}>Dashboard</DropdownItem>
 
 					<DropdownDivider />
-					<DropdownItem as={Link} to="/jobseekers">Sign out</DropdownItem>
+					<DropdownItem as={Link} to={`${role === "Jobseeker" ? "/jobseekers" : "/employers"}`}>Sign out</DropdownItem>
 				</Dropdown>
 			</div>
 		</Navbar>

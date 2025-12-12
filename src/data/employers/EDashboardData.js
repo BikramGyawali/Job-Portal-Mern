@@ -37,3 +37,10 @@ export const EDashboardData = [
 	},
 
 ];
+
+export const NavbarData = [
+	{
+		name: "Coding journey",
+		email: "cj7@gmail.com"
+	}
+]

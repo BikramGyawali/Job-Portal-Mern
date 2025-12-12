@@ -33,14 +33,23 @@ function LoginComp({ LoginData }) {
 		const { error, valid } = contactLoginValidate(form);
 		// console.log(error.email);
 
-		
+
 		setError(error)
 		if (valid) {
 			setForm({
 				email: "",
 				pass: ""
 			});
-			(role === "jobseeker" ? navigate("/jobseeker") : navigate("/employer"))
+			if (role === "jobseeker") {
+				navigate("/jobseeker");
+			} else if (role === "employers") {
+				navigate("/employer");
+			} else if (role === "admin") {
+				navigate("/admin");
+			} else {
+				navigate("/not-found");
+			}
+
 		}
 	};
 
@@ -116,16 +125,18 @@ function LoginComp({ LoginData }) {
 					</div>
 				</form>
 
-				<p className="text-lg mt-5">
-					New to Hamro Job?{" "}
-					<Link
-						to="/register"
-						state={{ role: role }}
-						className="text-blue-900 underline font-semibold"
-					>
-						Create Account
-					</Link>
-				</p>
+				{role !== "admin" ?
+					<p className="text-lg mt-5">
+						New to Hamro Job?{" "}
+						<Link
+							to="/register"
+							state={{ role: role }}
+							className="text-blue-900 underline font-semibold"
+						>
+							Create Account
+						</Link>
+					</p> :
+					""}
 			</div>
 
 		</div>

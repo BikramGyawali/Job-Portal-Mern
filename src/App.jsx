@@ -17,12 +17,11 @@ import EmployersProfile from "./components/profile/EmployersProfile";
 import DashboardLayout from "./layout/DashboardLayout";
 import JobseekerDashboard from "./components/dashboard/Jobseeker/JobseekerDashboard";
 import EditProfile from "./components/dashboard/Jobseeker/pages/EditProfile";
-import MyDocument from "./components/dashboard/Jobseeker/pages/MyDocument";
+
 import AppliedJobs from "./components/dashboard/Jobseeker/pages/AppliedJobs";
 import SavedJobs from "./components/dashboard/Jobseeker/pages/SavedJobs";
 import DownloadResume from "./components/dashboard/Jobseeker/pages/DownloadResume";
-import Setting from "./components/dashboard/Jobseeker/pages/Setting";
-import Logout from "./components/dashboard/Jobseeker/pages/Logout";
+
 
 // Employer dashboard components
 import EmployerDashboard from "./components/dashboard/Employer/EmployerDashboard";
@@ -30,12 +29,13 @@ import JobBoard from "./components/dashboard/Employer/pages/JobBoard";
 import MyJobs from "./components/dashboard/Employer/pages/MyJobs";
 import PostJob from "./components/dashboard/Employer/pages/PostJob";
 
-import EmployerSetting from "./components/dashboard/Employer/pages/Setting";
+
 import Applicants from "./components/dashboard/Employer/pages/Applicants";
 import JobListing from "./components/dashboard/Jobseeker/pages/JobListing";
 import AdminDashboard from "./components/dashboard/Admin/AdminDashboard";
 import ApproveAccounts from "./components/dashboard/Admin/pages/ApproveAccounts";
 import ApprovePostJobs from "./components/dashboard/Admin/pages/ApprovePostJobs";
+import AdminLogin from "./pages/admin/AdminLogin";
 
 
 export default function App() {
@@ -52,7 +52,7 @@ export default function App() {
 					<Route path="/jobseekers" element={<Jobseekers />} />
 					<Route path="/employers" element={<Employers />} />
 					<Route path="/register" element={<RegisterComp />} />
-
+					<Route path="/admin-login" element={<AdminLogin />} />
 					<Route path="/jobseekers-profile" element={<JobseekersProfile />} />
 					<Route path="/employers-profile" element={<EmployersProfile />} />
 
@@ -61,11 +61,9 @@ export default function App() {
 					<Route path="jobseeker/*" element={<DashboardLayout role="Jobseeker" />}>
 						<Route index element={<JobseekerDashboard />} />
 						<Route path="edit-profile" element={<EditProfile />} />
-						<Route path="documents" element={<MyDocument />} />
 						<Route path="applied-jobs" element={<AppliedJobs />} />
 						<Route path="saved-jobs" element={<SavedJobs />} />
 						<Route path="download-resume" element={<DownloadResume />} />
-						<Route path="settings" element={<Setting />} />
 						<Route path="jobseekers" element={<Jobseekers />} />
 						<Route path="job-listing" element={<JobListing />} />
 					</Route>
@@ -77,7 +75,7 @@ export default function App() {
 						<Route path="my-jobs" element={<MyJobs />} />
 						<Route path="post-job" element={<PostJob />} />
 						<Route path="applicants" element={<Applicants />} />
-						<Route path="settings" element={<EmployerSetting />} />
+
 						<Route path="" />
 					</Route>
 
@@ -85,6 +83,7 @@ export default function App() {
 						<Route index element={<AdminDashboard />} />
 						<Route path="approve-account" element={<ApproveAccounts />} />
 						<Route path="approve-jobs" element={<ApprovePostJobs />} />
+						<Route path="admin-login" element={<AdminLogin />} />
 
 					</Route>
 

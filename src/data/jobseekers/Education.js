@@ -51,7 +51,7 @@ export const Education = [
 		name: "gradingType",
 		type: "select",
 		required: true,
-		options: ["GPA", "CGPA", "Percentage"]
+		options: ["CGPA", "Percentage"]
 	},
 
 	{
@@ -62,13 +62,13 @@ export const Education = [
 		placeholder: "3.6"
 	},
 
-	{
-		label: "CGPA Scale",
-		name: "cgpaScale",
-		type: "select",
-		required: false,
-		options: ["4.0 Points", "10 Points"]
-	},
+	// {
+	// 	label: "CGPA Scale",
+	// 	name: "cgpaScale",
+	// 	type: "select",
+	// 	required: false,
+	// 	options: ["4.0 Points", "10 Points"]
+	// },
 
 	{
 		label: "Joined Year",

@@ -76,7 +76,8 @@ function ReusableForm({
 					) : field.type === "select" ? (
 						<select
 							name={field.name}
-							value={form[field.name] ?? ""}
+							value={form[field.name] !== undefined ? form[field.name] : ""}
+
 							onChange={onChange}
 							className="p-2 border rounded-xl"
 						>
@@ -91,7 +92,8 @@ function ReusableForm({
 					) : field.type === "textarea" ? (
 						<textarea
 							name={field.name}
-							value={form[field.name] ?? ""}
+							value={form[field.name] !== undefined ? form[field.name] : ""}
+
 							onChange={onChange}
 							placeholder={field.placeholder}
 							rows="4"
@@ -118,7 +120,8 @@ function ReusableForm({
 							<input
 								type="date"
 								name={field.name}
-								value={form[field.name] ?? ""}
+								value={form[field.name] !== undefined ? form[field.name] : ""}
+
 								onChange={onChange}
 								max={maxDate}
 								placeholder={field.placeholder}
@@ -129,7 +132,8 @@ function ReusableForm({
 								<input
 									type={field.type}
 									name={field.name}
-									value={form[field.name] ?? ""}
+									value={form[field.name] !== undefined ? form[field.name] : ""}
+
 									onChange={onChange}
 									placeholder={field.placeholder}
 									className="p-2 border rounded-xl"

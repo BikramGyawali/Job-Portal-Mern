@@ -16,7 +16,7 @@ export const employerProfile = [
 
 	{
 		label: "Company Address",
-		name: "sname",
+		name: "companyaddress",
 		type: "text",
 		required: true,
 		placeholder: "Enter your company address"

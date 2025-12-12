@@ -120,13 +120,13 @@ function JobseekersProfile() {
 			targetForm = profile;
 			targetFields = ProfileFields;
 		} else if (step === 2) {
-			targetForm = experiences[expIndex] || createEmptyEntry(Experience);
+			targetForm = experiences[expIndex] ?? createEmptyEntry(Experience);
 			targetFields = Experience;
 		} else if (step === 3) {
-			targetForm = educationList[eduIndex] || createEmptyEntry(Education);
+			targetForm = educationList[eduIndex] ?? createEmptyEntry(Education);
 			targetFields = Education;
 		} else {
-			targetForm = addDetailsList[addIndex] || createEmptyEntry(JAddDetails);
+			targetForm = addDetailsList[addIndex] ?? createEmptyEntry(JAddDetails);
 			targetFields = JAddDetails;
 		}
 

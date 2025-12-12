@@ -16,7 +16,9 @@ export const ValidateUtil = (form, fields = []) => {
 
 	// Loop through each field
 	fields.forEach(f => {
-		const value = (form[f.name] || "").toString().trim();
+		const value = form[f.name]?.toString().trim() || "";
+
+
 
 		// 1️⃣ Required fields
 		if (f.required && !value) {
@@ -92,6 +94,46 @@ export const ValidateUtil = (form, fields = []) => {
 			}
 		}
 
+		// district
+		if ('currentDistrict' in form && form.currentDistrict?.trim() && !textOnly.test(form.currentDistrict)) {
+			error.currentDistrict = "District Name must be text";
+			valid = false;
+		}
+		//municipality
+		if ('currentMunicipality' in form && form.currentMunicipality?.trim() && !textOnly.test(form.currentMunicipality)) {
+			error.currentMunicipality = "Municipality Name must be text";
+			valid = false;
+		}
+		if ('currentCity' in form && form.currentCity?.trim() && !textOnly.test(form.currentCity)) {
+			error.currentCity = " City Name must be text";
+			valid = false;
+		}
+		if ('perCity' in form && form.perCity?.trim() && !textOnly.test(form.perCity)) {
+			error.perCity = " City Name must be text";
+			valid = false;
+		}
+		if ('perDistrict' in form && form.perDistrict?.trim() && !textOnly.test(form.perDistrict)) {
+			error.perDistrict = " District Name must be text";
+			valid = false;
+		}
+		if ('perMunicipality' in form && form.perMunicipality?.trim() && !textOnly.test(form.perMunicipality)) {
+			error.perMunicipality = " Municipality Name must be text";
+			valid = false;
+		}
+
+		//
+		if ('position' in form && form.position?.trim() && !textOnly.test(form.position)) {
+			error.position = " Position must be text";
+			valid = false;
+		}
+		if ('institution' in form && form.institution?.trim() && !textOnly.test(form.institution)) {
+			error.institution = " Institution/College Name must be text";
+			valid = false;
+		}
+
+
+
+
 		//for empolyers
 
 		if (f.name === 'panCard' && value && !panCardCheck.test(value)) {
@@ -110,7 +152,11 @@ export const ValidateUtil = (form, fields = []) => {
 			error[f.name] = "Invalid webiste format";
 			valid = false;
 		}
-
+		//company address
+		if ('companyaddress' in form && form.companyaddress?.trim() && !textOnly.test(form.companyaddress)) {
+			error.companyaddress = "Company Address must be text";
+			valid = false;
+		}
 		//for dashboard jobtitle 
 		if ('jobTitle' in form && form.jobTitle?.trim() && !textOnly.test(form.jobTitle)) {
 			error.jobTitle = "Job Title must be text";
@@ -118,6 +164,24 @@ export const ValidateUtil = (form, fields = []) => {
 		}
 
 	});
+	//grade validation
+	// Grading validation
+	if (form.gradingType === "CGPA") {
+		const gpa = parseFloat(form.score);
 
+		if (isNaN(gpa) || gpa <= 0 || gpa > 4) {
+			error.score = "CGPA must be between 0.1 and 4.0";
+			valid = false;
+		}
+	}
+
+	if (form.gradingType === "Percentage") {
+		const percent = parseFloat(form.score);
+
+		if (isNaN(percent) || percent <= 0 || percent > 100) {
+			error.score = "Percentage must be between 1 and 100";
+			valid = false;
+		}
+	}
 	return { valid, error };
 };

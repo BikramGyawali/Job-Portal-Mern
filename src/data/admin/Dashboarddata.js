@@ -10,6 +10,9 @@ export const DashboardCardData = [
 	{
 		number: "30",
 		content: "Job Approved"
+	}, {
+		number: "20",
+		content: "Register Request"
 	}
 ]
 
@@ -21,12 +24,23 @@ export const DashboardBodyData = [
 		"S.N": "1",
 		"Name": "Bikram Gyawali",
 		"Email": "gyawalibikram7@gamil.com",
-		"Role": "User",
+		"Role": "Jobseeker",
 		// "Details": ["view"],
 		"Actions": ["approve", "reject", "view"]
 	}
 ]
 
+export const JobHeads = ["S.N", "Company Name", "Post", "Experience", "Actions"];
+export const JobData = [
+	{
+		"S.N": "1",
+		"Company Name": "Hehe",
+		"Post": "Frontend Developer",
+		"Experience": "Fresher",
+		// "Details": ["view"],
+		"Actions": ["approve", "reject", "view"]
+	}
+]
 export const ADashboardSideData = [
 	{
 		type: "item",

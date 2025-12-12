@@ -10,6 +10,8 @@ export const ValidateUtil = (form, fields = []) => {
 	const officePhoneCheck = /^\d{2}-\d{7}$/;
 	const websiteCheck = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/.*)?$/;
 
+	const mediaLink = /^(https?:\/\/)?(www\.)?(facebook|instagram|linkedin|pinterest|reddit|snapchat|tiktok|twitter|youtube)\.com(\/.*)?$/i;
+
 
 	// Get today's date for date validation
 	const today = new Date().toISOString().split("T")[0];
@@ -132,7 +134,11 @@ export const ValidateUtil = (form, fields = []) => {
 		}
 
 
-
+		//url check
+		if (f.name === 'socialUrl' && value && !mediaLink.test(value)) {
+			error[f.name] = "Invalid social media link format";
+			valid = false;
+		}
 
 		//for empolyers
 

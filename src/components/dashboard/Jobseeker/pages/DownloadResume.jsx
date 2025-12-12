@@ -38,7 +38,7 @@ const DownloadResume = () => {
 				heightLeft -= pdfHeight;
 			}
 
-			pdf.save('resume.pdf');
+			pdf.save('HamroJobresume.pdf');
 		} catch (err) {
 			console.error('Error generating PDF:', err);
 		}
@@ -49,7 +49,7 @@ const DownloadResume = () => {
 			{/* Resume Container */}
 			<div
 				ref={resumeRef}
-				style={{
+				style={{   // style for the pdf page 
 					backgroundColor: '#ffffff',
 					color: '#111111',
 					fontFamily: 'Arial, sans-serif',

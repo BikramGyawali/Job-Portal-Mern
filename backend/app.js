@@ -9,7 +9,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 5000;
 
 connectDB();
-app.get("/test", async (req, res) => {
+app.post("/test", async (req, res) => {
 	try {
 		const user = new jobseekerSignupModel({
 			email: "test@example.com",

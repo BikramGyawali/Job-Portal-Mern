@@ -20,7 +20,7 @@ export const Signup = async (req, res, role) => {
 		}
 		const hashPassword = await hash(pass, 10)
 
-		await SignupModel.create({ email, pass: hashPassword, role });
+		await SignupModel.create({ email, password: hashPassword, role });
 		res.status(200).send({
 			status: 1,
 			message: `Data insert Sucessfully of ${role} `,
@@ -37,41 +37,47 @@ export const Signup = async (req, res, role) => {
 }
 
 // login controller 
-
-export const LoginController = async (req, res, type, next) => {
+export const LoginController = async (req, res, type) => {
 	try {
 		const { email, pass } = req.body;
-		const user = await SignupModel.findOne({ email: email, role: type })
+
+		const user = await SignupModel.findOne({ email, role: type });
 		if (!user) {
-			return res.status(404).send({
+			return res.status(404).json({
 				status: 0,
-				message: "No user Exists",
-
+				message: "User not found",
 			});
-
 		}
-		const isMatch = await compare(pass, user.pass);
+
+		const isMatch = await compare(pass, user.password);
 		if (!isMatch) {
-			return es.status(401).send({
+			return res.status(401).json({
 				status: 0,
-				message: "Invalide Password",
-
+				message: "Invalid password",
 			});
 		}
-		const token = jwt.sign({
-			email: user.email, role: user.role
-		},
-			jwt_key, { expiresIn: '1d' }
-		)
-		res.cookie('token', token)
+
+		const token = jwt.sign(
+			{ email: user.email, role: user.role },
+			jwt_key,
+			{ expiresIn: "1d" }
+		);
+
+		res.cookie("token", token, {
+			httpOnly: true,
+			sameSite: "strict",
+		});
+
+		res.status(200).json({
+			status: 1,
+			message: "Login successful",
+			role: user.role,
+		});
 
 	} catch (error) {
-		res.status(400).send({
+		res.status(400).json({
 			status: 0,
-			message: "Validation failed",
-			errorMessage: error.message,
+			message: error.message,
 		});
 	}
-}
-
-
+};

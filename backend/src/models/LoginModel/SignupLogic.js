@@ -6,7 +6,7 @@ const signupSchema = new schema({
 		unique: true,
 		required: true
 	},
-	pass: {
+	password: {
 		type: String,
 		required: true
 	},

@@ -2,7 +2,7 @@ import express, { json } from "express";
 import dotenv from "dotenv";
 import { connectDB } from "./src/config/database.js";
 
-import jobseekerroutes from "./src/routes/JobseekerRoutes/signup.js";
+import jobseekerroutes from "./src/routes/JobseekerRoutes/jobseekerRoutes.js";
 
 dotenv.config();
 const app = express();

@@ -9,8 +9,13 @@ const signupSchema = new schema({
 	pass: {
 		type: String,
 		required: true
-	}
+	},
+	role: {
+		type: String,
+		enum: ["jobseeker", "employer", "admin"],
+		required: true,
+	},
 
 })
 
-export const jobseekerSignupModel = mongoose.model('Jobseeker', signupSchema);
+export const SignupModel = mongoose.model('User', signupSchema);

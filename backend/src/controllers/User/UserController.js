@@ -11,6 +11,7 @@ const jwt_key = process.env.JWT_KEY
 export const Signup = async (req, res, role) => {
 	try {
 		const { email, pass } = req.body;
+
 		const exists = await SignupModel.findOne({ email: email });
 		if (exists) {
 			return res.status(409).send({
@@ -66,6 +67,7 @@ export const LoginController = async (req, res, type) => {
 		res.cookie("token", token, {
 			httpOnly: true,
 			sameSite: "strict",
+			// maxAge: 10 * 100
 		});
 
 		res.status(200).json({

@@ -9,7 +9,7 @@ function Employers() {
 		title: "Welcome to Employer Dashboard",
 		explain: "Get started with finding the right talent from Hamro Job.",
 		image: login,
-		role: "employers"
+		role: "employer"
 
 	}
 

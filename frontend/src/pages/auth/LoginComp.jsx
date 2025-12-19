@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import ButtonComp from '../../components/common/ButtonComp';
 import { contactLoginValidate } from '../../utils/contactLoginValidate';
+import { loginUser } from '../../utils/userapi';
 // import { ValidateUtil } from '../utils/ValidationUtil';
 
 function LoginComp({ LoginData }) {
@@ -27,7 +28,7 @@ function LoginComp({ LoginData }) {
 	//for Validation
 
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		const { error, valid } = contactLoginValidate(form);
@@ -35,22 +36,37 @@ function LoginComp({ LoginData }) {
 
 
 		setError(error)
-		if (valid) {
-			setForm({
-				email: "",
-				pass: ""
-			});
-			if (role === "jobseeker") {
-				navigate("/jobseeker");
-			} else if (role === "employers") {
-				navigate("/employer");
-			} else if (role === "admin") {
-				navigate("/admin");
-			} else {
-				navigate("/not-found");
+		if (!valid) return null;
+		try {
+			const res = await loginUser(form, role)
+			if (res.status === 1) {
+				console.log(res.message);
+				if (role === "jobseeker") {
+					navigate("/jobseeker");
+				} else if (role === "employers") {
+					navigate("/employer");
+				} else if (role === "admin") {
+					navigate("/admin");
+				} else {
+					navigate("/not-found");
+				}
+
 			}
+			else {
+				alert(res.message)
+			}
+		} catch (error) {
+			console.log(error);
+			alert(err.response?.data?.message || "Login failed");
 
 		}
+		setForm({
+			email: "",
+			pass: ""
+		});
+
+
+
 	};
 
 

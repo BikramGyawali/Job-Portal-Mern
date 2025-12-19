@@ -8,6 +8,8 @@ import NavbarComp from '../../layout/NavbarComp';
 import { FooterComp } from '../../layout/FooterComp';
 import { ValidateUtil } from '../../utils/ValidationUtil';
 import { contactLoginValidate } from '../../utils/contactLoginValidate';
+// import axios from 'axios';
+import { signupUser } from '../../utils/userapi';
 
 function RegisterComp() {
 	const { state } = useLocation();
@@ -35,7 +37,7 @@ function RegisterComp() {
 		});
 	};
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		const { error: validateError, valid } = contactLoginValidate(form, role)
@@ -44,6 +46,31 @@ function RegisterComp() {
 		// Only navigate if valid
 		if (!valid) return;
 
+		try {
+			const data = {
+				email: form.email,
+				pass: form.pass,
+				...(role === "employer" && { company: form.company })
+			}
+			const res = await signupUser(data, role)
+			if (res.status === 1) {
+				console.log(res.data);
+				if (role === "employer") {
+					navigate("/employers-profile");
+				} else if (role === "jobseeker") {
+					navigate("/jobseekers-profile");
+				}
+
+			}
+			else {
+				console.log(res.status);
+
+			}
+		} catch (error) {
+			console.log(error);
+			alert(error.response?.data?.message || "Signup failed");
+
+		}
 		// Reset form
 		setForm({
 			email: "",
@@ -53,11 +80,7 @@ function RegisterComp() {
 		});
 
 		// Navigate after state updates
-		if (role === "employers") {
-			navigate("/employers-profile");
-		} else if (role === "jobseeker") {
-			navigate("/jobseekers-profile");
-		}
+
 	};
 
 	const RegisterData = [
@@ -85,7 +108,7 @@ function RegisterComp() {
 
 					<form onSubmit={handleSubmit} className="w-full">
 						{/* Company Name only for employers */}
-						{role === "employers" && (
+						{role === "employer" && (
 							<>
 								<label className="text-lg font-semibold mb-1" htmlFor="company">
 									Company Name
@@ -156,7 +179,7 @@ function RegisterComp() {
 					<p className="text-lg mt-5">
 						Already have an account?{" "}
 						<Link
-							to="/jobseeker"
+							to={role === "employer" ? "/employers" : "/jobseekers"}
 							className="text-blue-900 underline font-semibold"
 						>
 							Login Here

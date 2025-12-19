@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import ButtonComp from '../../components/common/ButtonComp';
 import { contactLoginValidate } from '../../utils/contactLoginValidate';
 import { loginUser } from '../../utils/userapi';
+import { useEffect } from 'react';
 // import { ValidateUtil } from '../utils/ValidationUtil';
 
 function LoginComp({ LoginData }) {
@@ -60,6 +61,8 @@ function LoginComp({ LoginData }) {
 			alert(error.response?.data?.message || "Login failed");
 
 		}
+	
+
 		setForm({
 			email: "",
 			pass: ""
@@ -69,7 +72,7 @@ function LoginComp({ LoginData }) {
 
 	};
 
-
+	
 
 	return (
 		<div className="flex items-center justify-center w-screen h-screen gap-6 px-4">

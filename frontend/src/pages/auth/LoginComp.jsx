@@ -50,7 +50,7 @@ function LoginComp({ LoginData }) {
 			alert(res.message)
 		}
 		try {
-			const res = await loginUser(form, role)
+			
 			if (res.status === 1) {
 				console.log(res.message);
 				if (role === "jobseeker") {

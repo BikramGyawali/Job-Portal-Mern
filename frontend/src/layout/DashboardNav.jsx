@@ -8,15 +8,22 @@ import {
 	NavbarBrand,
 } from "flowbite-react";
 import logo from "../assets/image/newLogo.png";
-import { Link, Links, useLocation, useNavigation } from "react-router-dom";
+import { Link, Links, useLocation, useNavigate, useNavigation } from "react-router-dom";
 import { NavbarData } from "../data/employers/edashboardData";
 import { JNavbarData } from "../data/jobseekers/JDashboardData";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export function DashboardNav({ onMenuClick, role = 'Employer' }) {
-	// const naviagation = useNavigation();
-	// const handleClick = () => {
-	// 	naviagation("/jobseekers")
-	// }
+	const { state, logout } = useContext(AuthContext);
+	const navigate = useNavigate()
+	const handleLogout = () => {
+		logout()
+		navigate(
+			role === "Jobseeker" ? "/jobseekers" : role === "Employer" ? "/employers" : "/admin-login"
+			, { replace: true }
+		)
+	}
 	const { pathname } = useLocation();
 	const myData = role === 'Jobseeker' ? JNavbarData : NavbarData;
 	return (
@@ -49,7 +56,7 @@ export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 						/>
 					}
 				>
-					<DropdownHeader>
+					{/* <DropdownHeader>
 						{myData.map((item, i) => {
 							const { name, email } = item;
 							return (
@@ -61,11 +68,16 @@ export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 								</div>
 							)
 						})}
-					</DropdownHeader>
-					<DropdownItem as={Link} to={`${role === "Jobseeker" ? "/jobseeker" : "/employer"}`}>Dashboard</DropdownItem>
+					</DropdownHeader> */}
+ <DropdownHeader>
+	<span className="font-bold text-sm">Logged in as</span>
+					<span className="block text-sm">{role}</span>
+ </DropdownHeader>
+
+					<DropdownItem as={Link} to={`/${role.toLowerCase()}`}>Dashboard</DropdownItem>
 
 					<DropdownDivider />
-					<DropdownItem as={Link} to={`${role === "Jobseeker" ? "/jobseekers" : "/employers"}`}>Sign out</DropdownItem>
+					<DropdownItem onClick={handleLogout}>Sign out</DropdownItem>
 				</Dropdown>
 			</div>
 		</Navbar>

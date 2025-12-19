@@ -18,7 +18,7 @@ const authReducer = (state, action) => {
 				role: action.payload.role,
 				user: action.payload.user
 			}
-			break;
+			
 		case "LOGOUT":
 			return initialState;
 		default:
@@ -35,15 +35,16 @@ export function AuthProvider({ children }) {
 				type: "LOGIN",
 				payload: {
 					role: res.role,
-					user: role.user
+					user: res.user
 				}
 			})
 		}
 		return res;
 	}
+	const logout = () => dispatch({ type: "LOGOUT" });
 	return (
 
-		<AuthContext.Provider value={{ state, dispatch }}>
+		<AuthContext.Provider value={{ state, login, logout }}>
 			{children}
 		</AuthContext.Provider>
 

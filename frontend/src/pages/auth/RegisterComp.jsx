@@ -53,22 +53,24 @@ function RegisterComp() {
 				...(role === "employer" && { company: form.company })
 			}
 			const res = await signupUser(data, role)
-			if (res.status === 1) {
-				console.log(res);
+			if (res.status == 1) {
+				// console.log(res);
 				if (role === "employer") {
 					navigate("/employers-profile");
 				} else if (role === "jobseeker") {
 					navigate("/jobseekers-profile");
 				}
+				alert(res.message)
 
 			}
 			else {
-				console.log(res.status);
+				// console.log(res);
+				alert(res.message)
 
 			}
 		} catch (error) {
 			console.log(error);
-			// alert(error.response?.data?.message || "Signup failed");
+			alert(error.response?.data?.message || "Signup failed");
 
 		}
 		// Reset form

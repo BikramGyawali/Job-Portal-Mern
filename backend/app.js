@@ -26,8 +26,9 @@ connectDB();
 app.use('/jobseeker', jobseekerroutes);
 app.use("/employer", employerroutes);
 app.use((req, res) => {
-	res.send("401:Page not found");
-})
+	res.status(404).json({ status: 0, message: "Page not found" });
+});
+
 app.listen(PORT, () => {
 	console.log(`Serving running at port number ${PORT}`);
 

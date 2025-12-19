@@ -53,14 +53,14 @@ function RegisterComp() {
 				...(role === "employer" && { company: form.company })
 			}
 			const res = await signupUser(data, role)
-			if (res.status == 1) {
+			if (res.status === 1) {
 				// console.log(res);
 				if (role === "employer") {
 					navigate("/employers-profile");
 				} else if (role === "jobseeker") {
 					navigate("/jobseekers-profile");
 				}
-				alert(res.message)
+				// alert(res.message)
 
 			}
 			else {

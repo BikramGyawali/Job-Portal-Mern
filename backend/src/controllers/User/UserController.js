@@ -16,7 +16,7 @@ const JWT_KEY = process.env.JWT_KEY;
 export const Signup = async (req, res, role) => {
 	try {
 		const { email, pass } = req.body;
-		console.log(req.body);
+
 
 
 		const exists = await SignupModel.findOne({ email });
@@ -24,20 +24,21 @@ export const Signup = async (req, res, role) => {
 			return res.status(200).json({ status: 0, message: "Email already exists" });
 		}
 
-
 		const hashedPassword = await hash(pass, 10);
 		const newUser = await SignupModel.create({ email, password: hashedPassword, role });
 
-		res.status(200).json({
+		return res.status(200).json({
 			status: 1,
 			message: `Signup successful for ${role}`,
 			user: { _id: newUser._id, email: newUser.email, role: newUser.role }
 		});
-	} catch (error) {
-		res.status(400).json({ status: 0, message: "Signup failed", errorMessage: error.message });
-	}
 
+	} catch (error) {
+		console.error("Signup error:", error);
+		return res.status(400).json({ status: 0, message: "Signup failed", errorMessage: error.message });
+	}
 };
+
 
 export const LoginController = async (req, res, type) => {
 	try {

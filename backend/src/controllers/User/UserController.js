@@ -8,6 +8,7 @@ import { configDotenv } from "dotenv";
 import cookieParser from "cookie-parser";
 configDotenv();
 const jwt_key = process.env.JWT_KEY
+const EXPIRE_TIME = 20; // seconds
 export const Signup = async (req, res, role) => {
 	try {
 		const { email, pass } = req.body;
@@ -61,13 +62,13 @@ export const LoginController = async (req, res, type) => {
 		const token = jwt.sign(
 			{ email: user.email, role: user.role },
 			jwt_key,
-			{ expiresIn: "1d" }
+			{ expiresIn: EXPIRE_TIME }
 		);
 
 		res.cookie("token", token, {
 			httpOnly: true,
 			sameSite: "strict",
-			// maxAge: 10 * 100
+			maxAge: EXPIRE_TIME * 1000
 		});
 
 		res.status(200).json({

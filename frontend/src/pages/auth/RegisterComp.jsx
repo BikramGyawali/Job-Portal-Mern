@@ -54,7 +54,7 @@ function RegisterComp() {
 			}
 			const res = await signupUser(data, role)
 			if (res.status === 1) {
-				console.log(res.data);
+				console.log(res);
 				if (role === "employer") {
 					navigate("/employers-profile");
 				} else if (role === "jobseeker") {
@@ -68,7 +68,7 @@ function RegisterComp() {
 			}
 		} catch (error) {
 			console.log(error);
-			alert(error.response?.data?.message || "Signup failed");
+			// alert(error.response?.data?.message || "Signup failed");
 
 		}
 		// Reset form

@@ -43,7 +43,7 @@ function LoginComp({ LoginData }) {
 				console.log(res.message);
 				if (role === "jobseeker") {
 					navigate("/jobseeker");
-				} else if (role === "employers") {
+				} else if (role === "employer") {
 					navigate("/employer");
 				} else if (role === "admin") {
 					navigate("/admin");
@@ -57,7 +57,7 @@ function LoginComp({ LoginData }) {
 			}
 		} catch (error) {
 			console.log(error);
-			alert(err.response?.data?.message || "Login failed");
+			alert(error.response?.data?.message || "Login failed");
 
 		}
 		setForm({

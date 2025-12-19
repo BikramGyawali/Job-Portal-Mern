@@ -35,6 +35,14 @@ export const Signup = async (req, res, role) => {
 
 	} catch (error) {
 		console.error("Signup error:", error);
+		if (error.code === 11000) {
+			return res.status(409).json({
+				status: 0,
+				message: "Email already exists",
+				errorMessage: error.message
+			});
+		}
+
 		return res.status(400).json({ status: 0, message: "Signup failed", errorMessage: error.message });
 	}
 };

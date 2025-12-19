@@ -8,12 +8,19 @@ export const signupUser = async (formData, role) => {
 	if (role === "jobseeker") url = `${BASE_URL}/jobseeker/signup`;
 	else if (role === "employer") url = `${BASE_URL}/employer/signup`;
 	else throw new Error("Invalid role");
+	try {
 
-	const response = await axios.post(url, formData, {
-		withCredentials: true,
-	});
+		const response = await axios.post(url, formData, {
+			withCredentials: true,
+		});
+		return response.data
 
-	return response.data;
+	} catch (error) {
+		if (error.message) {
+			return error.response.data
+		}
+		throw error
+	}
 };
 
 export const loginUser = async (formData, role) => {
@@ -24,9 +31,16 @@ export const loginUser = async (formData, role) => {
 	else if (role === "admin") url = `${BASE_URL}/admin/login`;
 	else throw new Error("Invalid role");
 
-	const response = await axios.post(url, formData, {
-		withCredentials: true,
-	});
+	try {
 
-	return response.data;
+		const response = await axios.post(url, formData, {
+			withCredentials: true,
+		});
+		return response.data
+	} catch (error) {
+		if (error.message) {
+			return error.response.data
+		}
+		throw error
+	}
 };

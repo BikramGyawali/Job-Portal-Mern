@@ -6,6 +6,8 @@ import ButtonComp from '../../components/common/ButtonComp';
 import { contactLoginValidate } from '../../utils/contactLoginValidate';
 import { loginUser } from '../../utils/userapi';
 import { useEffect } from 'react';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 // import { ValidateUtil } from '../utils/ValidationUtil';
 
 function LoginComp({ LoginData }) {
@@ -26,6 +28,8 @@ function LoginComp({ LoginData }) {
 			[e.target.name]: e.target.value
 		});
 	};
+
+	const { login } = useContext(AuthContext)
 	//for Validation
 
 
@@ -38,6 +42,13 @@ function LoginComp({ LoginData }) {
 
 		setError(error)
 		if (!valid) return null;
+		const res = await login(form, role)
+		if (res.status === 1) {
+			navigate(`/${res.role}`, { replace: true })
+		}
+		else {
+			alert(res.message)
+		}
 		try {
 			const res = await loginUser(form, role)
 			if (res.status === 1) {
@@ -61,7 +72,7 @@ function LoginComp({ LoginData }) {
 			alert(error.response?.data?.message || "Login failed");
 
 		}
-	
+
 
 		setForm({
 			email: "",
@@ -72,7 +83,7 @@ function LoginComp({ LoginData }) {
 
 	};
 
-	
+
 
 	return (
 		<div className="flex items-center justify-center w-screen h-screen gap-6 px-4">

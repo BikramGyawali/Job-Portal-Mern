@@ -1,8 +1,9 @@
 import React from 'react'
 import { useReducer } from 'react'
 import { createContext } from 'react'
+import { loginUser } from '../utils/userapi'
 
-const AuthContext = createContext()
+export const AuthContext = createContext()
 const initialState = {
 	isAuth: false,
 	role: null,
@@ -27,6 +28,19 @@ const authReducer = (state, action) => {
 
 export function AuthProvider({ children }) {
 	const [state, dispatch] = useReducer(authReducer, initialState)
+	const login = async (formData, role) => {
+		const res = await loginUser(formData, role)
+		if (res.status === 1) {
+			dispatch({
+				type: "LOGIN",
+				payload: {
+					role: res.role,
+					user: role.user
+				}
+			})
+		}
+		return res;
+	}
 	return (
 
 		<AuthContext.Provider value={{ state, dispatch }}>

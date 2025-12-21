@@ -1,5 +1,5 @@
 export const ProfileFields = [
-	{ name: "image", label: "Change Photo", type: "file" },
+	{ name: "image", label: "Profile Photo", type: "file", required: true },
 
 	{
 		name: "fname",
@@ -128,12 +128,12 @@ export const ProfileFields = [
 		options: ["Full Time", "Part Time"]
 	},
 
-	{
-		name: "salary",
-		label: "Expected Salary",
-		type: "text",
-		placeholder: "Eg. 25000"
-	},
+	// {
+	// 	name: "salary",
+	// 	label: "Expected Salary",
+	// 	type: "text",
+	// 	placeholder: "Eg. 25000"
+	// },
 
 	{
 		name: "about",

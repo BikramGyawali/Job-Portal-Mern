@@ -3,7 +3,7 @@ export const employerProfile = [
 		label: "Company Logo",
 		name: "image",
 		type: "file",
-		required: false
+		required: true
 	},
 
 	{

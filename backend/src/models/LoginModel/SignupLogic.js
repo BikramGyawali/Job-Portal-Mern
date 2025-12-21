@@ -8,7 +8,8 @@ const signupSchema = new schema({
 	},
 	password: {
 		type: String,
-		required: true
+		required: true,
+          select:false   // to unselect the pass while populate
 	},
 	role: {
 		type: String,

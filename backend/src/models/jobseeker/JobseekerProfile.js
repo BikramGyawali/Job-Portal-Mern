@@ -1,106 +1,119 @@
 import mongoose from "mongoose";
 
 const educationSchema = new mongoose.Schema({
-  degree: String,
-  fieldOfStudy: String,
-  institution: String,
-  university: String,
-  gradingType: String,
-  score: Number,
-  sdate: Date,
-  edate: Date
-}, { _id: false });
+	degree: String,
+	fieldOfStudy: String,
+	institution: String,
+	university: String,
+	gradingType: String,
+	score: Number,
+	sdate: Date,
+	edate: Date
+}, { _id: false });   // as we will add this schema to the 
+// profile so we dont need any id but the mongodb give id so we will state false to id .
 
 const experienceSchema = new mongoose.Schema({
-  position: String,
-  orgname: String,
-  industry: String,
-  jlevel: String,
-  role: String,
-  sdate: Date,
-  edate: Date
+	position: String,
+	orgname: String,
+	industry: String,
+	jlevel: String,
+	role: String,
+	sdate: Date,
+	edate: Date
 }, { _id: false });
 
 const trainingSchema = new mongoose.Schema({
-  title: String,
-  year: Number,
-  institution: String
+	title: String,
+	year: Number,
+	institution: String
 }, { _id: false });
 
 const awardSchema = new mongoose.Schema({
-  title: String,
-  institution: String
+	title: String,
+	institution: String
 }, { _id: false });
 
 const socialSchema = new mongoose.Schema({
-  name: String,
-  url: String
+	name: String,
+	url: String
 }, { _id: false });
 
 const referenceSchema = new mongoose.Schema({
-  name: String,
-  position: String,
-  email: String,
-  company: String
+	name: String,
+	position: String,
+	email: String,
+	company: String
 }, { _id: false });
 
 const profileSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true,
-    unique: true
-  },
+	userId: {
+		type: mongoose.Schema.Types.ObjectId,
+		ref: "User",
+		required: true,
+		unique: true
+	},
 
-  image: String,
+	image: String,
 
-  fname: String,
-  mname: String,
-  sname: String,
+	fname: String,
+	mname: String,
+	sname: String,
 
-  currentAddress: {
-    district: String,
-    municipality: String,
-    city: String
-  },
+	currentAddress: {
+		district: String,
+		municipality: String,
+		city: String
+	},
 
-  permanentAddress: {
-    district: String,
-    municipality: String,
-    city: String
-  },
+	permanentAddress: {
+		district: String,
+		municipality: String,
+		city: String
+	},
 
-  dob: Date,
-  phone: String,
-  gender: String,
-  maritalStatus: String,
-  license: String,
-  vehicle: String,
-  jobType: String,
-  lookingFor: String,
+	dob: Date,
+	phone: {
+		type: String,
+		unique: true,
+		required: true
+	},
+	gender: String,
+	maritalStatus: String,
+	license: String,
+	vehicle: String,
+	jobType: String,
+	lookingFor: String,
 
-  about: String,
+	about: String,
 
-  skills: [String],
-  languages: [{
-    name: String,
-    reading: String,
-    writing: String,
-    speaking: String
-  }],
+	skills: [String],
+	languages: [{
+		name: String,
+		reading: String,
+		writing: String,
+		speaking: String
+	}],
 
-  education: [educationSchema],
-  experience: [experienceSchema],
-  trainings: [trainingSchema],
-  awards: [awardSchema],
-  socials: [socialSchema],
-  references: [referenceSchema],
+	education: [educationSchema],
+	experience: [experienceSchema],
+	trainings: [trainingSchema],
+	awards: [awardSchema],
+	socials: [socialSchema],
+	references: [referenceSchema],
 
-  profileCompleted: {
-    type: Boolean,
-    default: false
-  }
+	profileCompleted: {
+		type: Boolean,
+		default: false
+	}
 
-}, { timestamps: true });
+}, { timestamps: true });   //timestamp add extra two field as createdat and updatedat
 
+profileSchema.pre("save", function (next) {
+	if (this.phone) {
+		this.phone = this.phone.replace("/\D\g", "");
+	}
+	next();
+})
+profileSchema.index({ phone: 1 }, { unique: true });
+profileSchema.index({ userId: 1 }, { unique: true })
 export const Profile = mongoose.model("Profile", profileSchema);

@@ -8,7 +8,7 @@ export const employerProfile = [
 
 	{
 		label: "Company Name",
-		name: "fname",
+		name: "cname",
 		type: "text",
 		required: true,
 		placeholder: "Enter your Company name"

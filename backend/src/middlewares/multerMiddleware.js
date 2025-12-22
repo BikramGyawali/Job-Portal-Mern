@@ -1,8 +1,8 @@
 import multer from "multer";
-import multerImages from '../public/multerImages'
+
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, multerImages)
+		cb(null, '../public/multerImages')
 	},
 	filename: function (req, file, cb) {
 		const newFileName = `${Date.now()}-${path.extname(file.originalname)}`

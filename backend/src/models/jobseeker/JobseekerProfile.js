@@ -75,7 +75,13 @@ const profileSchema = new mongoose.Schema({
 	phone: {
 		type: String,
 		unique: true,
-		required: true
+		required: true,
+		validate: {
+			validator: function (v) {
+				return /^[0-9]{10}$/.test(v);
+			},
+			message: "Phone number must be exactly 10 "
+		}
 	},
 	gender: String,
 	maritalStatus: String,
@@ -110,7 +116,8 @@ const profileSchema = new mongoose.Schema({
 
 profileSchema.pre("save", function (next) {
 	if (this.phone) {
-		this.phone = this.phone.replace("/\D\g", "");
+		this.phone =
+			this.phone.replace(/\D/g, "");
 	}
 	next();
 })

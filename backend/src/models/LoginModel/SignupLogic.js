@@ -9,16 +9,16 @@ const signupSchema = new schema({
 	password: {
 		type: String,
 		required: true,
-          select:false   // to unselect the pass while populate
+		select: false   // to unselect the pass while populate
 	},
 	role: {
 		type: String,
 		enum: ["jobseeker", "employer", "admin"],
 		required: true,
 	},
-	isProfileCompleted:{
-		type:Boolean,
-		default:false
+	isProfileCompleted: {
+		type: Boolean,
+		default: false
 	}
 
 })

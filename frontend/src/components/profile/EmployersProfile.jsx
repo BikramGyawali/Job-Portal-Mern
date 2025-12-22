@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { employerProfile } from '../../data/employers/employerProfile';
 import ReusableForm from '../form/ReusableForm';
 import { ValidateUtil } from '../../utils/ValidationUtil';
+import { Profile } from '../../utils/profileapi';
 
 function EmployersProfile() {
 	const createEmptyEntry = (fields) =>
@@ -23,13 +24,15 @@ function EmployersProfile() {
 		}))
 
 	}
-	const handleSubmit = (e) => {
+	const handleSubmit = async(e) => {
 		e.preventDefault();
 		const { valid, error } = ValidateUtil(profile, employerProfile);
 		setError(error);
+		
 		if (!valid) {
 			return
 		}
+		const response = await Profile.apply(profile, "employer")
 	}
 
 	return (

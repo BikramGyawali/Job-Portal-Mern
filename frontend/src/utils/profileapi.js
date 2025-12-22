@@ -1,0 +1,26 @@
+import axios from "axios";
+
+const BASE_URL = "http://localhost:3000";
+
+export const Profile = async (formData, role) => {
+	let url = "";
+
+	if (role === "jobseeker") url = `${BASE_URL}/jobseeker/profile`;
+	else if (role === "employer") url = `${BASE_URL}/employer/profile`;
+	else throw new Error("Invalid role");
+	try {
+		const response = await axios.post(url, formData);
+		return response.data
+		
+	} catch (error) {
+		if (error.response && error.response.data) {
+			return error.response.data
+		}
+		else {
+			return {
+				status: 0,
+				message: error.message || "Failed  to create profile"
+			}
+		}
+	}
+}

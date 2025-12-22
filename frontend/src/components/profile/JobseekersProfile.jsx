@@ -5,6 +5,7 @@ import { Experience } from "../../data/jobseekers/Experience";
 import { Education } from "../../data/jobseekers/Education";
 import { JAddDetails } from "../../data/jobseekers/JAddDetails";
 import { ValidateUtil } from "../../utils/ValidationUtil";
+import { Profile } from "../../utils/profileapi";
 
 
 const createEmptyEntry = (fields) =>
@@ -111,7 +112,7 @@ function JobseekersProfile() {
 	};
 
 	//  submit  logic
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		let targetForm;
@@ -138,7 +139,7 @@ function JobseekersProfile() {
 			// show errors, do not progress
 			return;
 		}
-
+		const response = await Profile(profile, "jobseeker")
 		if (step < totalSteps) {
 			setStep((s) => s + 1);
 		} else {

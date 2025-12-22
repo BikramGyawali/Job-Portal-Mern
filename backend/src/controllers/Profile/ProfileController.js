@@ -3,6 +3,7 @@ import express from "express"
 import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js"
 import { EmployerProfile } from "../../models/employer/EmployerProfile.js"
 import { SignupModel } from "../../models/LoginModel/SignupLogic.js"
+import { useId } from "react"
 
 const app = express()
 app.use(express.json())
@@ -33,6 +34,7 @@ export const JProfileController = async (req, res) => {
 		}
 
 		const newProfile = await JobseekerProfile.create(data)
+		await SignupModel.findByIdAndUpdate(userId, { isProfileCompleted: true })
 		return res.status(201).json({
 			status: 1,
 			message: "Jobseeker profile created successfully",
@@ -79,6 +81,7 @@ export const EProfileController = async (req, res) => {
 			message: "Employer profile created successfully",
 			user: { _id: newProfile._id, name: newProfile.fname }
 		})
+		await SignupModel.findByIdAndUpdate(userId, { isProfileCompleted: true })
 	} catch (error) {
 		return res.status(500).json({ status: 0, message: "Cannot create profile", error: error.message })
 	}

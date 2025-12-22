@@ -25,7 +25,7 @@ export const Signup = async (req, res, role) => {
 		}
 
 		const hashedPassword = await hash(pass, 10);
-		const newUser = await SignupModel.create({ email, password: hashedPassword, role });
+		const newUser = await SignupModel.create({ email, password: hashedPassword, role, isProfileCompleted: false });
 
 		return res.status(200).json({
 			status: 1,
@@ -55,6 +55,9 @@ export const LoginController = async (req, res, type) => {
 		const user = await SignupModel.findOne({ email, role: type });
 		if (!user) {
 			return res.status(404).json({ status: 0, message: "User not found" });
+		}
+		if (!user.isProfileCompleted) {
+			return res.status(403).json({ status: 0, message: "Complete Your Profile Before Login" });
 		}
 
 		const isMatch = await compare(pass, user.password);

@@ -16,6 +16,10 @@ const signupSchema = new schema({
 		enum: ["jobseeker", "employer", "admin"],
 		required: true,
 	},
+	isProfileCompleted:{
+		type:Boolean,
+		default:false
+	}
 
 })
 

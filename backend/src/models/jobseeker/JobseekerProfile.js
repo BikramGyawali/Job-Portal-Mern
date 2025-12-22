@@ -123,4 +123,4 @@ profileSchema.pre("save", function (next) {
 })
 profileSchema.index({ phone: 1 }, { unique: true });
 profileSchema.index({ userId: 1 }, { unique: true })
-export const Profile = mongoose.model("Profile", profileSchema);
+export const JobseekerProfile = mongoose.model("JobseekerProfile", profileSchema);

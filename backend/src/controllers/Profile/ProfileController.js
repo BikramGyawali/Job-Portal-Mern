@@ -75,6 +75,9 @@ export const EProfileController = async (req, res) => {
 	try {
 		const data = req.body
 		const { phone, userId, panCard } = data
+		console.log("Body", data);
+		console.log("file", req.file);
+
 
 		if (!userId) {
 			return res.status(400).json({ status: 0, message: "User ID is required" })

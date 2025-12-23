@@ -73,11 +73,17 @@ export const LoginController = async (req, res, type) => {
 			return res.status(401).json({ status: 0, message: "Invalid password" });
 		}
 
-		const token = jwt.sign({ email: user.email, role: user.role, isProfileCompleted: user.isProfileCompleted }, JWT_KEY, { expiresIn: "1d" });
+		const token = jwt.sign({
+			email: user.email,
+			role: user.role,
+			isProfileCompleted: user.isProfileCompleted,
+			id: user._id
+		}, JWT_KEY, { expiresIn: "1d" });
 
 		res.cookie("token", token, {
 			httpOnly: true,
 			sameSite: "lax",
+			secure:false
 		});
 
 		res.status(200).json({

@@ -3,9 +3,6 @@ import express from "express"
 import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js"
 import { EmployerProfile } from "../../models/employer/EmployerProfile.js"
 import { SignupModel } from "../../models/LoginModel/SignupLogic.js"
-import fs from "fs"
-import path from "path"
-import { profile } from "console"
 const app = express()
 app.use(express.json())
 

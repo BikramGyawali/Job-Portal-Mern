@@ -2,6 +2,7 @@ import React from 'react'
 import { useReducer } from 'react'
 import { createContext } from 'react'
 import { loginUser } from '../utils/userapi'
+import { useEffect } from 'react'
 
 export const AuthContext = createContext()
 const initialState = {
@@ -48,7 +49,7 @@ export function AuthProvider({ children }) {
 	}, []);
 	return (
 
-		<AuthContext.Provider value={{ state, login, logout }}>
+		<AuthContext.Provider value={{ state }}>
 			{children}
 		</AuthContext.Provider>
 

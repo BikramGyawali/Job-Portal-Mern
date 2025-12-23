@@ -8,19 +8,19 @@ const roleLoginMap = {
 	jobseeker: "/jobseekers",
 	admin: "/admin-login"
 }
-function ProtectedRoute({allowedRole}) {
+function ProtectedRoute({ allowedRole }) {
 	const { state } = useContext(AuthContext)
-	const{isAuth,role}=state;
-	if(!isAuth){
-		return <Navigate to={roleLoginMap[allowedRole]} replace/>
+	const { isAuth, role } = state;
+	if (!isAuth) {
+		return <Navigate to="/login" replace />
 	}
-	if(allowedRole && role!==allowedRole){
-		return <Navigate to={roleLoginMap[role]} replace/>
+	if (allowedRole && role !== allowedRole) {
+		return <Navigate to={roleLoginMap[role]} replace />
 	}
 	return (
-		
-			<Outlet/>
-		
+
+		<Outlet />
+
 	)
 }
 

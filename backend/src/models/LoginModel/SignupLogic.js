@@ -29,4 +29,4 @@ const signupSchema = new schema({
 })
 signupSchema.index({ approvalStatus: 1 })
 
-export const SignupModel = mongoose.model('User', signupSchema);
+export const User = mongoose.model('User', signupSchema);

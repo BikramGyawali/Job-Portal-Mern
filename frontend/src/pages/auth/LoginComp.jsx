@@ -42,7 +42,7 @@ function LoginComp({ LoginData }) {
 
 		setError(error)
 		if (!valid) return null;
-		const res = await login(form, role)
+		// const res = await login(form, role)
 		if (!res.isProfileCompleted) {
 			navigate(`/${res.role}-profile`, { replace: true });
 		} else {

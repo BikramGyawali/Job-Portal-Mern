@@ -8,7 +8,7 @@ const employerroutes = Router();
 
 employerroutes.post("/signup", (req, res) => Signup(req, res, "employer"));
 employerroutes.post("/login", (req, res) => LoginController(req, res, "employer"));
-employerroutes.post("/profile",verifyAuth,uploadImage.single("image"), EProfileController)
+employerroutes.post("/profile", verifyAuth, uploadImage.single("image"), EProfileController)
 employerroutes.get(
 	"/dashboard",
 	verifyRole("employer"),

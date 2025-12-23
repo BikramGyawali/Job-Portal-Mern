@@ -5,9 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import ButtonComp from '../../components/common/ButtonComp';
 import { contactLoginValidate } from '../../utils/contactLoginValidate';
 import { loginUser } from '../../utils/userapi';
-import { useEffect } from 'react';
-import { useContext } from 'react';
-import { AuthContext } from '../../context/AuthContext';
+
 // import { ValidateUtil } from '../utils/ValidationUtil';
 
 function LoginComp({ LoginData }) {
@@ -29,7 +27,6 @@ function LoginComp({ LoginData }) {
 		});
 	};
 
-	const { login } = useContext(AuthContext)
 	//for Validation
 
 
@@ -42,12 +39,18 @@ function LoginComp({ LoginData }) {
 
 		setError(error)
 		if (!valid) return null;
-		// const res = await login(form, role)
-		if (!res.isProfileCompleted) {
-			navigate(`/${res.role}-profile`, { replace: true });
-		} else {
-			navigate(`/${res.role}`, { replace: true });
+		const res = await loginUser(form, role)
+		if (res.status === 1) {
+			if (!res.isProfileCompleted) {
+				navigate(`/${res.role}-profile`, { replace: true });
+			} else {
+				navigate(`/${res.role}`, { replace: true });
+			}
 		}
+		else {
+			alert(res.message)
+		}
+
 
 
 

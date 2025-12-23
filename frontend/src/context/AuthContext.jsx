@@ -8,7 +8,8 @@ export const AuthContext = createContext()
 const initialState = {
 	isAuth: false,
 	role: null,
-	user: null
+	user: null,
+	isProfileCompleted: false
 }
 
 const authReducer = (state, action) => {
@@ -17,7 +18,8 @@ const authReducer = (state, action) => {
 			return {
 				isAuth: true,
 				role: action.payload.role,
-				user: action.payload.user
+				user: action.payload.user,
+				isProfileCompleted: action.payload.isProfileCompleted
 			}
 
 		case "LOGOUT":
@@ -33,13 +35,11 @@ export function AuthProvider({ children }) {
 	useEffect(() => {
 		const checkAuth = async () => {
 			try {
-				const res = await axios.get("/auth/me", { withCredentials: true });
+				const res = await axios.get("http://localhost:3000/auth/me", { withCredentials: true });
 				dispatch({
 					type: "LOGIN",
-					payload: {
-						role: res.data.role,
-						user: res.data.user
-					}
+					payload: res.data
+
 				});
 			} catch {
 				dispatch({ type: "LOGOUT" });
@@ -49,7 +49,7 @@ export function AuthProvider({ children }) {
 	}, []);
 	return (
 
-		<AuthContext.Provider value={{ state }}>
+		<AuthContext.Provider value={{ state, dispatch }}>
 			{children}
 		</AuthContext.Provider>
 

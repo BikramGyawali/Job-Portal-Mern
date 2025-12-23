@@ -18,7 +18,7 @@ const signupSchema = new schema({
 	},
 	isProfileCompleted: {
 		type: Boolean,
-		default: false
+		default: true
 	},
 	approvalStatus: {
 		type: String,

@@ -1,9 +1,11 @@
-import mongoose from "mongoose"
+
 import express from "express"
 import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js"
 import { EmployerProfile } from "../../models/employer/EmployerProfile.js"
 import { SignupModel } from "../../models/LoginModel/SignupLogic.js"
-
+import fs from "fs"
+import path from "path"
+import { profile } from "console"
 const app = express()
 app.use(express.json())
 
@@ -32,7 +34,24 @@ export const JProfileController = async (req, res) => {
 			return res.status(409).json({ status: 0, message: "Phone number already exists" })
 		}
 
-		const newProfile = await JobseekerProfile.create(data)
+		const newProfile = await JobseekerProfile.create({
+			...data,
+			image: null
+		})
+		let imagePath = null;
+		if (req.file) {
+			const uploadDir = path.join(process.cwd(), "public/uploads/images")
+			if (!fs.existsSync(uploadDir)) {
+				fs.mkdirSync(uploadDir, { recursive: true })
+
+			}
+			const fileName = `${Date.now()}.png`;
+			imagePath = path.join(uploadDir, fileName)
+			fs.writeFileSync(imagePath, req.file.buffer);
+
+			newProfile.image = imagePath
+			await newProfile.save();
+		}
 		await SignupModel.findByIdAndUpdate(userId, { isProfileCompleted: true })
 		return res.status(201).json({
 			status: 1,
@@ -40,6 +59,13 @@ export const JProfileController = async (req, res) => {
 			user: { _id: newProfile._id, name: newProfile.fname }
 		})
 	} catch (error) {
+		if (uploadedFilePath) {
+			fs.unlink(uploadedFilePath, (error) => {
+				if (error) console.log("Image clean up fail");
+
+			})
+		}
+
 		return res.status(500).json({ status: 0, message: "Cannot create profile", error: error.message })
 	}
 }
@@ -73,8 +99,27 @@ export const EProfileController = async (req, res) => {
 		if (panExists) {
 			return res.status(409).json({ status: 0, message: "PAN card already exists" })
 		}
+		//for image 
+		const newProfile = await EmployerProfile.create(
+			{
+				...data,
+				image: null
+			}
+		)
+		let imagePath = null;
+		if (req.file) {
+			const uploadDir = path.join(process.cwd(), "public/uploads/images")
+			if (!fs.existsSync(uploadDir)) {
+				fs.mkdirSync(uploadDir, { recursive: true })
 
-		const newProfile = await EmployerProfile.create(data)
+			}
+			const fileName = `${Date.now()}.png`;
+			imagePath = path.join(uploadDir, fileName)
+			fs.writeFileSync(imagePath, req.file.buffer);
+
+			newProfile.image = imagePath;
+			await newProfile.save();
+		}
 		await SignupModel.findByIdAndUpdate(userId, { isProfileCompleted: true })
 		return res.status(201).json({
 			status: 1,
@@ -82,6 +127,7 @@ export const EProfileController = async (req, res) => {
 			user: { _id: newProfile._id, name: newProfile.fname }
 		})
 	} catch (error) {
+
 		return res.status(500).json({ status: 0, message: "Cannot create profile", error: error.message })
 	}
 }

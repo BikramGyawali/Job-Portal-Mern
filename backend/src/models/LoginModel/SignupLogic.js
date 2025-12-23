@@ -27,5 +27,6 @@ const signupSchema = new schema({
 		lowercase: true
 	}
 })
+signupSchema.index({ approvalStatus: 1 })
 
 export const SignupModel = mongoose.model('User', signupSchema);

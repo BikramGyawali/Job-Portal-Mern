@@ -59,12 +59,12 @@ export const LoginController = async (req, res, type) => {
 		if (!user.isProfileCompleted) {
 			return res.status(403).json({ status: 0, message: "Complete Your Profile Before Login" });
 		}
-		if (!user.approvalStatus === "approved") {
-			if (user.approvalStatus === "pending") {
-				return res.status(403).json({ status: 0, message: "Your Profile is Under Pending State" });
+		if (user.approvalStatus !== "approved") {
+			if (user.approvalStatus == "pending") {
+				return res.status(403).json({ status: 0, message: "Your Profile is Under Admin View" });
 			}
-			else if (user.approvalStatus === "rejected") {
-				return res.status(403).json({ status: 0, message: "Approval Rejected" });
+			else if (user.approvalStatus == "rejected") {
+				return res.status(403).json({ status: 0, message: "Your Profile has been rejected" });
 
 			}
 		}

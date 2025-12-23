@@ -20,3 +20,29 @@ export const uploadImage = multer({
 	storage,
 	fileFilter
 })
+
+
+
+
+//for cv multer 
+const cvStorage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, '../public/uploads/cvs')
+	},
+	filename: function (req, file, cb) {
+		const newFileName = `${Date.now()}-${path.extname(file.originalname)}`
+		cb(null, newFileName)
+	}
+})
+const cvFileFilter = (req, file, cb) => {
+
+	if (file.mimetype !== "application/pdf") {
+		return cb(new Error("Only accept pdf file"), false)
+	}
+	cb(null, true)
+}
+
+export const uploadCv = multer({
+	storage: cvStorage,
+	fileFilter: cvFileFilter
+})

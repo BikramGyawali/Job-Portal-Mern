@@ -7,6 +7,7 @@ import { connectDB } from "./src/config/database.js";
 import jobseekerroutes from "./src/routes/JobseekerRoutes/jobseekerRoutes.js"
 import employerroutes from "./src/routes/EmployerRoutes/employerRoutes.js"
 import cookieParser from "cookie-parser";
+import authrouter from "./src/routes/authroutes/auth.routes.js";
 // import employerroutes from "./src/routes/EmployerRoutes/employerRoutes.js";
 
 dotenv.config();
@@ -25,6 +26,7 @@ const PORT = process.env.PORT || 5000;
 connectDB();
 app.use('/jobseeker', jobseekerroutes);
 app.use("/employer", employerroutes);
+app.use("/auth", authrouter)
 app.use((req, res) => {
 	res.status(404).json({ status: 0, message: "Page not found" });
 });

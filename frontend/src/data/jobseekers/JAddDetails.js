@@ -10,7 +10,7 @@ export const JAddDetails = [
 	{ label: "Award Title", name: "awardTitle", type: "text", placeholder: "Certified Scrum Master" },
 	{ label: "Award Institution", name: "awardInstitution", type: "text", placeholder: "Scrum Alliance" },
 	{ label: "Social Media Name", name: "socialName", type: "text", placeholder: "LinkedIn" },
-	{ label: "Profile URL", name: "socialUrl", type: "text", placeholder: "https://linkedin.com/in/username" },
+	// { label: "Profile URL", name: "socialUrl", type: "text", placeholder: "https://linkedin.com/in/username" },
 	{ label: "Reference Name", name: "referenceName", type: "text", placeholder: "John Doe" },
 	{ label: "Reference Position", name: "referencePosition", type: "text", placeholder: "Manager" },
 	{ label: "Reference Email", name: "referenceEmail", type: "email", placeholder: "john@example.com" },

@@ -19,8 +19,13 @@ const signupSchema = new schema({
 	isProfileCompleted: {
 		type: Boolean,
 		default: false
+	},
+	approvalStaus: { 		 	
+		type: String,
+		enum: ["approved", "pending", "rejected"],
+		default: "approved",
+		lowercase: true
 	}
-
 })
 
 export const SignupModel = mongoose.model('User', signupSchema);

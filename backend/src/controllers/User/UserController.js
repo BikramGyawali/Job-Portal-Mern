@@ -52,13 +52,23 @@ export const LoginController = async (req, res, type) => {
 	try {
 		const { email, pass } = req.body;
 
-		const user = await SignupModel.findOne({ email, role: type });
+		const user = await SignupModel.findOne({ email, role: type }).select("+password");
 		if (!user) {
 			return res.status(404).json({ status: 0, message: "User not found" });
 		}
 		if (!user.isProfileCompleted) {
 			return res.status(403).json({ status: 0, message: "Complete Your Profile Before Login" });
 		}
+		if (!user.approvalStatus === "approved") {
+			if (user.approvalStatus === "pending") {
+				return res.status(403).json({ status: 0, message: "Your Profile is Under Pending State" });
+			}
+			else if (user.approvalStatus === "rejected") {
+				return res.status(403).json({ status: 0, message: "Approval Rejected" });
+
+			}
+		}
+
 
 		const isMatch = await compare(pass, user.password);
 		if (!isMatch) {

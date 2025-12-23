@@ -24,15 +24,28 @@ function EmployersProfile() {
 		}))
 
 	}
-	const handleSubmit = async(e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const { valid, error } = ValidateUtil(profile, employerProfile);
 		setError(error);
-		
+
 		if (!valid) {
 			return
 		}
-		const response = await Profile(profile, "employer")
+		const formData = new FormData();
+
+		Object.entries(profile).forEach(([key, value]) => {
+			if (value !== null && value !== "") {
+				formData.append(key, value);
+			}
+		});
+
+		// Add image
+		if (profile.image) {
+			formData.append("image", profile.image); // "image" matches multer field name
+		}
+
+		const response = await Profile(formData, "employer")
 	}
 
 	return (

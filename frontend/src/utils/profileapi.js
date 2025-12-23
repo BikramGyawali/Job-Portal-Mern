@@ -11,15 +11,14 @@ export const Profile = async (formData, role) => {
 	else throw new Error("Invalid role");
 
 	try {
-		const response = await axios.post(url, formData);
+		const response = await axios.post(url, formData, {
+			headers: { "Content-Type": "multipart/form-data" },
+		});
 		return response.data;
 	} catch (error) {
 		if (error.response?.data) {
 			return error.response.data;
 		}
-		return {
-			status: 0,
-			message: error.message || "Failed to create profile"
-		};
+		return { status: 0, message: error.message || "Failed to create profile" };
 	}
 };

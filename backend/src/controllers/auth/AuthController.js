@@ -1,4 +1,4 @@
-import { currentUserService } from "../../services/auth/AuthService"
+import { currentUserService } from "../../services/auth/AuthService.js"
 
 
 export const getCurrentUser = async (req, res) => {

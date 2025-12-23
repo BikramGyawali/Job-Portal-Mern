@@ -1,6 +1,7 @@
 import dotenv from "dotenv"
 import jwt, { decode } from "jsonwebtoken"
-import { User } from "../../models/LoginModel/SignupLogic";
+import { User } from "../../models/LoginModel/SignupLogic.js";
+
 dotenv.config();
 const key = process.env.JWT_KEY;
 export const currentUserService = async (req) => {

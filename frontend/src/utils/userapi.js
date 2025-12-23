@@ -25,6 +25,7 @@ export const signupUser = async (formData, role) => {
 
 export const loginUser = async (formData, role) => {
 	let url = "";
+	console.log(role);
 
 	if (role === "jobseeker") url = `${BASE_URL}/jobseeker/login`;
 	else if (role === "employer") url = `${BASE_URL}/employer/login`;

@@ -10,6 +10,8 @@ import { loginUser } from '../../utils/userapi';
 
 function LoginComp({ LoginData }) {
 	const { title, explain, image, role } = LoginData;
+	
+
 	const navigate = useNavigate()
 	const [showPassword, setShowPassword] = useState(false);
 	const [form, setForm] = useState({

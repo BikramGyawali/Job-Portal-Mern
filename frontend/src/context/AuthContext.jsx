@@ -18,7 +18,7 @@ const authReducer = (state, action) => {
 				role: action.payload.role,
 				user: action.payload.user
 			}
-			
+
 		case "LOGOUT":
 			return initialState;
 		default:
@@ -28,20 +28,24 @@ const authReducer = (state, action) => {
 
 export function AuthProvider({ children }) {
 	const [state, dispatch] = useReducer(authReducer, initialState)
-	const login = async (formData, role) => {
-		const res = await loginUser(formData, role)
-		if (res.status === 1) {
-			dispatch({
-				type: "LOGIN",
-				payload: {
-					role: res.role,
-					user: res.user
-				}
-			})
-		}
-		return res;
-	}
-	const logout = () => dispatch({ type: "LOGOUT" });
+
+	useEffect(() => {
+		const checkAuth = async () => {
+			try {
+				const res = await axios.get("/auth/me", { withCredentials: true });
+				dispatch({
+					type: "LOGIN",
+					payload: {
+						role: res.data.role,
+						user: res.data.user
+					}
+				});
+			} catch {
+				dispatch({ type: "LOGOUT" });
+			}
+		};
+		checkAuth();
+	}, []);
 	return (
 
 		<AuthContext.Provider value={{ state, login, logout }}>

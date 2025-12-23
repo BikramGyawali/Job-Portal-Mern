@@ -43,35 +43,12 @@ function LoginComp({ LoginData }) {
 		setError(error)
 		if (!valid) return null;
 		const res = await login(form, role)
-		if (res.status === 1) {
-			navigate(`/${res.role}`, { replace: true })
+		if (!res.isProfileCompleted) {
+			navigate(`/${res.role}-profile`, { replace: true });
+		} else {
+			navigate(`/${res.role}`, { replace: true });
 		}
-		else {
-			alert(res.message)
-		}
-		try {
 
-			if (res.status === 1) {
-				console.log(res.message);
-				if (role === "jobseeker") {
-					navigate("/jobseeker");
-				} else if (role === "employer") {
-					navigate("/employer");
-				} else if (role === "admin") {
-					navigate("/admin");
-				} else {
-					navigate("/not-found");
-				}
-
-			}
-			else {
-				alert(res.message)
-			}
-		} catch (error) {
-			console.log(error);
-			alert(error.response?.data?.message || "Login failed");
-
-		}
 
 
 		setForm({

@@ -56,8 +56,8 @@ export default function App() {
 						<Route path="/employers" element={<Employers />} />
 						<Route path="/register" element={<RegisterComp />} />
 						<Route path="/admin-login" element={<AdminLogin />} />
-						<Route path="/jobseekers-profile" element={<JobseekersProfile />} />
-						<Route path="/employers-profile" element={<EmployersProfile />} />
+						<Route path="/jobseeker-profile" element={<JobseekersProfile />} />
+						<Route path="/employer-profile" element={<EmployersProfile />} />
 
 
 						{/* for jobseeker dashboard routes (nested under /jobseeker) */}

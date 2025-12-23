@@ -9,6 +9,8 @@ export const verifyRole = (...roles) => {
 		console.log("Cookies:", req.cookies);
 
 		const token = req.cookies?.token;
+
+
 		if (!token) {
 			return res.status(401).json({ message: "No token" });
 		}
@@ -27,6 +29,7 @@ export const verifyRole = (...roles) => {
 
 
 export const verifyAuth = (req, res, next) => {
+	console.log("Cookies:", req.cookies);
 	const token = req.cookies?.token;
 	console.log(req.cookies);
 

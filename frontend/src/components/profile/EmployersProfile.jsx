@@ -32,7 +32,7 @@ function EmployersProfile() {
 		if (!valid) {
 			return
 		}
-		const response = await Profile.apply(profile, "employer")
+		const response = await Profile(profile, "employer")
 	}
 
 	return (

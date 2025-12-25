@@ -2,18 +2,17 @@ import dotenv from "dotenv"
 import jwt, { decode } from "jsonwebtoken"
 import { User } from "../../models/LoginModel/SignupLogic.js";
 
-dotenv.config();
-const key = process.env.JWT_KEY;
+
 export const currentUserService = async (req) => {
-	const token = req.cookies?.token
-	if (!token) {
+
+	if (!req.user || !req.user.id) {
 		throw {
 			status: 401,
 			message: "Token  is missing"
 		}
 	}
-	const decoded = jwt.verify(token, key);
-	const user = await User.findById(decoded.id).select("-pass");
+
+	const user = await User.findById(req.user.id).select("-pass");
 	if (!user) {
 		throw {
 			status: 401,
@@ -21,8 +20,12 @@ export const currentUserService = async (req) => {
 		}
 	}
 	return {
-		role: decode.role,
-		user,
-		isProfileCompleted: user.isProfileCompleted
+		status: 1,
+		user: {
+			id: user._id,
+			role: user.role,
+			user,
+			isProfileCompleted: user.isProfileCompleted
+		}
 	}
 }

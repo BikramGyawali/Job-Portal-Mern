@@ -4,8 +4,12 @@ import ReusableForm from '../form/ReusableForm';
 import { ValidateUtil } from '../../utils/ValidationUtil';
 import { Profile } from '../../utils/profileapi';
 import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 function EmployersProfile() {
+
+	const { dispatch } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const createEmptyEntry = (fields) =>
 		fields.reduce((acc, f) => {
@@ -49,9 +53,18 @@ function EmployersProfile() {
 
 		const response = await Profile(formData, "employer");
 		if (response?.status === 1) {
+			dispatch({
+				type: "LOGIN",
+				payload: {
+					...state,
+					isProfileCompleted: true
+				}
+			})
 			navigate("/employers", { replace: true })
 		}
 	}
+
+	//for the usercontext
 
 	return (
 		<div className="p-6 bg-white rounded-xl shadow">

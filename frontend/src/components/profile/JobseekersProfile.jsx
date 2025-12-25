@@ -159,38 +159,28 @@ function JobseekersProfile() {
 		// multi-entry arrays
 		formData.append("experience", JSON.stringify(experiences));
 		formData.append("education", JSON.stringify(educationList));
-		formData.append("trainings", JSON.stringify(addDetailsList.filter(d => d.trainingTitle || d.trainingYear || d.trainingInstitution).map(d => ({
-			title: d.trainingTitle,
-			year: d.trainingYear,
-			institution: d.trainingInstitution
-		}))));
-
-		const awards = addDetailsList
-			.filter(d => d.awardTitle || d.awardInstitution)
-			.map(d => ({
-				title: d.awardTitle,
-				institution: d.awardInstitution
-			}));
-
-		const socials = addDetailsList
-			.filter(d => d.socialName)
-			.map(d => ({
-				name: d.socialName,
-				url: d.socialUrl || ""
-			}));
-
-		const references = addDetailsList
-			.filter(d => d.referenceName || d.referenceEmail)
-			.map(d => ({
-				name: d.referenceName,
-				position: d.referencePosition,
-				email: d.referenceEmail,
-				company: d.referenceCompany
-			}));
-			formData.append("awards",JSON.stringify(awards));
-			formData.append("socials",JSON.stringify(socials));
-			formData.append("references",references)
-		formData.append("skills", JSON.stringify(addDetailsList[0]?.skills || [])); // or however you store skills
+		formData.append("trainings", JSON.stringify(
+			addDetailsList.filter(d => d.trainingTitle || d.trainingYear || d.trainingInstitution)
+				.map(d => ({ title: d.trainingTitle, year: d.trainingYear, institution: d.trainingInstitution }))
+		));
+		formData.append("awards", JSON.stringify(
+			addDetailsList.filter(d => d.awardTitle || d.awardInstitution)
+				.map(d => ({ title: d.awardTitle, institution: d.awardInstitution }))
+		));
+		formData.append("socials", JSON.stringify(
+			addDetailsList.filter(d => d.socialName)
+				.map(d => ({ name: d.socialName, url: d.socialUrl || "" }))
+		));
+		formData.append("references", JSON.stringify(
+			addDetailsList.filter(d => d.referenceName || d.referenceEmail)
+				.map(d => ({
+					name: d.referenceName,
+					position: d.referencePosition,
+					email: d.referenceEmail,
+					company: d.referenceCompany
+				}))
+		));
+		formData.append("skills", JSON.stringify(addDetailsList[0]?.skills || []));
 		formData.append("languages", JSON.stringify([{
 			name: addDetailsList[0]?.language,
 			reading: addDetailsList[0]?.languageReading,

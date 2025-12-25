@@ -11,9 +11,9 @@ app.use(express.json())
 // Helper to write image buffer to disk and return filename
 const saveImageBuffer = async (file) => {
 	if (!file || !file.buffer) return null;
-	const safeName = file.originalname.replace(/\s+/g, "-")
+	const safeName = file.originalname.replace(/\s+/g, "-")  //replace space with -
 	const fileName = `${Date.now()}-${safeName}`
-	const uploadDir = path.join(process.cwd(), "public/uploads/images")
+	const uploadDir = path.join(process.cwd(), "public/uploads/images") //cwd->current workin directory
 	if (!fs.existsSync(uploadDir)) {
 		fs.mkdirSync(uploadDir, { recursive: true })
 	}

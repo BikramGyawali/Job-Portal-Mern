@@ -6,6 +6,7 @@ import { Education } from "../../data/jobseekers/Education";
 import { JAddDetails } from "../../data/jobseekers/JAddDetails";
 import { ValidateUtil } from "../../utils/ValidationUtil";
 import { Profile } from "../../utils/profileapi";
+import { useNavigate } from "react-router-dom";
 
 
 const createEmptyEntry = (fields) =>
@@ -17,6 +18,7 @@ const createEmptyEntry = (fields) =>
 	}, {});
 
 function JobseekersProfile() {
+	const naviagte = useNavigate();
 	const [profile, setProfile] = useState(createEmptyEntry(ProfileFields));  // help to make intially empty object of data 
 	const [experiences, setExperiences] = useState([createEmptyEntry(Experience)]);
 	const [educationList, setEducationList] = useState([createEmptyEntry(Education)]);
@@ -157,6 +159,9 @@ function JobseekersProfile() {
 			};
 			console.log("FINAL PAYLOAD", payload);
 
+		}
+		if (response?.status === 1) {
+			naviagte("/joobseekers", { replace: true })
 		}
 	};
 

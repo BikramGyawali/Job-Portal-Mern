@@ -3,8 +3,10 @@ import { employerProfile } from '../../data/employers/employerProfile';
 import ReusableForm from '../form/ReusableForm';
 import { ValidateUtil } from '../../utils/ValidationUtil';
 import { Profile } from '../../utils/profileapi';
+import { useNavigate } from 'react-router-dom';
 
 function EmployersProfile() {
+	const navigate = useNavigate();
 	const createEmptyEntry = (fields) =>
 		fields.reduce((acc, f) => {
 			if (f.type === "checkbox") acc[f.name] = false;
@@ -45,7 +47,10 @@ function EmployersProfile() {
 		// 	formData.append("image", profile.image); // "image" matches multer field name
 		// }
 
-		const response = await Profile(formData, "employer")
+		const response = await Profile(formData, "employer");
+		if (response?.status === 1) {
+			navigate("/employers", { replace: true })
+		}
 	}
 
 	return (

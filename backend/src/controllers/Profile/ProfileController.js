@@ -36,11 +36,28 @@ export const JProfileController = async (req, res) => {
 		}
 
 		// create profile without image first
+		const experience = req.body.experience ? JSON.parse(req.body.experience) : [];
+		const education = req.body.education ? JSON.parse(req.body.education) : [];
+		const trainings = req.body.trainings ? JSON.parse(req.body.trainings) : [];
+		const skills = req.body.skills ? JSON.parse(req.body.skills) : [];
+		const languages = req.body.languages ? JSON.parse(req.body.languages) : [];
+		const socials = req.body.socials ? JSON.parse(req.body.socials) : [];
+		const awards = req.body.awards ? JSON.parse(req.body.awards) : [];
+		const references = req.body.references ? JSON.parse(req.body.references) : [];
+
 		const profile = await JobseekerProfile.create({
 			...req.body,
-			userId,
-			image: null
+			experience,
+			education,
+			trainings,
+			skills,
+			languages,
+			socials,
+			awards,
+			references,
+			userId: req.user.id
 		});
+
 
 		// save image to disk only after profile is created
 		if (req.file) {

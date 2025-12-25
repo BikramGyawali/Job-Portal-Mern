@@ -117,8 +117,7 @@ function JobseekersProfile() {
 	};
 
 	//  submit  logic
-	const handleSubmit = async (e) => {
-		e.prevent.Default();
+	const handleSubmit = async () => {
 		let targetForm;
 		let targetFields;
 		if (step === 1) {
@@ -151,9 +150,53 @@ function JobseekersProfile() {
 
 		// final step - send profile as multipart/form-data
 		const formData = new FormData();
+
+		// top-level profile fields
 		Object.entries(profile).forEach(([key, value]) => {
 			if (value !== null && value !== "") formData.append(key, value);
 		});
+
+		// multi-entry arrays
+		formData.append("experience", JSON.stringify(experiences));
+		formData.append("education", JSON.stringify(educationList));
+		formData.append("trainings", JSON.stringify(addDetailsList.filter(d => d.trainingTitle || d.trainingYear || d.trainingInstitution).map(d => ({
+			title: d.trainingTitle,
+			year: d.trainingYear,
+			institution: d.trainingInstitution
+		}))));
+
+		const awards = addDetailsList
+			.filter(d => d.awardTitle || d.awardInstitution)
+			.map(d => ({
+				title: d.awardTitle,
+				institution: d.awardInstitution
+			}));
+
+		const socials = addDetailsList
+			.filter(d => d.socialName)
+			.map(d => ({
+				name: d.socialName,
+				url: d.socialUrl || ""
+			}));
+
+		const references = addDetailsList
+			.filter(d => d.referenceName || d.referenceEmail)
+			.map(d => ({
+				name: d.referenceName,
+				position: d.referencePosition,
+				email: d.referenceEmail,
+				company: d.referenceCompany
+			}));
+			formData.append("awards",JSON.stringify(awards));
+			formData.append("socials",JSON.stringify(socials));
+			formData.append("references",references)
+		formData.append("skills", JSON.stringify(addDetailsList[0]?.skills || [])); // or however you store skills
+		formData.append("languages", JSON.stringify([{
+			name: addDetailsList[0]?.language,
+			reading: addDetailsList[0]?.languageReading,
+			writing: addDetailsList[0]?.languageWriting,
+			speaking: addDetailsList[0]?.languageSpeaking
+		}]));
 
 		const response = await Profile(formData, "jobseeker");
 
@@ -165,47 +208,47 @@ function JobseekersProfile() {
 		} else {
 			alert(response?.message || "Failed to create profile");
 		};
-
-
-		const currentForm =
-			step === 1
-				? profile
-				: step === 2
-					? experiences[expIndex] || createEmptyEntry(Experience)
-					: step === 3
-						? educationList[eduIndex] || createEmptyEntry(Education)
-						: addDetailsList[addIndex] || createEmptyEntry(JAddDetails);
-
-		const changeHandler =
-			step === 1
-				? handleProfileChange
-				: step === 2
-					? handleExperienceChange
-					: step === 3
-						? handleEducationChange
-						: handleAddDetailsChange;
-
-		return (
-			<div className="p-6 bg-white rounded-xl shadow">
-				<h2 className="text-2xl font-bold mb-4 text-center ">{steps[step - 1].name}</h2>
-
-				<ReusableForm
-					form={currentForm}
-					errors={errors}
-					onChange={changeHandler}
-					onSubmit={handleSubmit}
-					fields={currentStep.fields}
-					step={step}
-					setStep={setStep}
-					totalSteps={totalSteps}
-					addSection={step === 2 ? addExperience : step === 3 ? addEducation : step === 4 ? addDetailSection : undefined}
-					entriesCount={step === 2 ? experiences.length : step === 3 ? educationList.length : step === 4 ? addDetailsList.length : 1}
-					setCurrentEntryIndex={step === 2 ? setExpIndex : step === 3 ? setEduIndex : step === 4 ? setAddIndex : () => { }}  // the callback function is just for profile because it doesnt have multiple entries 
-					currentEntryIndex={step === 2 ? expIndex : step === 3 ? eduIndex : step === 4 ? addIndex : 0}  //for profile there is 0
-					multipleEntries={true}
-				/>
-			</div>
-		);
 	}
+
+	const currentForm =
+		step === 1
+			? profile
+			: step === 2
+				? experiences[expIndex] || createEmptyEntry(Experience)
+				: step === 3
+					? educationList[eduIndex] || createEmptyEntry(Education)
+					: addDetailsList[addIndex] || createEmptyEntry(JAddDetails);
+
+	const changeHandler =
+		step === 1
+			? handleProfileChange
+			: step === 2
+				? handleExperienceChange
+				: step === 3
+					? handleEducationChange
+					: handleAddDetailsChange;
+
+	return (
+		<div className="p-6 bg-white rounded-xl shadow">
+			<h2 className="text-2xl font-bold mb-4 text-center ">{steps[step - 1].name}</h2>
+
+			<ReusableForm
+				form={currentForm}
+				errors={errors}
+				onChange={changeHandler}
+				onSubmit={handleSubmit}
+				fields={currentStep.fields}
+				step={step}
+				setStep={setStep}
+				totalSteps={totalSteps}
+				addSection={step === 2 ? addExperience : step === 3 ? addEducation : step === 4 ? addDetailSection : undefined}
+				entriesCount={step === 2 ? experiences.length : step === 3 ? educationList.length : step === 4 ? addDetailsList.length : 1}
+				setCurrentEntryIndex={step === 2 ? setExpIndex : step === 3 ? setEduIndex : step === 4 ? setAddIndex : () => { }}  // the callback function is just for profile because it doesnt have multiple entries 
+				currentEntryIndex={step === 2 ? expIndex : step === 3 ? eduIndex : step === 4 ? addIndex : 0}  //for profile there is 0
+				multipleEntries={true}
+			/>
+		</div>
+	);
+
 }
 export default JobseekersProfile;

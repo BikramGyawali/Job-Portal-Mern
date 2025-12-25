@@ -24,7 +24,7 @@ export const currentUserService = async (req) => {
 		user: {
 			id: user._id,
 			role: user.role,
-			user,
+		
 			isProfileCompleted: user.isProfileCompleted
 		}
 	}

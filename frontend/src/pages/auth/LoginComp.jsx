@@ -5,12 +5,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import ButtonComp from '../../components/common/ButtonComp';
 import { contactLoginValidate } from '../../utils/contactLoginValidate';
 import { loginUser } from '../../utils/userapi';
+import { useContext } from 'react';
+import { AuthContext } from '../../context/AuthContext';
 
 // import { ValidateUtil } from '../utils/ValidationUtil';
 
 function LoginComp({ LoginData }) {
+	const { dispatch } = useContext(AuthContext)
 	const { title, explain, image, role } = LoginData;
-	
+
 
 	const navigate = useNavigate()
 	const [showPassword, setShowPassword] = useState(false);
@@ -40,20 +43,33 @@ function LoginComp({ LoginData }) {
 
 
 		setError(error)
-		if (!valid) return null;
+		if (!valid) return;
 		const res = await loginUser(form, role)
+		// console.log(res);
+
+
 		if (res.status === 1) {
+			// update local auth state so ProtectedRoute works without reload
+			dispatch({
+				type: "LOGIN",
+				payload: {
+					role: res.role,
+					user: res.user,
+					isProfileCompleted: res.isProfileCompleted,
+				},
+			});
+
 			if (!res.isProfileCompleted) {
 				navigate(`/${res.role}-profile`, { replace: true });
 			} else {
 				navigate(`/${res.role}`, { replace: true });
 			}
-		}
-		else {
+		} else {
 			alert(res.message)
 		}
 
 
+		console.log(res);
 
 
 		setForm({

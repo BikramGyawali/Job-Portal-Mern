@@ -7,8 +7,8 @@ import { JAddDetails } from "../../data/jobseekers/JAddDetails";
 import { ValidateUtil } from "../../utils/ValidationUtil";
 import { Profile } from "../../utils/profileapi";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../context/AuthContext";
 import { useContext } from "react";
+import { AuthContext } from "../../context/AuthContext";
 
 
 const createEmptyEntry = (fields) =>
@@ -21,7 +21,7 @@ const createEmptyEntry = (fields) =>
 
 function JobseekersProfile() {
 	const { dispatch } = useContext(AuthContext);
-	const naviagte = useNavigate();
+	const navigate = useNavigate();
 	const [profile, setProfile] = useState(createEmptyEntry(ProfileFields));  // help to make intially empty object of data 
 	const [experiences, setExperiences] = useState([createEmptyEntry(Experience)]);
 	const [educationList, setEducationList] = useState([createEmptyEntry(Education)]);
@@ -118,8 +118,7 @@ function JobseekersProfile() {
 
 	//  submit  logic
 	const handleSubmit = async (e) => {
-		e.preventDefault();
-
+		e.prevent.Default();
 		let targetForm;
 		let targetFields;
 		if (step === 1) {
@@ -144,77 +143,69 @@ function JobseekersProfile() {
 			// show errors, do not progress
 			return;
 		}
-		// ensure we send multipart/form-data when there is a file
+
+		if (step < totalSteps) {
+			setStep((s) => s + 1);
+			return;
+		}
+
+		// final step - send profile as multipart/form-data
 		const formData = new FormData();
 		Object.entries(profile).forEach(([key, value]) => {
 			if (value !== null && value !== "") formData.append(key, value);
 		});
-		const response = await Profile(formData, "jobseeker")
-		if (step < totalSteps) {
-			setStep((s) => s + 1);
-		} else {
-			// final payload 
-			const payload = {
-				profile,
-				experiences,
-				educationList,
-				addDetailsList,
-			};
-			console.log("FINAL PAYLOAD", payload);
 
-		}
+		const response = await Profile(formData, "jobseeker");
+
 		if (response?.status === 1) {
-				dispatch({
-				type: "LOGIN",
-				payload: {
-					...state,
-					isProfileCompleted: true
-				}
-			})
-			naviagte("/joobseekers", { replace: true })
-		}
-	};
+			alert("Profile created successfully. Please login.");
+			// clear client auth state and force re-login
+			dispatch({ type: "LOGOUT" });
+			navigate("/jobseekers", { replace: true });
+		} else {
+			alert(response?.message || "Failed to create profile");
+		};
 
 
-	const currentForm =
-		step === 1
-			? profile
-			: step === 2
-				? experiences[expIndex] || createEmptyEntry(Experience)
-				: step === 3
-					? educationList[eduIndex] || createEmptyEntry(Education)
-					: addDetailsList[addIndex] || createEmptyEntry(JAddDetails);
+		const currentForm =
+			step === 1
+				? profile
+				: step === 2
+					? experiences[expIndex] || createEmptyEntry(Experience)
+					: step === 3
+						? educationList[eduIndex] || createEmptyEntry(Education)
+						: addDetailsList[addIndex] || createEmptyEntry(JAddDetails);
 
-	const changeHandler =
-		step === 1
-			? handleProfileChange
-			: step === 2
-				? handleExperienceChange
-				: step === 3
-					? handleEducationChange
-					: handleAddDetailsChange;
+		const changeHandler =
+			step === 1
+				? handleProfileChange
+				: step === 2
+					? handleExperienceChange
+					: step === 3
+						? handleEducationChange
+						: handleAddDetailsChange;
 
-	return (
-		<div className="p-6 bg-white rounded-xl shadow">
-			<h2 className="text-2xl font-bold mb-4 text-center ">{steps[step - 1].name}</h2>
+		return (
+			<div className="p-6 bg-white rounded-xl shadow">
+				<h2 className="text-2xl font-bold mb-4 text-center ">{steps[step - 1].name}</h2>
 
-			<ReusableForm
-				form={currentForm}
-				errors={errors}
-				onChange={changeHandler}
-				onSubmit={handleSubmit}
-				fields={currentStep.fields}
-				step={step}
-				setStep={setStep}
-				totalSteps={totalSteps}
-				addSection={step === 2 ? addExperience : step === 3 ? addEducation : step === 4 ? addDetailSection : undefined}
-				entriesCount={step === 2 ? experiences.length : step === 3 ? educationList.length : step === 4 ? addDetailsList.length : 1}
-				setCurrentEntryIndex={step === 2 ? setExpIndex : step === 3 ? setEduIndex : step === 4 ? setAddIndex : () => { }}  // the callback function is just for profile because it doesnt have multiple entries 
-				currentEntryIndex={step === 2 ? expIndex : step === 3 ? eduIndex : step === 4 ? addIndex : 0}  //for profile there is 0
-				multipleEntries={true}
-			/>
-		</div>
-	);
+				<ReusableForm
+					form={currentForm}
+					errors={errors}
+					onChange={changeHandler}
+					onSubmit={handleSubmit}
+					fields={currentStep.fields}
+					step={step}
+					setStep={setStep}
+					totalSteps={totalSteps}
+					addSection={step === 2 ? addExperience : step === 3 ? addEducation : step === 4 ? addDetailSection : undefined}
+					entriesCount={step === 2 ? experiences.length : step === 3 ? educationList.length : step === 4 ? addDetailsList.length : 1}
+					setCurrentEntryIndex={step === 2 ? setExpIndex : step === 3 ? setEduIndex : step === 4 ? setAddIndex : () => { }}  // the callback function is just for profile because it doesnt have multiple entries 
+					currentEntryIndex={step === 2 ? expIndex : step === 3 ? eduIndex : step === 4 ? addIndex : 0}  //for profile there is 0
+					multipleEntries={true}
+				/>
+			</div>
+		);
+	}
 }
-
 export default JobseekersProfile;

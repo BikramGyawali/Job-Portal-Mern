@@ -1,8 +1,7 @@
 import React from 'react'
-import { useReducer } from 'react'
+import { useReducer, useEffect } from 'react'
 import { createContext } from 'react'
-import { loginUser } from '../utils/userapi'
-import { useEffect } from 'react'
+import api from '../utils/axiosInstance'
 
 export const AuthContext = createContext()
 const initialState = {
@@ -35,12 +34,19 @@ export function AuthProvider({ children }) {
 	useEffect(() => {
 		const checkAuth = async () => {
 			try {
-				const res = await axios.get("http://localhost:3000/auth/me", { withCredentials: true });
-				dispatch({
-					type: "LOGIN",
-					payload: res.data
-
-				});
+				const res = await api.get("/auth/me");
+				if (res.data?.status === 1 && res.data.user) {
+					dispatch({
+						type: "LOGIN",
+						payload: {
+							role: res.data.user.role,
+							user: res.data.user.user,
+							isProfileCompleted: res.data.user.isProfileCompleted,
+						},
+					});
+				} else {
+					dispatch({ type: "LOGOUT" });
+				}
 			} catch {
 				dispatch({ type: "LOGOUT" });
 			}

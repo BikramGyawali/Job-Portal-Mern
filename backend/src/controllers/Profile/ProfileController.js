@@ -1,10 +1,8 @@
 
 import express from "express"
 import fs from "fs"
-import cookieParser from "cookie-parser";
 import path from "path"
-import jwt from "jsonwebtoken"
-import dotenv from dotenv
+import dotenv from "dotenv"
 import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js"
 import { EmployerProfile } from "../../models/employer/EmployerProfile.js"
 import { User } from "../../models/LoginModel/SignupLogic.js"
@@ -25,17 +23,7 @@ const saveImageBuffer = async (file) => {
 	return fileName
 }
 
-//function to create new token generator
-const generateToken = (user) => {
-	return jwt.sign(
-		{
-			id: user._id,
-			role: user.role,
-			isProfileCompleted: user.isProfileCompleted
-		}, process.env.JWT_KEY, { expiresIn: "1d" }
 
-	)
-}
 
 // Jobseeker Profile
 export const JProfileController = async (req, res) => {
@@ -73,14 +61,12 @@ export const JProfileController = async (req, res) => {
 		},
 			{ new: true }
 		);
-		const token = generateToken(user)
-		res.cookie("token", token, {
-			httpOnly: true,
-			samesite: lax,
-			secure: false
+		// clear authentication cookie so user returns to login and re-authenticates
+		try {
+			res.clearCookie("token", { httpOnly: true, sameSite: 'lax', secure: false });
+		} catch (e) {
+			// ignore
 		}
-
-		)
 		res.status(201).json({
 			status: 1,
 			message: "Profile created",
@@ -123,17 +109,13 @@ export const EProfileController = async (req, res) => {
 		const user = await User.findByIdAndUpdate(userId, {
 			isProfileCompleted: true
 		},
-			{ new: true },
-		);
-
-		const token = generateToken(user)
-		res.cookie("token", token, {
-			httpOnly: true,
-			samesite: lax,
-			secure: false
+			{ new: true }
+		);		// clear authentication cookie so user returns to login and re-authenticates
+		try {
+			res.clearCookie("token", { httpOnly: true, sameSite: 'lax', secure: false });
+		} catch (e) {
+			// ignore
 		}
-
-		)
 		res.status(201).json({
 			status: 1,
 			message: "Profile created",

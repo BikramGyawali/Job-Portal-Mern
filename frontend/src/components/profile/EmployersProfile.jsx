@@ -8,7 +8,6 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 
 function EmployersProfile() {
-
 	const { dispatch } = useContext(AuthContext);
 	const navigate = useNavigate();
 	const createEmptyEntry = (fields) =>
@@ -53,14 +52,12 @@ function EmployersProfile() {
 
 		const response = await Profile(formData, "employer");
 		if (response?.status === 1) {
-			dispatch({
-				type: "LOGIN",
-				payload: {
-					...state,
-					isProfileCompleted: true
-				}
-			})
+			alert("Profile created successfully. Please login.");
+			// clear client auth state and force re-login
+			dispatch({ type: "LOGOUT" });
 			navigate("/employers", { replace: true })
+		} else {
+			alert(response?.message || "Failed to create profile");
 		}
 	}
 

@@ -24,8 +24,8 @@ function EmployersProfile() {
 		}))
 
 	}
-	const handleSubmit = async (e) => {
-		e.preventDefault();
+	const handleSubmit = async () => {
+		// e.preventDefault();
 		const { valid, error } = ValidateUtil(profile, employerProfile);
 		setError(error);
 
@@ -41,9 +41,9 @@ function EmployersProfile() {
 		});
 
 		// Add image
-		if (profile.image) {
-			formData.append("image", profile.image); // "image" matches multer field name
-		}
+		// if (profile.image) {
+		// 	formData.append("image", profile.image); // "image" matches multer field name
+		// }
 
 		const response = await Profile(formData, "employer")
 	}

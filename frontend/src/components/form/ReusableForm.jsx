@@ -23,7 +23,7 @@ function ReusableForm({
 
 	const handleNextOrSubmit = (e) => {
 		e.preventDefault();
-		onSubmit(e);
+		onSubmit();
 	};
 
 	return (

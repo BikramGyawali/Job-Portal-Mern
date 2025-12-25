@@ -139,7 +139,12 @@ function JobseekersProfile() {
 			// show errors, do not progress
 			return;
 		}
-		const response = await Profile(profile, "jobseeker")
+		// ensure we send multipart/form-data when there is a file
+		const formData = new FormData();
+		Object.entries(profile).forEach(([key, value]) => {
+			if (value !== null && value !== "") formData.append(key, value);
+		});
+		const response = await Profile(formData, "jobseeker")
 		if (step < totalSteps) {
 			setStep((s) => s + 1);
 		} else {

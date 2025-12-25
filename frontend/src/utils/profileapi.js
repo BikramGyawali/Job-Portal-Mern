@@ -13,6 +13,7 @@ export const Profile = async (formData, role) => {
 	try {
 		const response = await axios.post(url, formData, {
 			headers: { "Content-Type": "multipart/form-data" },
+			withCredentials: true,
 		});
 		return response.data;
 	} catch (error) {

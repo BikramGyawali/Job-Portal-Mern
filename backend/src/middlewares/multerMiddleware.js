@@ -5,16 +5,8 @@ const uploadDir = path.join(process.cwd(), "public/uploads/images")
 if (!fs.existsSync(uploadDir)) {
 	fs.mkdirSync(uploadDir, { recursive: true })
 }
-const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, uploadDir)
-	},
-	filename: function (req, file, cb) {
-		const safeName = file.originalname.replace(/\s+/g, "-")
-		const newFileName = `${Date.now()}-${safeName}`
-		cb(null, newFileName)
-	}
-})
+// Use memory storage so the file is only written to disk if profile creation succeeds
+const storage = multer.memoryStorage();
 const fileFilter = (req, file, cb) => {
 	const allowTypes = ['image/jpeg', 'image/jpg', 'image/png'];
 	if (!allowTypes.includes(file.mimetype)) {
@@ -38,7 +30,7 @@ if (!fs.existsSync(cvUploadDir)) {
 
 const cvStorage = multer.diskStorage({
 	destination: function (req, file, cb) {
-		cb(null, 'cvUploadDir')
+		cb(null, cvUploadDir)
 	},
 	filename: function (req, file, cb) {
 		const safeName = file.originalname.replace(/\s+/g, "-")

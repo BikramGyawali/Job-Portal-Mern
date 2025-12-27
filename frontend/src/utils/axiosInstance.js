@@ -9,8 +9,12 @@ const api = axios.create({
 api.interceptors.response.use(
 	res => res,
 	err => {
+		
+		const loginPaths = ['/jobseekers', '/employers', '/admin-login'];
 		if (err.response?.status === 401) {
-			window.location.replace('/jobseekers')
+			if (err.config?.url !== '/auth/me' && !loginPaths.includes(window.location.pathname)) {
+				window.location.replace('/jobseekers');
+			}
 		}
 		return Promise.reject(err);
 	}

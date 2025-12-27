@@ -179,8 +179,8 @@ function JobseekersProfile() {
 					company: d.referenceCompany
 				}))
 		));
-		const skill = addDetailsList.flatMap(d => typeof d.skills === "string" ?
-			d.skills.split(",").map(s => s.trim()).filter(Boolean) : []
+		const skill = addDetailsList.flatMap(d => typeof d.skills === "string" ? //flatmap make a single array by removing nested arry the skill returns the array of object
+			d.skills.split(",").map(s => s.trim()).filter(Boolean) : [] //the filter will help to remove the "",undefined and null
 		)
 		formData.append("skills", JSON.stringify(skill));
 		const languages = addDetailsList.filter(d => d.language).map(
@@ -189,7 +189,7 @@ function JobseekersProfile() {
 				reading: d.languageReading,
 				writing: d.languageWriting,
 				speaking: d.languageSpeaking
-			})
+			}) // in language this return an object 
 		)
 		formData.append("languages", JSON.stringify(languages));
 

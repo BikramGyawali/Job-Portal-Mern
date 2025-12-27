@@ -139,7 +139,7 @@ function JobseekersProfile() {
 		setErrors(error);
 
 		if (!valid) {
-			// show errors, do not progress
+
 			return;
 		}
 
@@ -148,7 +148,6 @@ function JobseekersProfile() {
 			return;
 		}
 
-		// final step - send profile as multipart/form-data
 		const formData = new FormData();
 
 		// top-level profile fields
@@ -157,7 +156,7 @@ function JobseekersProfile() {
 		});
 
 		// multi-entry arrays
-		formData.append("experience", JSON.stringify(experiences));
+		formData.append("experience", JSON.stringify(experiences)); //json.stringify convert the array or object into the string
 		formData.append("education", JSON.stringify(educationList));
 		formData.append("trainings", JSON.stringify(
 			addDetailsList.filter(d => d.trainingTitle || d.trainingYear || d.trainingInstitution)
@@ -169,7 +168,7 @@ function JobseekersProfile() {
 		));
 		formData.append("socials", JSON.stringify(
 			addDetailsList.filter(d => d.socialName)
-				.map(d => ({ name: d.socialName, url: d.socialUrl || "" }))
+				.map(d => ({ name: d.socialName }))
 		));
 		formData.append("references", JSON.stringify(
 			addDetailsList.filter(d => d.referenceName || d.referenceEmail)
@@ -180,19 +179,24 @@ function JobseekersProfile() {
 					company: d.referenceCompany
 				}))
 		));
-		formData.append("skills", JSON.stringify(addDetailsList[0]?.skills || []));
-		formData.append("languages", JSON.stringify([{
-			name: addDetailsList[0]?.language,
-			reading: addDetailsList[0]?.languageReading,
-			writing: addDetailsList[0]?.languageWriting,
-			speaking: addDetailsList[0]?.languageSpeaking
-		}]));
+		const skill = addDetailsList.flatMap(d => typeof d.skills === "string" ?
+			d.skills.split(",").map(s => s.trim()).filter(Boolean) : []
+		)
+		formData.append("skills", JSON.stringify(skill));
+		const languages = addDetailsList.filter(d => d.language).map(
+			(d) => ({
+				name: d.language,
+				reading: d.languageReading,
+				writing: d.languageWriting,
+				speaking: d.languageSpeaking
+			})
+		)
+		formData.append("languages", JSON.stringify(languages));
 
 		const response = await Profile(formData, "jobseeker");
 
 		if (response?.status === 1) {
 			alert("Profile created successfully. Please login.");
-			// clear client auth state and force re-login
 			dispatch({ type: "LOGOUT" });
 			navigate("/jobseekers", { replace: true });
 		} else {

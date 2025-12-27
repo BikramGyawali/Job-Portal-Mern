@@ -37,7 +37,7 @@ function EmployersProfile() {
 		if (!valid) {
 			return
 		}
-		const formData = new FormData();
+		const formData = new FormData();  //use to send the binary file
 
 		Object.entries(profile).forEach(([key, value]) => {
 			if (value !== null && value !== "") {
@@ -45,11 +45,7 @@ function EmployersProfile() {
 			}
 		});
 
-		// Add image
-		// if (profile.image) {
-		// 	formData.append("image", profile.image); // "image" matches multer field name
-		// }
-
+		
 		const response = await Profile(formData, "employer");
 		if (response?.status === 1) {
 			alert("Profile created successfully. Please login.");

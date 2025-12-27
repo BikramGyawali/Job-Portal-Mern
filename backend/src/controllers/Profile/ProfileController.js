@@ -36,7 +36,7 @@ export const JProfileController = async (req, res) => {
 		}
 
 		// create profile without image first
-		const experience = req.body.experience ? JSON.parse(req.body.experience) : [];
+		const experience = req.body.experience ? JSON.parse(req.body.experience) : []; //parse conver the data to their orginal form as object
 		const education = req.body.education ? JSON.parse(req.body.education) : [];
 		const trainings = req.body.trainings ? JSON.parse(req.body.trainings) : [];
 		const skills = req.body.skills ? JSON.parse(req.body.skills) : [];

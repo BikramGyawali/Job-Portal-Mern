@@ -29,7 +29,7 @@ export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 	}
 	const { pathname } = useLocation();
 	const myData = role === 'Jobseeker' ? JNavbarData : NavbarData;
-	const apiUrl = import.meta.env.VITE_API_URL || '';
+	const apiUrl = import.meta.env.VITE_API_URL || window.location.origin;
 	const avatarSrc = profile?.image ? `${apiUrl}/uploads/images/${profile.image}` : null;
 	return (
 		<Navbar className="bg-[#1E2939] text-white shadow px-4 py-2 flex items-center justify-between">
@@ -64,8 +64,11 @@ export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 					<DropdownHeader>
 						<span className="font-bold text-sm">Logged in as {role}</span>
 						<br />
-						<span className="font-bold text-sm ">{profile ? `${profile.fname || profile.cname || ''} ${profile.mname ?? ''} ${profile.sname ?? ''}`.trim() : ''}</span>
-						<span className="block text-sm">{profile?.email || ''}</span>
+						<span className="font-bold text-sm ">{profile ? `${profile.fname || profile.cname || ''} ${profile.mname ?? ''} ${profile.sname ?? ''}`.trim() : (state.user?.name || '')}</span>
+						<span className="block text-sm">{profile?.email || state.user?.email || ''}</span>
+						{profile?.currentAddress && (
+							<span className="block text-sm">{profile.currentAddress.district ? `${profile.currentAddress.district}${profile.currentAddress.city ? ', ' + profile.currentAddress.city : ''}` : profile.currentAddress}</span>
+						)}
 						<DropdownItem onClick={handleLogout} className="bg-linear-to-r from-indigo-500 to-purple-500 mt-1 rounded-2xl !text-white text-center  text-bold w-[60%] ">Sign out</DropdownItem>
 					</DropdownHeader>
 				</Dropdown>

@@ -85,7 +85,7 @@ const DownloadResume = () => {
 										<img
 											src={sec.data.profileImage}
 											alt={sec.data.name}
-											className="max-h-[200px] max-w-[150px]
+											className="max-h-[200px] max-w-[200px]
 											
 											border-2 border-black p-1.5 rounded"
 										/>

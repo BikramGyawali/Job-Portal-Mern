@@ -1,6 +1,6 @@
 export const ProfileToCV = (profile) => {
 	if (!profile) return [];
-	const apiUrl = import.meta.env.VITE_API_URL || '';
+	const apiUrl = import.meta.env.VITE_API_URL || window.location.origin;
 	const getFullName = (p) => [p?.fname, p?.mname, p?.sname].filter(Boolean).join(' ');
 
 	return [

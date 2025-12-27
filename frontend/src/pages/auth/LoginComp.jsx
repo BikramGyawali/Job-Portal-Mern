@@ -69,7 +69,7 @@ function LoginComp({ LoginData }) {
 		}
 
 
-		console.log(res);
+		console.log(res.message);
 
 
 		setForm({

@@ -18,6 +18,8 @@ import { ProfileContext } from "../context/ProfileContext";
 export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 	const { state, logout } = useContext(AuthContext);
 	const { profile } = useContext(ProfileContext)
+	console.log(profile);
+	
 	const navigate = useNavigate()
 	const handleLogout = () => {
 		logout()
@@ -74,7 +76,7 @@ export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 					<DropdownHeader>
 						<span className="font-bold text-sm">Logged in as</span>
 						<span className="block text-sm">{role}</span>
-						<span className="font-bold text-sm">{profile.fname}</span>
+						<span className="font-bold text-sm">`{profile.fname}${profile.mname ?? ""}${profile.sname}`</span>
 						<span className="block text-sm">{profile.email}</span>
 					</DropdownHeader>
 

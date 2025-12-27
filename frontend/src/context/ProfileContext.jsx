@@ -24,7 +24,9 @@ export const ProfileProvider = ({ children }) => {
 
 			try {
 				const res = api.get(`${authState.role}/profile`);
-				setProfile(ProfileToCV(res.data.profile));
+				console.log(res);
+
+				setProfile(ProfileToCV(res.profile));
 			} catch (error) {
 				setProfile(null)
 			} finally {

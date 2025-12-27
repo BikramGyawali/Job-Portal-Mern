@@ -1,6 +1,6 @@
 export const ProfileToCV = (profile) => {
 	if (!profile) return []
-
+const apiUrl= import.meta.env.VITE_API_URL
 	return [
 		{
 			section: "Personal Header",
@@ -8,7 +8,7 @@ export const ProfileToCV = (profile) => {
 			data: {
 				name: `${profile.fname}${profile.mname ?? ""}${profile.sname
 					}`.trim(),
-				profileImage: profile.image ? `${import.meta.env.VITE_API_URL} / uploads / ${profile.image}` : null,
+				profileImage: profile.image ? `$apiUrl / uploads / ${profile.image}` : null,
 				address: profile.currentAddress,
 				contact: profile.phone,
 				email: profile.email,

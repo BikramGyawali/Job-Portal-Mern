@@ -85,14 +85,18 @@ const DownloadResume = () => {
 										<img
 											src={sec.data.profileImage}
 											alt={sec.data.name}
-											className="max-h-[200px] max-w-[200px]
+											className="h-[200px] w-auto
 											
 											border-2 border-black p-1.5 rounded"
 										/>
 									)}
 									<div className="flex flex-col gap-1 justify-center text-[17px] text-justify">
 										{sec.data.name && <h1 className='text-[22px] font-bold'>{sec.data.name}</h1>}
-										{sec.data.address && <h2>Address: {JSON.stringify(sec.data.address)}</h2>}
+										{/* {sec.data.address && <h2>Address: {sec.data.address}</h2>} */}
+										{sec.data.email && <h1 >
+											Email: {sec.data.email}</h1>}
+										{sec.data.contact && <h1 >
+											Contact: {sec.data.contact}</h1>}
 										{sec.data.dateOfBirth && <h2>Date of Birth: {sec.data.dateOfBirth}</h2>}
 										{sec.data.experience && <h2>Experience: {sec.data.experience}</h2>}
 									</div>

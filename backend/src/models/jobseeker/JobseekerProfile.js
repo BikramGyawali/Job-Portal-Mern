@@ -107,10 +107,10 @@ const profileSchema = new mongoose.Schema({
 	socials: [socialSchema],
 	references: [referenceSchema],
 
-	profileCompleted: {
-		type: Boolean,
-		default: false
-	}
+	// profileCompleted: {
+	// 	type: Boolean,
+	// 	default: false
+	// }
 
 }, { timestamps: true });   //timestamp add extra two field as createdat and updatedat
 

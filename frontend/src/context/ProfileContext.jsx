@@ -5,7 +5,7 @@ import { AuthContext } from "./AuthContext";
 import { useState } from "react";
 import { useEffect } from "react";
 import api from "../utils/axiosInstance";
-import { ProfileToCV } from "../utils/ProfileToCV";
+
 
 
 export const ProfileContext = createContext();
@@ -23,10 +23,9 @@ export const ProfileProvider = ({ children }) => {
 			}
 
 			try {
-				const res = api.get(`${authState.role}/profile`);
-				console.log(res);
-
-				setProfile(ProfileToCV(res.profile));
+				const res = await api.get(`/${authState.role}/profile`);
+				// API returns { status: 1, profile }
+				setProfile(res.data?.profile || null);
 			} catch (error) {
 				setProfile(null)
 			} finally {

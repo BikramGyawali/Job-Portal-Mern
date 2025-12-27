@@ -1,6 +1,7 @@
 import express, { json } from "express";
 import dotenv from "dotenv";
 import cors from 'cors'
+import path from 'path'
 import { connectDB } from "./src/config/database.js";
 
 // import jobseekerroutes from "./src/routes/JobseekerRoutes/jobseekerRoutes.js";
@@ -27,6 +28,8 @@ connectDB();
 app.use('/jobseeker', jobseekerroutes);
 app.use("/employer", employerroutes);
 app.use("/auth", authrouter)
+// serve uploaded files (images, cvs)
+app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
 app.use((req, res) => {
 	res.status(404).json({ status: 0, message: "Page not found" });
 });

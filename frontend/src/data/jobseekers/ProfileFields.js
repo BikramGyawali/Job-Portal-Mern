@@ -23,7 +23,13 @@ export const ProfileFields = [
 		required: true,
 		placeholder: "Enter your last name"
 	},
-
+	{
+		name: "email",
+		label: "Email",
+		type: "email",
+		required: true,
+		placeholder: "abc@gmail.com"
+	},
 	{
 		name: "currentDistrict",
 		label: "Current District",

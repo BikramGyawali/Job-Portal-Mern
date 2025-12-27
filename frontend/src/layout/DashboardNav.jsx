@@ -18,8 +18,7 @@ import { ProfileContext } from "../context/ProfileContext";
 export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 	const { state, logout } = useContext(AuthContext);
 	const { profile } = useContext(ProfileContext)
-	console.log(profile);
-	
+
 	const navigate = useNavigate()
 	const handleLogout = () => {
 		logout()
@@ -30,6 +29,8 @@ export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 	}
 	const { pathname } = useLocation();
 	const myData = role === 'Jobseeker' ? JNavbarData : NavbarData;
+	const apiUrl = import.meta.env.VITE_API_URL || '';
+	const avatarSrc = profile?.image ? `${apiUrl}/uploads/images/${profile.image}` : null;
 	return (
 		<Navbar className="bg-[#1E2939] text-white shadow px-4 py-2 flex items-center justify-between">
 
@@ -55,35 +56,18 @@ export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 					label={
 						<Avatar
 							alt="User settings"
-							img={profile.image}
+							img={avatarSrc}
 							rounded
 						/>
 					}
 				>
-					{/* <DropdownHeader>
-						{myData.map((item, i) => {
-							const { name, email } = item;
-							return (
-								<div key={i}>
-									<span className="font-bold text-sm">{name}</span>
-									<span className="block truncate text-sm font-medium">
-										{email}
-									</span>
-								</div>
-							)
-						})}
-					</DropdownHeader> */}
 					<DropdownHeader>
-						<span className="font-bold text-sm">Logged in as</span>
-						<span className="block text-sm">{role}</span>
-						<span className="font-bold text-sm">`{profile.fname}${profile.mname ?? ""}${profile.sname}`</span>
-						<span className="block text-sm">{profile.email}</span>
+						<span className="font-bold text-sm">Logged in as {role}</span>
+						<br />
+						<span className="font-bold text-sm ">{profile ? `${profile.fname || profile.cname || ''} ${profile.mname ?? ''} ${profile.sname ?? ''}`.trim() : ''}</span>
+						<span className="block text-sm">{profile?.email || ''}</span>
+						<DropdownItem onClick={handleLogout} className="bg-linear-to-r from-indigo-500 to-purple-500 mt-1 rounded-2xl !text-white text-center  text-bold w-[60%] ">Sign out</DropdownItem>
 					</DropdownHeader>
-
-					<DropdownItem as={Link} to={`/${role.toLowerCase()}`}>Dashboard</DropdownItem>
-
-					<DropdownDivider />
-					<DropdownItem onClick={handleLogout}>Sign out</DropdownItem>
 				</Dropdown>
 			</div>
 		</Navbar>

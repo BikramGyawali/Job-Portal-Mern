@@ -10,6 +10,11 @@ const employerProfileSchema = new schema({
 	image: String,
 	cname: String,
 	companyaddress: String,
+	email: {
+		type: String,
+		unique: true,
+		required: true
+	},
 	panCard: {
 		type: String,
 		unique: true,

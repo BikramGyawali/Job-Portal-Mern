@@ -58,7 +58,10 @@ const profileSchema = new mongoose.Schema({
 	fname: String,
 	mname: String,
 	sname: String,
-
+	email: {
+		type: String,
+		unique: true
+	},
 	currentAddress: {
 		district: String,
 		municipality: String,
@@ -89,6 +92,7 @@ const profileSchema = new mongoose.Schema({
 	vehicle: String,
 	jobType: String,
 	lookingFor: String,
+	cv: String,
 
 	about: String,
 
@@ -122,5 +126,6 @@ profileSchema.pre("save", function (next) {
 	next();
 })
 profileSchema.index({ phone: 1 }, { unique: true });
+profileSchema.index({ email: 1 }, { unique: true });
 profileSchema.index({ userId: 1 }, { unique: true })
 export const JobseekerProfile = mongoose.model("JobseekerProfile", profileSchema);

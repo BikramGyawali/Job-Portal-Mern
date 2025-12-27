@@ -128,17 +128,27 @@ function ReusableForm({
 								className="p-2 border rounded-xl"
 							/>
 						)
-							: (
+							: field.type === "email" ? (
 								<input
-									type={field.type}
+									type="email"
 									name={field.name}
 									value={form[field.name] !== undefined ? form[field.name] : ""}
-
 									onChange={onChange}
 									placeholder={field.placeholder}
 									className="p-2 border rounded-xl"
 								/>
-							)}
+							)
+								: (
+									<input
+										type={field.type}
+										name={field.name}
+										value={form[field.name] !== undefined ? form[field.name] : ""}
+
+										onChange={onChange}
+										placeholder={field.placeholder}
+										className="p-2 border rounded-xl"
+									/>
+								)}
 
 
 					{errors && errors[field.name] && (

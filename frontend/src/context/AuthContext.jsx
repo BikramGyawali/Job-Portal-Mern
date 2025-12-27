@@ -35,13 +35,14 @@ export function AuthProvider({ children }) {
 		const checkAuth = async () => {
 			try {
 				const res = await api.get("/auth/me");
-				if (res.data?.status === 1 && res.data.user) {
+				if (res.data?.status === 1) {
+					// normalize payload similar to login response
 					dispatch({
 						type: "LOGIN",
 						payload: {
-							role: res.data.user.role,
-							user: res.data.user.user,
-							isProfileCompleted: res.data.user.isProfileCompleted,
+							role: res.data.role || res.data.user?.role,
+							user: res.data.user || (res.data.user ? res.data.user : { _id: res.data.user?.id, email: res.data.user?.email }),
+							isProfileCompleted: res.data.isProfileCompleted || res.data.user?.isProfileCompleted,
 						},
 					});
 				} else {
@@ -53,9 +54,19 @@ export function AuthProvider({ children }) {
 		};
 		checkAuth();
 	}, []);
+
+	const logout = async () => {
+		try {
+			await api.post('/auth/logout');
+		} catch (e) {
+			// ignore
+		}
+		dispatch({ type: 'LOGOUT' });
+	}
+
 	return (
 
-		<AuthContext.Provider value={{ state, dispatch }}>
+		<AuthContext.Provider value={{ state, dispatch, logout }}>
 			{children}
 		</AuthContext.Provider>
 

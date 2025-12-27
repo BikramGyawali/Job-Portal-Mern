@@ -23,20 +23,29 @@ const saveImageBuffer = async (file) => {
 	return fileName
 }
 
+const validateEmail = (email) => {
+	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
 
-
-// Jobseeker Profile
+// Jobseeker Profile - create
 export const JProfileController = async (req, res) => {
 	try {
 		const userId = req.user.id;
+		const { email, phone } = req.body;
 
-		const exists = await JobseekerProfile.findOne({ userId });
-		if (exists) {
-			return res.status(409).json({ message: "Profile already exists" });
+		if (!email || !validateEmail(email)) return res.status(400).json({ status: 0, message: "Valid email is required" });
+		// check email uniqueness across users (allow same user)
+		const emailExists = await User.findOne({ email, _id: { $ne: userId } });
+		if (emailExists) return res.status(409).json({ status: 0, message: "Email already exists" });
+
+		// check phone uniqueness in profiles
+		if (phone) {
+			const phoneExists = await JobseekerProfile.findOne({ phone });
+			if (phoneExists) return res.status(409).json({ status: 0, message: "Phone number already exists" });
 		}
 
 		// create profile without image first
-		const experience = req.body.experience ? JSON.parse(req.body.experience) : []; //parse conver the data to their orginal form as object
+		const experience = req.body.experience ? JSON.parse(req.body.experience) : [];
 		const education = req.body.education ? JSON.parse(req.body.education) : [];
 		const trainings = req.body.trainings ? JSON.parse(req.body.trainings) : [];
 		const skills = req.body.skills ? JSON.parse(req.body.skills) : [];
@@ -55,9 +64,8 @@ export const JProfileController = async (req, res) => {
 			socials,
 			awards,
 			references,
-			userId: req.user.id
+			userId
 		});
-
 
 		// save image to disk only after profile is created
 		if (req.file) {
@@ -73,11 +81,17 @@ export const JProfileController = async (req, res) => {
 			}
 		}
 
+		// if profile provides different email than user.email, update User
+		if (email && (await User.findById(userId)).email !== email) {
+			await User.findByIdAndUpdate(userId, { email });
+		}
+
 		const user = await User.findByIdAndUpdate(userId, {
 			isProfileCompleted: true
 		},
 			{ new: true }
 		);
+
 		// clear authentication cookie so user returns to login and re-authenticates
 		try {
 			res.clearCookie("token", { httpOnly: true, sameSite: 'lax', secure: false });
@@ -91,18 +105,26 @@ export const JProfileController = async (req, res) => {
 			profile
 		});
 	} catch (err) {
+		console.error(err);
 		res.status(500).json({ message: err.message });
 	}
 }
 
-// Employer Profile
+// Employer Profile - create
 export const EProfileController = async (req, res) => {
 	try {
 		const userId = req.user.id;
+		const { email, phone } = req.body;
 
-		const exists = await EmployerProfile.findOne({ userId });
-		if (exists) {
-			return res.status(409).json({ message: "Profile already exists" });
+		if (!email || !validateEmail(email)) return res.status(400).json({ status: 0, message: "Valid email is required" });
+		// check email uniqueness across users (allow same user)
+		const emailExists = await User.findOne({ email, _id: { $ne: userId } });
+		if (emailExists) return res.status(409).json({ status: 0, message: "Email already exists" });
+
+		// check phone uniqueness optionally
+		if (phone) {
+			const phoneExists = await EmployerProfile.findOne({ phone });
+			if (phoneExists) return res.status(409).json({ status: 0, message: "Phone number already exists" });
 		}
 
 		const profile = await EmployerProfile.create({
@@ -123,11 +145,17 @@ export const EProfileController = async (req, res) => {
 			}
 		}
 
+		// update user email if changed
+		if (email && (await User.findById(userId)).email !== email) {
+			await User.findByIdAndUpdate(userId, { email });
+		}
+
 		const user = await User.findByIdAndUpdate(userId, {
 			isProfileCompleted: true
 		},
 			{ new: true }
-		);		// clear authentication cookie so user returns to login and re-authenticates
+		);
+		// clear authentication cookie so user returns to login and re-authenticates
 		try {
 			res.clearCookie("token", { httpOnly: true, sameSite: 'lax', secure: false });
 		} catch (e) {
@@ -140,7 +168,64 @@ export const EProfileController = async (req, res) => {
 			profile
 		});
 	} catch (err) {
+		console.error(err);
 		res.status(500).json({ message: err.message });
 	}
 };
 
+// GET Jobseeker Profile
+export const getJProfile = async (req, res) => {
+	try {
+		const userId = req.user.id;
+		const profile = await JobseekerProfile.findOne({ userId }).lean();
+		if (!profile) return res.status(404).json({ status: 0, message: "Profile not found" });
+		res.status(200).json({ status: 1, profile });
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ status: 0, message: err.message });
+	}
+}
+
+// GET Employer Profile
+export const getEProfile = async (req, res) => {
+	try {
+		const userId = req.user.id;
+		const profile = await EmployerProfile.findOne({ userId }).lean();
+		if (!profile) return res.status(404).json({ status: 0, message: "Profile not found" });
+		res.status(200).json({ status: 1, profile });
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ status: 0, message: err.message });
+	}
+}
+
+// Upload CV (jobseeker)
+export const uploadJCV = async (req, res) => {
+	try {
+		const userId = req.user.id;
+		if (!req.file) return res.status(400).json({ status: 0, message: "No CV uploaded" });
+		const profile = await JobseekerProfile.findOne({ userId });
+		if (!profile) return res.status(404).json({ status: 0, message: "Profile not found" });
+		profile.cv = req.file.filename;
+		await profile.save();
+		res.status(200).json({ status: 1, message: "CV uploaded", cv: profile.cv });
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ status: 0, message: err.message });
+	}
+}
+
+// Download CV (jobseeker)
+export const downloadJCV = async (req, res) => {
+	try {
+		const userId = req.user.id;
+		const profile = await JobseekerProfile.findOne({ userId });
+		if (!profile || !profile.cv) return res.status(404).json({ status: 0, message: "CV not found" });
+		const cvPath = path.join(process.cwd(), "public/uploads/cvs", profile.cv);
+		if (!fs.existsSync(cvPath)) return res.status(404).json({ status: 0, message: "CV file missing" });
+		res.download(cvPath, `${profile.fname || 'resume'}.pdf`);
+	} catch (err) {
+		console.error(err);
+		res.status(500).json({ status: 0, message: err.message });
+	}
+}

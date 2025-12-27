@@ -2,8 +2,11 @@ import React, { useRef } from 'react';
 import { CVSections } from '../../../../data/jobseekers/DashboardData';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import { useContext } from 'react';
+import { ProfileContext } from '../../../../context/ProfileContext';
 
 const DownloadResume = () => {
+	const { profile } = useContext(ProfileContext)
 	const resumeRef = useRef();
 
 	const handleDownload = async () => {
@@ -58,7 +61,7 @@ const DownloadResume = () => {
 				}}
 				className="grid grid-cols-1 gap-5"
 			>
-				{CVSections.map((sec, i) => {
+				{profile.map((sec, i) => {
 					if (!sec.data || (Array.isArray(sec.data) && sec.data.length === 0)) return null;
 
 					return (

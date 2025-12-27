@@ -13,9 +13,11 @@ import { NavbarData } from "../data/employers/edashboardData";
 import { JNavbarData } from "../data/jobseekers/JDashboardData";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { ProfileContext } from "../context/ProfileContext";
 
 export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 	const { state, logout } = useContext(AuthContext);
+	const { profile } = useContext(ProfileContext)
 	const navigate = useNavigate()
 	const handleLogout = () => {
 		logout()
@@ -51,7 +53,7 @@ export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 					label={
 						<Avatar
 							alt="User settings"
-							img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+							img={profile.image}
 							rounded
 						/>
 					}
@@ -69,10 +71,12 @@ export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 							)
 						})}
 					</DropdownHeader> */}
- <DropdownHeader>
-	<span className="font-bold text-sm">Logged in as</span>
-					<span className="block text-sm">{role}</span>
- </DropdownHeader>
+					<DropdownHeader>
+						<span className="font-bold text-sm">Logged in as</span>
+						<span className="block text-sm">{role}</span>
+						<span className="font-bold text-sm">{profile.fname}</span>
+						<span className="block text-sm">{profile.email}</span>
+					</DropdownHeader>
 
 					<DropdownItem as={Link} to={`/${role.toLowerCase()}`}>Dashboard</DropdownItem>
 

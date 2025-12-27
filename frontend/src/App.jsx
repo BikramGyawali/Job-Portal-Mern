@@ -38,6 +38,7 @@ import ApprovePostJobs from "./components/dashboard/Admin/pages/ApprovePostJobs"
 import AdminLogin from "./pages/admin/AdminLogin";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
+import { ProfileProvider } from "./context/ProfileContext";
 
 
 export default function App() {
@@ -45,69 +46,71 @@ export default function App() {
 
 		<div>
 			<AuthProvider>
+				<ProfileProvider>
 
-				<BrowserRouter>
-					<Routes>
-						<Route path="/" element={<Home />} />
-						<Route path="/about" element={<AboutUS />} />
-						<Route path="/services" element={<Services />} />
-						<Route path="/contact" element={<Contact />} />
-						<Route path="/jobseekers" element={<Jobseekers />} />
-						<Route path="/employers" element={<Employers />} />
-						<Route path="/register" element={<RegisterComp />} />
-						<Route path="/admin-login" element={<AdminLogin />} />
-						<Route path="/jobseeker-profile" element={<JobseekersProfile />} />
-						<Route path="/employer-profile" element={<EmployersProfile />} />
+					<BrowserRouter>
+						<Routes>
+							<Route path="/" element={<Home />} />
+							<Route path="/about" element={<AboutUS />} />
+							<Route path="/services" element={<Services />} />
+							<Route path="/contact" element={<Contact />} />
+							<Route path="/jobseekers" element={<Jobseekers />} />
+							<Route path="/employers" element={<Employers />} />
+							<Route path="/register" element={<RegisterComp />} />
+							<Route path="/admin-login" element={<AdminLogin />} />
+							<Route path="/jobseeker-profile" element={<JobseekersProfile />} />
+							<Route path="/employer-profile" element={<EmployersProfile />} />
 
 
-						{/* for jobseeker dashboard routes (nested under /jobseeker) */}
-						<Route element={<ProtectedRoute allowedRole="jobseeker" />} >
+							{/* for jobseeker dashboard routes (nested under /jobseeker) */}
+							<Route element={<ProtectedRoute allowedRole="jobseeker" />} >
 
-							<Route path="jobseeker/*" element={<DashboardLayout role="Jobseeker" />} >
-								<Route index element={<JobseekerDashboard />} />
-								<Route path="edit-profile" element={<EditProfile />} />
-								<Route path="applied-jobs" element={<AppliedJobs />} />
-								<Route path="saved-jobs" element={<SavedJobs />} />
-								<Route path="download-resume" element={<DownloadResume />} />
-								<Route path="jobseekers" element={<Jobseekers />} />
-								<Route path="job-listing" element={<JobListing />} />
+								<Route path="jobseeker/*" element={<DashboardLayout role="Jobseeker" />} >
+									<Route index element={<JobseekerDashboard />} />
+									<Route path="edit-profile" element={<EditProfile />} />
+									<Route path="applied-jobs" element={<AppliedJobs />} />
+									<Route path="saved-jobs" element={<SavedJobs />} />
+									<Route path="download-resume" element={<DownloadResume />} />
+									<Route path="jobseekers" element={<Jobseekers />} />
+									<Route path="job-listing" element={<JobListing />} />
+								</Route>
 							</Route>
-						</Route>
 
 
-						{/* employer dashboard routes (nested under /employer) */}
-						<Route element={<ProtectedRoute allowedRole="employer" />} >
+							{/* employer dashboard routes (nested under /employer) */}
+							<Route element={<ProtectedRoute allowedRole="employer" />} >
 
-							<Route path="employer/*" element={<DashboardLayout role="Employer" />} >
-								<Route index element={<EmployerDashboard />} />
-								<Route path="job-board" element={<JobBoard />} />
-								<Route path="my-jobs" element={<MyJobs />} />
-								<Route path="post-job" element={<PostJob />} />
-								<Route path="applicants" element={<Applicants />} />
+								<Route path="employer/*" element={<DashboardLayout role="Employer" />} >
+									<Route index element={<EmployerDashboard />} />
+									<Route path="job-board" element={<JobBoard />} />
+									<Route path="my-jobs" element={<MyJobs />} />
+									<Route path="post-job" element={<PostJob />} />
+									<Route path="applicants" element={<Applicants />} />
+								</Route>
 							</Route>
-						</Route>
 
 
 
-						<Route element={<ProtectedRoute allowedRole="admin" />} >
+							<Route element={<ProtectedRoute allowedRole="admin" />} >
 
 
-							<Route path="admin/*" element={<DashboardLayout role="Admin" />} >
-								<Route index element={<AdminDashboard />} />
-								<Route path="approve-account" element={<ApproveAccounts />} />
-								<Route path="approve-jobs" element={<ApprovePostJobs />} />
-								<Route path="admin-login" element={<AdminLogin />} />
+								<Route path="admin/*" element={<DashboardLayout role="Admin" />} >
+									<Route index element={<AdminDashboard />} />
+									<Route path="approve-account" element={<ApproveAccounts />} />
+									<Route path="approve-jobs" element={<ApprovePostJobs />} />
+									<Route path="admin-login" element={<AdminLogin />} />
+								</Route>
 							</Route>
-						</Route>
 
 
 
 
-						{/* legacy /dashboard route -> redirect to jobseeker dashboard layout (silence unmatched warning) */}
-						<Route path="/dashboard" element={<DashboardLayout role="Jobseeker" />} />
-						{/* <Route path="/employers" element={<Employers />} /> */}
-					</Routes>
-				</BrowserRouter>
+							{/* legacy /dashboard route -> redirect to jobseeker dashboard layout (silence unmatched warning) */}
+							<Route path="/dashboard" element={<DashboardLayout role="Jobseeker" />} />
+							{/* <Route path="/employers" element={<Employers />} /> */}
+						</Routes>
+					</BrowserRouter>
+				</ProfileProvider>
 			</AuthProvider>
 		</div>
 

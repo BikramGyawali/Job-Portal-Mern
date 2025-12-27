@@ -71,7 +71,7 @@ export const jobData = [
 
 //for cv 
 import logo from "../../assets/image/logo.png";
-export const CVSections = [
+export const 	CVSections = [
 	{
 		section: "Personal Header",
 		type: "header",

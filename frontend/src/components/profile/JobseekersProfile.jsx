@@ -56,7 +56,6 @@ function JobseekersProfile() {
 			const file = files?.[0] ?? null;
 			if (file && !['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
 				setErrors((prev) => ({ ...prev, image: 'Only JPG/JPEG/PNG images are accepted' }));
-				alert('Only JPG/JPEG/PNG images are accepted');
 				return;
 			}
 		}

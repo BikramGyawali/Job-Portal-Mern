@@ -34,7 +34,7 @@ export const ProfileProvider = ({ children }) => {
 
 		}
 		fetchData();
-	}, [authState.isAuth, authState.role])
+	}, [authState.isAuth, authState.role])  //run if the user role is change and the state as login or logout chnages 
 	return (
 		<ProfileContext.Provider value={{ profile, setProfile, loading }}>
 			{children}

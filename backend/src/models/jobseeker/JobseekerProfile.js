@@ -62,17 +62,18 @@ const profileSchema = new mongoose.Schema({
 		type: String,
 		unique: true
 	},
-	currentAddress: {
-		district: String,
-		municipality: String,
-		city: String
-	},
+	currenDistrict: String,
+	// currentAddress: {
+	// 	district: String,
+	// 	municipality: String,
+	// 	city: String
+	// },
 
-	permanentAddress: {
-		district: String,
-		municipality: String,
-		city: String
-	},
+	// permanentAddress: {
+	// 	district: String,
+	// 	municipality: String,
+	// 	city: String
+	// },
 
 	dob: Date,
 	phone: {

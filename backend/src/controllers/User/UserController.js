@@ -89,6 +89,7 @@ export const LoginController = async (req, res, type) => {
 			status: 1,
 			message: "Login successful",
 			role: user.role,
+			// token:token,
 			isProfileCompleted: user.isProfileCompleted,
 			user: { _id: user._id, email: user.email }
 		});

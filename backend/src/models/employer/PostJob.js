@@ -3,7 +3,7 @@ const schema = mongoose.Schema;
 const postJob = new schema({
 	userId: {
 		type: mongoose.Schema.Types.ObjectId,
-		ref: "EmployerProfile",
+		ref: "User",
 		required: true
 
 	},

@@ -6,9 +6,12 @@ import { Profile } from '../../utils/profileapi';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import { ProfileContext } from '../../context/ProfileContext';
+import api from '../../utils/axiosInstance';
 
 function EmployersProfile() {
-	const { dispatch } = useContext(AuthContext);
+	const { state, dispatch } = useContext(AuthContext);
+	const { setProfile: setGlobalProfile } = useContext(ProfileContext);
 	const navigate = useNavigate();
 	const createEmptyEntry = (fields) =>
 		fields.reduce((acc, f) => {
@@ -21,6 +24,14 @@ function EmployersProfile() {
 	const [error, setError] = useState({})
 	const handleChange = (e) => {
 		const { name, value, files, type } = e.target;
+		if (type === 'file') {
+			const file = files?.[0] ?? null;
+			if (file && !['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
+				setError({ image: 'Only JPG/JPEG/PNG images are accepted' });
+				alert('Only JPG/JPEG/PNG images are accepted');
+				return;
+			}
+		}
 		setProfile((old) => ({
 			...old,
 			[name]: type === "file" ? files?.[0] ?? null :
@@ -45,13 +56,30 @@ function EmployersProfile() {
 			}
 		});
 
-		
+
 		const response = await Profile(formData, "employer");
 		if (response?.status === 1) {
-			alert("Profile created successfully. Please login.");
-			// clear client auth state and force re-login
-			dispatch({ type: "LOGOUT" });
-			navigate("/employers", { replace: true })
+			if (state?.isAuth) {
+				setGlobalProfile(response.profile);
+				try {
+					const me = await api.get('/auth/me');
+					if (me.data?.status === 1) {
+						dispatch({
+							type: "LOGIN", payload: {
+								role: me.data.role || me.data.user?.role,
+								user: me.data.user || me.data.user,
+								isProfileCompleted: me.data.isProfileCompleted || true
+							}
+						})
+					}
+				} catch (e) { }
+				alert("Profile created/updated successfully.");
+				navigate('/employer', { replace: true });
+			} else {
+				alert("Profile created successfully. Please login.");
+				dispatch({ type: "LOGOUT" });
+				navigate("/employers", { replace: true });
+			}
 		} else {
 			alert(response?.message || "Failed to create profile");
 		}

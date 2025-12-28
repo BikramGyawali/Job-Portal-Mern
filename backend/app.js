@@ -30,6 +30,13 @@ app.use("/employer", employerroutes);
 app.use("/auth", authrouter)
 // serve uploaded files (images, cvs)
 app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
+
+// JSON error handler (ensures multer and other errors return JSON)
+app.use((err, req, res, next) => {
+	console.error(err);
+	res.status(400).json({ status: 0, message: err.message || 'Server error' });
+});
+
 app.use((req, res) => {
 	res.status(404).json({ status: 0, message: "Page not found" });
 });

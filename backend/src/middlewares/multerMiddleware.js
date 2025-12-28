@@ -10,7 +10,7 @@ const storage = multer.memoryStorage();
 const fileFilter = (req, file, cb) => {
 	const allowTypes = ['image/jpeg', 'image/jpg', 'image/png'];
 	if (!allowTypes.includes(file.mimetype)) {
-		return cb(new Error("Only accept jpg,jpeg,png file"), false)
+		return cb(new Error("Only JPG/JPEG/PNG images are accepted"), false)
 	}
 	cb(null, true)
 }
@@ -42,7 +42,7 @@ const cvStorage = multer.diskStorage({
 const cvFileFilter = (req, file, cb) => {
 
 	if (file.mimetype !== "application/pdf") {
-		return cb(new Error("Only accept pdf file"), false)
+		return cb(new Error("Only PDF files are accepted"), false)
 	}
 	cb(null, true)
 }

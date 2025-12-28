@@ -9,6 +9,8 @@ import { Profile } from "../../utils/profileapi";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
+import { ProfileContext } from "../../context/ProfileContext";
+import api from '../../utils/axiosInstance';
 
 
 const createEmptyEntry = (fields) =>
@@ -20,7 +22,8 @@ const createEmptyEntry = (fields) =>
 	}, {});
 
 function JobseekersProfile() {
-	const { dispatch } = useContext(AuthContext);
+	const { state, dispatch } = useContext(AuthContext);
+	const { setProfile: setGlobalProfile } = useContext(ProfileContext);
 	const navigate = useNavigate();
 	const [profile, setProfile] = useState(createEmptyEntry(ProfileFields));  // help to make intially empty object of data 
 	const [experiences, setExperiences] = useState([createEmptyEntry(Experience)]);
@@ -47,6 +50,16 @@ function JobseekersProfile() {
 	// --- change handlers ---
 	const handleProfileChange = (e) => {
 		const { name, value, files, type, checked } = e.target;
+
+		// validate image file types on client before setting
+		if (type === 'file') {
+			const file = files?.[0] ?? null;
+			if (file && !['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
+				setErrors((prev) => ({ ...prev, image: 'Only JPG/JPEG/PNG images are accepted' }));
+				alert('Only JPG/JPEG/PNG images are accepted');
+				return;
+			}
+		}
 
 		setProfile((prev) => ({
 			...prev,
@@ -196,9 +209,31 @@ function JobseekersProfile() {
 		const response = await Profile(formData, "jobseeker");
 
 		if (response?.status === 1) {
-			alert("Profile created successfully. Please login.");
-			dispatch({ type: "LOGOUT" });
-			navigate("/jobseekers", { replace: true });
+			if (state?.isAuth) {
+				// update profile in context for immediate UI update
+				setGlobalProfile(response.profile);
+				// refresh auth info (in case email/flags changed)
+				try {
+					const me = await api.get('/auth/me');
+					if (me.data?.status === 1) {
+						dispatch({
+							type: "LOGIN", payload: {
+								role: me.data.role || me.data.user?.role,
+								user: me.data.user || me.data.user,
+								isProfileCompleted: me.data.isProfileCompleted || true
+							}
+						})
+					}
+				} catch (e) {
+					// ignore
+				}
+				alert("Profile created/updated successfully.");
+				navigate("/jobseeker", { replace: true });
+			} else {
+				alert("Profile created successfully. Please login.");
+				dispatch({ type: "LOGOUT" });
+				navigate("/jobseekers", { replace: true });
+			}
 		} else {
 			alert(response?.message || "Failed to create profile");
 		};

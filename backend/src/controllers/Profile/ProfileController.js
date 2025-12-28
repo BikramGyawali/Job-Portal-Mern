@@ -35,7 +35,7 @@ export const JProfileController = async (req, res) => {
 
 		if (!email || !validateEmail(email)) return res.status(400).json({ status: 0, message: "Valid email is required" });
 		// check email uniqueness across users (allow same user)
-		const emailExists = await User.findOne({ email, _id: { $ne: userId } });
+		const emailExists = await JobseekerProfile.findOne({ email });
 		if (emailExists) return res.status(409).json({ status: 0, message: "Email already exists" });
 
 		// check phone uniqueness in profiles
@@ -81,32 +81,35 @@ export const JProfileController = async (req, res) => {
 			}
 		}
 
-		// if profile provides different email than user.email, update User
-		if (email && (await User.findById(userId)).email !== email) {
-			await User.findByIdAndUpdate(userId, { email });
-		}
+		// update user email if changed (keep user signed in and return updated user)
+		// if (email && (await User.findById(userId)).email !== email) {
+		// 	await User.findByIdAndUpdate(userId, { email });
+		// }
 
 		const user = await User.findByIdAndUpdate(userId, {
 			isProfileCompleted: true
 		},
 			{ new: true }
 		);
-
-		// clear authentication cookie so user returns to login and re-authenticates
 		try {
-			res.clearCookie("token", { httpOnly: true, sameSite: 'lax', secure: false });
-		} catch (e) {
-			// ignore
+			res.clearCookies("token", {
+				httpOnly: true,
+				sameSite: "lax",
+				secure: false
+			})
+		} catch (error) {
+
 		}
 		res.status(201).json({
 			status: 1,
 			message: "Profile created",
 			isProfileCompleted: true,
-			profile
+			profile,
+			user: { _id: user._id, email: user.email, role: user.role }
 		});
 	} catch (err) {
 		console.error(err);
-		res.status(500).json({ message: err.message });
+		res.status(500).json({ status: 0, message: err.message });
 	}
 }
 
@@ -118,7 +121,7 @@ export const EProfileController = async (req, res) => {
 
 		if (!email || !validateEmail(email)) return res.status(400).json({ status: 0, message: "Valid email is required" });
 		// check email uniqueness across users (allow same user)
-		const emailExists = await User.findOne({ email, _id: { $ne: userId } });
+		const emailExists = await EmployerProfile.findOne({ email });
 		if (emailExists) return res.status(409).json({ status: 0, message: "Email already exists" });
 
 		// check phone uniqueness optionally
@@ -146,30 +149,34 @@ export const EProfileController = async (req, res) => {
 		}
 
 		// update user email if changed
-		if (email && (await User.findById(userId)).email !== email) {
-			await User.findByIdAndUpdate(userId, { email });
-		}
+		// if (email && (await User.findById(userId)).email !== email) {
+		// 	await User.findByIdAndUpdate(userId, { email });
+		// }
 
 		const user = await User.findByIdAndUpdate(userId, {
 			isProfileCompleted: true
 		},
 			{ new: true }
 		);
-		// clear authentication cookie so user returns to login and re-authenticates
 		try {
-			res.clearCookie("token", { httpOnly: true, sameSite: 'lax', secure: false });
-		} catch (e) {
-			// ignore
+			res.clearCookies("token", {
+				httpOnly: true,
+				sameSite: "lax",
+				secure: false
+			})
+		} catch (error) {
+
 		}
 		res.status(201).json({
 			status: 1,
 			message: "Profile created",
 			isProfileCompleted: true,
-			profile
+			profile,
+			user: { _id: user._id, email: user.email, role: user.role }
 		});
 	} catch (err) {
 		console.error(err);
-		res.status(500).json({ message: err.message });
+		res.status(500).json({ status: 0, message: err.message });
 	}
 };
 

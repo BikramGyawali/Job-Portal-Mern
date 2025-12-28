@@ -14,7 +14,7 @@ function Employers() {
 	}
 
 	return (
-		<div>
+			<div className='overflow-x-hidden'>
 			<NavbarComp />
 			<LoginComp LoginData={LoginData} />
 			<FooterComp />

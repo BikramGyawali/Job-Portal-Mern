@@ -11,8 +11,8 @@ jobseekerroutes.post("/login", (req, res,) => LoginController(req, res, "jobseek
 jobseekerroutes.post("/profile", verifyAuth, uploadImage.single('image'), JProfileController)
 jobseekerroutes.get("/profile", verifyAuth, getJProfile)
 // cv: upload and download
-jobseekerroutes.post("/profile/cv", verifyAuth, uploadCv.single('cv'), uploadJCV)
-jobseekerroutes.get("/profile/cv", verifyAuth, downloadJCV)
+// jobseekerroutes.post("/profile/cv", verifyAuth, uploadCv.single('cv'), uploadJCV)
+// jobseekerroutes.get("/profile/cv", verifyAuth, downloadJCV)
 jobseekerroutes.get(
 	"/dashboard",
 	verifyRole("jobseeker"),

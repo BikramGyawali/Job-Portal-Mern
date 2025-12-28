@@ -1,7 +1,8 @@
 import dotenv from "dotenv"
 import jwt, { decode } from "jsonwebtoken"
 import { User } from "../../models/LoginModel/SignupLogic.js";
-
+import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js";
+import { EmployerProfile } from "../../models/employer/EmployerProfile.js";
 
 export const currentUserService = async (req) => {
 
@@ -20,13 +21,9 @@ export const currentUserService = async (req) => {
 		}
 	}
 	// fetch profile for display name/email if exists
-	let profile = null;
-	if (user.role === 'jobseeker') {
-		import("../../models/jobseeker/JobseekerProfile.js");
-		profile = await (await import("../../models/jobseeker/JobseekerProfile.js")).JobseekerProfile.findOne({ userId: user._id }).lean();
-	} else if (user.role === 'employer') {
-		profile = await (await import("../../models/employer/EmployerProfile.js")).EmployerProfile.findOne({ userId: user._id }).lean();
-	}
+
+	const profileModel = user.role === "jobseeker" ? JobseekerProfile : EmployerProfile;
+	const profile = await profileModel.findOne({ userId: user._id }).lean();
 
 	return {
 		status: 1,

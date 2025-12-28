@@ -36,7 +36,7 @@ export const verifyAuth = (req, res, next) => {
 	if (!token) return res.status(401).json({ message: "Unauthorized" });
 
 	try {
-		req.user = jwt.verify(token, jwt_key);
+		req.user = jwt.verify(token, jwt_key); //req.user hods the payload data 
 		next();
 	} catch {
 		res.status(401).json({ message: "Invalid token" });

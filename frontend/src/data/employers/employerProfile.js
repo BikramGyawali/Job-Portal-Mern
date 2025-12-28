@@ -32,7 +32,7 @@ export const employerProfile = [
 		name: "panCard",
 		type: "text",
 		required: true,
-		placeholder: "615801553"
+		placeholder: "ABCPQ1232A"
 	},
 
 	{

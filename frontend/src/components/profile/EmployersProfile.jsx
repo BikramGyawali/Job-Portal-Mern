@@ -73,9 +73,7 @@ function EmployersProfile() {
 						})
 					}
 				} catch (e) { }
-				alert("Profile created/updated successfully.");
-				navigate('/employer', { replace: true });
-			} else {
+
 				alert("Profile created successfully. Please login.");
 				dispatch({ type: "LOGOUT" });
 				navigate("/employers", { replace: true });

@@ -226,9 +226,7 @@ function JobseekersProfile() {
 				} catch (e) {
 					// ignore
 				}
-				alert("Profile created/updated successfully.");
-				navigate("/jobseeker", { replace: true });
-			} else {
+
 				alert("Profile created successfully. Please login.");
 				dispatch({ type: "LOGOUT" });
 				navigate("/jobseekers", { replace: true });

@@ -24,6 +24,8 @@ export const ProfileProvider = ({ children }) => {
 
 			try {
 				const res = await api.get(`/${authState.role}/profile`);
+				// console.log(res);
+
 				// API returns { status: 1, profile }
 				setProfile(res.data?.profile || null);
 			} catch (error) {

@@ -53,6 +53,8 @@ function RegisterComp() {
 				...(role === "employer" && { company: form.company })
 			}
 			const res = await signupUser(data, role)
+			
+
 			if (res.status === 1) {
 				// console.log(res);
 				if (role === "employer") {

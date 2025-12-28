@@ -11,6 +11,8 @@ export const signupUser = async (formData, role) => {
 
 	try {
 		const response = await axios.post(url, formData, { withCredentials: true });
+
+
 		return response.data;
 	} catch (error) {
 		// Handle network errors or backend errors

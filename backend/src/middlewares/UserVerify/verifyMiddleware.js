@@ -16,7 +16,7 @@ export const verifyRole = (...roles) => {
 		}
 
 		const decoded = jwt.verify(token, jwt_key);
-		console.log("Decoded:", decoded);
+		// console.log("Decoded:", decoded);
 
 		if (!roles.includes(decoded.role)) {
 			return res.status(403).json({ message: "Forbidden" });
@@ -31,7 +31,7 @@ export const verifyRole = (...roles) => {
 export const verifyAuth = (req, res, next) => {
 	console.log("Cookies:", req.cookies);
 	const token = req.cookies?.token;
-	console.log(req.cookies);
+	// console.log(req.cookies);
 
 	if (!token) return res.status(401).json({ message: "Unauthorized" });
 

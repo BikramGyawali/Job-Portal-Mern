@@ -97,7 +97,7 @@ export const pendingJob = async (req, res) => {
 
 export const approve = async (req, res) => {
 	try {
-		const jobs = await PostJob.findByIdAndUpdate(
+		const job = await PostJob.findByIdAndUpdate(
 			req.params.id,
 			{
 				isApproved: true,
@@ -105,7 +105,7 @@ export const approve = async (req, res) => {
 			},
 			{ new: true }
 		)
-		if (!jobs) {
+		if (!job) {
 			return res.status(404).json({
 				status: 0,
 				message: "No Jobs area avaiable "
@@ -114,7 +114,7 @@ export const approve = async (req, res) => {
 		return res.status(200).json({
 			status: 1,
 			message: "Approved Jobs Successfully",
-			jobs: jobs
+			job: job
 		})
 
 	} catch (error) {
@@ -131,10 +131,10 @@ export const approve = async (req, res) => {
 //reject jobs for admin 
 export const rejectJob = async (req, res) => {
 	try {
-		const jobs = await PostJob.findByIdAndDelete(
+		const job = await PostJob.findByIdAndDelete(
 			req.params.id,
 		)
-		if (!jobs) {
+		if (!job) {
 			return res.status(404).json({
 				status: 0,
 				message: "No Jobs area avaiable "
@@ -143,7 +143,7 @@ export const rejectJob = async (req, res) => {
 		return res.status(200).json({
 			status: 1,
 			message: "Rejected Jobs Successfully",
-			jobs: jobs
+			job: job
 		})
 
 	} catch (error) {

@@ -3,7 +3,8 @@ import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 import { useContext } from 'react';
 import { ProfileContext } from '../../../../context/ProfileContext';
-import { ProfileToCV } from '../../../../utils/ProfileToCV';
+import { ProfileToCV } from '../../../../services/ProfileToCV';
+
 
 const DownloadResume = () => {
 	const { profile } = useContext(ProfileContext)

@@ -1,29 +1,37 @@
 import { createContext, useEffect, useState } from "react";
 import api from '../utils/axiosInstance'
+import { getApprovedJobsService } from "../services/jobService";
 export const JobPostContext = createContext();
 
 export const JobPostProvider = ({ children }) => {
-	const [job, setJob] = useState(null)
-	useEffect(() => {
-		const fechdata = async () => {
-			try {
-				const response = await api.post("/job/create");
-				if (response.status === 200 || response.status === 201) {
-					alert("Job created successfully")
-				}
-			} catch (error) {
-				console.log(error);
+	const [jobs, setJobs] = useState([])
+	const [loading, setLoading] = useState(true)
 
-				alert(response.data.message)
+	useEffect(() => {
+		fetchApprovedJobs();
+	}, [])  // run every time when home page is open
+	const fetchApprovedJobs = async () => {
+		try {
+			const result = await getApprovedJobsService();
+			if (result.success === "true") {
+				setJobs(result.jobs)
 			}
+		} catch (error) {
+			console.error("failed to fecth data:" + error)
 		}
-		fechdata()
-	}, [])
+		finally {
+			setLoading(false)
+		}
+	}
+
+	const addJob = (newJob) => {
+		setJobs(prev => [newJob, ...prev])
+	}
 
 	return (
-		<JobPostProvider.Provider value={{ job, setJob }}>
+		<JobPostContext.Provider value={{ jobs, loading, fetchApprovedJobs, addJob }}>
 			{children}
-		</JobPostProvider.Provider>
+		</JobPostContext.Provider>
 	)
 }
 

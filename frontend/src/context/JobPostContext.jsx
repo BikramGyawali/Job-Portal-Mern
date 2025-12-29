@@ -13,7 +13,7 @@ export const JobPostProvider = ({ children }) => {
 	const fetchApprovedJobs = async () => {
 		try {
 			const result = await getApprovedJobsService();
-			if (result.success === "true") {
+			if (result.success) {
 				setJobs(result.jobs)
 			}
 		} catch (error) {

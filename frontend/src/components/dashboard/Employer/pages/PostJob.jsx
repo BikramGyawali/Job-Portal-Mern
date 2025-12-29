@@ -2,8 +2,14 @@ import React, { useState } from 'react'
 import { CreateJobsData } from '../../../../data/employers/DashboardData';
 import { ValidateUtil } from '../../../../utils/ValidationUtil';
 import ReusableForm from '../../../form/ReusableForm';
+import { useContext } from 'react';
+import { JobPostContext } from '../../../../context/JobPostContext';
+import { postJobService } from '../../../../services/jobService';
 
 function PostJob() {
+	const { addJob } = useContext(JobPostContext)
+	const [message, setMessage] = useState("")
+	const [loading, setLoading] = useState(false)
 	const createEmptyEntry = (fields) =>
 		fields.reduce((acc, f) => {
 			if (f.type === "checkbox") acc[f.name] = false;
@@ -21,12 +27,21 @@ function PostJob() {
 		}))
 	}
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const { error, valid } = ValidateUtil(job, CreateJobsData);
 		setError(error);
-		if (!valid) {
+		if (!valid)
 			return
+		setLoading(true);
+		const result = await postJobService(job);
+		if (result.success) {
+			setMessage("Job is post successfully");
+			addJob(result.job);
+			setJob(createEmptyEntry(CreateJobsData))
+			setTimeout(() => setMessage(''), 3000);
+		} else {
+			setMessage(`${result.error}`)
 		}
 	}
 	return (

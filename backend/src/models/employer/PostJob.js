@@ -56,7 +56,7 @@ const postJob = new schema({
 		type: Boolean,
 		default: true
 	},
-	// approvalDate: Date,
+	approvalDate: Date,
 	createdAt: {
 		type: Date,
 		default: Date.now

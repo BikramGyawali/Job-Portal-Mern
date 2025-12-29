@@ -20,7 +20,7 @@ function PostJob() {
 	const [job, setJob] = useState(createEmptyEntry(CreateJobsData))
 	const [error, setError] = useState({});
 	const handleChange = (e) => {
-		const { name, value, type } = e.target;
+		const { name, value } = e.target;
 		setJob((old) => ({
 			...old,
 			[name]: value
@@ -28,7 +28,7 @@ function PostJob() {
 	}
 
 	const handleSubmit = async (e) => {
-		e.preventDefault();
+		if (e) e.preventDefault()
 		const { error, valid } = ValidateUtil(job, CreateJobsData);
 		setError(error);
 		if (!valid)
@@ -39,7 +39,8 @@ function PostJob() {
 			setMessage("Job is post successfully");
 			addJob(result.job);
 			setJob(createEmptyEntry(CreateJobsData))
-			setTimeout(() => setMessage(''), 3000);
+			setLoading(false)
+			setTimeout(() => setMessage(''), 10000);  //this decide how long the message will be vissible 
 		} else {
 			setMessage(`${result.error}`)
 		}
@@ -47,6 +48,15 @@ function PostJob() {
 	return (
 		<div className="p-6 bg-white rounded-xl shadow ">
 			<h2 className="text-2xl font-bold mb-4 text-center ">Create Job</h2>
+			{message && (
+				<div className={`mb-4 p-4 rounded-lg text-center font-semibold ${message.startsWith('Job')
+					? 'bg-green-100 text-green-800'
+					: 'bg-red-100 text-red-800'
+					}`}>
+					{message}
+				</div>
+			)}
+
 			<ReusableForm
 				form={job}
 				errors={error}
@@ -60,6 +70,8 @@ function PostJob() {
 				entriesCount={1}
 				setCurrentEntryIndex={() => { }}
 				currentEntryIndex={0}
+				isLoading={loading}
+				submitButtonText={loading ? "Posting..." : "Post Job"}
 
 
 			/>

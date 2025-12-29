@@ -30,7 +30,7 @@ connectDB();
 app.use('/jobseeker', jobseekerroutes);
 app.use("/employer", employerroutes);
 app.use("/auth", authrouter)
-app.use("job", jobroutes)
+app.use("/job", jobroutes)
 // serve uploaded files (images, cvs)
 app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
 

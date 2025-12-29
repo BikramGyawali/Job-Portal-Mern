@@ -40,8 +40,8 @@ function EmployersProfile() {
 		}))
 
 	}
-	const handleSubmit = async () => {
-		// e.preventDefault();
+	const handleSubmit = async (e) => {
+		if (e) e.preventDefault()
 		const { valid, error } = ValidateUtil(profile, employerProfile);
 		setError(error);
 

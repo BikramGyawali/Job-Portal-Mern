@@ -13,6 +13,8 @@ function ReusableForm({
 	entriesCount,
 	setCurrentEntryIndex,
 	currentEntryIndex,
+	isLoading = false,
+	submitButtonText = "Submit"
 }) {
 	const maxDate = new Date().toISOString().split("T")[0];
 
@@ -23,7 +25,7 @@ function ReusableForm({
 
 	const handleNextOrSubmit = (e) => {
 		e.preventDefault();
-		onSubmit();
+		onSubmit(e);
 	};
 
 	return (
@@ -163,16 +165,27 @@ function ReusableForm({
 					<button
 						className="bg-blue-600 text-white py-2 rounded-xl w-full hover:bg-blue-700"
 						onClick={handlePrev}
+						disabled={isLoading}
 					>
 						Previous
 					</button>
 				)}
 
-				<button
+				{/* <button
 					type="submit"
 					className="bg-blue-600 text-white py-2 rounded-xl w-full hover:bg-blue-700"
 				>
 					{step === totalSteps ? "Finish" : "Next"}
+				</button> */}
+				<button
+					type="submit"
+					className={`text-white py-2 rounded-xl w-full ${isLoading
+						? 'bg-gray-400 cursor-not-allowed'  //  Disabled style
+						: 'bg-blue-600 hover:bg-blue-700'
+						}`}
+					disabled={isLoading}  //  Disable while loading
+				>
+					{submitButtonText}  {/*  Shows "Posting..." */}
 				</button>
 			</div>
 
@@ -186,6 +199,7 @@ function ReusableForm({
 					>
 						+ Add Another
 					</button>
+
 				</div>
 			)}
 		</form>

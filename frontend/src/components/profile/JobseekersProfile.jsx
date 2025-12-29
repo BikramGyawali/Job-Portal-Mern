@@ -129,7 +129,8 @@ function JobseekersProfile() {
 	};
 
 	//  submit  logic
-	const handleSubmit = async () => {
+	const handleSubmit = async (e) => {
+		if(e) e.preventDefault()
 		let targetForm;
 		let targetFields;
 		if (step === 1) {

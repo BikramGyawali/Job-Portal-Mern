@@ -25,7 +25,7 @@ export const JobPostProvider = ({ children }) => {
 	}
 
 	const addJob = (newJob) => {
-		setJobs(prev => [newJob, ...prev])
+		setJobs(prev => [newJob, ...prev])   // the new job will be at top and the previous array is also store by including the new job array in a single array
 	}
 
 	return (

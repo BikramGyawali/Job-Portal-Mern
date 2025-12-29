@@ -4,12 +4,14 @@ import cors from 'cors'
 import path from 'path'
 import { connectDB } from "./src/config/database.js";
 
-// import jobseekerroutes from "./src/routes/JobseekerRoutes/jobseekerRoutes.js";
-import jobseekerroutes from "./src/routes/JobseekerRoutes/jobseekerRoutes.js"
-import employerroutes from "./src/routes/EmployerRoutes/employerRoutes.js"
+
 import cookieParser from "cookie-parser";
-import authrouter from "./src/routes/authroutes/auth.routes.js";
-// import employerroutes from "./src/routes/EmployerRoutes/employerRoutes.js";
+
+import jobroutes from "./src/routes/jobRoutes.js";
+import employerroutes from "./src/routes/employerRoutes.js";
+import jobseekerroutes from "./src/routes/jobseekerRoutes.js";
+import authrouter from "./src/routes/auth.routes.js";
+
 
 dotenv.config();
 const app = express();
@@ -28,6 +30,7 @@ connectDB();
 app.use('/jobseeker', jobseekerroutes);
 app.use("/employer", employerroutes);
 app.use("/auth", authrouter)
+app.use("job", jobroutes)
 // serve uploaded files (images, cvs)
 app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
 

@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { getCurrentUser } from "../../controllers/auth/AuthController.js";
-import { verifyAuth } from "../../middlewares/UserVerify/verifyMiddleware.js";
+import { verifyAuth } from "../middlewares/UserVerify/verifyMiddleware.js";
+import { getCurrentUser } from "../controllers/auth/AuthController.js";
+
 
 const authrouter = Router();
 authrouter.get("/me", verifyAuth, getCurrentUser)

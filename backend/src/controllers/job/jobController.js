@@ -63,3 +63,32 @@ export const approvedJob = async (req, res) => {
 
 
 }
+
+//for getting pending jobs for the admin
+
+export const pendingJob = async (req, res) => {
+	try {
+		const jobs = await PostJob.find({ isApproved: false }).populate('userId', 'email role').sort({ createdAt: -1 }).lean() //using the useid i will get the email and role
+		if (jobs.length === 0) {
+			return res.status(404).json({
+				status: 0,
+				message: "No Jobs area avaiable to fetch"
+			})
+		}
+		return res.status(200).json({
+			status: 1,
+			message: "Fetached all jobs",
+			jobs: jobs
+		})
+
+	} catch (error) {
+		console.error(error);
+
+		return res.status(500).json({
+			status: 0,
+			message: "Failed to fetch approved jobs"
+		})
+	}
+
+
+}

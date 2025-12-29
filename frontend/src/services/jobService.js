@@ -66,3 +66,50 @@ export const getApprovedJobsService = async () => {
 		}
 	}
 }
+
+//approve jobs by admin 
+
+export const approvedJobsService = async (jobId) => {
+	try {
+		const response = await api.patch(`/job/approve/${jobId}`);
+		if (response.data?.status === 1) {
+			return {
+				success: true,
+				jobs: response.data?.job
+			}
+		}
+		return {
+			success: false,
+			error: response.data?.message
+		}
+	} catch (error) {
+		return {
+			success: false,
+			error: error.message
+		}
+	}
+}
+
+
+//rejected job from admin 
+
+export const rejectJobsService = async (jobId) => {
+	try {
+		const response = await api.delete(`/job/reject/${jobId}`);
+		if (response.data?.status === 1) {
+			return {
+				success: true,
+				jobs: response.data?.job
+			}
+		}
+		return {
+			success: false,
+			error: response.data?.message
+		}
+	} catch (error) {
+		return {
+			success: false,
+			error: error.message
+		}
+	}
+}

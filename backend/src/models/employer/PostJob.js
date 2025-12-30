@@ -39,7 +39,7 @@ const postJob = new schema({
 	salaryPeriod: String,
 	salaryRange: String,
 	license: String,
-	vehicle:String,
+	vehicle: String,
 	skills: {
 		type: [String],
 		default: []

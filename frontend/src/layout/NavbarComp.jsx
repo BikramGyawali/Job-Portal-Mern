@@ -8,16 +8,16 @@ function NavbarComp() {
 
 	const links = [
 		{ name: "Home", path: "/" },
-		{ name: "About", path: "/about" },
+		{ name: "About Us", path: "/about" },
 		{ name: "Services", path: "/services" },
-		{ name: "Contact", path: "/contact" },
-		{ name: "JobSeeker", path: "/jobseekers" },
+		{ name: "Contact Us", path: "/contact" },
+		{ name: "JobSeekers", path: "/jobseekers" },
 		{ name: "Employers", path: "/employers" },
 	];
 
 	return (
 		<div className="sticky top-0 z-50 shadow-md">
-			<Navbar fluid rounded className="!bg-white">
+			<Navbar fluid rounded className="!bg-white ">
 				<NavbarBrand as={Link} to="/">
 					<img
 						src={logo}
@@ -37,7 +37,7 @@ function NavbarComp() {
 							key={link.name}
 							to={link.path}
 							className={`
-                text-lg px-3 py-2 rounded-md 
+                text-[23px] px-4 py-1 rounded-md 
                 transition duration-300
                 hover:bg-gray-100 hover:text-blue-600
                 ${location.pathname === link.path

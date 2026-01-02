@@ -3,18 +3,25 @@ import { EmployerProfile } from "../../models/employer/EmployerProfile.js";
 import { PostJob } from "../../models/employer/PostJob.js";
 //helper fucntion for the company name
 const addCompanyName = async (jobs) => {
-	return await Promise.all(
-		jobs.map(async (job) => {
+	const jobArray = Array.isArray(jobs) ? jobs : [jobs];
+
+	const result = await Promise.all(
+		jobArray.map(async (job) => {
 			const profile = await EmployerProfile.findOne({
 				userId: job.userId._id
 			}).lean();
+
 			return {
 				...job,
-				companyName: profile?.cname || job.userId.email || "N/A"
-			}
+				companyName: profile?.cname || job.userId?.email || "N/A"
+			};
 		})
-	)
-}
+	);
+
+	return Array.isArray(jobs) ? result : result[0];
+};
+
+
 export const PostJobController = async (req, res) => {
 	try {
 		const userId = req.user.id;
@@ -53,7 +60,7 @@ export const PostJobController = async (req, res) => {
 
 export const approvedJob = async (req, res) => {
 	try {
-		const jobs = await PostJob.find({ isApproved: true }).populate('userId', 'email role').sort({ createdAt: -1 }).limit(12).lean() //using the useid i will get the email and role
+		const jobs = await PostJob.find({ isApproved: true }).populate('userId', 'email role').sort({ approvalDate: -1 }).limit(12).lean() //using the useid i will get the email and role
 		if (jobs.length === 0) {
 			return res.status(404).json({
 				status: 0,
@@ -84,7 +91,7 @@ export const approvedJob = async (req, res) => {
 
 export const pendingJob = async (req, res) => {
 	try {
-		const jobs = await PostJob.find({ isApproved: false }).populate('userId', 'email role').sort({ createdAt: -1 }).lean() //using the useid i will get the email and role
+		const jobs = await PostJob.find({ isApproved: false }).populate('userId', 'email role').sort({ approvalDate: -1 }).lean() //using the useid i will get the email and role and show in the reverse order
 		if (jobs.length === 0) {
 			return res.status(404).json({
 				status: 0,
@@ -129,7 +136,7 @@ export const approve = async (req, res) => {
 				message: "No Jobs area avaiable "
 			})
 		}
-		const jobWithCompany = await addCompanyName(jobs)
+		const jobWithCompany = await addCompanyName([job])
 
 
 
@@ -162,12 +169,12 @@ export const rejectJob = async (req, res) => {
 				message: "No Jobs area avaiable "
 			})
 		}
-		const jobWithCompany = await addCompanyName(jobs)
+		const jobWithCompany = await addCompanyName([job])
 
 		return res.status(200).json({
 			status: 1,
 			message: "Rejected Jobs Successfully",
-			jobs: jobWithCompany
+			job
 		})
 
 	} catch (error) {

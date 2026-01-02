@@ -4,6 +4,8 @@ import api from "../utils/axiosInstance"
 export const postJobService = async (jobData) => {
 	try {
 		const response = await api.post("/job/create", jobData);
+		console.log(response);
+		
 		if (response.data?.status === 1) {
 			return {
 				success: true,

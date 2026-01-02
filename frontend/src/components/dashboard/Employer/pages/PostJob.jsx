@@ -42,7 +42,7 @@ function PostJob() {
 			setLoading(false)
 			setTimeout(() => setMessage(''), 10000);  //this decide how long the message will be vissible 
 		} else {
-			setMessage(`${result.error}`)
+			// setMessage(`${result.error}`)
 		}
 	}
 	return (

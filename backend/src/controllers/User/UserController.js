@@ -78,7 +78,7 @@ export const LoginController = async (req, res, type) => {
 			role: user.role,
 			isProfileCompleted: user.isProfileCompleted,
 			id: user._id
-		}, JWT_KEY, { expiresIn: "1d" });
+		}, JWT_KEY, { expiresIn: "10d" });
 
 		res.cookie("token", token, {
 			httpOnly: true,

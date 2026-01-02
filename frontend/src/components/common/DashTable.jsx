@@ -11,7 +11,7 @@ import { BsPen, BsPenFill, BsTrash2 } from "react-icons/bs";
 import { MdDeleteForever, MdModeEdit } from "react-icons/md";
 
 function DashTable({ title, headData, bodyData, actionHandler }) {
-	console.log(bodyData.Actions);
+
 	// console.log(headData);
 
 
@@ -55,57 +55,61 @@ function DashTable({ title, headData, bodyData, actionHandler }) {
 								{headData.map((key, j) => (
 									<TableCell key={j} className="!text-black">
 
-										{key === "Actions" ? (
-											<div className="flex items-center gap-3">
-												{Array.isArray(row[key]) && row[key]?.map((action, idx) => {
-													// Choose icon & color based on action type
-													let Icon, colorClass;
-													switch (action.toLowerCase()) {
-														case "edit":
-															Icon = MdModeEdit;
-															colorClass = "text-green-400 hover:bg-green-500  hover:text-white";
-															break;
-														case "delete":
-															Icon = MdDeleteForever;
-															colorClass = "text-red-400 hover:bg-red-500 hover:text-white";
-															break;
-														case "view":
-															Icon = null; // use a view icon if you like
-															colorClass = "text-blue-400 hover:text-blue-700";
-															break;
-														case "shortlist":
-															Icon = null;
-															colorClass = "text-green-400 hover:text-green-700 ";
-															break;
-														case "approve":
-															Icon = null;
-															colorClass = "text-green-400 hover:text-green-700 ";
-															break;
-														case "reject":
-															Icon = null;
-															colorClass = "text-red-400 hover:text-red-700 ";
-															break;
-														default:
-															Icon = BsPen;
-															colorClass = "text-gray-400";
-													}
+										{key === "S.N" ? (
+											i + 1
+										) :
 
-													return (
-														<button
-															key={idx}
-															className={`p-1 cursor-pointer rounded-full ${colorClass}`}
-															onClick={() => actionHandler[action]?.(row)}
-														>
-															{Icon === null ? action : <Icon size={25} />}
-														</button>
+											key === "Actions" ? (
+												<div className="flex items-center gap-3">
+													{Array.isArray(row[key]) && row[key]?.map((action, idx) => {
+														// Choose icon & color based on action type
+														let Icon, colorClass;
+														switch (action.toLowerCase()) {
+															case "edit":
+																Icon = MdModeEdit;
+																colorClass = "text-green-400 hover:bg-green-500  hover:text-white";
+																break;
+															case "delete":
+																Icon = MdDeleteForever;
+																colorClass = "text-red-400 hover:bg-red-500 hover:text-white";
+																break;
+															case "view":
+																Icon = null; // use a view icon if you like
+																colorClass = "text-blue-400 hover:text-blue-700";
+																break;
+															case "shortlist":
+																Icon = null;
+																colorClass = "text-green-400 hover:text-green-700 ";
+																break;
+															case "approve":
+																Icon = null;
+																colorClass = "text-green-400 hover:text-green-700 ";
+																break;
+															case "reject":
+																Icon = null;
+																colorClass = "text-red-400 hover:text-red-700 ";
+																break;
+															default:
+																Icon = BsPen;
+																colorClass = "text-gray-400";
+														}
 
-													);
+														return (
+															<button
+																key={idx}
+																className={`p-1 cursor-pointer rounded-full ${colorClass}`}
+																onClick={() => actionHandler[action]?.(row)}
+															>
+																{Icon === null ? action : <Icon size={25} />}
+															</button>
 
-												})}
-											</div>
-										) : (
-											row[key]
-										)}
+														);
+
+													})}
+												</div>
+											) : (
+												row[key]
+											)}
 
 									</TableCell>
 								))}

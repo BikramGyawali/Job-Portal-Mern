@@ -8,7 +8,7 @@ export const PostJobController = async (req, res) => {
 		const jobCreate = await PostJob.create({
 			...req.body,
 			userId,
-			isApproved: true
+			isApproved: false
 		})
 
 		return res.status(200).json({

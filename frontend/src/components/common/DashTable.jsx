@@ -11,6 +11,10 @@ import { BsPen, BsPenFill, BsTrash2 } from "react-icons/bs";
 import { MdDeleteForever, MdModeEdit } from "react-icons/md";
 
 function DashTable({ title, headData, bodyData, actionHandler }) {
+	console.log(bodyData.Actions);
+	// console.log(headData);
+
+
 
 	const isActive = title === "Recent Applications";
 	return (

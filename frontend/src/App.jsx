@@ -59,7 +59,7 @@ export default function App() {
 								<Route path="/jobseekers" element={<Jobseekers />} />
 								<Route path="/employers" element={<Employers />} />
 								<Route path="/register" element={<RegisterComp />} />
-								<Route path="/admin-login" element={<AdminLogin />} />
+								<Route path="/admins" element={<AdminLogin />} />
 								<Route path="/jobseeker-profile" element={<JobseekersProfile />} />
 								<Route path="/employer-profile" element={<EmployersProfile />} />
 
@@ -100,7 +100,7 @@ export default function App() {
 										<Route index element={<AdminDashboard />} />
 										<Route path="approve-account" element={<ApproveAccounts />} />
 										<Route path="approve-jobs" element={<ApprovePostJobs />} />
-										<Route path="admin-login" element={<AdminLogin />} />
+										<Route path="admins" element={<AdminLogin />} />
 									</Route>
 								</Route>
 

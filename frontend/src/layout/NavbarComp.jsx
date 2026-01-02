@@ -25,7 +25,7 @@ function NavbarComp() {
 						alt="Company Logo"
 					/>
 					<span className="self-center whitespace-nowrap text-2xl font-bold text-gray-800">
-						MyCompany
+						Hamro Job
 					</span>
 				</NavbarBrand>
 

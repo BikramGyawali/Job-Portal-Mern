@@ -1,6 +1,20 @@
 // import { EmployerProfile } from "../../models/employer/EmployerProfile";
+import { EmployerProfile } from "../../models/employer/EmployerProfile.js";
 import { PostJob } from "../../models/employer/PostJob.js";
-
+//helper fucntion for the company name
+const addCompanyName = async (jobs) => {
+	return await Promise.all(
+		jobs.map(async (job) => {
+			const profile = await EmployerProfile.findOne({
+				userId: job.userId._id
+			}).lean();
+			return {
+				...job,
+				companyName: profile?.cname || job.userId.email || "N/A"
+			}
+		})
+	)
+}
 export const PostJobController = async (req, res) => {
 	try {
 		const userId = req.user.id;
@@ -46,10 +60,12 @@ export const approvedJob = async (req, res) => {
 				message: "No Jobs area avaiable to fetch"
 			})
 		}
+		const jobWithCompany = await addCompanyName(jobs)
 		return res.status(200).json({
 			status: 1,
 			message: "Fetached all jobs",
-			jobs: jobs
+			jobs: jobWithCompany
+
 		})
 
 	} catch (error) {
@@ -75,10 +91,12 @@ export const pendingJob = async (req, res) => {
 				message: "No Jobs area avaiable to fetch"
 			})
 		}
+		const jobWithCompany = await addCompanyName(jobs)
+
 		return res.status(200).json({
 			status: 1,
 			message: "Fetached all jobs",
-			jobs: jobs
+			jobs: jobWithCompany
 		})
 
 	} catch (error) {
@@ -111,10 +129,14 @@ export const approve = async (req, res) => {
 				message: "No Jobs area avaiable "
 			})
 		}
+		const jobWithCompany = await addCompanyName(jobs)
+
+
+
 		return res.status(200).json({
 			status: 1,
 			message: "Approved Jobs Successfully",
-			job: job
+			jobs: jobWithCompany
 		})
 
 	} catch (error) {
@@ -140,10 +162,12 @@ export const rejectJob = async (req, res) => {
 				message: "No Jobs area avaiable "
 			})
 		}
+		const jobWithCompany = await addCompanyName(jobs)
+
 		return res.status(200).json({
 			status: 1,
 			message: "Rejected Jobs Successfully",
-			job: job
+			jobs: jobWithCompany
 		})
 
 	} catch (error) {

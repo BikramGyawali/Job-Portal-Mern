@@ -7,6 +7,7 @@ const postJob = new schema({
 		required: true
 
 	},
+	companyName: String,
 	jobTitle: {
 		type: String,
 		required: true

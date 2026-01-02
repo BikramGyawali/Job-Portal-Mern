@@ -92,6 +92,12 @@ export const CreateJobsData = [
 
 	// ----- BASIC JOB INFO -----
 	{
+		label: "Company Name",
+		name: "cname",
+		type: "text",
+		required: true
+	},
+	{
 		label: "Job Title",
 		name: "jobTitle",
 		type: "text",

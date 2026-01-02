@@ -133,7 +133,8 @@ export const EProfileController = async (req, res) => {
 		const profile = await EmployerProfile.create({
 			...req.body,
 			userId,
-			image: null
+			image: null,
+			companyName: req.body.cname
 		});
 
 		if (req.file) {

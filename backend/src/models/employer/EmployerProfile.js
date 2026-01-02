@@ -8,7 +8,7 @@ const employerProfileSchema = new schema({
 		unique: true
 	},
 	image: String,
-	cname: String,
+	companyName: String,
 	companyaddress: String,
 	email: {
 		type: String,

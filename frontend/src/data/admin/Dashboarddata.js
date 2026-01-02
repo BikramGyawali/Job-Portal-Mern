@@ -30,7 +30,7 @@ export const DashboardBodyData = [
 	}
 ]
 
-export const JobHeads = ["S.N", "Company Name", "Post", "Experience", "Actions"];
+export const JobHeads = ["S.N", "Company Name", "Job Title", "Experience", "Actions"];
 export const JobData = [
 	{
 		"S.N": "1",

@@ -30,15 +30,21 @@ function ApprovePostJobs() {
 		reject: "reject",
 		view: "view"
 	}
-	const jobdata = [
+	const tranformedJobs = jobs.filter(job => !job.isApproved).map((job, index) => ({
+		"S.N": index + 1,
+		"Company Name": job.companyName,
+		"Job Title": job.jobTitle,
+		"Experience": job.experience,
+		Actions: ["view", "approve", "reject"],
+		_id: job._id,
+		fullData: job
 
-		...jobs,
+	}))
 
-		Actions = ActionsData
-	]
+
 	return (
 		<div>
-			<DashTable headData={JobHeads} bodyData={jobdata} title={"Job Post"} actionHandler={actionHandler} />
+			<DashTable headData={JobHeads} bodyData={tranformedJobs} title={"Job Post"} actionHandler={actionHandler} />
 		</div>
 	)
 }

@@ -16,6 +16,7 @@ employerroutes.get("/profile", verifyAuth, getEProfile)
 
 employerroutes.get(
 	"/dashboard",
+	verifyAuth,
 	verifyRole("employer"),
 	(req, res) => {
 		res.send("Employer Dashboard");

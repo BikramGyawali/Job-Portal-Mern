@@ -31,7 +31,7 @@ function ApprovePostJobs() {
 		}
 		storeData()
 	}, [pendingJobs])
-	console.log(pendingJobs);
+	// console.log(pendingJobs);
 
 	const handleApprove = async (row) => {
 		if (!window.confirm(`Approve job : ${row['Job Title']}?`)) return

@@ -10,7 +10,7 @@ export function ViewJobModal({ job, onClose }) {
 
 	return (
 		<div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-			<div className="bg-white rounded-xl w-[600px] max-h-[80vh] overflow-y-auto p-6 shadow-lg">
+			<div className="bg-white rounded-xl w-auto max-h-[80vh] overflow-y-auto p-6 shadow-lg">
 				<h2 className="text-xl font-semibold mb-4 text-center">Job Posted By {job.companyName}</h2>
 
 				<div className="grid grid-cols-2 gap-3 text-sm">

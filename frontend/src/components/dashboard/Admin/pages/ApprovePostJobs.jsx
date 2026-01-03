@@ -3,12 +3,17 @@ import DashTable from '../../../common/DashTable'
 import { JobData, JobHeads } from '../../../../data/admin/Dashboarddata'
 import { JobPostContext } from '../../../../context/JobPostContext'
 import { approvedJobsService, rejectJobsService } from '../../../../services/jobService'
+import { ViewJobModal } from '../../../common/ViewModel'
 
 function ApprovePostJobs() {
-	const { jobs } = useContext(JobPostContext)
+	const { jobs, fetchPendingJobs } = useContext(JobPostContext)
 	const [transformedJobs, setTransformedJobs] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [message, setMessage] = useState("")
+	const [viewJob, setViewJob] = useState(null)
+	useEffect(() => {
+		fetchPendingJobs()
+	},[])
 
 	useEffect(() => {
 		const storeData = async () => {
@@ -65,7 +70,9 @@ function ApprovePostJobs() {
 
 	}
 	const handleView = (row) => {
+		setViewJob(row.fullData)
 		console.log(row);
+
 
 	}
 	const actionHandler = {
@@ -103,7 +110,14 @@ function ApprovePostJobs() {
 				title={`Pending Jobs (${transformedJobs.length})`}
 				actionHandler={actionHandler}
 				isLoading={loading}
+
 			/>
+			{viewJob && (
+				<ViewJobModal
+					job={viewJob}
+					onClose={() => setViewJob(null)}
+				/>
+			)}
 		</div>
 	)
 }

@@ -1,5 +1,4 @@
-import dotenv from "dotenv"
-import jwt, { decode } from "jsonwebtoken"
+
 import { User } from "../../models/LoginModel/SignupLogic.js";
 import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js";
 import { EmployerProfile } from "../../models/employer/EmployerProfile.js";

@@ -5,13 +5,12 @@ export const JobPostContext = createContext();
 
 export const JobPostProvider = ({ children }) => {
 	const [jobs, setJobs] = useState([])
+	const [pendingJobs, setPendingJobs] = useState([])
 	const [loading, setLoading] = useState(true)
 
-	useEffect(() => {
-		fetchApprovedJobs();
-		fetchPendingJobs();
-	}, [])  // run every time when home page is open
+
 	const fetchApprovedJobs = async () => {
+		setLoading(true)
 		try {
 			const result = await getApprovedJobsService();
 			if (result.success) {
@@ -25,10 +24,11 @@ export const JobPostProvider = ({ children }) => {
 		}
 	}
 	const fetchPendingJobs = async () => {
+		setLoading(true)
 		try {
 			const result = await getPendingJobsService();
 			if (result.success) {
-				setJobs(result.jobs)
+				setPendingJobs(result.jobs)
 			}
 		} catch (error) {
 			console.error("failed to fecth data:" + error)
@@ -42,7 +42,10 @@ export const JobPostProvider = ({ children }) => {
 	}
 
 	return (
-		<JobPostContext.Provider value={{ jobs, loading, fetchApprovedJobs, addJob, fetchPendingJobs }}>
+		<JobPostContext.Provider value={{
+			jobs, loading, fetchApprovedJobs, addJob, fetchPendingJobs,
+			pendingJobs
+		}}>
 			{children}
 		</JobPostContext.Provider>
 	)

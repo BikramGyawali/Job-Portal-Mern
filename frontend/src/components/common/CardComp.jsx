@@ -12,7 +12,7 @@ export const CardComp = ({ job }) => {
 
 	const { state: authSate } = useContext(AuthContext);
 	const navigate = useNavigate();
-	console.log(authSate);
+	// console.log(authSate);
 
 	const handleApply = () => {
 		if (authSate.isAuth) {

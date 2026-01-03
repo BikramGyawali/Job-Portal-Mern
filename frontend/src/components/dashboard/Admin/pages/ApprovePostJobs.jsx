@@ -6,18 +6,18 @@ import { approvedJobsService, rejectJobsService } from '../../../../services/job
 import { ViewJobModal } from '../../../common/ViewModel'
 
 function ApprovePostJobs() {
-	const { jobs, fetchPendingJobs } = useContext(JobPostContext)
+	const { pendingJobs, fetchPendingJobs } = useContext(JobPostContext)
 	const [transformedJobs, setTransformedJobs] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [message, setMessage] = useState("")
 	const [viewJob, setViewJob] = useState(null)
 	useEffect(() => {
 		fetchPendingJobs()
-	},[])
+	}, [])
 
 	useEffect(() => {
 		const storeData = async () => {
-			const transformed = await jobs.filter(job => !job.isApproved).map((job, index) => ({
+			const transformed = await pendingJobs.filter(job => !job.isApproved).map((job, index) => ({
 				// "S.N": index + 1,
 				"Company Name": job.companyName,
 				"Job Title": job.jobTitle,
@@ -30,7 +30,9 @@ function ApprovePostJobs() {
 			setTransformedJobs(transformed)
 		}
 		storeData()
-	}, [jobs])
+	}, [pendingJobs])
+	console.log(pendingJobs);
+
 	const handleApprove = async (row) => {
 		if (!window.confirm(`Approve job : ${row['Job Title']}?`)) return
 		setLoading(true)
@@ -71,7 +73,7 @@ function ApprovePostJobs() {
 	}
 	const handleView = (row) => {
 		setViewJob(row.fullData)
-		console.log(row);
+		// console.log(row);
 
 
 	}
@@ -81,11 +83,7 @@ function ApprovePostJobs() {
 		view: handleView
 
 	}
-	const ActionsData = {
-		approve: "approve",
-		reject: "reject",
-		view: "view"
-	}
+
 
 
 

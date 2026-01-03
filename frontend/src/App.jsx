@@ -62,6 +62,7 @@ export default function App() {
 								<Route path="/admins" element={<AdminLogin />} />
 								<Route path="/jobseeker-profile" element={<JobseekersProfile />} />
 								<Route path="/employer-profile" element={<EmployersProfile />} />
+							
 
 
 								{/* for jobseeker dashboard routes (nested under /jobseeker) */}

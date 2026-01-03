@@ -12,7 +12,8 @@ import { MdDeleteForever, MdModeEdit } from "react-icons/md";
 
 function DashTable({ title, headData, bodyData, actionHandler }) {
 
-	// console.log(headData);
+	console.log(headData);
+
 
 
 

@@ -21,7 +21,12 @@ export const ProfileProvider = ({ children }) => {
 				setLoading(false)
 				return
 			}
-
+			if (authState.role === "admin") {
+				setProfile(null); 
+				setLoading(false);
+				return;  
+			}
+			setLoading(true)
 			try {
 				const res = await api.get(`/${authState.role}/profile`);
 				console.log(res);

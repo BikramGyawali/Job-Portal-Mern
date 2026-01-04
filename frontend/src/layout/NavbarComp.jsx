@@ -37,7 +37,7 @@ function NavbarComp() {
 							key={link.name}
 							to={link.path}
 							className={`
-                text-[23px] px-4 py-1 rounded-md 
+                text-[18px] px-4 py-1 rounded-md 
                 transition duration-300
                 hover:bg-gray-100 hover:text-blue-600
                 ${location.pathname === link.path

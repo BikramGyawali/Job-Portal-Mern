@@ -1,4 +1,4 @@
-// for jobseeker Profile Controller
+
 //pending profile 
 
 import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile";
@@ -43,11 +43,36 @@ export const getPendingProfile = async (req, res) => {
 	}
 }
 
-//approve profile
 
+export const updateProfileStatus = async (req, res) => {
+	try {
+		const { status } = req.body;
 
-//reject profile
+		if (!["approve", "reject"].includes(status)) {
+			return res.status(400).json({
+				message: "Invalid Status"
+			})
+		}
 
+		const user = await User.findByIdAndUpdate(
+			req.params.userId,
+			{ approvalStatus: status },
+			{ new: true }
+		)
+		if (!user) {
+			return res.status(404).json({
+				message: "No user Found"
+			})
+		}
+		res.status(200).json({
+			status: 1,
+			message: `Profile ${status} Successfully`
+		})
+	} catch (error) {
+		res.status(500).josn({
+			status: 0,
+			message: "failed to update the profile status"
+		})
+	}
 
-
-//for Employers Profile 
+}

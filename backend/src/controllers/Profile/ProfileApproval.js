@@ -8,48 +8,50 @@ import { User } from "../../models/LoginModel/SignupLogic.js"
 //to get the user name from the jobseekersprofile
 
 const addUserName = async (users) => {
-	const profileData = users.role === "employer" ? EmployerProfile : JobseekerProfile
+	// console.log(users.role)
+	const profileModel = users.role === "employer" ? EmployerProfile : JobseekerProfile
 	const usersArray = Array.isArray(users) ? users : [users];
 	const result = await Promise.all(
 		usersArray.map(async (user) => {
-			const profile = await profileData.findOne(
+			const profile = await profileModel.findOne(
 				{
-					userId: user.userId._id
+					userId: user._id
 				}
 			).lean();
 			return {
 				...user,
-				Name: `${profile?.fname} ${profile?.mname} ${profile?.sname} || ${profile?.cname}`
-			}
+				Name: `${profile?.fname ?? ""} ${profile?.mname ?? ""} ${profile?.sname ?? ""} ${profile?.cname ?? ""}`
+			};
 		})
-	)
-	return result(users) ? users : users[0];
+	);
+	return result;
 }
 
 
 export const getPendingProfile = async (req, res) => {
 	try {
-		const users = await User.findOne(
+		const users = await User.find(
 			{
-				role: { $in: ['employer', 'jobseker'] }, approvalStatus: "pending"
+				role: { $in: ['employer', 'jobseeker'] }, approvalStatus: "pending"
 			}
 		).lean();
+		const profileWithName = await addUserName(users);
 
-		const profile = Promise.all(
-			users.map(async (user) => {
+		const profile = await Promise.all(
+			profileWithName.map(async (user) => {
 				let profileData = null;
 				if (user.role == "jobseeker") {
-					profileData = await JobseekerProfile.findById(user._id).lean();
+					profileData = await JobseekerProfile.findOne({ userId: user._id }).lean();
 				}
 				if (user.role == "employer") {
-					profileData = await EmployerProfile.findById(user._id).lean();
+					profileData = await EmployerProfile.findOne({ userId: user._id }).lean();
 				}
-				const profileWithName = await addUserName(users);
 				return {
 					userId: user._id,
 					email: user.email,
+					name: user.Name,
 					role: user.role,
-					profile: profileWithName
+					profile: profileData
 				}
 			})
 		)
@@ -92,7 +94,7 @@ export const updateProfileStatus = async (req, res) => {
 			message: `Profile ${status} Successfully`
 		})
 	} catch (error) {
-		res.status(500).josn({
+		res.status(500).json({
 			status: 0,
 			message: "failed to update the profile status"
 		})

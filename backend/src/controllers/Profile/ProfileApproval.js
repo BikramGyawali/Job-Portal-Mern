@@ -1,8 +1,31 @@
 
 //pending profile 
 
+import { EmployerProfile } from "../../models/employer/EmployerProfile.js";
 import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js";
 import { User } from "../../models/LoginModel/SignupLogic.js"
+
+//to get the user name from the jobseekersprofile
+
+const addUserName = async (users) => {
+	const profileData = users.role === "employer" ? EmployerProfile : JobseekerProfile
+	const usersArray = Array.isArray(users) ? users : [users];
+	const result = await Promise.all(
+		usersArray.map(async (user) => {
+			const profile = await profileData.findOne(
+				{
+					userId: user.userId._id
+				}
+			).lean();
+			return {
+				...user,
+				Name: `${profile?.fname} ${profile?.mname} ${profile?.sname} || ${profile?.cname}`
+			}
+		})
+	)
+	return result(users) ? users : users[0];
+}
+
 
 export const getPendingProfile = async (req, res) => {
 	try {
@@ -21,12 +44,12 @@ export const getPendingProfile = async (req, res) => {
 				if (user.role == "employer") {
 					profileData = await EmployerProfile.findById(user._id).lean();
 				}
-
+				const profileWithName = await addUserName(users);
 				return {
 					userId: user._id,
 					email: user.email,
 					role: user.role,
-					profile: profileData
+					profile: profileWithName
 				}
 			})
 		)

@@ -73,7 +73,7 @@ export const updateProfileStatus = async (req, res) => {
 	try {
 		const { status } = req.body;
 
-		if (!["approve", "reject"].includes(status)) {
+		if (!["approved", "rejected"].includes(status)) {
 			return res.status(400).json({
 				message: "Invalid Status"
 			})

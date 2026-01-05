@@ -26,17 +26,26 @@ export const getPendingProfiles = async () => {
 
 //update profile status
 
-export const updateProfileApporval=async(profileId)=>{
- try {
-	 const res= await api.patch(`/admin/profile/${profileId}`)
+export const updateProfileApporval = async (profileId) => {
+	try {
+		const res = await api.patch(`/admin/profile/${profileId}`)
 
-	 if(res.data?.status===1){
-		return{
-			status:true,
-			profiles:res.data?.profile
+		if (res.data?.status === 1) {
+			return {
+				status: true,
+				profiles: res.data?.profile
+			}
 		}
-	 }
- } catch (error) {
-	
- }
+		else {
+			return {
+				status: false,
+				error: res.error?.message
+			}
+		}
+	} catch (error) {
+		return {
+			status: false,
+			error: error?.message
+		}
+	}
 }

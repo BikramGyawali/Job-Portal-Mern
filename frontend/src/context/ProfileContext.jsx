@@ -5,6 +5,9 @@ import { AuthContext } from "./AuthContext";
 import { useState } from "react";
 import { useEffect } from "react";
 import api from "../utils/axiosInstance";
+import { getPendingProfilesService } from "../services/profileApproval";
+
+// import { getPendingProfile } from "../../../backend/src/controllers/Profile/ProfileApproval.js";
 
 
 
@@ -13,6 +16,7 @@ export const ProfileContext = createContext();
 export const ProfileProvider = ({ children }) => {
 	const { state: authState } = useContext(AuthContext)
 	const [profile, setProfile] = useState(null)
+	const [pendingProfile, setPendingProfile] = useState([])
 	const [loading, setLoading] = useState(true);
 	useEffect(() => {
 		const fetchData = async () => {
@@ -22,9 +26,9 @@ export const ProfileProvider = ({ children }) => {
 				return
 			}
 			if (authState.role === "admin") {
-				setProfile(null); 
+				setProfile(null);
 				setLoading(false);
-				return;  
+				return;
 			}
 			setLoading(true)
 			try {
@@ -42,8 +46,26 @@ export const ProfileProvider = ({ children }) => {
 		}
 		fetchData();
 	}, [authState.isAuth, authState.role])  //run if the user role is change and the state as login or logout chnages 
+
+	//for the pending profiles
+	const fetchPendingProfile = async () => {
+		setLoading(true)
+		try {
+			const result = await getPendingProfilesService();
+			if (result.success) {
+				setPendingProfile(result.profiles)
+			}
+
+		} catch (error) {
+			console.log("failed to fetched data" + error);
+
+		} finally {
+			setLoading(false)
+
+		}
+	}
 	return (
-		<ProfileContext.Provider value={{ profile, setProfile, loading }}>
+		<ProfileContext.Provider value={{ profile, setProfile, loading, fetchPendingProfile, pendingProfile }}>
 			{children}
 		</ProfileContext.Provider>
 	)

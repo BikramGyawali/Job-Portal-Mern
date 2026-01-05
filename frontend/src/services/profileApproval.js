@@ -1,24 +1,24 @@
 
 import api from "../utils/axiosInstance"
 
-export const getPendingProfiles = async () => {
+export const getPendingProfilesService = async () => {
 	try {
-		const res = await api.get("/admin//pending-profile");
+		const res = await api.get("/admin/pending-profile");
 
 		if (res.data?.status === 1) {
 			return {
-				status: true,
-				profiles: res.data?.profile
+				success: true,
+				profiles: res.data?.profiles
 			}
 		} else {
 			return {
-				status: false,
+				success: false,
 				error: res.data?.message
 			}
 		}
 	} catch (error) {
 		return {
-			status: false,
+			success: false,
 			error: error.message
 		}
 	}
@@ -26,7 +26,7 @@ export const getPendingProfiles = async () => {
 
 //update profile status
 
-export const updateProfileApporval = async (profileId) => {
+export const updateProfileApporvalService = async (profileId) => {
 	try {
 		const res = await api.patch(`/admin/profile/${profileId}`)
 

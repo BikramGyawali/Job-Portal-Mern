@@ -57,11 +57,11 @@ export const LoginController = async (req, res, type) => {
 			return res.status(404).json({ status: 0, message: "User not found" });
 		}
 
-		if (user.approvalStatus !== "approved") {
+		if (user.approvalStatus !== "approve") {
 			if (user.approvalStatus == "pending") {
 				return res.status(403).json({ status: 0, message: "Your Profile is Under Admin View" });
 			}
-			else if (user.approvalStatus == "rejected") {
+			else if (user.approvalStatus == "reject") {
 				return res.status(403).json({ status: 0, message: "Your Profile has been rejected" });
 
 			}

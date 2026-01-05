@@ -5,5 +5,5 @@ import { getPendingProfile, updateProfileStatus } from "../controllers/Profile/P
 const adminRoutes = Router();
 adminRoutes.post("/login", (req, res) => LoginController(req, res, "admin"));
 adminRoutes.get("/pending-profile", verifyAuth, verifyRole("admin"), getPendingProfile)
-adminRoutes.get("/profile/:userId", verifyAuth, verifyRole("admin"), updateProfileStatus)
+adminRoutes.patch("/profile/:userId", verifyAuth, verifyRole("admin"), updateProfileStatus)
 export default adminRoutes;

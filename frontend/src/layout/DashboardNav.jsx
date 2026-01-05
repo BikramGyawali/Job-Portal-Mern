@@ -23,7 +23,8 @@ export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 	const handleLogout = () => {
 		logout()
 		navigate(
-			role === "Jobseeker" ? "/jobseekers" : role === "Employer" ? "/employers" : "/admin-login"
+			"/"
+			// role === "Jobseeker" ? "/jobseekers" : role === "Employer" ? "/employers" : "/admins"
 			, { replace: true }
 		)
 	}

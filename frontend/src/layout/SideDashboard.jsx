@@ -1,14 +1,22 @@
 import { Sidebar, SidebarItem, SidebarItemGroup, SidebarItems, SidebarCollapse } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, replace, useLocation, useNavigate } from "react-router-dom";
 import { JDashboardData } from "../data/jobseekers/JDashboardData";
 import { EDashboardData } from "../data/employers/edashboardData";
 import { HiX } from "react-icons/hi";
 import { ADashboardSideData } from "../data/admin/Dashboarddata";
+import { useContext } from "react";
+import { AuthContext } from "../context/AuthContext";
 
 export function SideDashboard({ role = "Employer", isOpen, onClose }) {
+	const navigate = useNavigate();
 	const { pathname } = useLocation();
 	const menuData = role === "Jobseeker" ? JDashboardData : role == "Employer" ? EDashboardData : ADashboardSideData;
-
+	const { logout } = useContext(AuthContext)
+	const handleLogout = () => {
+		console.log("logout");
+		logout();
+		navigate("/", { replace: true })
+	}
 	const renderMenu = (closeOnClick = false) => (
 		<SidebarItems>
 			<p className="text-center text-[15px] sm:text-2xl md:text-3xl font-extrabold tracking-wide   ">
@@ -22,6 +30,21 @@ export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 
 
 					if (type === "item") {
+						if (name == "Logout") {
+							return (
+								<SidebarItem
+									key={i}
+									as={Link}
+									to={link}
+									icon={icon}
+									className={`rounded-md ${isActive ? "bg-blue-600 text-white" : "hover:bg-gray-700"}`}
+									onClick={handleLogout}
+								>
+									{name}
+								</SidebarItem>
+							);
+						}
+
 						return (
 							<SidebarItem
 								key={i}
@@ -34,6 +57,7 @@ export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 								{name}
 							</SidebarItem>
 						);
+
 					}
 
 					if (type === "collapse") {

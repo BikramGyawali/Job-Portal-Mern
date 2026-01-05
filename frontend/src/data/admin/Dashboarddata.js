@@ -64,6 +64,6 @@ export const ADashboardSideData = [
 		type: "item",
 		icons: HiLogout,
 		name: "Logout",
-		link: "/admin-login"
+		link: "/"
 	}
 ]

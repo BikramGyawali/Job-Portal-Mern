@@ -1,8 +1,8 @@
 
 //pending profile 
 
-import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile";
-import { User } from "../../models/LoginModel/SignupLogic"
+import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js";
+import { User } from "../../models/LoginModel/SignupLogic.js"
 
 export const getPendingProfile = async (req, res) => {
 	try {

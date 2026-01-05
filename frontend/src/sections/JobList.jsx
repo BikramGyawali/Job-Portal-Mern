@@ -11,6 +11,8 @@ function JobList() {
 		fetchApprovedJobs();
 
 	}, [])  // run every time when home page is open
+
+
 	if (loading) return <p>Loading......</p>
 	return (
 		<div className=' grid gap-4 p-6 md:grid-cols-4 sm:grid-cols-2'>

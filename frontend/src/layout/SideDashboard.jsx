@@ -1,11 +1,12 @@
 import { Sidebar, SidebarItem, SidebarItemGroup, SidebarItems, SidebarCollapse } from "flowbite-react";
 import { Link, replace, useLocation, useNavigate } from "react-router-dom";
 import { JDashboardData } from "../data/jobseekers/JDashboardData";
-import { EDashboardData } from "../data/employers/edashboardData";
+// import { EDashboardData } from "../data/employers/edashboardData";
 import { HiX } from "react-icons/hi";
 import { ADashboardSideData } from "../data/admin/Dashboarddata";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { EDashboardData } from "../data/employers/EDashboardData";
 
 export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 	const navigate = useNavigate();

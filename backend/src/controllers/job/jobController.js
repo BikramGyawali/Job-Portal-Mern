@@ -13,7 +13,7 @@ const addCompanyName = async (jobs) => {
 
 			return {
 				...job,
-				companyName: profile?.cname || job.userId?.email || "N/A"
+				companyName: profile?.cname || profile?.companyName || job.userId?.email || "N/A"
 			};
 		})
 	);

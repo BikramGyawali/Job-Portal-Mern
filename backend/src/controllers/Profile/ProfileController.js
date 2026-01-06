@@ -30,17 +30,27 @@ const validateEmail = (email) => {
 // Jobseeker Profile - create
 export const JProfileController = async (req, res) => {
 	try {
-		const userId = req.user.id;
+		// ensure authenticated user id is present
+		const userId = req.user?.id;
+		if (!userId) return res.status(401).json({ status: 0, message: "Unauthorized: missing user id" });
 		const { email, phone } = req.body;
+		// ensure there isn't already a profile for this user
+		const existingProfile = await JobseekerProfile.findOne({ userId: userId });
 
+		if (existingProfile) {
+			return res.status(409).json({
+				status: 0,
+				message: "Jobseeker profile already exists"
+			});
+		}
 		if (!email || !validateEmail(email)) return res.status(400).json({ status: 0, message: "Valid email is required" });
-		// check email uniqueness across users (allow same user)
-		const emailExists = await JobseekerProfile.findOne({ email });
+		// check email uniqueness across other profiles (allow same user)
+		const emailExists = await JobseekerProfile.findOne({ email, userId: { $ne: userId } });
 		if (emailExists) return res.status(409).json({ status: 0, message: "Email already exists" });
 
-		// check phone uniqueness in profiles
+		// check phone uniqueness in profiles (exclude current user)
 		if (phone) {
-			const phoneExists = await JobseekerProfile.findOne({ phone });
+			const phoneExists = await JobseekerProfile.findOne({ phone, userId: { $ne: userId } });
 			if (phoneExists) return res.status(409).json({ status: 0, message: "Phone number already exists" });
 		}
 
@@ -92,7 +102,7 @@ export const JProfileController = async (req, res) => {
 			{ new: true }
 		);
 		try {
-			res.clearCookies("token", {
+			res.clearCookie("token", {
 				httpOnly: true,
 				sameSite: "lax",
 				secure: false
@@ -116,17 +126,27 @@ export const JProfileController = async (req, res) => {
 // Employer Profile - create
 export const EProfileController = async (req, res) => {
 	try {
-		const userId = req.user.id;
+		// ensure authenticated user id is present
+		const userId = req.user?.id;
+		if (!userId) return res.status(401).json({ status: 0, message: "Unauthorized: missing user id" });
 		const { email, phone } = req.body;
+		const existingProfile = await EmployerProfile.findOne({ userId: userId });
+
+		if (existingProfile) {
+			return res.status(409).json({
+				status: 0,
+				message: "Employer profile already exists"
+			});
+		}
 
 		if (!email || !validateEmail(email)) return res.status(400).json({ status: 0, message: "Valid email is required" });
-		// check email uniqueness across users (allow same user)
-		const emailExists = await EmployerProfile.findOne({ email });
+		// check email uniqueness across other profiles (allow same user)
+		const emailExists = await EmployerProfile.findOne({ email, userId: { $ne: userId } });
 		if (emailExists) return res.status(409).json({ status: 0, message: "Email already exists" });
 
-		// check phone uniqueness optionally
+		// check phone uniqueness optionally (exclude current user)
 		if (phone) {
-			const phoneExists = await EmployerProfile.findOne({ phone });
+			const phoneExists = await EmployerProfile.findOne({ phone, userId: { $ne: userId } });
 			if (phoneExists) return res.status(409).json({ status: 0, message: "Phone number already exists" });
 		}
 
@@ -160,10 +180,7 @@ export const EProfileController = async (req, res) => {
 			{ new: true }
 		);
 		try {
-			res.clearCookies("token", {
-				httpOnly: true,
-				sameSite: "lax",
-				secure: false
+			res.clearCookie("token", {
 			})
 		} catch (error) {
 
@@ -184,7 +201,8 @@ export const EProfileController = async (req, res) => {
 // GET Jobseeker Profile
 export const getJProfile = async (req, res) => {
 	try {
-		const userId = req.user.id;
+		const userId = req.user?.id;
+		if (!userId) return res.status(401).json({ status: 0, message: "Unauthorized: missing user id" });
 		const profile = await JobseekerProfile.findOne({ userId }).lean(); //lean() returns a JavaScript object instead of a Mongoose document.
 		if (!profile) return res.status(404).json({ status: 0, message: "Profile not found" });
 		res.status(200).json({ status: 1, profile });
@@ -197,7 +215,8 @@ export const getJProfile = async (req, res) => {
 // GET Employer Profile
 export const getEProfile = async (req, res) => {
 	try {
-		const userId = req.user.id;
+		const userId = req.user?.id;
+		if (!userId) return res.status(401).json({ status: 0, message: "Unauthorized: missing user id" });
 		const profile = await EmployerProfile.findOne({ userId }).lean();
 		if (!profile) return res.status(404).json({ status: 0, message: "Profile not found" });
 		res.status(200).json({ status: 1, profile });

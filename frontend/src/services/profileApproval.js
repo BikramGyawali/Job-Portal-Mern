@@ -6,6 +6,7 @@ export const getPendingProfilesService = async () => {
 		const res = await api.get("/admin/pending-profile");
 
 		if (res.data?.status === 1) {
+			console.log(res.data?.profiles);
 			return {
 				success: true,
 				profiles: res.data?.profiles
@@ -23,6 +24,7 @@ export const getPendingProfilesService = async () => {
 		}
 	}
 }
+
 
 //update profile status
 

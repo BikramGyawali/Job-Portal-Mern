@@ -18,12 +18,12 @@ const signupSchema = new schema({
 	},
 	isProfileCompleted: {
 		type: Boolean,
-		default: true
+		default: false
 	},
 	approvalStatus: {
 		type: String,
 		enum: ["approve", "pending", "reject"],
-		default: "pending",
+		default: "approve",
 		lowercase: true
 	}
 })

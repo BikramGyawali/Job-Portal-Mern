@@ -20,10 +20,16 @@ const addUserName = async (users) => {
 			const profile = await profileModel
 				.findOne({ userId: user._id })
 				.lean();
+			let name;
 
+			if (user.role === "employer") {
+				name = profile?.cname || user?.email || "N/A";
+			} else {
+				name = `${profile?.fname ?? ""} ${profile?.mname ?? ""} ${profile?.sname ?? ""}`.trim();
+			}
 			return {
 				...user,
-				Name: `${profile?.fname ?? ""} ${profile?.mname ?? ""} ${profile?.sname ?? ""} ${profile?.cname ?? ""}`.trim()
+				Name: name
 			};
 		})
 	);

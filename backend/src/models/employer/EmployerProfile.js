@@ -30,12 +30,12 @@ const employerProfileSchema = new schema({
 		type: String,
 
 		required: true,
-		validate: {
-			validator: function (v) {
-				return /^[0-9]{10}$/.test(v);
-			},
-			message: "Phone number must be exactly 10 "
-		}
+		// validate: {
+		// 	validator: function (v) {
+		// 		return /^[0-9]{10}$/.test(v);
+		// 	},
+		// 	message: "Phone number must be exactly 10 "
+		// }
 	},
 	companyIntro: String
 
@@ -43,15 +43,15 @@ const employerProfileSchema = new schema({
 
 })
 
-employerProfileSchema.pre("save", function (next) {
-	if (this.phone) {
-		this.phone =
-			this.phone.replace(/\D/g, "")
-	}
-	if (this.panCard) {
-		this.panCard =
-			this.panCard.trim().toUpperCase()
-	}
-	next()
-})
+// employerProfileSchema.pre("save", function (next) {
+// 	if (this.phone) {
+// 		this.phone =
+// 			this.phone.replace(/\D/g, "")
+// 	}
+// 	if (this.panCard) {
+// 		this.panCard =
+// 			this.panCard.trim().toUpperCase()
+// 	}
+// 	next()
+// })
 export const EmployerProfile = mongoose.model("EmployerProfile", employerProfileSchema)

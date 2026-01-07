@@ -119,14 +119,14 @@ const profileSchema = new mongoose.Schema({
 
 }, { timestamps: true });   //timestamp add extra two field as createdat and updatedat
 
-profileSchema.pre("save", function (next) {
-	if (this.phone) {
-		this.phone =
-			this.phone.replace(/\D/g, "");
-	}
-	next();
-})
-profileSchema.index({ phone: 1 }, { unique: true });
-profileSchema.index({ email: 1 }, { unique: true });
-profileSchema.index({ userId: 1 }, { unique: true })
+// profileSchema.pre("save", function (next) {
+// 	if (this.phone) {
+// 		this.phone =
+// 			this.phone.replace(/\D/g, "");
+// 	}
+// 	next();
+// })
+// profileSchema.index({ phone: 1 }, { unique: true });
+// profileSchema.index({ email: 1 }, { unique: true });
+// profileSchema.index({ userId: 1 }, { unique: true })
 export const JobseekerProfile = mongoose.model("JobseekerProfile", profileSchema);

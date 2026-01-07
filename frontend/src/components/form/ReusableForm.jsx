@@ -9,6 +9,7 @@ function ReusableForm({
 	step,
 	setStep,
 	totalSteps,
+	deleteSection,
 	addSection,
 	entriesCount,
 	setCurrentEntryIndex,

@@ -3,12 +3,14 @@ import express from "express"
 import fs from "fs"
 import path from "path"
 import dotenv from "dotenv"
+import jwt from "jsonwebtoken"
 import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js"
 import { EmployerProfile } from "../../models/employer/EmployerProfile.js"
 import { User } from "../../models/LoginModel/SignupLogic.js"
 const app = express()
 app.use(express.json())
 dotenv.config();
+const JWT_KEY = process.env.JWT_KEY;
 // Helper to write image buffer to disk and return filename
 const saveImageBuffer = async (file) => {
 	if (!file || !file.buffer) return null;
@@ -50,14 +52,24 @@ export const JProfileController = async (req, res) => {
 
 		// normalize email for case-insensitive comparison
 		const normalizedEmail = email.trim().toLowerCase();
-		const emailExists = await JobseekerProfile.findOne({ email: { $regex: `^${normalizedEmail}$`, $options: 'i' }, userId: { $ne: userId } });
-		if (emailExists) return res.status(409).json({ status: 0, message: "Email already exists" });
+		// try to find a matching profile by email (any userId)
+		let existingByEmail = await JobseekerProfile.findOne({ email: { $regex: `^${normalizedEmail}$`, $options: 'i' } });
+		if (existingByEmail) {
+			// if already linked to another user, reject
+			if (existingByEmail.userId && existingByEmail.userId.toString() !== userId) {
+				return res.status(409).json({ status: 0, message: "Email already exists" });
+			}
+		}
 
 		// check phone uniqueness in profiles (exclude current user)
 		if (phone) {
 			const sanitizedPhone = phone.replace(/\D/g, "");
-			const phoneExists = await JobseekerProfile.findOne({ phone: sanitizedPhone, userId: { $ne: userId } });
-			if (phoneExists) return res.status(409).json({ status: 0, message: "Phone number already exists" });
+			let existingByPhone = await JobseekerProfile.findOne({ phone: sanitizedPhone });
+			if (existingByPhone) {
+				if (existingByPhone.userId && existingByPhone.userId.toString() !== userId) {
+					return res.status(409).json({ status: 0, message: "Phone number already exists" });
+				}
+			}
 			// ensure the body phone is sanitized before saving
 			req.body.phone = sanitizedPhone;
 		}
@@ -72,18 +84,36 @@ export const JProfileController = async (req, res) => {
 		const awards = req.body.awards ? JSON.parse(req.body.awards) : [];
 		const references = req.body.references ? JSON.parse(req.body.references) : [];
 
-		const profile = await JobseekerProfile.create({
-			...req.body,
-			experience,
-			education,
-			trainings,
-			skills,
-			languages,
-			socials,
-			awards,
-			references,
-			userId
-		});
+		let profile;
+		if (existingByEmail && !existingByEmail.userId) {
+			// link unassociated profile to this user and update fields
+			existingByEmail.set({
+				...req.body,
+				experience,
+				education,
+				trainings,
+				skills,
+				languages,
+				socials,
+				awards,
+				references,
+				userId
+			});
+			profile = await existingByEmail.save();
+		} else {
+			profile = await JobseekerProfile.create({
+				...req.body,
+				experience,
+				education,
+				trainings,
+				skills,
+				languages,
+				socials,
+				awards,
+				references,
+				userId
+			});
+		}
 
 		// save image to disk only after profile is created
 		if (req.file) {
@@ -105,11 +135,17 @@ export const JProfileController = async (req, res) => {
 			{ new: true }
 		);
 		try {
-			res.clearCookie("token", {
+			const token = jwt.sign({
+				email: user.email,
+				role: user.role,
+				isProfileCompleted: user.isProfileCompleted,
+				id: user._id
+			}, JWT_KEY, { expiresIn: "1d" });
+			res.cookie("token", token, {
 				httpOnly: true,
 				sameSite: "lax",
 				secure: false
-			})
+			});
 		} catch (error) {
 
 		}
@@ -159,25 +195,44 @@ export const EProfileController = async (req, res) => {
 
 		// normalize email for case-insensitive comparison
 		const normalizedEmail = email.trim().toLowerCase();
-		const emailExists = await EmployerProfile.findOne({ email: { $regex: `^${normalizedEmail}$`, $options: 'i' }, userId: { $ne: userId } });
-		if (emailExists) return res.status(409).json({ status: 0, message: "Email already exists" });
+		let existingByEmail = await EmployerProfile.findOne({ email: { $regex: `^${normalizedEmail}$`, $options: 'i' } });
+		if (existingByEmail) {
+			if (existingByEmail.userId && existingByEmail.userId.toString() !== userId) {
+				return res.status(409).json({ status: 0, message: "Email already exists" });
+			}
+		}
 
 		// check phone uniqueness optionally (exclude current user)
 		if (phone) {
 			const sanitizedPhone = phone.replace(/\D/g, "");
-			const phoneExists = await EmployerProfile.findOne({ phone: sanitizedPhone, userId: { $ne: userId } });
-			if (phoneExists) return res.status(409).json({ status: 0, message: "Phone number already exists" });
+			let existingByPhone = await EmployerProfile.findOne({ phone: sanitizedPhone });
+			if (existingByPhone) {
+				if (existingByPhone.userId && existingByPhone.userId.toString() !== userId) {
+					return res.status(409).json({ status: 0, message: "Phone number already exists" });
+				}
+			}
 			req.body.phone = sanitizedPhone;
 		}
 
 		const companyName = req.body.companyName || req.body.cname || null;
 
-		const profile = await EmployerProfile.create({
-			...req.body,
-			userId,
-			image: null,
-			companyName
-		});
+		let profile;
+		if (existingByEmail && !existingByEmail.userId) {
+			existingByEmail.set({
+				...req.body,
+				userId,
+				image: null,
+				companyName
+			});
+			profile = await existingByEmail.save();
+		} else {
+			profile = await EmployerProfile.create({
+				...req.body,
+				userId,
+				image: null,
+				companyName
+			});
+		}
 
 		if (req.file) {
 			try {
@@ -197,8 +252,13 @@ export const EProfileController = async (req, res) => {
 			{ new: true }
 		);
 		try {
-			res.clearCookie("token", {
-			})
+			const token = jwt.sign({
+				email: user.email,
+				role: user.role,
+				isProfileCompleted: user.isProfileCompleted,
+				id: user._id
+			}, JWT_KEY, { expiresIn: "1d" });
+			res.cookie("token", token, { httpOnly: true, sameSite: "lax", secure: false });
 		} catch (error) {
 
 		}

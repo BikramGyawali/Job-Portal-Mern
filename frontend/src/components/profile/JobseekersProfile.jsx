@@ -260,8 +260,7 @@ function JobseekersProfile() {
 					// ignore
 				}
 
-				alert("Profile created successfully. Please login.");
-				dispatch({ type: "LOGOUT" });
+				alert("Profile created successfully.");
 				navigate("/jobseekers", { replace: true });
 			}
 		} else {
@@ -300,7 +299,8 @@ function JobseekersProfile() {
 				step={step}
 				setStep={setStep}
 				totalSteps={totalSteps}
-				addSection={step === 2 ? addExperience : step === 3 ? addEducation : step === 4 ? addDetailSection : undefined} deleteSection={
+				addSection={step === 2 ? addExperience : step === 3 ? addEducation : step === 4 ? addDetailSection : undefined}
+				deleteSection={
 					step === 2
 						? deleteExperience
 						: step === 3

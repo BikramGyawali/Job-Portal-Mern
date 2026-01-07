@@ -18,7 +18,7 @@ dotenv.config();
 const app = express();
 app.use(cors({
 	origin: "http://localhost:5173",
-	methods: ["GET", "POST", "PUT", "DELETE","PATCH"],
+	methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
 	allowedHeaders: ["Content-Type", "Authorization"],
 	credentials: true
 }));
@@ -46,10 +46,13 @@ app.use((req, res) => {
 	res.status(404).json({ status: 0, message: "Page not found" });
 });
 
-app.listen(PORT, () => {
-	console.log(`Serving running at port number ${PORT}`);
+if (process.env.NODE_ENV !== 'test') {
+	app.listen(PORT, () => {
+		console.log(`Serving running at port number ${PORT}`);
+	});
+}
 
-})
+export default app;
 
 
 

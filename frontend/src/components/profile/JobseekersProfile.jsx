@@ -127,10 +127,42 @@ function JobseekersProfile() {
 			return next;
 		});
 	};
+	// Delete current experience
+	const deleteExperience = () => {
+		if (experiences.length <= 1) return; // prevent deleting the last one
+		setExperiences((prev) => {
+			const copy = [...prev];
+			copy.splice(expIndex, 1); // remove current
+			setExpIndex(Math.max(0, expIndex - 1)); // adjust index
+			return copy;
+		});
+	};
+
+	// Delete current education
+	const deleteEducation = () => {
+		if (educationList.length <= 1) return;
+		setEducationList((prev) => {
+			const copy = [...prev];
+			copy.splice(eduIndex, 1);
+			setEduIndex(Math.max(0, eduIndex - 1));
+			return copy;
+		});
+	};
+
+	// Delete current additional details
+	const deleteAddDetails = () => {
+		if (addDetailsList.length <= 1) return;
+		setAddDetailsList((prev) => {
+			const copy = [...prev];
+			copy.splice(addIndex, 1);
+			setAddIndex(Math.max(0, addIndex - 1));
+			return copy;
+		});
+	};
 
 	//  submit  logic
 	const handleSubmit = async (e) => {
-		if(e) e.preventDefault()
+		if (e) e.preventDefault()
 		let targetForm;
 		let targetFields;
 		if (step === 1) {
@@ -268,7 +300,15 @@ function JobseekersProfile() {
 				step={step}
 				setStep={setStep}
 				totalSteps={totalSteps}
-				addSection={step === 2 ? addExperience : step === 3 ? addEducation : step === 4 ? addDetailSection : undefined}
+				addSection={step === 2 ? addExperience : step === 3 ? addEducation : step === 4 ? addDetailSection : undefined} deleteSection={
+					step === 2
+						? deleteExperience
+						: step === 3
+							? deleteEducation
+							: step === 4
+								? deleteAddDetails
+								: undefined
+				}
 				entriesCount={step === 2 ? experiences.length : step === 3 ? educationList.length : step === 4 ? addDetailsList.length : 1}
 				setCurrentEntryIndex={step === 2 ? setExpIndex : step === 3 ? setEduIndex : step === 4 ? setAddIndex : () => { }}  // the callback function is just for profile because it doesnt have multiple entries 
 				currentEntryIndex={step === 2 ? expIndex : step === 3 ? eduIndex : step === 4 ? addIndex : 0}  //for profile there is 0

@@ -33,7 +33,9 @@ export const JProfileController = async (req, res) => {
 		// ensure authenticated user id is present
 		const userId = req.user?.id;
 		if (!userId) return res.status(401).json({ status: 0, message: "Unauthorized: missing user id" });
+
 		const { email, phone } = req.body;
+
 		// ensure there isn't already a profile for this user
 		const existingProfile = await JobseekerProfile.findOne({ userId: userId });
 
@@ -43,15 +45,21 @@ export const JProfileController = async (req, res) => {
 				message: "Jobseeker profile already exists"
 			});
 		}
+
 		if (!email || !validateEmail(email)) return res.status(400).json({ status: 0, message: "Valid email is required" });
-		// check email uniqueness across other profiles (allow same user)
-		const emailExists = await JobseekerProfile.findOne({ email, userId: { $ne: userId } });
+
+		// normalize email for case-insensitive comparison
+		const normalizedEmail = email.trim().toLowerCase();
+		const emailExists = await JobseekerProfile.findOne({ email: { $regex: `^${normalizedEmail}$`, $options: 'i' }, userId: { $ne: userId } });
 		if (emailExists) return res.status(409).json({ status: 0, message: "Email already exists" });
 
 		// check phone uniqueness in profiles (exclude current user)
 		if (phone) {
-			const phoneExists = await JobseekerProfile.findOne({ phone, userId: { $ne: userId } });
+			const sanitizedPhone = phone.replace(/\D/g, "");
+			const phoneExists = await JobseekerProfile.findOne({ phone: sanitizedPhone, userId: { $ne: userId } });
 			if (phoneExists) return res.status(409).json({ status: 0, message: "Phone number already exists" });
+			// ensure the body phone is sanitized before saving
+			req.body.phone = sanitizedPhone;
 		}
 
 		// create profile without image first
@@ -91,11 +99,6 @@ export const JProfileController = async (req, res) => {
 			}
 		}
 
-		// update user email if changed (keep user signed in and return updated user)
-		// if (email && (await User.findById(userId)).email !== email) {
-		// 	await User.findByIdAndUpdate(userId, { email });
-		// }
-
 		const user = await User.findByIdAndUpdate(userId, {
 			isProfileCompleted: true
 		},
@@ -119,6 +122,19 @@ export const JProfileController = async (req, res) => {
 		});
 	} catch (err) {
 		console.error(err);
+		// handle duplicate key errors from indexes
+		if (err && err.code === 11000) {
+			const dupKey = Object.keys(err.keyValue || {})[0];
+			let message = "Duplicate value exists";
+			if (dupKey === 'email') message = 'Email already exists';
+			if (dupKey === 'phone') message = 'Phone number already exists';
+			if (dupKey === 'userId') message = 'Profile for this user already exists';
+			return res.status(409).json({ status: 0, message });
+		}
+		// handle mongoose validation errors
+		if (err && err.name === 'ValidationError') {
+			return res.status(400).json({ status: 0, message: err.message });
+		}
 		res.status(500).json({ status: 0, message: err.message });
 	}
 }
@@ -129,7 +145,7 @@ export const EProfileController = async (req, res) => {
 		// ensure authenticated user id is present
 		const userId = req.user?.id;
 		if (!userId) return res.status(401).json({ status: 0, message: "Unauthorized: missing user id" });
-		const { email, phone } = req.body;
+		let { email, phone } = req.body;
 		const existingProfile = await EmployerProfile.findOne({ userId: userId });
 
 		if (existingProfile) {
@@ -140,21 +156,27 @@ export const EProfileController = async (req, res) => {
 		}
 
 		if (!email || !validateEmail(email)) return res.status(400).json({ status: 0, message: "Valid email is required" });
-		// check email uniqueness across other profiles (allow same user)
-		const emailExists = await EmployerProfile.findOne({ email, userId: { $ne: userId } });
+
+		// normalize email for case-insensitive comparison
+		const normalizedEmail = email.trim().toLowerCase();
+		const emailExists = await EmployerProfile.findOne({ email: { $regex: `^${normalizedEmail}$`, $options: 'i' }, userId: { $ne: userId } });
 		if (emailExists) return res.status(409).json({ status: 0, message: "Email already exists" });
 
 		// check phone uniqueness optionally (exclude current user)
 		if (phone) {
-			const phoneExists = await EmployerProfile.findOne({ phone, userId: { $ne: userId } });
+			const sanitizedPhone = phone.replace(/\D/g, "");
+			const phoneExists = await EmployerProfile.findOne({ phone: sanitizedPhone, userId: { $ne: userId } });
 			if (phoneExists) return res.status(409).json({ status: 0, message: "Phone number already exists" });
+			req.body.phone = sanitizedPhone;
 		}
+
+		const companyName = req.body.companyName || req.body.cname || null;
 
 		const profile = await EmployerProfile.create({
 			...req.body,
 			userId,
 			image: null,
-			companyName: req.body.cname
+			companyName
 		});
 
 		if (req.file) {
@@ -168,11 +190,6 @@ export const EProfileController = async (req, res) => {
 				console.error("Failed to save image", e)
 			}
 		}
-
-		// update user email if changed
-		// if (email && (await User.findById(userId)).email !== email) {
-		// 	await User.findByIdAndUpdate(userId, { email });
-		// }
 
 		const user = await User.findByIdAndUpdate(userId, {
 			isProfileCompleted: true
@@ -194,6 +211,17 @@ export const EProfileController = async (req, res) => {
 		});
 	} catch (err) {
 		console.error(err);
+		if (err && err.code === 11000) {
+			const dupKey = Object.keys(err.keyValue || {})[0];
+			let message = "Duplicate value exists";
+			if (dupKey === 'email') message = 'Email already exists';
+			if (dupKey === 'phone') message = 'Phone number already exists';
+			if (dupKey === 'userId') message = 'Profile for this user already exists';
+			return res.status(409).json({ status: 0, message });
+		}
+		if (err && err.name === 'ValidationError') {
+			return res.status(400).json({ status: 0, message: err.message });
+		}
 		res.status(500).json({ status: 0, message: err.message });
 	}
 };

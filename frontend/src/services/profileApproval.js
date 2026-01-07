@@ -28,14 +28,14 @@ export const getPendingProfilesService = async () => {
 
 //update profile status
 
-export const updateProfileApporvalService = async (profileId) => {
+export const updateProfileApporvalService = async (profileId, status) => {
 	try {
-		const res = await api.patch(`/admin/profile/${profileId}`)
+		const res = await api.patch(`/admin/profile/${profileId}`, { status })
 
 		if (res.data?.status === 1) {
 			return {
 				status: true,
-				profiles: res.data?.profile
+				user: res.data?.user
 			}
 		}
 		else {

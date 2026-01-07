@@ -22,6 +22,8 @@ import {
 import logo from "../assets/image/logo.png";
 
 export function FooterComp() {
+	const currentTime = new Date();
+	const currentYear = currentTime.getFullYear();
 	return (
 		<Footer container className="!bg-gray-900 ">
 			<div className="w-full">
@@ -90,7 +92,7 @@ export function FooterComp() {
 
 				{/* BOTTOM COPYRIGHT + ICONS */}
 				<div className="flex flex-col-reverse items-center justify-between gap-4 sm:flex-row">
-					<FooterCopyright href="#" by="Hamro Job™" year={2025} />
+					<FooterCopyright href="#" by="Hamro Job™" year={currentYear} />
 
 					<div className="flex space-x-6">
 						<FooterIcon href="#" icon={BsFacebook} />

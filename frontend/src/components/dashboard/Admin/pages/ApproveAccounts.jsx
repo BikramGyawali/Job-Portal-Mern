@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import DashTable from '../../../common/DashTable'
 import { DashboardBodyData, DashboardTableHeadData } from '../../../../data/admin/Dashboarddata'
 import { ProfileContext } from '../../../../context/ProfileContext'
+import { updateProfileApporvalService } from '../../../../services/profileApproval'
 
 function ApproveAccounts() {
 
@@ -14,33 +15,56 @@ function ApproveAccounts() {
 
 	useEffect(() => {
 		const storedData = async () => {
-			const transform = await pendingProfile.filter(profile => !profile.isApproved).map((profile, i) => ({
-				"Name": profile.name,
-				"Email": profile.email,
-				"Role": profile.role,
-				Actions: ["view", "approve", "reject"],
-				_id: profile._id,
-				fullData: profile
+			const transform = pendingProfile
+				.filter(profile => profile.approvalStatus !== 'approve')
+				.map((profile, i) => ({
+					"Name": profile.name || profile.email,
+					"Email": profile.email,
+					"Role": profile.role,
+					Actions: ["view", "approve", "reject"],
+					_id: profile._id,
+					fullData: profile
 
-
-
-			}))
+				}))
 			setTransformedProfile(transform);
 
 		}
 		storedData()
-	}, pendingProfile)
+	}, [pendingProfile])
 
 
-	const handleApprove = (row) => {
-		console.log(row);
+	const [message, setMessage] = useState("")
 
+	const handleApprove = async (row) => {
+		if (!window.confirm(`Approve : ${row['Name']}?`)) return
+		try {
+			const result = await updateProfileApporvalService(row._id, 'approve')
+			if (result.status) {
+				setMessage("Profile approved successfully")
+				fetchPendingProfile()
+			} else {
+				setMessage("Failed to approve profile")
+			}
+		} catch (error) {
+			setMessage("Error approving profile")
+		}
 	}
-	const handleReject = (row) => {
-		console.log(row);
-
+	const handleReject = async (row) => {
+		if (!window.confirm(`Reject : ${row['Name']}?`)) return
+		try {
+			const result = await updateProfileApporvalService(row._id, 'reject')
+			if (result.status) {
+				setMessage("Profile rejected")
+				fetchPendingProfile()
+			} else {
+				setMessage("Failed to reject profile")
+			}
+		} catch (error) {
+			setMessage("Error rejecting profile")
+		}
 	}
 	const handleView = (row) => {
+		// optional: open modal with profile data
 		console.log(row);
 
 	}
@@ -52,6 +76,7 @@ function ApproveAccounts() {
 	}
 	return (
 		<div>
+			{message && <div className={`mb-4 p-4 rounded-lg text-center font-semibold ${message.toLowerCase().includes('failed') || message.toLowerCase().includes('error') ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>{message}</div>}
 			<DashTable headData={DashboardTableHeadData} bodyData={transformedProfile} title={`Pending Profile( ${transformedProfile.length})`} actionHandler={actionHandler} />
 		</div>
 	)

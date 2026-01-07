@@ -23,7 +23,7 @@ const signupSchema = new schema({
 	approvalStatus: {
 		type: String,
 		enum: ["approve", "pending", "reject"],
-		default: "approve",
+		default: "pending",
 		lowercase: true
 	}
 })

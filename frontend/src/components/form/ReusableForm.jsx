@@ -191,7 +191,7 @@ function ReusableForm({
 
 			{/* ADD SECTION */}
 			{addSection && (
-				<div className="col-span-2">
+				<div className="col-span-2 flex gap-2">
 					<button
 						type="button"
 						onClick={addSection}
@@ -200,8 +200,18 @@ function ReusableForm({
 						+ Add Another
 					</button>
 
+					{entriesCount > 1 && deleteSection && (
+						<button
+							type="button"
+							onClick={deleteSection}
+							className="bg-red-600 text-white py-2 rounded-xl w-full hover:bg-red-700"
+						>
+							- Delete
+						</button>
+					)}
 				</div>
 			)}
+
 		</form>
 	);
 }

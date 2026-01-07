@@ -36,7 +36,7 @@ const addUserName = async (users) => {
 
 			return {
 				...user,
-				Name: name,
+				name: name,
 				profileData: profile
 			};
 

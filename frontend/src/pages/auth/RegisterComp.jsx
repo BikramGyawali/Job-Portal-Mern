@@ -58,9 +58,9 @@ function RegisterComp() {
 			if (res.status === 1) {
 				// console.log(res);
 				if (role === "employer") {
-					navigate("/employers", { replace: true });
+					navigate("/employer-profile", { replace: true });
 				} else if (role === "jobseeker") {
-					navigate("/jobseekers", { replace: true });
+					navigate("/jobseeker-profile", { replace: true });
 				}
 				// alert(res.message)
 

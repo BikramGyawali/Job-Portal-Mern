@@ -5,7 +5,7 @@ export const contactLoginValidate = (form, role = null) => {
 	let error = {};
 
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	const phoneRegex = /^[0-9]{10}$/;
+	const phoneRegex = /^(97|98|96)[0-9]{8}$/;  // used to take input of neplai phone number only
 	const stringCheck = /^[A-Za-z]+$/;
 	const companyCheck = /^[A-Za-z0-9 .&-]+$/;
 

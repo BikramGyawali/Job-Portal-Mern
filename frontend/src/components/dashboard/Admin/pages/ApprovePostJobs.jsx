@@ -102,7 +102,7 @@ function ApprovePostJobs() {
 			)}
 
 
-			<DashTable
+			<DashTable	
 				headData={JobHeads}
 				bodyData={transformedJobs}
 				title={`Pending Jobs (${transformedJobs.length})`}

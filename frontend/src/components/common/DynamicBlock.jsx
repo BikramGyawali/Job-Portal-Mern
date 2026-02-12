@@ -1,6 +1,6 @@
 import React from "react";
 
-function DynamicBlock({ item }) {
+function DynamicBlock({ item }) {   // call from the info section
 	if (!item) return null; // prevent undefined 
 
 

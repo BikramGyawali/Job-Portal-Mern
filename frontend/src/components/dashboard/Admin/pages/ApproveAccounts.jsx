@@ -77,8 +77,16 @@ function ApproveAccounts() {
 	}
 	return (
 		<div>
-			{message && <div className={`mb-4 p-4 rounded-lg text-center font-semibold ${message.toLowerCase().includes('failed') || message.toLowerCase().includes('error') ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>{message}</div>}
+			{
+				message && 
+				(
+				<div className={`mb-4 p-4 rounded-lg text-center font-semibold ${message.toLowerCase().includes('failed') || message.toLowerCase().includes('error') ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>{message}
+				</div>
+			)}
+
 			<DashTable headData={DashboardTableHeadData} bodyData={transformedProfile} title={`Pending Profile( ${transformedProfile.length})`} actionHandler={actionHandler} />
+
+
 			{viewData && <ViewProfileModal profile={viewData} role={viewData.role} onClose={closeView} />}
 		</div>
 	)

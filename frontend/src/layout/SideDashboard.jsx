@@ -6,7 +6,8 @@ import { HiX } from "react-icons/hi";
 import { ADashboardSideData } from "../data/admin/Dashboarddata";
 import { useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { EDashboardData } from "../data/employers/EDashboardData";
+import { EDashboardData } from "../data/employers/edashboardData";
+
 
 export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 	const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import React from "react";
 import DynamicBlock from "./DynamicBlock";
 
-function InfoSection({ section }) {
+function InfoSection({ section }) {  //call from the  section folder
 	return (
 		<div className="w-full px-5 py-10 bg-gradient-to-b from-gray-100 to-gray-200">
 			<div className="max-w-5xl mx-auto space-y-6">

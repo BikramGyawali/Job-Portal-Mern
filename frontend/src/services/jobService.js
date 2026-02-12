@@ -79,7 +79,7 @@ export const approvedJobsService = async (jobId) => {
 				success: true,
 				jobs: response.data?.job
 			}
-		}
+		}	
 		return {
 			success: false,
 			error: response.data?.message

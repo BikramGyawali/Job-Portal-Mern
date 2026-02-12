@@ -67,7 +67,7 @@ export default function App() {
 
 								{/* for jobseeker dashboard routes (nested under /jobseeker) */}
 								<Route element={<ProtectedRoute allowedRole="jobseeker" />} >
-
+		
 									<Route path="jobseeker/*" element={<DashboardLayout role="Jobseeker" />} >
 										<Route index element={<JobseekerDashboard />} />
 										<Route path="edit-profile" element={<EditProfile />} />

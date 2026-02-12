@@ -13,8 +13,6 @@ import { AuthContext } from '../../context/AuthContext';
 function LoginComp({ LoginData }) {
 	const { dispatch } = useContext(AuthContext)
 	const { title, explain, image, role } = LoginData;
-
-
 	const navigate = useNavigate()
 	const [showPassword, setShowPassword] = useState(false);
 	const [form, setForm] = useState({
@@ -45,7 +43,7 @@ function LoginComp({ LoginData }) {
 		setError(error)
 		if (!valid) return;
 		const res = await loginUser(form, role)
-		// console.log(res);
+		console.log(res);
 
 
 		if (res.status === 1) {

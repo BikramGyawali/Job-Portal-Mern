@@ -178,21 +178,17 @@ function JobseekersProfile() {
 			targetForm = addDetailsList[addIndex] ?? createEmptyEntry(JAddDetails);
 			targetFields = JAddDetails;
 		}
-
 		// validate
 		const { valid, error } = ValidateUtil(targetForm, targetFields);
 		setErrors(error);
 
 		if (!valid) {
-
 			return;
 		}
-
 		if (step < totalSteps) {
 			setStep((s) => s + 1);
 			return;
 		}
-
 		const formData = new FormData();
 
 		// top-level profile fields

@@ -35,11 +35,12 @@ export const loginUser = async (formData, role) => {
 	else throw new Error("Invalid role");
 
 	try {
-
 		const response = await axios.post(url, formData, {
 			withCredentials: true,
 		});
-		return response.data
+		console.log(response);
+		return response.data;
+
 	} catch (error) {
 		if (error.message) {
 			return error.response.data

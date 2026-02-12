@@ -52,7 +52,7 @@ export const ProfileProvider = ({ children }) => {
 		setLoading(true)
 		try {
 			const result = await getPendingProfilesService();
-			if (result.success) {
+			if (result.success) {	
 				setPendingProfile(result.profiles)
 			}
 

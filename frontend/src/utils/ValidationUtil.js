@@ -22,14 +22,14 @@ export const ValidateUtil = (form, fields = []) => {
 
 
 
-		// 1️⃣ Required fields
+		// 1 Required fields
 		if (f.required && !value) {
 			error[f.name] = `${f.label} is required`;
 			valid = false;
 			return; // skip further checks for this field
 		}
 
-		// 2️⃣ Text only validation
+		// 2 Text only validation
 		if ('fname' in form && form.fname?.trim() && !textOnly.test(form.fname)) {
 			error.fname = "First name must be text";
 			valid = false;
@@ -46,19 +46,19 @@ export const ValidateUtil = (form, fields = []) => {
 		}
 
 
-		// 3️⃣ Email validation
+		// 3 Email validation
 		if (f.name === "email" && value && !emailRegex.test(value)) {
 			error[f.name] = "Invalid email format";
 			valid = false;
 		}
 
-		// 4️⃣ Phone validation
+		// 4 Phone validation
 		if (f.name === "phone" && value && !phoneRegex.test(value)) {
 			error[f.name] = "Phone must be 10 digits";
 			valid = false;
 		}
 
-		// 5️⃣ Date validation (DOB or Start Date cannot be in future)
+		// 5 Date validation (DOB or Start Date cannot be in future)
 		if (f.type === "date" && value) {
 			if ((f.name === "dob" || f.name === "sdate") && value > today) {
 				error[f.name] = `${f.label} cannot be in the future`;
@@ -66,7 +66,7 @@ export const ValidateUtil = (form, fields = []) => {
 			}
 		}
 
-		// 6️⃣ Message field
+		// 6 Message field
 		if (f.name === "message") {
 			if (typeof form.message !== "string") {
 				error.message = "Message must be text";
@@ -74,7 +74,7 @@ export const ValidateUtil = (form, fields = []) => {
 			}
 		}
 
-		// 7️⃣ Password validation
+		// 7 Password validation
 		if (f.name === "pass") {
 			if (!value) {
 				error.pass = "Password is required";
@@ -85,7 +85,7 @@ export const ValidateUtil = (form, fields = []) => {
 			}
 		}
 
-		// 8️⃣ Confirm Password validation
+		// 8 Confirm Password validation
 		if (f.name === "cPass") {
 			if (!value) {
 				error.cPass = "Confirm password is required";

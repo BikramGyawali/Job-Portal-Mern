@@ -10,7 +10,6 @@ const initialState = {
 	user: null,
 	isProfileCompleted: false
 }
-
 const authReducer = (state, action) => {
 	switch (action.type) {
 		case "LOGIN":
@@ -20,14 +19,12 @@ const authReducer = (state, action) => {
 				user: action.payload.user,
 				isProfileCompleted: action.payload.isProfileCompleted
 			}
-
 		case "LOGOUT":
 			return initialState;
 		default:
 			return state
 	}
 }
-
 export function AuthProvider({ children }) {
 	const [state, dispatch] = useReducer(authReducer, initialState)
 

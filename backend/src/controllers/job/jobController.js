@@ -1,4 +1,4 @@
-// import { EmployerProfile } from "../../models/employer/EmployerProfile";
+
 import { EmployerProfile } from "../../models/employer/EmployerProfile.js";
 import { PostJob } from "../../models/employer/PostJob.js";
 //helper fucntion for the company name
@@ -64,7 +64,7 @@ export const approvedJob = async (req, res) => {
 		if (jobs.length === 0) {
 			return res.status(404).json({
 				status: 0,
-				message: "No Jobs area avaiable to fetch"
+				message: "No Jobs are avaiable to fetch"
 			})
 		}
 		const jobWithCompany = await addCompanyName(jobs)
@@ -133,7 +133,7 @@ export const approve = async (req, res) => {
 		if (!job) {
 			return res.status(404).json({
 				status: 0,
-				message: "No Jobs area avaiable "
+				message: "No Jobs are avaiable "
 			})
 		}
 		const jobWithCompany = await addCompanyName([job])

@@ -36,7 +36,7 @@ export const loginUser = async (formData, role) => {
 
 	try {
 		const response = await axios.post(url, formData, {
-			withCredentials: true,
+			withCredentials: true, // used to send cookies and http auth with cors.
 		});
 		console.log(response);
 		return response.data;

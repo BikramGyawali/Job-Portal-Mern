@@ -4,7 +4,7 @@ export const ValidateUtil = (form, fields = []) => {
 
 	// Regex patterns
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	const phoneRegex = /^[0-9]{10}$/; // adjust length if needed
+	const phoneRegex = /^(98|97|96)[0-9]{8}$/; // adjust length if needed
 	const textOnly = /^[A-Za-z\s]+$/; // allow letters and spaces
 	const panCardCheck = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
 	const officePhoneCheck = /^\d{2}-\d{7}$/;

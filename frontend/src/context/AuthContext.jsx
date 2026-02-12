@@ -39,7 +39,7 @@ export function AuthProvider({ children }) {
 						payload: {
 							role: res.data.role || res.data.user?.role,
 							user: res.data.user || (res.data.user ? res.data.user : { _id: res.data.user?.id, email: res.data.user?.email }),
-							isProfileCompleted: res.data.isProfileCompleted || res.data.user?.isProfileCompleted,
+							isProfileCompleted: res.data.isProfileCompleted ?? res.data.user?.isProfileCompleted ?? false,
 						},
 					});
 				} else {

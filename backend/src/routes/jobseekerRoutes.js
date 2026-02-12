@@ -9,6 +9,7 @@ const jobseekerroutes = Router();
 jobseekerroutes.post("/signup", (req, res) => Signup(req, res, "jobseeker"));
 jobseekerroutes.post("/login", (req, res,) => LoginController(req, res, "jobseeker"))
 jobseekerroutes.post("/profile", verifyAuth, uploadImage.single('image'), JProfileController)
+// the verufy auth hold the payload of user in req.user and form this we are getting the id also 
 jobseekerroutes.get("/profile", verifyAuth, getJProfile)
 // cv: upload and download
 // jobseekerroutes.post("/profile/cv", verifyAuth, uploadCv.single('cv'), uploadJCV)

@@ -184,9 +184,9 @@ function ReusableForm({
 						? 'bg-gray-400 cursor-not-allowed'  //  Disabled style
 						: 'bg-blue-600 hover:bg-blue-700'
 						}`}
-					disabled={isLoading}  //  Disable while loading
+					disabled={isLoading}
 				>
-					{submitButtonText}  {/*  Shows "Posting..." */}
+					{submitButtonText}
 				</button>
 			</div>
 

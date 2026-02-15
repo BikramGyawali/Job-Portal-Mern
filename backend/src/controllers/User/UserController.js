@@ -26,7 +26,24 @@ export const Signup = async (req, res, role) => {
 
 		const hashedPassword = await hash(pass, 10);
 		const newUser = await User.create({ email, password: hashedPassword, role, isProfileCompleted: false });
+		const token = jwt.sign(
+			{
+				email: newUser.email,
+				role: newUser.role,
+				isProfileCompleted: newUser.isProfileCompleted,
+				id: newUser._id
+			},
+			JWT_KEY,
+			{ expiresIn: "1d" }
+		);
 
+
+		res.cookie("token", token, {
+			httpOnly: true,
+			sameSite: "lax",
+			secure: false,
+			maxAge: 24 * 60 * 60 * 1000
+		});
 		return res.status(200).json({
 			status: 1,
 			message: `Signup successful for ${role}`,

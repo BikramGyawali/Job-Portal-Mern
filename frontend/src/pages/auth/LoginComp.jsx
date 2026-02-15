@@ -80,7 +80,7 @@ function LoginComp({ LoginData }) {
 			navigate(`/${res.role}`, { replace: true });
 		}
 
-		//  alert(res.message);
+		alert(res.message);
 
 
 		setForm({

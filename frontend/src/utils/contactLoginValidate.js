@@ -42,9 +42,15 @@ export const contactLoginValidate = (form, role = null) => {
 		}
 	}
 	// Phone
-	if ('phone' in form && form.phone?.trim() && !phoneRegex.test(form.phone)) {
-		error.phone = "Phone must be 10 digits";
-		valid = false;
+	if ('phone' in form && form.phone?.trim()) {
+		if (phone.length !== 10) {
+			error.phone = "Phone must be 10 digits"
+			valid = false;
+		}
+		else if (!phoneRegex.test(form.phone)) {
+			error.phone = "Phone must start form 97 or 98";
+			valid = false;
+		}
 	}
 
 	//message

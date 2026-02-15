@@ -53,9 +53,17 @@ export const ValidateUtil = (form, fields = []) => {
 		}
 
 		// 4 Phone validation
-		if (f.name === "phone" && value && !phoneRegex.test(value)) {
-			error[f.name] = "Phone must be 10 digits";
-			valid = false;
+		if (f.name === "phone" && value) {
+
+			if (value.length !== 10) {
+				error[f.name] = "Phone must be exactly 10 digits";
+				valid = false;
+			}
+
+			else if (!phoneRegex.test(value)) {
+				error[f.name] = "Phone must start with 97 or 98";
+				valid = false;
+			}
 		}
 
 		// 5 Date validation (DOB or Start Date cannot be in future)

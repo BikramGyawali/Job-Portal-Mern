@@ -33,14 +33,23 @@ export function AuthProvider({ children }) {
 			try {
 				const res = await api.get("/auth/me");
 				if (res.data?.status === 1) {
+
 					// normalize payload similar to login response
+					// dispatch({
+					// 	type: "LOGIN",
+					// 	payload: {
+					// 		role: res.data.role || res.data.user?.role,
+					// 		user: res.data.user || (res.data.user ? res.data.user : { _id: res.data.user?.id, email: res.data.user?.email }),
+					// 		isProfileCompleted: res.data.isProfileCompleted ?? res.data.user?.isProfileCompleted ?? false,
+					// 	},
+					const user = res.data.user ?? null;
 					dispatch({
 						type: "LOGIN",
 						payload: {
-							role: res.data.role || res.data.user?.role,
-							user: res.data.user || (res.data.user ? res.data.user : { _id: res.data.user?.id, email: res.data.user?.email }),
-							isProfileCompleted: res.data.isProfileCompleted ?? res.data.user?.isProfileCompleted ?? false,
-						},
+							role: user?.role || res.data.role,
+							user: user || null,
+							isProfileCompleted: res.data.isProfileCompleted ?? user?.isProfileCompleted ?? false
+						}
 					});
 				} else {
 					dispatch({ type: "LOGOUT" });

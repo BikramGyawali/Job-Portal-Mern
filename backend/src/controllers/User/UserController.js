@@ -7,9 +7,9 @@ import { configDotenv } from "dotenv";
 
 configDotenv();
 
-const app = express();
-app.use(express.json());
-app.use(cookieParser());
+// const app = express();
+// app.use(express.json());
+// app.use(cookieParser());
 
 const JWT_KEY = process.env.JWT_KEY;
 
@@ -57,7 +57,7 @@ export const LoginController = async (req, res, type) => {
 			return res.status(404).json({ status: 0, message: "User not found" });
 		}
 
-		if (user.approvalStatus !== "approve") {
+		if (type !== "admin" && user.approvalStatus !== "approve") {
 			if (user.approvalStatus == "pending") {
 				return res.status(403).json({ status: 0, message: "Your Profile is Under Admin View" });
 			}
@@ -83,7 +83,8 @@ export const LoginController = async (req, res, type) => {
 		res.cookie("token", token, {
 			httpOnly: true,
 			sameSite: "lax",
-			secure: false
+			secure: false,
+			maxAge: 24 * 60 * 60 * 1000
 		})
 		res.status(200).json({
 			status: 1,

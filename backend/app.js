@@ -16,15 +16,15 @@ import adminRoutes from "./src/routes/adminRoute.js";
 
 dotenv.config();
 const app = express();
+app.use(express.json());
+app.use(cookieParser());
 app.use(cors({
 	origin: "http://localhost:5173",
-	methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-	allowedHeaders: ["Content-Type", "Authorization"],
 	credentials: true
 }));
-app.use(express.json());
+
+// app.options("*", cors());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
 const PORT = process.env.PORT || 3000;
 
 connectDB();

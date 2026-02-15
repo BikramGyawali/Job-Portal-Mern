@@ -46,25 +46,25 @@ function LoginComp({ LoginData }) {
 		console.log(res);
 
 
-		// 		if (res.status === 1) {
-		// 			// update local auth state so ProtectedRoute works without reload
-		// 			dispatch({
-		// 				type: "LOGIN",
-		// 				payload: {
-		// 					role: res.role,
-		// 					user: res.user,
-		// 					isProfileCompleted: res.isProfileCompleted,
-		// 				},
-		// 			});
-		// // user route to profile page if the profile is not completed
-		// 			if (!res.isProfileCompleted) {
-		// 				navigate(`/${res.role}-profile`, { replace: true });
-		// 			} else {
-		// 				navigate(`/${res.role}`, { replace: true });
-		// 			}
-		// 		} else {
-		// 			alert(res.message)
-		// 		}
+		// if (res.status === 1) {
+		// 	// update local auth state so ProtectedRoute works without reload
+		// 	dispatch({
+		// 		type: "LOGIN",
+		// 		payload: {
+		// 			role: res.role,
+		// 			user: res.user,
+		// 			isProfileCompleted: res.isProfileCompleted,
+		// 		},
+		// 	});
+		// 	// user route to profile page if the profile is not completed
+		// 	if (!res.isProfileCompleted) {
+		// 		navigate(`/${res.role}-profile`, { replace: true });
+		// 	} else {
+		// 		navigate(`/${res.role}`, { replace: true });
+		// 	}
+		// } else {
+		// 	alert(res.message)
+		// }
 
 		if (res.status === 1) {
 			dispatch({
@@ -76,11 +76,11 @@ function LoginComp({ LoginData }) {
 				},
 			});
 
-			// always redirect to dashboard route
+			// always redirect to dashboard Route
 			navigate(`/${res.role}`, { replace: true });
 		}
 
-		console.log(res.message);
+		//  alert(res.message);
 
 
 		setForm({

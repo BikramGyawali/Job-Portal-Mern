@@ -32,6 +32,7 @@ function ApproveAccounts() {
 		}
 		storedData()
 	}, [pendingProfile])
+	// console.log(transformedProfile);
 
 
 	const [message, setMessage] = useState("")
@@ -68,6 +69,8 @@ function ApproveAccounts() {
 	const handleView = (row) => {
 		setViewData(row.fullData)
 	}
+	// console.log(viewData);
+
 	const closeView = () => setViewData(null)
 	const actionHandler = {
 		approve: handleApprove,
@@ -78,11 +81,11 @@ function ApproveAccounts() {
 	return (
 		<div>
 			{
-				message && 
+				message &&
 				(
-				<div className={`mb-4 p-4 rounded-lg text-center font-semibold ${message.toLowerCase().includes('failed') || message.toLowerCase().includes('error') ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>{message}
-				</div>
-			)}
+					<div className={`mb-4 p-4 rounded-lg text-center font-semibold ${message.toLowerCase().includes('failed') || message.toLowerCase().includes('error') ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>{message}
+					</div>
+				)}
 
 			<DashTable headData={DashboardTableHeadData} bodyData={transformedProfile} title={`Pending Profile( ${transformedProfile.length})`} actionHandler={actionHandler} />
 

@@ -2,9 +2,11 @@ import React from 'react'
 import { ProfileToCV } from '../../services/ProfileToCV'
 import jsPDF from 'jspdf'
 import html2canvas from 'html2canvas'
+import ResumeRender from '../dashboard/Jobseeker/ResumeRender';
 
 export function ViewProfileModal({ profile, role, onClose }) {
 	if (!profile) return null;
+	console.log(profile, role);
 
 	const sections = role === 'jobseeker' ? ProfileToCV(profile?.profileData || profile) : null;
 
@@ -52,7 +54,7 @@ export function ViewProfileModal({ profile, role, onClose }) {
 	return (
 		<div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
 			<div className="bg-white rounded-xl w-auto max-h-[80vh] overflow-y-auto p-6 shadow-lg">
-				<h2 className="text-xl font-semibold mb-4 text-center">{role === 'employer' ? (profile.profileData?.companyName || profile.companyName || profile.email) : (profile.profileData?.fname ? `${profile.profileData.fname} ${profile.profileData.mname || ''} ${profile.profileData.sname || ''}`.trim() : profile.email)}</h2>
+				<h2 className="text-xl font-semibold mb-4 text-center">{role === 'employer' ? (profile.profileData?.companyName || profile.companyName || profile.email) : null}</h2>
 
 				{role === 'employer' ? (
 					<div className="grid grid-cols-2 gap-3 text-sm">
@@ -64,19 +66,7 @@ export function ViewProfileModal({ profile, role, onClose }) {
 					</div>
 				) : (
 					<div>
-						{sections && sections.map((sec, i) => (
-							<div key={i} className="mb-3">
-								<h4 className="font-semibold">{sec.section}</h4>
-								{sec.type === 'header' && sec.data && (
-									<div>
-										{sec.data.name && <p><strong>Name:</strong> {sec.data.name}</p>}
-										{sec.data.email && <p><strong>Email:</strong> {sec.data.email}</p>}
-										{sec.data.contact && <p><strong>Contact:</strong> {sec.data.contact}</p>}
-									</div>
-								)}
-								{sec.type === 'text' && <p>{sec.data}</p>}
-							</div>
-						))}
+						<ResumeRender sections={sections} />
 						<button className="mt-4 px-4 py-2 bg-blue-600 text-white rounded" onClick={handleDownload}>Download Resume</button>
 					</div>
 				)}

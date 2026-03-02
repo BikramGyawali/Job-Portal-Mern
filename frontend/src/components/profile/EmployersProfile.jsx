@@ -77,6 +77,9 @@ function EmployersProfile() {
 			alert("Profile created successfully.");
 			navigate("/employers", { replace: true });
 		}
+		else {
+			alert(response?.message || "Failed to create profile");
+		}
 	}
 
 	//for the usercontext

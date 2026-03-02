@@ -6,7 +6,6 @@ import { updateProfileApporvalService } from '../../../../services/profileApprov
 import { ViewProfileModal } from '../../../common/ViewProfileModal'
 
 function ApproveAccounts() {
-
 	const { fetchPendingProfile, pendingProfile } = useContext(ProfileContext)
 	const [transformedProfile, setTransformedProfile] = useState([])
 

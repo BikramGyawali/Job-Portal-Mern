@@ -4,6 +4,7 @@ import { JobData, JobHeads } from '../../../../data/admin/Dashboarddata'
 import { JobPostContext } from '../../../../context/JobPostContext'
 import { approvedJobsService, rejectJobsService } from '../../../../services/jobService'
 import { ViewJobModal } from '../../../common/ViewModel'
+import JobDetails from '../../../common/JobDetails'
 
 function ApprovePostJobs() {
 	const { pendingJobs, fetchPendingJobs } = useContext(JobPostContext)
@@ -102,7 +103,7 @@ function ApprovePostJobs() {
 			)}
 
 
-			<DashTable	
+			<DashTable
 				headData={JobHeads}
 				bodyData={transformedJobs}
 				title={`Pending Jobs (${transformedJobs.length})`}
@@ -110,11 +111,20 @@ function ApprovePostJobs() {
 				isLoading={loading}
 
 			/>
-			{viewJob && (
+			{/* {viewJob && (
 				<ViewJobModal
 					job={viewJob}
 					onClose={() => setViewJob(null)}
 				/>
+			)} */}
+			{viewJob && (
+
+				<JobDetails
+					job={viewJob}
+					showClose={true}
+					onClose={() => setViewJob(null)}
+				/>
+
 			)}
 		</div>
 	)

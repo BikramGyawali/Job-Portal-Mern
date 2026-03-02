@@ -1,0 +1,107 @@
+import React from "react";
+// import logo from "../../../../assets/image/logo.png";
+
+// import ButtonComp from "../../../common/ButtonComp";
+import { CreateJobsData } from "../../data/employers/DashboardData";
+import ButtonComp from "./ButtonComp";
+
+function JobDetails({
+	job,
+	showApply = false,
+	showClose = false,
+	onApply,
+	onClose
+}) {
+
+
+	if (!job) return null;
+
+	return (
+		< div className="fixed inset-0  flex items-center justify-end z-50 p-4">
+			<div className="bg-white rounded-2xl max-h-[90vh] overflow-y-auto w-full max-w-[60rem] ">
+
+				<div className="bg-white shadow-xl rounded-2xl p-8 max-w-6xl mx-auto flex flex-col gap-6">
+
+					{/* Company Header */}
+
+					<div className="border-b pb-4">
+						<h2 className="text-3xl font-bold text-gray-900">
+							Company Name:		{job.companyName || "Company Name"}
+						</h2>
+						<h3 className="text-gray-600 mt-1">
+							Hiring Now
+						</h3>
+					</div>
+
+					{/* Job Title */}
+					<h1 className="text-4xl font-bold tracking-wide text-gray-900">
+						{job.jobTitle}
+					</h1>
+
+					{/* Job Info Grid */}
+					<div className="border-t pt-6 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
+						{CreateJobsData.map((field, i) => {
+							const value = job[field.name];
+
+							if (!value || value.length === 0) return null;
+							if (field.label == "Job Specification" || field.label == "Job Description") return null;
+							return (
+								<React.Fragment key={i}>
+									<p className="font-semibold text-gray-700">
+										{field.label}
+									</p>
+									<p className="text-gray-900">
+										{Array.isArray(value)
+											? value.join(", ")
+											: value}
+									</p>
+								</React.Fragment>
+							);
+						})}
+					</div>
+
+					{/* Description Section */}
+					{job.jobDescription && (
+						<div className="border-t pt-6">
+							<h3 className="text-2xl font-semibold mb-3">
+								Job Description
+							</h3>
+							<p className="text-gray-700 leading-relaxed text-justify">
+								{job.jobDescription}
+							</p>
+						</div>
+					)}
+
+					{job.jobSpecification && (
+						<div className="border-t pt-6">
+							<h3 className="text-2xl font-semibold mb-3">
+								Job Specification
+							</h3>
+							<p className="text-gray-700 leading-relaxed text-justify">
+								{job.jobSpecification}
+							</p>
+						</div>
+					)}
+
+					{/* Buttons */}
+					<div className="pt-4 w-fit">
+						{showApply && (
+							<ButtonComp name="Apply Job" click={onApply} />
+						)}
+
+						{showClose && (
+							<button
+								onClick={onClose}
+								className="px-5 py-2 bg-gray-600 text-white rounded-xl"
+							>
+								Close
+							</button>
+						)}
+					</div>
+				</div>
+			</div>
+		// </div>
+	);
+}
+
+export default JobDetails;

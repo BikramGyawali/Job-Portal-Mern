@@ -36,31 +36,33 @@ function JobDetails({
 						</h3>
 					</div>
 
-					{/* Job Title */}
+				
 					<h1 className="text-4xl font-bold tracking-wide text-gray-900">
 						{job.jobTitle}
 					</h1>
 
-					{/* Job Info Grid */}
 					<div className="border-t pt-6 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4">
 						{CreateJobsData.map((field, i) => {
 							const value = job[field.name];
-							// console.log();
+							let displayValue = value;
+							
 
 
-							if (!value || value.length === 0) return null;
+							if (value === undefined || value === null || value === "") return null;
 							if (field.label == "Job Specification" || field.label == "Job Description") return null;
-							if (field.label == "Post Date") return formatDate(job[field.type === "date"])
-
+							if (field.type === "date") {
+								displayValue = formatDate(value)
+							}
+							if (Array.isArray(value)) {
+								displayValue = value.join(',')
+							}
 							return (
 								<React.Fragment key={i}>
 									<p className="font-semibold text-gray-700">
 										{field.label}
 									</p>
 									<p className="text-gray-900">
-										{Array.isArray(value)
-											? value.join(", ")
-											: value}
+										{displayValue}
 									</p>
 								</React.Fragment>
 							);

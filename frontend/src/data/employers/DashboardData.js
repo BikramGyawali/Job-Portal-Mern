@@ -37,26 +37,27 @@ export const DashboardTableBody = [
 export const MyJobsTableHead = ["S.N",
 	"Job Title",
 	"Posted at",
-	"Expires in",
-	"Status",
-	"Views",
+	// "Expires in",
+	// "Views",
 	"Applicants",
-	"Pending",
-	"In Review",
-	"Processed",
+	"Status",
+
+	// "Pending",
+	// "In Review",
+	// "Processed",
 	"Actions"]
 
 export const MyJobsTableBody = [{
 	"S.N": 1,
 	"Job Title": "Frontend Developer",
 	"Posted at": "2025-01-12",
-	"Expires in": "5 days",
-	"Status": "Active",
-	"Views": 120,
+	// "Expires in": "5 days",
+	// "Views": 120,
 	"Applicants": 18,
-	"Pending": 5,
-	"In Review": 8,
-	"Processed": 5,
+	// "Pending": 5,
+	"Status": "Active",
+	// "In Review": 8,
+	// "Processed": 5,
 	"Actions": ["edit", "delete"]
 }]
 

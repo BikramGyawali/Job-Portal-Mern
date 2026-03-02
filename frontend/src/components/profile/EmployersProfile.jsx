@@ -60,55 +60,23 @@ function EmployersProfile() {
 		const response = await Profile(formData, "employer");
 		console.log(response.message);
 
-	// 	if (response?.status === 1) {
 
-	// 		setGlobalProfile(response.profile);
-	// 		try {
-	// 			// const me = await api.get('/auth/me');
-	// 			// if (me.data?.status === 1) {
-	// 			// 	dispatch({
-	// 			// 		type: "LOGIN", payload: {
-	// 			// 			role: me.data.role || me.data.user?.role,
-	// 			// 			user: me.data.user || me.data.user,
-	// 			// 			isProfileCompleted: me.data.isProfileCompleted || true
-	// 			// 		}
-	// 			// 	})
-	// 			// }
-	// 			dispatch({
-	// 				type: "LOGIN",
-	// 				payload: {
-	// 					role: response.user.role,
-	// 					user: response.user,
-	// 					isProfileCompleted: true
-	// 				}
-	// 			});
-	// 		} catch (e) {
-	// 			console.log(e);
+		if (response?.status === 1) {
 
-	// 		}
+			setGlobalProfile(response.profile);
 
-	// 		alert("Profile created successfully.");
-	// 		navigate("/employers", { replace: true });
+			dispatch({
+				type: "LOGIN",
+				payload: {
+					role: response.user.role,
+					user: response.user,
+					isProfileCompleted: true
+				}
+			});
 
-	// 	} else {
-	// 		alert(response?.message || "Failed to create profile");
-	// 	}
-	if (response?.status === 1) {
-
-  setGlobalProfile(response.profile);
-
-  dispatch({
-    type: "LOGIN",
-    payload: {
-      role: response.user.role,
-      user: response.user,
-      isProfileCompleted: true
-    }
-  });
-
-  alert("Profile created successfully.");
-  navigate("/employers", { replace: true });
-}
+			alert("Profile created successfully.");
+			navigate("/employers", { replace: true });
+		}
 	}
 
 	//for the usercontext

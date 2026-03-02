@@ -105,6 +105,10 @@ function JobseekersProfile() {
 
 	// add another entry functions 
 	const addExperience = () => {
+		const lastExperience = experiences[experiences.length - 1];
+		const { valid, error } = ValidateUtil(lastExperience, Experience);
+		setErrors(error);
+		if (!valid) return;
 		setExperiences((prev) => {
 			const next = [...prev, createEmptyEntry(Experience)];
 			setExpIndex(next.length - 1);  //this help to create a new entry
@@ -113,6 +117,10 @@ function JobseekersProfile() {
 	};
 
 	const addEducation = () => {
+		const lastEducation = educationList[educationList.length - 1];
+		const { valid, error } = ValidateUtil(lastEducation, Education)
+		setErrors(error);
+		if (!valid) return;
 		setEducationList((prev) => {
 			const next = [...prev, createEmptyEntry(Education)];
 			setEduIndex(next.length - 1);
@@ -121,6 +129,10 @@ function JobseekersProfile() {
 	};
 
 	const addDetailSection = () => {
+		const lastAddDetail = addDetailsList[addDetailsList.length - 1];
+		const { valid, error } = ValidateUtil(lastAddDetail, JAddDetails);
+		setErrors(error);
+		if (!valid) return;
 		setAddDetailsList((prev) => {
 			const next = [...prev, createEmptyEntry(JAddDetails)];
 			setAddIndex(next.length - 1);
@@ -236,34 +248,10 @@ function JobseekersProfile() {
 
 		const response = await Profile(formData, "jobseeker");
 
-		// if (response?.status === 1) {
-		// 	if (state?.isAuth) {
-		// 		// update profile in context for immediate UI update
-		// 		setGlobalProfile(response.profile);
-		// 		// refresh auth info (in case email/flags changed)
-		// 		try {
-		// 			const me = await api.get('/auth/me');
-		// 			if (me.data?.status === 1) {
-		// 				dispatch({
-		// 					type: "LOGIN", payload: {
-		// 						role: me.data.role || me.data.user?.role,
-		// 						user: me.data.user || me.data.user,
-		// 						isProfileCompleted: me.data.isProfileCompleted || true
-		// 					}
-		// 				})
-		// 			}
-		// 		} catch (e) {
-		// 			// ignore
-		// 		}
-
-		// 		alert("Profile created successfully.");
-		// 		navigate("/jobseekers", { replace: true });
-		// 	}
-		// } else {
-		// 	alert(response?.message || "Failed to create profile");
-		// };
+		
+	
 		if (response?.status === 1) {
-
+		
 			// update profile context
 			setGlobalProfile(response.profile);
 
@@ -279,6 +267,8 @@ function JobseekersProfile() {
 
 			alert("Profile created successfully.");
 			navigate("/jobseekers", { replace: true });
+		} else {
+			alert(response?.message || "Failed to create profile");
 		}
 
 

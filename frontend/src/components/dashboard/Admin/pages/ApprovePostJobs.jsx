@@ -3,7 +3,7 @@ import DashTable from '../../../common/DashTable'
 import { JobData, JobHeads } from '../../../../data/admin/Dashboarddata'
 import { JobPostContext } from '../../../../context/JobPostContext'
 import { approvedJobsService, rejectJobsService } from '../../../../services/jobService'
-import { ViewJobModal } from '../../../common/ViewModel'
+
 import JobDetails from '../../../common/JobDetails'
 
 function ApprovePostJobs() {
@@ -19,7 +19,7 @@ function ApprovePostJobs() {
 	useEffect(() => {
 		const storeData = async () => {
 			const transformed = await pendingJobs.filter(job => !job.isApproved).map((job, index) => ({
-				// "S.N": index + 1,
+		
 				"Company Name": job.companyName,
 				"Job Title": job.jobTitle,
 				"Experience": job.experience,
@@ -74,7 +74,7 @@ function ApprovePostJobs() {
 	}
 	const handleView = (row) => {
 		setViewJob(row.fullData)
-		// console.log(row);
+	
 
 
 	}
@@ -111,12 +111,7 @@ function ApprovePostJobs() {
 				isLoading={loading}
 
 			/>
-			{/* {viewJob && (
-				<ViewJobModal
-					job={viewJob}
-					onClose={() => setViewJob(null)}
-				/>
-			)} */}
+		
 			{viewJob && (
 
 				<JobDetails

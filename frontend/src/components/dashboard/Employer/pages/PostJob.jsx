@@ -39,24 +39,15 @@ function PostJob() {
 	// 	}
 	// }
 	const handleChange = (e) => {
-		const { name, value, type, multiple, options } = e.target;
+		const { name, value } = e.target;
 
-		if (multiple) {
-			const selectedValues = Array.from(options)
-				.filter(option => option.selected)
-				.map(option => option.value);
 
-			setJob(prev => ({
-				...prev,
-				[name]: selectedValues
-			}));
-		} else {
-			setJob(prev => ({
-				...prev,
-				[name]: value
-			}));
-		}
-	};
+		setJob(prev => ({
+			...prev,
+			[name]: value
+		}));
+	}
+
 
 	const handleSubmit = async (e) => {
 		if (e) e.preventDefault()

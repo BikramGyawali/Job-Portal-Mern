@@ -66,10 +66,10 @@ function ReusableForm({
 						{field.label} {field.required && "*"}
 					</label>
 
-					{/* FILE INPUT */}
+				
 					{field.type === "select" ? (
 						field.multiple ? (
-							// 🔹 MULTI SELECT (react-select)
+						
 							<Select
 								isMulti
 								name={field.name}
@@ -81,7 +81,8 @@ function ReusableForm({
 									value: val,
 									label: val
 								}))}
-								onChange={(selectedOptions) => {
+								onChange={
+									(selectedOptions) => {
 									const values = selectedOptions
 										? selectedOptions.map(option => option.value)
 										: [];
@@ -97,7 +98,7 @@ function ReusableForm({
 								classNamePrefix="select"
 							/>
 						) : (
-							// 🔹 SINGLE SELECT (react-select)
+							
 							<Select
 								name={field.name}
 								options={field.options?.map(opt => ({

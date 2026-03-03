@@ -1,5 +1,5 @@
 export const JAddDetails = [
-	{ label: "Skills", name: "skills", type: "tags", placeholder: "Add skills separated by comma" },
+	{ label: "Skills", name: "skills", type: "tags", placeholder: "React,Accounting,Fullstack" },
 	{ label: "Language", name: "language", type: "text", placeholder: "Nepali" },
 	{ label: "Reading", name: "languageReading", type: "select", options: ["Poor", "Average", "Good", "Excellent"] },
 	{ label: "Writing", name: "languageWriting", type: "select", options: ["Poor", "Average", "Good", "Excellent"] },

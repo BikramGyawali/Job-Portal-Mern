@@ -14,18 +14,49 @@ function PostJob() {
 		fields.reduce((acc, f) => {
 			if (f.type === "checkbox") acc[f.name] = false;
 			else if (f.type === "file") acc[f.name] = null;
+			else if (f.type === "select" && f.multiple) acc[f.name] = [];
 			else acc[f.name] = "";
 			return acc;
 		}, {});
 	const [job, setJob] = useState(createEmptyEntry(CreateJobsData))
 	const [error, setError] = useState({});
+	// const handleChange = (e) => {
+	// 	const { name, value, multiple, options } = e.target;
+	// 	if (multiple) {
+	// 		const selectedValue = Array.from(options).filter(opt => opt.selected).map(opt => opt.value)
+
+	// 		setJob((old) => ({
+	// 			...old,
+	// 			[name]: selectedValue
+	// 		}))
+	// 	}
+	// 	else {
+
+	// 		setJob((old) => ({
+	// 			...old,
+	// 			[name]: value
+	// 		}))
+	// 	}
+	// }
 	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setJob((old) => ({
-			...old,
-			[name]: value
-		}))
-	}
+		const { name, value, type, multiple, options } = e.target;
+
+		if (multiple) {
+			const selectedValues = Array.from(options)
+				.filter(option => option.selected)
+				.map(option => option.value);
+
+			setJob(prev => ({
+				...prev,
+				[name]: selectedValues
+			}));
+		} else {
+			setJob(prev => ({
+				...prev,
+				[name]: value
+			}));
+		}
+	};
 
 	const handleSubmit = async (e) => {
 		if (e) e.preventDefault()

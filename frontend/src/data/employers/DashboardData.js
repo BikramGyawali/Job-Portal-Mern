@@ -311,6 +311,7 @@ export const CreateJobsData = [
 		type: "select",
 		required: false,
 		multiple: true,
+		// size:4,
 		options: [
 			"Communication",
 			"Leadership",

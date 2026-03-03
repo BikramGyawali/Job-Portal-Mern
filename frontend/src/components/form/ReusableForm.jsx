@@ -1,5 +1,5 @@
 import React from "react";
-
+import Select from 'react-select'
 function ReusableForm({
 	form,
 	errors,
@@ -67,31 +67,60 @@ function ReusableForm({
 					</label>
 
 					{/* FILE INPUT */}
-					{field.type === "file" ? (
-						<input
-							type="file"
-							name={field.name}
-							placeholder={field.placeholder}
-							onChange={onChange}
-							className="p-5 border rounded-xl"
-						/>
+					{field.type === "select" ? (
+						field.multiple ? (
+							// 🔹 MULTI SELECT (react-select)
+							<Select
+								isMulti
+								name={field.name}
+								options={field.options?.map(opt => ({
+									value: opt,
+									label: opt
+								}))}
+								value={(form[field.name] || []).map(val => ({
+									value: val,
+									label: val
+								}))}
+								onChange={(selectedOptions) => {
+									const values = selectedOptions
+										? selectedOptions.map(option => option.value)
+										: [];
 
-					) : field.type === "select" ? (
-						<select
-							name={field.name}
-							value={form[field.name] !== undefined ? form[field.name] : ""}
-
-							onChange={onChange}
-							className="p-2 border rounded-xl"
-						>
-							<option value="">-- select --</option>
-							{field.options?.map((opt, idx) => (
-								<option key={idx} value={opt} className="  bg-white !hover:bg-red-800">
-									{opt}
-								</option>
-							))}
-						</select>
-
+									onChange({
+										target: {
+											name: field.name,
+											value: values
+										}
+									});
+								}}
+								className="basic-multi-select"
+								classNamePrefix="select"
+							/>
+						) : (
+							// 🔹 SINGLE SELECT (react-select)
+							<Select
+								name={field.name}
+								options={field.options?.map(opt => ({
+									value: opt,
+									label: opt
+								}))}
+								value={
+									form[field.name]
+										? { value: form[field.name], label: form[field.name] }
+										: null
+								}
+								onChange={(selectedOption) =>
+									onChange({
+										target: {
+											name: field.name,
+											value: selectedOption ? selectedOption.value : ""
+										}
+									})
+								}
+								className="basic-single-select"
+								classNamePrefix="select"
+							/>
+						)
 					) : field.type === "textarea" ? (
 						<textarea
 							name={field.name}
@@ -158,7 +187,8 @@ function ReusableForm({
 						<p className="text-red-600 text-sm">{errors[field.name]}</p>
 					)}
 				</div>
-			))}
+			))
+			}
 
 			{/* BUTTONS */}
 			<div className="col-span-2 flex gap-5">
@@ -191,29 +221,31 @@ function ReusableForm({
 			</div>
 
 			{/* ADD SECTION */}
-			{addSection && (
-				<div className="col-span-2 flex gap-2">
-					<button
-						type="button"
-						onClick={addSection}
-						className="bg-green-600 text-white py-2 rounded-xl w-full hover:bg-green-700"
-					>
-						+ Add Another
-					</button>
-
-					{entriesCount > 1 && deleteSection && (
+			{
+				addSection && (
+					<div className="col-span-2 flex gap-2">
 						<button
 							type="button"
-							onClick={deleteSection}
-							className="bg-red-600 text-white py-2 rounded-xl w-full hover:bg-red-700"
+							onClick={addSection}
+							className="bg-green-600 text-white py-2 rounded-xl w-full hover:bg-green-700"
 						>
-							- Delete
+							+ Add Another
 						</button>
-					)}
-				</div>
-			)}
 
-		</form>
+						{entriesCount > 1 && deleteSection && (
+							<button
+								type="button"
+								onClick={deleteSection}
+								className="bg-red-600 text-white py-2 rounded-xl w-full hover:bg-red-700"
+							>
+								- Delete
+							</button>
+						)}
+					</div>
+				)
+			}
+
+		</form >
 	);
 }
 

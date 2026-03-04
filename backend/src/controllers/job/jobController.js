@@ -31,7 +31,7 @@ export const PostJobController = async (req, res) => {
 		const jobCreate = await PostJob.create({
 			...req.body,
 			userId,
-			isApproved: false
+			// isApproved: false
 		})
 
 		return res.status(200).json({
@@ -62,7 +62,7 @@ export const PostJobController = async (req, res) => {
 
 export const approvedJob = async (req, res) => {
 	try {
-		const jobs = await PostJob.find({ isApproved: true }).populate('userId', 'email role').sort({ approvalDate: -1 }).limit(12).lean() //using the useid i will get the email and role
+		const jobs = await PostJob.find({ status: "approved" }).populate('userId', 'email role').sort({ approvalDate: -1 }).limit(12).lean() //using the useid i will get the email and role
 		if (jobs.length === 0) {
 			return res.status(404).json({
 				status: 0,
@@ -93,7 +93,7 @@ export const approvedJob = async (req, res) => {
 
 export const pendingJob = async (req, res) => {
 	try {
-		const jobs = await PostJob.find({ isApproved: false }).populate('userId', 'email role').sort({ approvalDate: -1 }).lean() //using the useid i will get the email and role and show in the reverse order
+		const jobs = await PostJob.find({ status: "pending" }).populate('userId', 'email role').sort({ approvalDate: -1 }).lean() //using the useid i will get the email and role and show in the reverse order
 		if (jobs.length === 0) {
 			return res.status(404).json({
 				status: 0,
@@ -127,7 +127,8 @@ export const approve = async (req, res) => {
 		const job = await PostJob.findByIdAndUpdate(
 			req.params.id,
 			{
-				isApproved: true,
+				// isApproved: true,
+				status: "approved",
 				approvalDate: Date.now()
 			},
 			{ new: true }
@@ -162,8 +163,9 @@ export const approve = async (req, res) => {
 //reject jobs for admin 
 export const rejectJob = async (req, res) => {
 	try {
-		const job = await PostJob.findByIdAndDelete(
+		const job = await PostJob.findByIdAndUpdate(
 			req.params.id,
+			{ status: "rejected" }
 		)
 		if (!job) {
 			return res.status(404).json({

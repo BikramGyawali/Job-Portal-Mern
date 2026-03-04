@@ -53,9 +53,14 @@ const postJob = new schema({
 		type: String,
 		required: true
 	},
-	isApproved: {
-		type: Boolean,
-		default: true
+	// isApproved: {
+	// 	type: Boolean,
+	// 	default: true
+	// },
+	status: {
+		type: String,
+		enum: ["pending", "approved", "rejected"],
+		default: "pending"
 	},
 	approvalDate: Date,
 	createdAt: {

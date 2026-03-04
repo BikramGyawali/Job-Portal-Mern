@@ -19,22 +19,28 @@ function MyJobs() {
 
 				const transformjobs = jobs.map((job, index) => {
 
-					// 🔹 Format Posted Date
+
 					const postedDate = new Date(job.postingDate);
 					const formattedDate = postedDate.toISOString().split("T")[0];
 
-					// 🔹 Extract number from "30 Days"
+
 					const periodDays = parseInt(job.postingPeriod);
 
-					// 🔹 Calculate expiry date
 					const expiryDate = new Date(postedDate);
 					expiryDate.setDate(expiryDate.getDate() + periodDays);
 
-					// 🔹 Calculate remaining days
 					const today = new Date();
 					const diffTime = expiryDate - today;
 					const remainingDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+					let statusLabel;
 
+					if (job.status === "approved") {
+						statusLabel = "Active";
+					} else if (job.status === "rejected") {
+						statusLabel = "Rejected";
+					} else {
+						statusLabel = "Pending";
+					}
 					return {
 						// "S.N": index + 1,
 						"_id": job._id,
@@ -42,7 +48,7 @@ function MyJobs() {
 						"Posted at": formattedDate,
 						"Expires In": remainingDays > 0 ? `${remainingDays} days` : "Expired",
 						// "Applicants": job.openings || 0, // you can replace later with real applicant count
-						"Status": job.isApproved ? "Active" : "Pending",
+						"Status": statusLabel,
 						"Actions": ["edit", "delete"]
 					};
 				});

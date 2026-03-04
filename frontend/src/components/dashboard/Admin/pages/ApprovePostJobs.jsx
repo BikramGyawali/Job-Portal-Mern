@@ -5,6 +5,7 @@ import { JobPostContext } from '../../../../context/JobPostContext'
 import { approvedJobsService, rejectJobsService } from '../../../../services/jobService'
 
 import JobDetails from '../../../common/JobDetails'
+import RejectJobModal from '../../../common/RejectModal'
 
 function ApprovePostJobs() {
 	const { pendingJobs, fetchPendingJobs } = useContext(JobPostContext)
@@ -12,6 +13,8 @@ function ApprovePostJobs() {
 	const [loading, setLoading] = useState(false)
 	const [message, setMessage] = useState("")
 	const [viewJob, setViewJob] = useState(null)
+
+	const [rejectJobData, setRejectJobData] = useState(null);
 	useEffect(() => {
 		fetchPendingJobs()
 	}, [])
@@ -19,7 +22,7 @@ function ApprovePostJobs() {
 	useEffect(() => {
 		const storeData = async () => {
 			const transformed = await pendingJobs.filter(job => !job.isApproved).map((job, index) => ({
-		
+
 				"Company Name": job.companyName,
 				"Job Title": job.jobTitle,
 				"Experience": job.experience,
@@ -54,27 +57,28 @@ function ApprovePostJobs() {
 		}
 	}
 	const handleReject = async (row) => {
-		setLoading(true)
-		try {
-			const result = await rejectJobsService(row._id)
-			if (result.success) {
-				setMessage("Job Rejected Successfully")
-				setTransformedJobs(prev => prev.filter(j => j._id !== row._id))
-				setTimeout(() => setMessage(""), 3000);
-			}
-			else {
-				setMessage(`${result.error}`)
-			}
-		} catch (error) {
-			setMessage(` Error: ${error.message}`)
-		} finally {
-			setLoading(false)
-		}
+		// 	setLoading(true)
+		// 	try {
+		// 		const result = await rejectJobsService(row._id)
+		// 		if (result.success) {
+		// 			setMessage("Job Rejected Successfully")
+		// 			setTransformedJobs(prev => prev.filter(j => j._id !== row._id))
+		// 			setTimeout(() => setMessage(""), 3000);
+		// 		}
+		// 		else {
+		// 			setMessage(`${result.error}`)
+		// 		}
+		// 	} catch (error) {
+		// 		setMessage(` Error: ${error.message}`)
+		// 	} finally {
+		// 		setLoading(false)
+		// 	}
+		setRejectJobData(row.fullData)
 
 	}
 	const handleView = (row) => {
 		setViewJob(row.fullData)
-	
+
 
 
 	}
@@ -111,7 +115,7 @@ function ApprovePostJobs() {
 				isLoading={loading}
 
 			/>
-		
+
 			{viewJob && (
 
 				<JobDetails
@@ -120,6 +124,17 @@ function ApprovePostJobs() {
 					onClose={() => setViewJob(null)}
 				/>
 
+			)}
+			{rejectJobData && (
+				<RejectJobModal
+					job={rejectJobData}
+					onClose={() => setRejectJobData(null)}
+					onSuccess={(id) =>
+						setTransformedJobs(prev =>
+							prev.filter(j => j._id !== id)
+						)
+					}
+				/>
 			)}
 		</div>
 	)

@@ -96,9 +96,11 @@ export const approvedJobsService = async (jobId) => {
 
 //rejected job from admin 
 
-export const rejectJobsService = async (jobId) => {
+export const rejectJobsService = async (jobId, reason) => {
 	try {
-		const response = await api.delete(`/job/reject/${jobId}`);
+		const response = await api.patch(`/job/reject/${jobId}`, {
+			rejectionReason: reason
+		});
 		if (response.data?.status === 1) {
 			return {
 				success: true,

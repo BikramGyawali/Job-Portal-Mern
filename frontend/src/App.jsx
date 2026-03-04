@@ -40,12 +40,15 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import { AuthProvider } from "./context/AuthContext";
 import { ProfileProvider } from "./context/ProfileContext";
 import { JobPostProvider } from "./context/JobPostContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 export default function App() {
 	return (
 
 		<div>
+			<ToastContainer />
 			<AuthProvider>
 				<ProfileProvider>
 					<JobPostProvider>
@@ -62,12 +65,12 @@ export default function App() {
 								<Route path="/admins" element={<AdminLogin />} />
 								<Route path="/jobseeker-profile" element={<JobseekersProfile />} />
 								<Route path="/employer-profile" element={<EmployersProfile />} />
-							
+
 
 
 								{/* for jobseeker dashboard routes (nested under /jobseeker) */}
 								<Route element={<ProtectedRoute allowedRole="jobseeker" />} >
-		
+
 									<Route path="jobseeker/*" element={<DashboardLayout role="Jobseeker" />} >
 										<Route index element={<JobseekerDashboard />} />
 										<Route path="edit-profile" element={<EditProfile />} />

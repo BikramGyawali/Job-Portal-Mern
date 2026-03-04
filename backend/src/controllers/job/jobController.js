@@ -163,10 +163,14 @@ export const approve = async (req, res) => {
 //reject jobs for admin 
 export const rejectJob = async (req, res) => {
 	try {
+		const { rejectionReason } = req.body;
 		const job = await PostJob.findByIdAndUpdate(
 			req.params.id,
-			{ status: "rejected" }
-			// rejectionReason:
+			{
+				status: "rejected",
+				rejectionReason: rejectionReason || null
+			}, { new: true }
+
 		)
 		if (!job) {
 			return res.status(404).json({
@@ -183,7 +187,7 @@ export const rejectJob = async (req, res) => {
 		})
 
 	} catch (error) {
-		console.error(error);
+
 
 		return res.status(500).json({
 			status: 0,
@@ -233,7 +237,7 @@ export const JJobList = async (req, res) => {
 			// userId: new mongoose.Types.ObjectId(id)
 			userId: id
 		});
-		console.log(user);
+
 
 		if (!user) {
 			return res.status(404).json({

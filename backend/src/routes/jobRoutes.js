@@ -8,7 +8,7 @@ jobroutes.post("/create", verifyAuth, verifyRole("employer"), PostJobController)
 jobroutes.get("/approved", approvedJob);
 jobroutes.get("/pending", verifyAuth, verifyRole("admin"), pendingJob)
 jobroutes.patch("/approve/:id", verifyAuth, verifyRole("admin"), approve)
-jobroutes.delete("/reject/:id", verifyAuth, verifyRole("admin"), rejectJob)
+jobroutes.patch("/reject/:id", verifyAuth, verifyRole("admin"), rejectJob)
 
 
 export default jobroutes;

@@ -41,6 +41,7 @@ export const MyJobsTableHead = ["S.N",
 	// "Views",
 	"Applicants",
 	"Status",
+	"Reason",
 
 	// "Pending",
 	// "In Review",

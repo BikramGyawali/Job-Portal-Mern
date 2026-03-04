@@ -57,22 +57,7 @@ function ApprovePostJobs() {
 		}
 	}
 	const handleReject = async (row) => {
-		// 	setLoading(true)
-		// 	try {
-		// 		const result = await rejectJobsService(row._id)
-		// 		if (result.success) {
-		// 			setMessage("Job Rejected Successfully")
-		// 			setTransformedJobs(prev => prev.filter(j => j._id !== row._id))
-		// 			setTimeout(() => setMessage(""), 3000);
-		// 		}
-		// 		else {
-		// 			setMessage(`${result.error}`)
-		// 		}
-		// 	} catch (error) {
-		// 		setMessage(` Error: ${error.message}`)
-		// 	} finally {
-		// 		setLoading(false)
-		// 	}
+
 		setRejectJobData(row.fullData)
 
 	}

@@ -3,6 +3,7 @@ import DashTable from '../../../common/DashTable'
 import { MyJobsTableBody, MyJobsTableHead } from '../../../../data/employers/DashboardData'
 import { EMyJobs } from '../../../../services/jobService'
 import { ProfileContext } from '../../../../context/ProfileContext'
+import RejectionReasonView from '../../../common/RejectionReasonView'
 
 function MyJobs() {
 	const { profile } = useContext(ProfileContext)
@@ -47,7 +48,9 @@ function MyJobs() {
 						"Job Title": job.jobTitle,
 						"Posted at": formattedDate,
 						"Expires In": remainingDays > 0 ? `${remainingDays} days` : "Expired",
-						// "Applicants": job.openings || 0, // you can replace later with real applicant count
+						"Reason": job.status === "rejected"
+							? <RejectionReasonView reason={job.rejectionReason} />
+							: null,
 						"Status": statusLabel,
 						"Actions": ["edit", "delete"]
 					};

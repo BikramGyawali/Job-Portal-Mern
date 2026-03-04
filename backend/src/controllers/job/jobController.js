@@ -196,7 +196,7 @@ export const EMyJobs = async (req, res) => {
 
 	try {
 		const jobs = await PostJob.find({ userId: id });
-		if (!jobs) {
+		if (!jobs.length) {
 			return res.status(404).json({
 				status: 0,
 				message: "No Jobs Post By You"
@@ -226,7 +226,7 @@ export const JJobList = async (req, res) => {
 	try {
 		const user = await JobseekerProfile.findById(id);
 
-		if (!user) {
+		if (!user.length) {
 			return res.status(404).json({
 				status: 0,
 				message: "No user details found"

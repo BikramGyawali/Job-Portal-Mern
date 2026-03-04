@@ -1,4 +1,5 @@
 
+import mongoose from "mongoose";
 import { EmployerProfile } from "../../models/employer/EmployerProfile.js";
 import { PostJob } from "../../models/employer/PostJob.js";
 import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js";
@@ -222,11 +223,14 @@ export const EMyJobs = async (req, res) => {
 
 export const JJobList = async (req, res) => {
 	const id = req.user.id;
-
+	console.log("Logged in user id:", id);
 	try {
-		const user = await JobseekerProfile.find({ userId: id });
+		const user = await JobseekerProfile.findOne({
+			userId: new mongoose.Types.ObjectId(id)
+		});
+		console.log(user);
 
-		if (!user.length) {
+		if (!user) {
 			return res.status(404).json({
 				status: 0,
 				message: "No user details found"

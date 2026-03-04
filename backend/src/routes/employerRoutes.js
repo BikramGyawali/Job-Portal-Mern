@@ -13,7 +13,7 @@ employerroutes.post("/signup", (req, res) => Signup(req, res, "employer"));
 employerroutes.post("/login", (req, res) => LoginController(req, res, "employer"));
 employerroutes.post("/profile", verifyAuth, uploadImage.single("image"), EProfileController)
 employerroutes.get("/profile", verifyAuth, getEProfile)
-employerroutes.get("/myjobs/:id", verifyAuth, EMyJobs)
+employerroutes.get("/myjobs", verifyAuth, EMyJobs)
 
 
 employerroutes.get(

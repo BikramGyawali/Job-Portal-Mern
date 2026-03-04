@@ -120,9 +120,9 @@ export const rejectJobsService = async (jobId) => {
 
 // for job listing for the employers
 
-export const EMyJobs = async (userid) => {
+export const EMyJobs = async () => {
 	try {
-		const response = await api.get(`/employer/myjobs/${userid}`)
+		const response = await api.get(`/employer/myjobs`)
 		if (response.data?.status === 1) {
 			return {
 				success: true,

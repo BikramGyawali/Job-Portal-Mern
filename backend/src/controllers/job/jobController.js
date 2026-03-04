@@ -192,7 +192,7 @@ export const rejectJob = async (req, res) => {
 // Jobs post from the employers
 
 export const EMyJobs = async (req, res) => {
-	const id = req.params.id;
+	const id = req.user.id;
 
 	try {
 		const jobs = await PostJob.find({ userId: id });
@@ -221,7 +221,7 @@ export const EMyJobs = async (req, res) => {
 //job list controller for jobseeker
 
 export const JJobList = async (req, res) => {
-	const id = req.params.id;
+	const id = req.user.id;
 
 	try {
 		const user = await JobseekerProfile.findById(id);

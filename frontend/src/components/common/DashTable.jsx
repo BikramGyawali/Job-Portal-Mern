@@ -11,6 +11,7 @@ import { BsPen, BsPenFill, BsTrash2 } from "react-icons/bs";
 import { MdDeleteForever, MdModeEdit } from "react-icons/md";
 
 function DashTable({ title, headData, bodyData, actionHandler }) {
+	console.log(bodyData);
 
 	// console.log(headData);
 

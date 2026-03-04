@@ -196,6 +196,7 @@ export const EMyJobs = async (req, res) => {
 	const id = req.user.id;
 
 	try {
+
 		const jobs = await PostJob.find({ userId: id });
 		if (!jobs.length) {
 			return res.status(404).json({
@@ -226,7 +227,8 @@ export const JJobList = async (req, res) => {
 	console.log("Logged in user id:", id);
 	try {
 		const user = await JobseekerProfile.findOne({
-			userId: new mongoose.Types.ObjectId(id)
+			// userId: new mongoose.Types.ObjectId(id)
+			userId: id
 		});
 		console.log(user);
 

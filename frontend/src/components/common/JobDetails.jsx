@@ -9,6 +9,8 @@ function JobDetails({
 	onApply,
 	onClose
 }) {
+	console.log(job);
+
 
 
 	if (!job) return null;
@@ -36,7 +38,7 @@ function JobDetails({
 						</h3>
 					</div>
 
-				
+
 					<h1 className="text-4xl font-bold tracking-wide text-gray-900">
 						{job.jobTitle}
 					</h1>
@@ -45,7 +47,7 @@ function JobDetails({
 						{CreateJobsData.map((field, i) => {
 							const value = job[field.name];
 							let displayValue = value;
-							
+
 
 
 							if (value === undefined || value === null || value === "") return null;

@@ -35,9 +35,9 @@ export const DashboardTableBody = [
 
 //for my jobs
 export const MyJobsTableHead = ["S.N",
-	"jobTitle",
+	"Job Title",
 	"Posted at",
-	// "Expires in",
+	"Expires In",
 	// "Views",
 	"Applicants",
 	"Status",
@@ -51,7 +51,7 @@ export const MyJobsTableBody = [{
 	"S.N": 1,
 	"Job Title": "Frontend Developer",
 	"Posted at": "2025-01-12",
-	// "Expires in": "5 days",
+	"Expires n": "5 days",
 	// "Views": 120,
 	"Applicants": 18,
 	// "Pending": 5,

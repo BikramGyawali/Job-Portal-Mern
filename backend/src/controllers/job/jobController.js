@@ -1,6 +1,7 @@
 
 import { EmployerProfile } from "../../models/employer/EmployerProfile.js";
 import { PostJob } from "../../models/employer/PostJob.js";
+import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js";
 //helper fucntion for the company name
 const addCompanyName = async (jobs) => {
 	const jobArray = Array.isArray(jobs) ? jobs : [jobs];
@@ -206,6 +207,41 @@ export const EMyJobs = async (req, res) => {
 			status: 1,
 			message: "All jobs are fetched",
 			jobs
+		})
+	} catch (error) {
+		return res.status(500).json({
+			status: 0,
+			message: "Failed to  fetched jobs"
+		})
+	}
+}
+
+
+
+//job list controller for jobseeker
+
+export const JJobList = async (req, res) => {
+	const id = req.params.id;
+	try {
+		const user = await JobseekerProfile.findById(id);
+		if (!user) {
+			return res.status(404).json({
+				status: 0,
+				message: "No user details find"
+			})
+		}
+
+		const result = await PostJob.find({ skills: { $in: user.skills } })
+		if (!result) {
+			return res.status(404).json({
+				status: 0,
+				message: "No Jobs found according to your skills"
+			})
+		}
+		return res.status(200).json({
+			status: 1,
+			messsage: "Jobs fetched successfully",
+			jobs: result
 		})
 	} catch (error) {
 		return res.status(500).json({

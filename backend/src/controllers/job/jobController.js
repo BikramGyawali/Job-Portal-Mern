@@ -230,6 +230,8 @@ export const JJobList = async (req, res) => {
 				message: "No user details find"
 			})
 		}
+		// const skills = user.skills;
+		// const userSkills= skills.charAt(0).toUpperCase()+skills.slice(1)
 
 		const result = await PostJob.find({ skills: { $in: user.skills } })
 		if (!result) {

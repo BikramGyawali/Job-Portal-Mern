@@ -309,7 +309,7 @@ export const CreateJobsData = [
 		label: "Skills",
 		name: "skills",
 		type: "select",
-		required: false,
+		required: true,
 		multiple: true,
 		// size:4,
 		options: [

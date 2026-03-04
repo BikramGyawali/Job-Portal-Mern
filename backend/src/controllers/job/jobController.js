@@ -222,33 +222,47 @@ export const EMyJobs = async (req, res) => {
 
 export const JJobList = async (req, res) => {
 	const id = req.params.id;
+
 	try {
 		const user = await JobseekerProfile.findById(id);
+
 		if (!user) {
 			return res.status(404).json({
 				status: 0,
-				message: "No user details find"
-			})
+				message: "No user details found"
+			});
 		}
-		// const skills = user.skills;
-		// const userSkills= skills.charAt(0).toUpperCase()+skills.slice(1)
 
-		const result = await PostJob.find({ skills: { $in: user.skills } })
-		if (!result) {
+
+		const formattedSkills = user.skills.map(skill => {
+			const cleaned = skill
+				.toLowerCase()
+				.replace(/[-_/]/g, " ");
+
+			return new RegExp(cleaned, "i");
+		});
+
+		const result = await PostJob.find({
+			skills: { $in: formattedSkills }
+		});
+
+		if (!result.length) {
 			return res.status(404).json({
 				status: 0,
 				message: "No Jobs found according to your skills"
-			})
+			});
 		}
+
 		return res.status(200).json({
 			status: 1,
-			messsage: "Jobs fetched successfully",
+			message: "Jobs fetched successfully",
 			jobs: result
-		})
+		});
+
 	} catch (error) {
 		return res.status(500).json({
 			status: 0,
-			message: "Failed to  fetched jobs"
-		})
+			message: "Failed to fetch jobs"
+		});
 	}
-}
+};

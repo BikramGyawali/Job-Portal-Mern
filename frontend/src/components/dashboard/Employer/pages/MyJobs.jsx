@@ -12,8 +12,8 @@ function MyJobs() {
 		const fetchJobs = async () => {
 			if (!profile?._id) return;
 			const response = await EMyJobs(profile._id);
-			if (response.success) {
-				setJobs(response.jobs);
+			if (response?.success) {
+				setJobs(response?.jobs);
 				console.log(profile);
 			}
 		}

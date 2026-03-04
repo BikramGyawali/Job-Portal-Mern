@@ -141,3 +141,27 @@ export const EMyJobs = async () => {
 		}
 	}
 }
+
+
+//jobseeker job list
+export const JMyJobs = async () => {
+	try {
+		const response = await api.get(`/jobseeker/jjoblist`)
+		if (response.data?.status === 1) {
+			return {
+				success: true,
+				jobs: response.data.jobs
+			}
+		}
+		return {
+			success: false,
+			message: response.data.message
+		}
+
+	} catch (error) {
+		return {
+			success: false,
+			error: error.message
+		}
+	}
+}

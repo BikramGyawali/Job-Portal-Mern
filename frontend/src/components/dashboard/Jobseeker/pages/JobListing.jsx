@@ -1,10 +1,26 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "../../../../assets/image/logo.png";
 import { jobData, JobListingData, ListingTitle } from "../../../../data/jobseekers/DashboardData";
 import ButtonComp from "../../../common/ButtonComp";
 import { useLocation } from "react-router-dom";
+import { ProfileContext } from "../../../../context/ProfileContext";
+import { JMyJobs } from "../../../../services/jobService";
 
 function JobListing() {
+	const { profile } = useContext(ProfileContext)
+	const [jobs, setJobs] = useState([]);
+	useEffect(() => {
+		const fetchJob = async () => {
+			if (!profile?._id) return;
+			const response = await JMyJobs();
+			if (response.success) {
+				setJobs(response?.jobs)
+				console.log(response);
+
+			}
+		}
+		fetchJob()
+	}, [profile])
 	const { state } = useLocation();
 	const formApplied = state?.formApplied;
 	const handleClick = () => {

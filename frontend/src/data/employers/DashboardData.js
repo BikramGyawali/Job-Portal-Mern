@@ -35,7 +35,7 @@ export const DashboardTableBody = [
 
 //for my jobs
 export const MyJobsTableHead = ["S.N",
-	"Job Title",
+	"jobTitle",
 	"Posted at",
 	// "Expires in",
 	// "Views",

@@ -224,7 +224,7 @@ export const JJobList = async (req, res) => {
 	const id = req.user.id;
 
 	try {
-		const user = await JobseekerProfile.findById(id);
+		const user = await JobseekerProfile.find({ userId: id });
 
 		if (!user.length) {
 			return res.status(404).json({

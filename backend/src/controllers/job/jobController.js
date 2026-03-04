@@ -166,6 +166,7 @@ export const rejectJob = async (req, res) => {
 		const job = await PostJob.findByIdAndUpdate(
 			req.params.id,
 			{ status: "rejected" }
+			// rejectionReason:
 		)
 		if (!job) {
 			return res.status(404).json({
@@ -251,7 +252,8 @@ export const JJobList = async (req, res) => {
 		});
 
 		const result = await PostJob.find({
-			skills: { $in: formattedSkills }
+			skills: { $in: formattedSkills },
+			status: "approved"
 		});
 
 		if (!result.length) {

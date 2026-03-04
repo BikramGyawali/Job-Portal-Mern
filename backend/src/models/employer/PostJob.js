@@ -62,6 +62,10 @@ const postJob = new schema({
 		enum: ["pending", "approved", "rejected"],
 		default: "pending"
 	},
+	rejectionReason: {
+		type: String,
+		default: null
+	},
 	approvalDate: Date,
 	createdAt: {
 		type: Date,

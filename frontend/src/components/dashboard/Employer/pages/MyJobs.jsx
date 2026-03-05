@@ -48,7 +48,8 @@ function MyJobs() {
 						"Job Title": job.jobTitle,
 						"Posted at": formattedDate,
 						"Expires In": remainingDays > 0 ? `${remainingDays} days` : "Expired",
-						"Reason": job.status === "rejected"
+						"Applicant":job.applicant,
+						"View All / Reason": job.status === "rejected"
 							? <RejectionReasonView reason={job.rejectionReason} />
 							: null,
 						"Status": statusLabel,

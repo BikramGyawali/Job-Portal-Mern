@@ -6,13 +6,14 @@ import { approvedJobsService, rejectJobsService } from '../../../../services/job
 
 import JobDetails from '../../../common/JobDetails'
 import RejectJobModal from '../../../common/RejectModal'
+import useViewJob from '../../../../hooks/useViewJob'
 
 function ApprovePostJobs() {
 	const { pendingJobs, fetchPendingJobs } = useContext(JobPostContext)
 	const [transformedJobs, setTransformedJobs] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [message, setMessage] = useState("")
-	const [viewJob, setViewJob] = useState(null)
+	const { viewJob, closeView, handleView } = useViewJob();
 
 	const [rejectJobData, setRejectJobData] = useState(null);
 	useEffect(() => {
@@ -61,12 +62,7 @@ function ApprovePostJobs() {
 		setRejectJobData(row.fullData)
 
 	}
-	const handleView = (row) => {
-		setViewJob(row.fullData)
 
-
-
-	}
 	const actionHandler = {
 		approve: handleApprove,
 		reject: handleReject,
@@ -106,7 +102,7 @@ function ApprovePostJobs() {
 				<JobDetails
 					job={viewJob}
 					showClose={true}
-					onClose={() => setViewJob(null)}
+					onClose={closeView}
 				/>
 
 			)}

@@ -94,7 +94,7 @@ function JobDetails({
 					)}
 
 
-					<div className="pt-4 w-fit">
+					<div className="pt-4 w-fit flex   gap-8 justify-items-center">
 						{showApply && (
 							<ButtonComp name="Apply Job" click={onApply} />
 						)}
@@ -102,7 +102,7 @@ function JobDetails({
 						{showClose && (
 							<button
 								onClick={onClose}
-								className="px-5 py-2 bg-gray-600 text-white rounded-xl"
+								className="px-5 py-2 bg-gray-600 text-white rounded-xl cursor-pointer"
 							>
 								Close
 							</button>

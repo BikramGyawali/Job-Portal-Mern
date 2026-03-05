@@ -27,7 +27,8 @@ export const JobPostProvider = ({ children }) => {
 						// "Posted At": formattedDate,
 						"Location": job.district,
 						"Remaining Days": remainingDays > 0 ? `${remainingDays} days` : "Expired",
-						"Actions": ["view", "apply"]
+						"Actions": ["view", "apply"],
+						fullData: job
 					}
 				})
 				setMyJobs(transformedJob)
@@ -40,6 +41,7 @@ export const JobPostProvider = ({ children }) => {
 			setLoading(false)
 		}
 	}
+
 	const fetchApprovedJobs = async () => {
 		setLoading(true)
 		try {

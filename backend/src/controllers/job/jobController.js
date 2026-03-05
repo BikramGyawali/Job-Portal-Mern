@@ -353,3 +353,31 @@ export const applyJob = async (req, res) => {
 		)
 	}
 }
+
+
+
+// controller for get applicant
+
+export const getApplicant = async (req, res) => {
+	const id = req.params.id
+	try {
+		const applicants = await JobApplication.find({ jobId: id }).populate("applicantId")
+		if (!applicants.length) {
+			return res.status(404).json({
+				status: 0,
+				message: "There are no applicants for this job"
+			})
+		}
+		return res.status(200).json({
+			status: 1,
+			message: "All jobs applicant are fetched",
+			applicants
+		})
+	} catch (error) {
+		return res.status(500).json({
+			status: 0,
+			message: "Failed to fetch applicants list",
+			error: error
+		})
+	}
+}

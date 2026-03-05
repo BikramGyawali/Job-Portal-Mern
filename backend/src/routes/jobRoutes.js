@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { verifyAuth, verifyRole } from "../middlewares/UserVerify/verifyMiddleware.js";
-import { approve, approvedJob, pendingJob, PostJobController, rejectJob } from "../controllers/job/jobController.js";
+import { applyJob, approve, approvedJob, pendingJob, PostJobController, rejectJob } from "../controllers/job/jobController.js";
 
 const jobroutes = Router();
 
@@ -9,6 +9,7 @@ jobroutes.get("/approved", approvedJob);
 jobroutes.get("/pending", verifyAuth, verifyRole("admin"), pendingJob)
 jobroutes.patch("/approve/:id", verifyAuth, verifyRole("admin"), approve)
 jobroutes.patch("/reject/:id", verifyAuth, verifyRole("admin"), rejectJob)
+jobroutes.post("/apply/:id", verifyAuth, applyJob)
 
 
 export default jobroutes;

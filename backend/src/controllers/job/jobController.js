@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { EmployerProfile } from "../../models/employer/EmployerProfile.js";
 import { PostJob } from "../../models/employer/PostJob.js";
 import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js";
+import { JobApplication, JobApplicationSche } from "../../models/employer/JobApplicationSchema.js";
 //helper fucntion for the company name
 const addCompanyName = async (jobs) => {
 	const jobArray = Array.isArray(jobs) ? jobs : [jobs];
@@ -199,12 +200,60 @@ export const rejectJob = async (req, res) => {
 
 // Jobs post from the employers
 
+// export const EMyJobs = async (req, res) => {
+// 	const id = req.user.id;
+
+// 	try {
+
+// 		const jobs = await PostJob.find({ userId: id });
+// 		if (!jobs.length) {
+// 			return res.status(404).json({
+// 				status: 0,
+// 				message: "No Jobs Post By You"
+// 			});
+
+// 		}
+// 		return res.status(200).json({
+// 			status: 1,
+// 			message: "All jobs are fetched",
+// 			jobs
+// 		})
+// 	} catch (error) {
+// 		return res.status(500).json({
+// 			status: 0,
+// 			message: "Failed to  fetched jobs"
+// 		})
+// 	}
+// }
+
+
 export const EMyJobs = async (req, res) => {
 	const id = req.user.id;
-
 	try {
+		const jobs = await PostJob.aggregate([
+			{
+				$match: { userId: id }
+			},
+			{
+				$lookup: {
+					from: "jobapplication",
+					localField: "_id",
+					foreignField: "jobId",
+					as: "applications"
 
-		const jobs = await PostJob.find({ userId: id });
+				}
+			},
+			{
+				$addFields: {
+					applicationCount: { $size: "applications" }
+				}
+			},
+			{
+				$project: {
+					applications: 0
+				}
+			}
+		])
 		if (!jobs.length) {
 			return res.status(404).json({
 				status: 0,
@@ -224,7 +273,6 @@ export const EMyJobs = async (req, res) => {
 		})
 	}
 }
-
 
 
 //job list controller for jobseeker
@@ -280,3 +328,28 @@ export const JJobList = async (req, res) => {
 		});
 	}
 };
+
+
+
+//api for job apply by the jobseeker
+
+export const applyJob = async (req, res) => {
+	const jobId = req.params.id;
+	const applicantId = req.user.id;
+	try {
+		const application = await JobApplication.create({
+			jobId, applicantId
+		})
+		return res.status(200).json({
+			status: 1,
+			message: "Job Applied Successfully"
+		}
+		)
+	} catch (error) {
+		return res.status(500).json({
+			status: 0,
+			message: " Failed to Apply Job"
+		}
+		)
+	}
+}

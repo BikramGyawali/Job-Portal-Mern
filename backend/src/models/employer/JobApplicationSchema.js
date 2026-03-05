@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const schema = mongoose.schema;
 const JobApplicationSchema = new schema({
-	jobid: {
+	jobId: {
 		type: mongoose.Schema.Types.ObjectId,
 		ref: "PostJob"
 	},
@@ -21,4 +21,4 @@ const JobApplicationSchema = new schema({
 	}
 })
 
-export const JobApplicationSche = mongoose.model("JobApplicationSchema", JobApplicationSche)
+export const JobApplication = mongoose.model("JobApplication", JobApplicationSchema)

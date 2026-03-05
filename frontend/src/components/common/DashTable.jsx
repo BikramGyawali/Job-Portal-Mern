@@ -91,6 +91,10 @@ function DashTable({ title, headData, bodyData, actionHandler }) {
 																Icon = null;
 																colorClass = "text-red-400 hover:text-red-700 ";
 																break;
+															case "apply":
+																Icon = null;
+																colorClass = "text-green-400 hover:text-green-700 ";
+																break;
 															default:
 																Icon = BsPen;
 																colorClass = "text-gray-400";

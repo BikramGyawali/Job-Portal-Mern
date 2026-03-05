@@ -6,23 +6,16 @@ import DashTable from '../../common/DashTable'
 import { useNavigate } from 'react-router-dom'
 import { JMyJobs } from '../../../services/jobService'
 import { ProfileContext } from '../../../context/ProfileContext'
+import { JobPostContext } from '../../../context/JobPostContext'
 // import { DashboardCardData } from '../../../data/jobseeker/DashboardCardData'
 
 function JobseekerDashboard() {
-	const { profile } = useContext(ProfileContext)
-	const [jobs, setJobs] = useState([]);
-	useEffect(() => {
-		const fetchJob = async () => {
-			if (!profile?._id) return;
-			const response = await JMyJobs();
-			if (response.success) {
-				setJobs(response?.jobs)
-				console.log(response);
-
-			}
-		}
-		fetchJob()
-	}, [profile])
+	
+	const { fetchMyJobs, myJobs } = useContext(JobPostContext)
+	
+		useEffect(() => {
+			fetchMyJobs();
+		}, [])
 	const navigate = useNavigate();
 	const handleView = (row) => {
 		// console.log("row", row);
@@ -35,7 +28,7 @@ function JobseekerDashboard() {
 	return (
 		<div>
 			<DashBoxCard cardData={JDashboardCardData} />
-			<DashTable title="Job Listing" headData={DashboardHeadData} bodyData={jobs} actionHandler={actionHandler} />
+			<DashTable title="Job Listing" headData={DashboardHeadData} bodyData={myJobs} actionHandler={actionHandler} />
 		</div>
 	)
 }

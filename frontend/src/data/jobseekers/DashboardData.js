@@ -17,14 +17,14 @@ export const JDashboardCardData = [
 	}
 ]
 
-export const DashboardHeadData = ["S.N","Job Title", "Job Level", "Remainig Days", "Actions"];
+export const DashboardHeadData = ["S.N", "Job Title", "Job Level", "Location", "Remaining Days", "Actions"];
 
 export const DashboardBodyData = [{
-	"S.N":"1",
+	"S.N": "1",
 	"Job Title": "Front-End Developer",
 	"Job Level": "Middle",
 	"Remainig Days": "16",
-	"Actions": ["view"]
+	"Actions": ["view", "apply"]
 }]
 export const ListingTitle = ["No. of Openings",
 	"Industry",
@@ -71,7 +71,7 @@ export const jobData = [
 
 //for cv 
 import logo from "../../assets/image/logo.png";
-export const 	CVSections = [
+export const CVSections = [
 	{
 		section: "Personal Header",
 		type: "header",

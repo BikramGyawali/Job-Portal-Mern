@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { EmployerProfile } from "../../models/employer/EmployerProfile.js";
 import { PostJob } from "../../models/employer/PostJob.js";
 import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js";
-import { JobApplication, JobApplicationSche } from "../../models/employer/JobApplicationSchema.js";
+import { JobApplication } from "../../models/employer/JobApplicationSchema.js";
 //helper fucntion for the company name
 const addCompanyName = async (jobs) => {
 	const jobArray = Array.isArray(jobs) ? jobs : [jobs];

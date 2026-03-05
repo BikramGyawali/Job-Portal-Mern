@@ -1,13 +1,14 @@
 import {
 	HiChartPie,
 	HiUser,
-	HiDocumentText,
 	HiBriefcase,
-	HiHeart,
+
 	HiDownload,
-	HiAcademicCap,
-	HiCog,
+
+
 	HiLogout,
+	HiOutlineViewList,
+
 } from "react-icons/hi";
 
 export const JDashboardData = [
@@ -41,9 +42,9 @@ export const JDashboardData = [
 
 	{
 		type: "item",
-		name: "Saved Jobs",
-		icon: HiHeart,
-		link: "/jobseeker/saved-jobs",
+		name: "Job Listing",
+		icon: HiOutlineViewList,
+		link: "/jobseeker/job-listing",
 	},
 
 	{
@@ -53,19 +54,7 @@ export const JDashboardData = [
 		link: "/jobseeker/download-resume",
 	},
 
-	// {
-	// 	type: "item",
-	// 	name: "Available Trainings",
-	// 	icon: HiAcademicCap,
-	// 	link: "/jobseeker/trainings",
-	// },
 
-	// {
-	// 	type: "item",
-	// 	name: "Setting",
-	// 	icon: HiCog,
-	// 	link: "/jobseeker/settings",
-	// },
 
 	{
 		type: "item",

@@ -1,14 +1,45 @@
 import { createContext, useEffect, useState } from "react";
 import api from '../utils/axiosInstance'
-import { getApprovedJobsService, getPendingJobsService } from "../services/jobService";
+import { getApprovedJobsService, getPendingJobsService, JMyJobs } from "../services/jobService";
+import { calculateJobDates } from "../utils/JobDataUtils";
 export const JobPostContext = createContext();
 
 export const JobPostProvider = ({ children }) => {
 	const [jobs, setJobs] = useState([])
 	const [pendingJobs, setPendingJobs] = useState([])
 	const [loading, setLoading] = useState(true)
+	const [myJobs, setMyJobs] = useState([]);
+	const fetchMyJobs = async () => {
+		setLoading(true)
+		try {
+			const result = await JMyJobs()
+			const jobs = result.jobs
+			if (result.success) {
+				// setMyJobs(result.jobs)
+				const transformedJob = jobs.map((job, i) => {
+					const { remainingDays } = calculateJobDates(
+						job.postingDate,
+						job.postingPeriod
+					)
+					return {
+						"Job Title": job.jobTitle,
+						"Job Level": job.jobLevel,
+						// "Posted At": formattedDate,
+						"Location": job.district,
+						"Remaining Days": remainingDays > 0 ? `${remainingDays} days` : "Expired",
+						"Actions": ["view", "apply"]
+					}
+				})
+				setMyJobs(transformedJob)
+			}
+		} catch (error) {
+			console.log(error);
 
-
+		}
+		finally {
+			setLoading(false)
+		}
+	}
 	const fetchApprovedJobs = async () => {
 		setLoading(true)
 		try {
@@ -17,7 +48,7 @@ export const JobPostProvider = ({ children }) => {
 				setJobs(result.jobs)
 			}
 		} catch (error) {
-			console.error("failed to fecth data:" + error)
+			// console.error("failed to fecth data:" + error)
 		}
 		finally {
 			setLoading(false)
@@ -43,7 +74,7 @@ export const JobPostProvider = ({ children }) => {
 
 	return (
 		<JobPostContext.Provider value={{
-			jobs, loading, fetchApprovedJobs, addJob, fetchPendingJobs,
+			jobs, loading, fetchApprovedJobs, addJob, fetchPendingJobs, fetchMyJobs, myJobs,
 			pendingJobs
 		}}>
 			{children}

@@ -75,10 +75,10 @@ export default function App() {
 										<Route index element={<JobseekerDashboard />} />
 										<Route path="edit-profile" element={<EditProfile />} />
 										<Route path="applied-jobs" element={<AppliedJobs />} />
-										<Route path="saved-jobs" element={<SavedJobs />} />
+										<Route path="job-listing" element={<JobListing />} />
 										<Route path="download-resume" element={<DownloadResume />} />
 										<Route path="jobseekers" element={<Jobseekers />} />
-										<Route path="job-listing" element={<JobListing />} />
+										{/* <Route path="job-listing" element={<JobListing />} /> */}
 									</Route>
 								</Route>
 

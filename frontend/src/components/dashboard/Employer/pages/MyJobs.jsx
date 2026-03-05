@@ -4,6 +4,7 @@ import { MyJobsTableBody, MyJobsTableHead } from '../../../../data/employers/Das
 import { EMyJobs } from '../../../../services/jobService'
 import { ProfileContext } from '../../../../context/ProfileContext'
 import RejectionReasonView from '../../../common/RejectionReasonView'
+import { calculateJobDates } from '../../../../utils/JobDataUtils'
 
 function MyJobs() {
 	const { profile } = useContext(ProfileContext)
@@ -21,18 +22,10 @@ function MyJobs() {
 				const transformjobs = jobs.map((job, index) => {
 
 
-					const postedDate = new Date(job.postingDate);
-					const formattedDate = postedDate.toISOString().split("T")[0];
-
-
-					const periodDays = parseInt(job.postingPeriod);
-
-					const expiryDate = new Date(postedDate);
-					expiryDate.setDate(expiryDate.getDate() + periodDays);
-
-					const today = new Date();
-					const diffTime = expiryDate - today;
-					const remainingDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+					const { formattedDate, remainingDays } = calculateJobDates(
+						job.postingDate,
+						job.postingPeriod
+					)
 					let statusLabel;
 
 					if (job.status === "approved") {

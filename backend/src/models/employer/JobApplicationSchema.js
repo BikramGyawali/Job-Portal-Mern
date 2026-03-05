@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const schema = mongoose.schema;
+const schema = mongoose.Schema;
 const JobApplicationSchema = new schema({
 	jobId: {
 		type: mongoose.Schema.Types.ObjectId,

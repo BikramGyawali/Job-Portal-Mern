@@ -12,7 +12,7 @@ import JobDetails from "../../../common/JobDetails";
 
 function JobListing() {
 	const { fetchMyJobs, myJobs } = useContext(JobPostContext)
-	const { viewJob, handleView, closeView } = useViewJob()
+	const { viewJob, handleView, closeView,handleApply } = useViewJob()
 	useEffect(() => {
 		fetchMyJobs();
 	}, [])
@@ -20,7 +20,8 @@ function JobListing() {
 	const formApplied = state?.formApplied;
 
 	const actionHandler = {
-		view: handleView
+		view: handleView,
+		apply:handleApply
 	}
 	return (
 		<div>

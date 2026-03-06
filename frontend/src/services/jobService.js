@@ -169,3 +169,31 @@ export const JMyJobs = async () => {
 		}
 	}
 }
+
+
+
+//job apply 
+
+export const applyJob = async (jobId) => {
+	try {
+		const response = await api.post(`/job/apply/${jobId}`)
+		if (response.data?.status === 1) {
+			return {
+				success: true,
+				message: "Job Applied Successfully",
+
+
+			}
+		}
+		return {
+			success: false,
+			message: response?.data?.message
+		}
+
+	} catch (error) {
+		return {
+			success: false,
+			error: error.message
+		}
+	}
+}

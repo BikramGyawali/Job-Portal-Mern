@@ -9,8 +9,8 @@ jobroutes.get("/approved", approvedJob);
 jobroutes.get("/pending", verifyAuth, verifyRole("admin"), pendingJob)
 jobroutes.patch("/approve/:id", verifyAuth, verifyRole("admin"), approve)
 jobroutes.patch("/reject/:id", verifyAuth, verifyRole("admin"), rejectJob)
-jobroutes.post("/apply/:id", verifyAuth, applyJob)
-jobroutes.get("applicants/:id", verifyAuth, getApplicant)
+jobroutes.post("/apply/:id", verifyAuth, verifyRole("jobseeker"), applyJob)
+jobroutes.get("/applicants/:id", verifyAuth, verifyRole("employer"), getApplicant)
 
 
 export default jobroutes;

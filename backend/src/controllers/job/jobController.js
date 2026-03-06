@@ -306,19 +306,19 @@ export const JJobList = async (req, res) => {
 		const result = await PostJob.find({
 			skills: { $in: formattedSkills },
 			status: "approved"
-		});
-
+		}).lean();
 		if (!result.length) {
 			return res.status(404).json({
 				status: 0,
 				message: "No Jobs found according to your skills"
 			});
 		}
+		const jobWithCompany = await addCompanyName(result)
 
 		return res.status(200).json({
 			status: 1,
 			message: "Jobs fetched successfully",
-			jobs: result
+			jobs: jobWithCompany
 		});
 
 	} catch (error) {

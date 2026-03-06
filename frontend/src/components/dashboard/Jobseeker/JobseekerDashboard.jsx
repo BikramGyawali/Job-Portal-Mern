@@ -21,6 +21,7 @@ function JobseekerDashboard() {
 	const actionHandler = {
 		view: handleView
 	}
+	console.log(myJobs);
 
 	return (
 		<div>

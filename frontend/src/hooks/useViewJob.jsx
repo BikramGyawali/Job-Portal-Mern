@@ -4,41 +4,63 @@ import { toast } from 'react-toastify';
 
 function useViewJob() {
 	const [viewJob, setViewJob] = useState(null)
-	const handleView = (row) => {
-		setViewJob(row.fullData || row)
-		console.log(row.fullData);
+	const [loading, setLoading] = useState(null)
+	const [selectedJob, setSelectedJob] = useState(null)
 
-	}
+
+
+	const handleView = (row) => {
+		if (!row) {
+			toast.error("Something went wrong");
+			return;
+		}
+
+		const jobData = row?.fullData ?? row;
+		if (!jobData || !jobData._id) {
+			toast.error("Job data not found");
+			return;
+		}
+		setSelectedJob(jobData)
+		setViewJob(jobData);
+	};
 	const closeView = () => {
 		setViewJob(null)
 	}
 	const handleApply = async (row) => {
 		try {
+			setLoading(true);
 
-			const jobId = row.fullData._id;
-			console.log(jobId);
-			const result = await applyJob(jobId);
+			const job = selectedJob || viewJob
+
+			if (!job || !job._id) {
+				toast.error("Job data missing");
+				return;
+			}
+
+			const result = await applyJob(job._id);
+
 			if (result.success) {
-				toast.success(result.message)
-				// alert("hello")
+				toast.success(result.message);
+				setSelectedJob(prev => ({
+					...prev,
+					alreadyApplied: true
+				}))
+			} else {
+				toast.error(result.message || "Apply failed");
 			}
-			else {
-
-				toast.error(result.message);
-
-
-			}
-
 
 		} catch (error) {
-			toast.error("Something went wrong")
+			toast.error("Something went wrong");
+		} finally {
+			setLoading(false);
 		}
-	}
+	};
 	return {
 		handleView,
 		closeView,
 		viewJob,
-		handleApply
+		handleApply,
+		loading
 	}
 }
 

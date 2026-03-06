@@ -334,9 +334,20 @@ export const JJobList = async (req, res) => {
 //api for job apply by the jobseeker
 
 export const applyJob = async (req, res) => {
-	const jobId = req.params.id;
-	const applicantId = req.user.id;
 	try {
+		const jobId = req.params.id;
+		const applicantId = req.user.id;
+		const alreadyApplied = await JobApplication.findOne({
+			jobId, applicantId
+		})
+
+		if (alreadyApplied) {
+			return res.status(400).json({
+				status: 0,
+				message: "Already Apllied "
+			})
+		}
+
 		const application = await JobApplication.create({
 			jobId, applicantId
 		})
@@ -348,7 +359,8 @@ export const applyJob = async (req, res) => {
 	} catch (error) {
 		return res.status(500).json({
 			status: 0,
-			message: " Failed to Apply Job"
+			message: " Failed to Apply Job",
+			// error: error
 		}
 		)
 	}

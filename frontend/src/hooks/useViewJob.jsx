@@ -19,17 +19,19 @@ function useViewJob() {
 			console.log(jobId);
 			const result = await applyJob(jobId);
 			if (result.success) {
-				toast.success("Job Applied Successfully")
+				toast.success(result.message)
 				// alert("hello")
 			}
 			else {
 
-				toast.error("Failed To apply Job")
+				toast.error(result.message);
+
+
 			}
 
 
 		} catch (error) {
-
+			toast.error("Something went wrong")
 		}
 	}
 	return {

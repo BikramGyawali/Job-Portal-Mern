@@ -187,13 +187,15 @@ export const applyJob = async (jobId) => {
 		}
 		return {
 			success: false,
-			message: response?.data?.message
+			message: response.data?.message
+
 		}
+
 
 	} catch (error) {
 		return {
 			success: false,
-			error: error.message
+			message: error?.response?.data?.message || "Failed to apply Job"
 		}
 	}
 }

@@ -7,9 +7,10 @@ function JobDetails({
 	showApply = false,
 	showClose = false,
 	onApply,
-	onClose
+	onClose,
+	
 }) {
-	console.log(job);
+	// console.log(job);
 
 
 

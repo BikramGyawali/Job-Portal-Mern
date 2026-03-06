@@ -181,13 +181,14 @@ export const applyJob = async (jobId) => {
 			return {
 				success: true,
 				message: "Job Applied Successfully",
-
+				
 
 			}
 		}
 		return {
 			success: false,
-			message: response.data?.message
+			message: response.data?.message,
+			jobs:response
 
 		}
 

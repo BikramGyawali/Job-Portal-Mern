@@ -12,7 +12,7 @@ import JobDetails from "../../../common/JobDetails";
 
 function JobListing() {
 	const { fetchMyJobs, myJobs } = useContext(JobPostContext)
-	const { viewJob, handleView, closeView,handleApply } = useViewJob()
+	const { viewJob, handleView, closeView, handleApply } = useViewJob()
 	useEffect(() => {
 		fetchMyJobs();
 	}, [])
@@ -21,14 +21,14 @@ function JobListing() {
 
 	const actionHandler = {
 		view: handleView,
-		apply:handleApply
+		apply: handleApply
 	}
 	return (
 		<div>
 
 			<DashTable title="Job Listing" headData={DashboardHeadData} bodyData={myJobs} actionHandler={actionHandler} />
 			{viewJob && (
-				<JobDetails onClose={closeView} job={viewJob} showApply={true} showClose={true} />
+				<JobDetails onClose={closeView} job={viewJob} showApply={true} showClose={true} onApply={handleApply} />
 			)
 			}
 		</div>

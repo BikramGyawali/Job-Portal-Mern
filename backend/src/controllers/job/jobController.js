@@ -227,12 +227,15 @@ export const rejectJob = async (req, res) => {
 // }
 
 
+//joblist for employers
 export const EMyJobs = async (req, res) => {
 	const id = req.user.id;
+	console.log(id);
+
 	try {
 		const jobs = await PostJob.aggregate([
 			{
-				$match: { userId: id }
+				$match: { userId: new mongoose.Types.ObjectId(id) }
 			},
 			{
 				$lookup: {
@@ -245,7 +248,7 @@ export const EMyJobs = async (req, res) => {
 			},
 			{
 				$addFields: {
-					applicationCount: { $size: "applications" }
+					applicationCount: { $size: "$applications" }
 				}
 			},
 			{
@@ -254,6 +257,8 @@ export const EMyJobs = async (req, res) => {
 				}
 			}
 		])
+		console.log(jobs.userId);
+
 		if (!jobs.length) {
 			return res.status(404).json({
 				status: 0,
@@ -273,6 +278,7 @@ export const EMyJobs = async (req, res) => {
 		})
 	}
 }
+
 
 
 //job list controller for jobseeker
@@ -307,13 +313,22 @@ export const JJobList = async (req, res) => {
 			skills: { $in: formattedSkills },
 			status: "approved"
 		}).lean();
+
 		if (!result.length) {
 			return res.status(404).json({
 				status: 0,
 				message: "No Jobs found according to your skills"
 			});
 		}
-		const jobWithCompany = await addCompanyName(result)
+		const applications = await JobApplication.find({
+			applicantId: id
+		})
+		const appliedJob = applications.map(app => app.jobId.toString()); //toString to conver the object id into string
+		const jobWithAppliedStatus = result.map(job => ({
+			...job,
+			alreadyApplied: appliedJob.includes(job._id.toString())
+		}))
+		const jobWithCompany = await addCompanyName(jobWithAppliedStatus)
 
 		return res.status(200).json({
 			status: 1,

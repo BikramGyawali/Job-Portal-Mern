@@ -14,7 +14,7 @@ function DashTable({ title, headData, bodyData, actionHandler }) {
 	// console.log(bodyData);
 
 	// console.log(headData);
-	console.log(actionHandler);
+	// console.log(actionHandler);
 
 
 

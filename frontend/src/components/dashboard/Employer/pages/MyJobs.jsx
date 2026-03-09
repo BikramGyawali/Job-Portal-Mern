@@ -21,7 +21,7 @@ function MyJobs() {
 
 				const transformjobs = jobs.map((job, index) => {
 
-
+					console.log(jobs);
 					const { formattedDate, remainingDays } = calculateJobDates(
 						job.postingDate,
 						job.postingPeriod
@@ -41,10 +41,12 @@ function MyJobs() {
 						"Job Title": job.jobTitle,
 						"Posted at": formattedDate,
 						"Expires In": remainingDays > 0 ? `${remainingDays} days` : "Expired",
-						"Applicant": job.applicantionCount > 0 ? `${job.applicantionCount}` : "0",
+						"Applicants": job.applicationCount
+							> 0 ? `${job.applicationCount
+							}` : "0",
 						"View All / Reason": job.status === "rejected"
 							? <RejectionReasonView reason={job.rejectionReason} />
-							: null,
+							: job.applicationCount > 0 ? "view" : null,
 						"Status": statusLabel,
 						"Actions": ["edit", "delete"]
 					};
@@ -56,7 +58,7 @@ function MyJobs() {
 
 		fetchJobs();
 	}, [profile]);
-	console.log(jobs);
+	// console.log(jobs);
 
 	const handleEdit = (row) => {
 		console.log(profile);

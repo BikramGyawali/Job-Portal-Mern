@@ -239,7 +239,7 @@ export const EMyJobs = async (req, res) => {
 			},
 			{
 				$lookup: {
-					from: "jobapplication",
+					from: "jobapplications",
 					localField: "_id",
 					foreignField: "jobId",
 					as: "applications"
@@ -257,7 +257,7 @@ export const EMyJobs = async (req, res) => {
 				}
 			}
 		])
-		console.log(jobs.userId);
+		// console.log(jobs.applicat);
 
 		if (!jobs.length) {
 			return res.status(404).json({
@@ -351,9 +351,17 @@ export const JJobList = async (req, res) => {
 export const applyJob = async (req, res) => {
 	try {
 		const jobId = req.params.id;
-		const applicantId = req.user.id;
+		const profile = await JobseekerProfile.findOne({
+			userId: req.user.id
+		})
+		if (!profile) {
+			return res.status(400).json({
+				status: 0,
+				message: "No Profile Found "
+			})
+		}
 		const alreadyApplied = await JobApplication.findOne({
-			jobId, applicantId
+			jobId, applicantId: profile._id
 		})
 
 		if (alreadyApplied) {
@@ -364,7 +372,7 @@ export const applyJob = async (req, res) => {
 		}
 
 		const application = await JobApplication.create({
-			jobId, applicantId
+			jobId, applicantId: profile._id
 		})
 		return res.status(200).json({
 			status: 1,
@@ -388,7 +396,9 @@ export const applyJob = async (req, res) => {
 export const getApplicant = async (req, res) => {
 	const id = req.params.id
 	try {
-		const applicants = await JobApplication.find({ jobId: id }).populate("applicantId")
+		const applicants = await JobApplication.find({ jobId: id }).populate("applicantId").populate("jobId")
+		console.log(applicants);
+
 		if (!applicants.length) {
 			return res.status(404).json({
 				status: 0,
@@ -404,7 +414,7 @@ export const getApplicant = async (req, res) => {
 		return res.status(500).json({
 			status: 0,
 			message: "Failed to fetch applicants list",
-			error: error
+			error
 		})
 	}
 }

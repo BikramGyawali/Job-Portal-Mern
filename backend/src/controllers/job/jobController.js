@@ -396,7 +396,7 @@ export const applyJob = async (req, res) => {
 export const getApplicant = async (req, res) => {
 	const id = req.params.id
 	try {
-		const applicants = await JobApplication.find({ jobId: id }).populate("applicantId").populate("jobId")  //populate helps us to get the actual data by the reference id 
+		const applicants = await JobApplication.find({ jobId: id }).populate("applicantId").populate("jobId", "jobTitle")  //populate helps us to get the actual data by the reference id 
 		console.log(applicants);
 
 		if (!applicants.length) {

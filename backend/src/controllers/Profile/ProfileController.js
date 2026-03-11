@@ -313,36 +313,3 @@ export const getEProfile = async (req, res) => {
 		res.status(500).json({ status: 0, message: err.message });
 	}
 }
-
-// Upload CV (jobseeker)
-// export const uploadJCV = async (req, res) => {
-// 	try {
-// 		const userId = req.user.id;
-// 		if (!req.file) return res.status(400).json({ status: 0, message: "No CV uploaded" });
-// 		const profile = await JobseekerProfile.findOne({ userId });
-// 		if (!profile) return res.status(404).json({ status: 0, message: "Profile not found" });
-// 		profile.cv = req.file.filename;
-// 		await profile.save();
-// 		res.status(200).json({ status: 1, message: "CV uploaded", cv: profile.cv });
-// 	} catch (err) {
-// 		console.error(err);
-// 		res.status(500).json({ status: 0, message: err.message });
-// 	}
-// }
-
-// // Download CV (jobseeker)
-// export const downloadJCV = async (req, res) => {
-// 	try {
-// 		const userId = req.user.id;
-// 		const profile = await JobseekerProfile.findOne({ userId });
-// 		if (!profile || !profile.cv) return res.status(404).json({ status: 0, message: "CV not found" });
-// 		const cvPath = path.join(process.cwd(), "public/uploads/cvs", profile.cv);
-// 		if (!fs.existsSync(cvPath)) return res.status(404).json({ status: 0, message: "CV file missing" });
-// 		res.download(cvPath, `${profile.fname || 'resume'}.pdf`);
-// 	} catch (err) {
-// 		console.error(err);
-// 		res.status(500).json({ status: 0, message: err.message });
-// 	}
-// }
-
-

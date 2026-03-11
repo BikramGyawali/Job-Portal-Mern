@@ -198,34 +198,6 @@ export const rejectJob = async (req, res) => {
 }
 
 
-// Jobs post from the employers
-
-// export const EMyJobs = async (req, res) => {
-// 	const id = req.user.id;
-
-// 	try {
-
-// 		const jobs = await PostJob.find({ userId: id });
-// 		if (!jobs.length) {
-// 			return res.status(404).json({
-// 				status: 0,
-// 				message: "No Jobs Post By You"
-// 			});
-
-// 		}
-// 		return res.status(200).json({
-// 			status: 1,
-// 			message: "All jobs are fetched",
-// 			jobs
-// 		})
-// 	} catch (error) {
-// 		return res.status(500).json({
-// 			status: 0,
-// 			message: "Failed to  fetched jobs"
-// 		})
-// 	}
-// }
-
 
 //joblist for employers
 export const EMyJobs = async (req, res) => {

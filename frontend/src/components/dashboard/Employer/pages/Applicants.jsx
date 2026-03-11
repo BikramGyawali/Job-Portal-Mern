@@ -37,7 +37,7 @@ function Applicants() {
 	}
 	return (
 		<div>
-			<DashTable headData={ApplicantHead} bodyData={applicants} title="Applicant " actionHandler={actionHandler} />
+			<DashTable headData={ApplicantHead} bodyData={ApplicantBody} title="Applicant " actionHandler={actionHandler} />
 
 		</div>
 	)

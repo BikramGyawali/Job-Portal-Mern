@@ -367,7 +367,7 @@ export const applyJob = async (req, res) => {
 		if (alreadyApplied) {
 			return res.status(400).json({
 				status: 0,
-				message: "Already Apllied "
+				message: "Already Apllied"
 			})
 		}
 
@@ -387,6 +387,7 @@ export const applyJob = async (req, res) => {
 		}
 		)
 	}
+
 }
 
 

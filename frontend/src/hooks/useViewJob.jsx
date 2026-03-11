@@ -20,6 +20,8 @@ function useViewJob() {
 			toast.error("Job data not found");
 			return;
 		}
+		console.log(jobData);
+
 		setSelectedJob(jobData)
 		setViewJob(jobData);
 	};
@@ -41,10 +43,10 @@ function useViewJob() {
 
 			if (result.success) {
 				toast.success(result.message);
-				setSelectedJob(prev => ({
-					...prev,
-					alreadyApplied: true
-				}))
+
+
+				setSelectedJob(prev => prev ? { ...prev, alreadyApplied: true } : null);
+				setViewJob(prev => prev ? { ...prev, alreadyApplied: true } : null);
 			} else {
 				toast.error(result.message || "Apply failed");
 			}
@@ -55,6 +57,8 @@ function useViewJob() {
 			setLoading(false);
 		}
 	};
+
+
 	return {
 		handleView,
 		closeView,

@@ -89,7 +89,7 @@ function ApproveAccounts() {
 			<DashTable headData={DashboardTableHeadData} bodyData={transformedProfile} title={`Pending Profile( ${transformedProfile.length})`} actionHandler={actionHandler} />
 
 
-			{viewData && <ViewProfileModal profile={viewData} role={viewData.role} onClose={closeView} />}
+			{viewData && (<ViewProfileModal profile={viewData} role={viewData.role} onClose={closeView} />)}
 		</div>
 	)
 }

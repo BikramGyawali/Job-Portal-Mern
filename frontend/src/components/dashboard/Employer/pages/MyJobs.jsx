@@ -1,14 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
+
 import DashTable from '../../../common/DashTable'
-import { MyJobsTableBody, MyJobsTableHead } from '../../../../data/employers/DashboardData'
+import { MyJobsTableHead } from '../../../../data/employers/DashboardData'
 import { EMyJobs } from '../../../../services/jobService'
 import { ProfileContext } from '../../../../context/ProfileContext'
 import RejectionReasonView from '../../../common/RejectionReasonView'
 import { calculateJobDates } from '../../../../utils/JobDataUtils'
 
+import ViewApplicant from '../../../common/ViewApplicant';
+
 function MyJobs() {
 	const { profile } = useContext(ProfileContext)
+	const navigate = useNavigate();
 
+	const [selectedJob, setSelectedJob] = useState(null);
 	const [jobs, setJobs] = useState([]);
 	useEffect(() => {
 		const fetchJobs = async () => {
@@ -18,10 +24,11 @@ function MyJobs() {
 
 			if (response?.success) {
 				const jobs = response.jobs;
+				console.log(jobs);
 
 				const transformjobs = jobs.map((job, index) => {
 
-					console.log(jobs);
+
 					const { formattedDate, remainingDays } = calculateJobDates(
 						job.postingDate,
 						job.postingPeriod
@@ -46,12 +53,11 @@ function MyJobs() {
 							}` : "0",
 						"View All / Reason": job.status === "rejected"
 							? <RejectionReasonView reason={job.rejectionReason} />
-							: job.applicationCount > 0 ? "view" : null,
+							: job.applicationCount > 0 ? <ViewApplicant  jobId={job._id}/>: null,
 						"Status": statusLabel,
 						"Actions": ["edit", "delete"]
 					};
 				});
-
 				setJobs(transformjobs);
 			}
 		};
@@ -76,6 +82,7 @@ function MyJobs() {
 	return (
 		<div>
 			<DashTable headData={MyJobsTableHead} bodyData={jobs} title="My Jobs" actionHandler={actionHandler} />
+			
 		</div>
 	)
 }

@@ -181,14 +181,14 @@ export const applyJob = async (jobId) => {
 			return {
 				success: true,
 				message: "Job Applied Successfully",
-				
+
 
 			}
 		}
 		return {
 			success: false,
 			message: response.data?.message,
-			jobs:response
+			jobs: response
 
 		}
 
@@ -197,6 +197,33 @@ export const applyJob = async (jobId) => {
 		return {
 			success: false,
 			message: error?.response?.data?.message || "Failed to apply Job"
+		}
+	}
+}
+
+
+
+//get all applicant 
+
+export const getApplicants = async (jobId) => {
+	try {
+		const response = await api.get(`/job/applicants/${jobId}`);
+		if (response.data?.status === 1) {
+			return {
+				success: true,
+				message: "List of all applicants"
+			}
+		}
+		return {
+			success: false,
+			message: response.data?.message,
+			applicants: response
+
+		}
+	} catch (error) {
+		return {
+			success: false,
+			message: error?.response?.data?.message || "Failed to fetch applicants"
 		}
 	}
 }

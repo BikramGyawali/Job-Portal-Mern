@@ -419,3 +419,31 @@ export const getApplicant = async (req, res) => {
 		})
 	}
 }
+
+
+
+// get all applicants
+
+export const getAllApplicant = async (req, res) => {
+	try {
+		const userId = req.user.id;
+
+		const jobs = await PostJob.find({ userId }).lean();
+		if (!jobs.length) {
+			return res.status(400).json({
+				status: 0,
+				message: "Jobs are not posted by you"
+			})
+		}
+		const jobWithApplicant = await Promise.all(
+			jobs.map(async (job, idx) => {
+				{
+					const applicant = await JobApplication.find({ jobId: job._id }).populate("applicantId").popupate("jobId", "jobTitle").lean()
+				}
+				// const totalApplicant
+			})
+		)
+	} catch (error) {
+
+	}
+}

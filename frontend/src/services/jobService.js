@@ -227,3 +227,28 @@ export const getApplicants = async (jobId) => {
 		}
 	}
 }
+
+
+//get all applicants
+
+export const getAllApplicants = async () => {
+	try {
+		const response = await api.get(`/job/allapplicants`);
+		if (response.data?.status === 1) {
+			return {
+				success: true,
+				jobs: response.data?.jobs,
+				message: response?.data?.message
+			}
+		}
+		return {
+			success: false,
+			message: response.data?.message
+		}
+	} catch (error) {
+		return {
+			success: false,
+			message: error?.response?.data?.message || "Failed to fetch applicants"
+		}
+	}
+}

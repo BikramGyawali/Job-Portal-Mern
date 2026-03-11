@@ -12,9 +12,9 @@ import ViewApplicant from '../../../common/ViewApplicant';
 
 function MyJobs() {
 	const { profile } = useContext(ProfileContext)
-	const navigate = useNavigate();
 
-	const [selectedJob, setSelectedJob] = useState(null);
+
+
 	const [jobs, setJobs] = useState([]);
 	useEffect(() => {
 		const fetchJobs = async () => {
@@ -24,7 +24,7 @@ function MyJobs() {
 
 			if (response?.success) {
 				const jobs = response.jobs;
-				console.log(jobs);
+			
 
 				const transformjobs = jobs.map((job, index) => {
 
@@ -53,7 +53,7 @@ function MyJobs() {
 							}` : "0",
 						"View All / Reason": job.status === "rejected"
 							? <RejectionReasonView reason={job.rejectionReason} />
-							: job.applicationCount > 0 ? <ViewApplicant  jobId={job._id}/>: null,
+							: job.applicationCount > 0 ? <ViewApplicant jobId={job._id} /> : null,
 						"Status": statusLabel,
 						"Actions": ["edit", "delete"]
 					};
@@ -82,7 +82,7 @@ function MyJobs() {
 	return (
 		<div>
 			<DashTable headData={MyJobsTableHead} bodyData={jobs} title="My Jobs" actionHandler={actionHandler} />
-			
+
 		</div>
 	)
 }

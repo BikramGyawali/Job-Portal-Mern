@@ -63,7 +63,7 @@ export const MyJobsTableBody = [{
 }]
 
 //for applicant data
-export const ApplicantHead = ["Job Title", "Applicant Name", "Email", "Phone", "Applied At", "Actions"]
+export const ApplicantHead = ["S.N", "Job Title", "Applicant Name", "Email", "Phone", "Applied At", "Actions"]
 
 
 

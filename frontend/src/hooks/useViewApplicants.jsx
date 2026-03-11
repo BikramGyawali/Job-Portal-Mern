@@ -9,7 +9,9 @@ function useViewApplicants() {
 			toast.error("Something went wrong")
 			return;
 		}
-		const applicantData = row?.fullData?.applicantId;
+		const applicantData = row?.fullData?.applicantId || row?.fullData?._id;
+		
+
 		if (!applicantData) {
 			toast.error("Not Data Found");
 			return;

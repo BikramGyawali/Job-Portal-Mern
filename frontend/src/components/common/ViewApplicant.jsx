@@ -17,45 +17,7 @@ function ViewApplicant({ jobId, onClose }) {
 		shortlist: "hehe",
 		reject: "handleReject"
 	}
-	// useEffect(() => {
-	// 	if
-	// 	const fetchApplicants = async () => {
-	// 		try {
-	// 			const res = await getApplicants(jobId);
-	// 			if (res?.success) {
-	// 				const formatted = res.applicants.map((app, idx) => {
-	// 					const {
-	// 						jobId: { jobTitle } = {},
-	// 						applicantId,
-	// 						appliedAt,
 
-	// 					} = app;
-	// 					const { fname, sname, email, phone } = applicantId || {};
-	// 					return {
-	// 						"Job Title": jobTitle || "N/A",
-
-	// 						"Applicant Name": fname ? `${fname} ${sname}` : "Deleted User",
-	// 						"Phone": phone || "N/A",
-	// 						"Email": email || "N/A",
-	// 						"Applied At": new Date(appliedAt).toLocaleDateString(),
-	// 						"Actions": ["view", "shortlist", "reject"],
-	// 						fullData: app
-	// 					}
-
-
-
-	// 				})
-	// 				setApplicants(formatted)
-	// 			}
-	// 			console.log(formatted);
-
-	// 		} catch (error) {
-	// 			console.log(error);
-
-	// 		}
-	// 	}
-	// 	fetchApplicants()
-	// }, [jobId])
 	useEffect(() => {
 		if (!open) return;
 

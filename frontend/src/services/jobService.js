@@ -211,13 +211,13 @@ export const getApplicants = async (jobId) => {
 		if (response.data?.status === 1) {
 			return {
 				success: true,
-				message: "List of all applicants"
+				message: "List of all applicants",
+				applicants: response
 			}
 		}
 		return {
 			success: false,
-			message: response.data?.message,
-			applicants: response
+			message: response.data?.message
 
 		}
 	} catch (error) {

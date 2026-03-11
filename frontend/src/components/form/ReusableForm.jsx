@@ -66,10 +66,10 @@ function ReusableForm({
 						{field.label} {field.required && "*"}
 					</label>
 
-				
+
 					{field.type === "select" ? (
 						field.multiple ? (
-						
+
 							<Select
 								isMulti
 								name={field.name}
@@ -83,22 +83,22 @@ function ReusableForm({
 								}))}
 								onChange={
 									(selectedOptions) => {
-									const values = selectedOptions
-										? selectedOptions.map(option => option.value)
-										: [];
+										const values = selectedOptions
+											? selectedOptions.map(option => option.value)
+											: [];
 
-									onChange({
-										target: {
-											name: field.name,
-											value: values
-										}
-									});
-								}}
+										onChange({
+											target: {
+												name: field.name,
+												value: values
+											}
+										});
+									}}
 								className="basic-multi-select"
 								classNamePrefix="select"
 							/>
 						) : (
-							
+
 							<Select
 								name={field.name}
 								options={field.options?.map(opt => ({
@@ -170,8 +170,17 @@ function ReusableForm({
 									placeholder={field.placeholder}
 									className="p-2 border rounded-xl"
 								/>
-							)
-								: (
+							):field.type==="file"? (
+									<input
+										type={field.type}
+										name={field.name}
+										// value={form[field.name] !== undefined ? form[field.name] : ""}
+
+										onChange={onChange}
+										placeholder={field.placeholder}
+										className="p-2 border rounded-xl"
+									/>
+								): (
 									<input
 										type={field.type}
 										name={field.name}

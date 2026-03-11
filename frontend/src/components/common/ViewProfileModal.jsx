@@ -18,8 +18,8 @@ export function ViewProfileModal({ profile, role, onClose }) {
 		downloadResume(resumeRef)
 	}
 	return (
-		<div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-			<div className="bg-white rounded-xl w-auto max-h-[80vh] overflow-y-auto p-6 shadow-lg">
+		<div className="fixed inset-0 bg-black/40 flex items-center justify-end pr-5 z-50">
+			<div className="bg-white rounded-xl w-[75%] max-h-[80vh] overflow-y-auto p-6 shadow-lg">
 				<h2 className="text-xl font-semibold mb-4 text-center">{role === 'employer' ? (profile.profileData?.companyName || profile.companyName || profile.email) : null}</h2>
 
 				{role === 'employer' ? (

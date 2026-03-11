@@ -398,24 +398,96 @@ export const getApplicant = async (req, res) => {
 
 export const getAllApplicant = async (req, res) => {
 	try {
-		const userId = req.user.id;
+		const id = req.user.id
+		const jobs = await PostJob.aggregate([
+			{
+				$match: {
+					userId: new mongoose.Types.ObjectId(id)
+				}
+			},
+			{
+				$lookup: {
+					from: "jobapplications",
 
-		const jobs = await PostJob.find({ userId }).lean();
+					let: { jobId: "$_id" },
+
+					pipeline: [
+						{
+							$match: {
+								$expr: { $eq: ["$jobId", "$$jobId"] }
+							}
+						}
+					],
+					as: "applications"
+
+				}
+			},
+			{
+				$unwind: {
+					path: "$applications",
+					preserveNullAndEmptyArrays: true
+				}
+			},
+			{
+				$lookup: {
+					from: "jobseekerprofiles",
+					let: { applicantId: "$applications.applicantId" },
+					pipeline: [
+						{
+							$match: {
+								$expr: { $eq: ["$_id", "$$applicantId"] }
+							}
+						}
+					],
+					as: "applications.applicantProfile"
+				}
+			},
+			{
+				$unwind: {
+					path: "$applications.applicantProfile",
+					preserveNullAndEmptyArrays: true
+				}
+			},
+			{
+				$group: {
+					_id: "$_id",
+					jobTitle: { $first: "$jobTitle" },
+					applications: { $push: "$applications" },
+					applicantsPerJob: { $sum: 1 }
+				}
+			},
+			{
+				$group: {
+					_id: null,
+					jobs: {
+						$push: {
+							jobId: "$_id",
+							jobTitle: "$jobTitle",
+							applications: "$applications",
+							applicantsPerJob: "$applicantsPerJob"
+						}
+					},
+					totalApplicants: { $sum: "$applicantsPerJob" }
+				}
+			}
+		]);
+
 		if (!jobs.length) {
 			return res.status(400).json({
 				status: 0,
-				message: "Jobs are not posted by you"
+				message: "No Jobs to fetch"
 			})
 		}
-		const jobWithApplicant = await Promise.all(
-			jobs.map(async (job, idx) => {
-				{
-					const applicant = await JobApplication.find({ jobId: job._id }).populate("applicantId").popupate("jobId", "jobTitle").lean()
-				}
-				// const totalApplicant
-			})
-		)
+		return res.status(200).json({
+			status: 1,
+			message: "Fetch all applicants",
+			jobs
+		})
 	} catch (error) {
-
+		return res.status(500).json({
+			status: 0,
+			message: "Error in fetching",
+			error: error.message
+		})
 	}
 }

@@ -32,7 +32,7 @@ function Applicants() {
 
 					safeApplications.forEach((application) => {
 						const { applicantProfile, appliedAt, status } = application
-						const { fname, mname, sname, email, phone, image } = applicantProfile || {}
+						const { fname, mname, sname, email, phone } = applicantProfile || {}
 
 						formatted.push({
 							"S.N": "",
@@ -80,18 +80,18 @@ function Applicants() {
 	}
 
 	return (
-		<div className="flex flex-col gap-4">
+		<div className="flex flex-col gap-2">
 			<div className="flex items-center justify-between px-2">
 				<h2 className="text-xl font-semibold text-gray-800">All Applicants</h2>
-				<span className="bg-blue-100 text-blue-700 text-sm font-medium px-4 py-1 rounded-full">
+				<h3 className="bg-blue-100 text-blue-700  p-1 rounded-full ">
 					Total Applicants: {totalApplicants}
-				</span>
+				</h3>
 			</div>
 
 			<DashTable
 				headData={ApplicantHead}
 				bodyData={applicants}
-				title="Applicants"
+				// title="All Applicants"
 				actionHandler={actionHandler}
 			/>
 

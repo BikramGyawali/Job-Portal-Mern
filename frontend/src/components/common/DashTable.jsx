@@ -36,7 +36,7 @@ function DashTable({ title, headData, bodyData, actionHandler }) {
 				<TableHead >
 					<TableRow >
 						{headData.map((head, i) => (
-							<TableHeadCell key={i} className="!text-black !font-bold !bg-gray-100">
+							<TableHeadCell key={i} className="!text-black !font-bold !bg-gray-100 text-center">
 								{head}
 							</TableHeadCell>
 						))}

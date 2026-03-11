@@ -27,12 +27,14 @@ function useViewJob() {
 	};
 	const closeView = () => {
 		setViewJob(null)
+
+		setSelectedJob(null)
 	}
 	const handleApply = async (row) => {
 		try {
 			setLoading(true);
-
-			const job = selectedJob || viewJob
+			const jobData = row?.fullData ?? row;
+			const job = (jobData?._id ? jobData : null) || viewJob || selectedJob
 
 			if (!job || !job._id) {
 				toast.error("Job data missing");
@@ -45,8 +47,13 @@ function useViewJob() {
 				toast.success(result.message);
 
 
-				setSelectedJob(prev => prev ? { ...prev, alreadyApplied: true } : null);
-				setViewJob(prev => prev ? { ...prev, alreadyApplied: true } : null);
+				setViewJob(prev =>
+					prev?._id === job._id ? { ...prev, alreadyApplied: true } : prev
+				)
+				setSelectedJob(prev =>
+					prev?._id === job._id ? { ...prev, alreadyApplied: true } : prev
+				)
+
 			} else {
 				toast.error(result.message || "Apply failed");
 			}

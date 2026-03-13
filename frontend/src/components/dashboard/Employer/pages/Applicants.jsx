@@ -31,13 +31,12 @@ function Applicants() {
 					const safeApplications = Array.isArray(applications) ? applications : []
 
 					safeApplications.forEach((application) => {
-						const { applicantProfile, appliedAt, status } = application
-						const { fname, mname, sname, email, phone, _id } = applicantProfile || {}
+						const { applicantProfile, appliedAt, status, _id } = application
+						const { fname, mname, sname, email, phone, } = applicantProfile || {}
 
 						formatted.push({
 							"S.N": "",
-							"jobId": jobId,
-							"applicantId": _id,
+
 							"Job Title": jobTitle || "N/A",
 							"Applicant Name": fname ? `${fname} ${sname}` : "N/A",
 							"Phone": phone || "N/A",
@@ -51,7 +50,8 @@ function Applicants() {
 								: "N/A",
 							"Status": status || "pending",
 							"Actions": ["view", "shortlist", "reject"],
-							fullData: applicantProfile
+							fullData: applicantProfile,
+							applicationId: _id
 						})
 					})
 				})

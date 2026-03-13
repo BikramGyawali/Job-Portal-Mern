@@ -504,62 +504,36 @@ export const getAllApplicant = async (req, res) => {
 
 export const ShortlistApplicant = async (req, res) => {
 	try {
-		const userId = req.user.id;
-		const applicantId = req.params.id;
-		const employerId = await EmployerProfile.findOne({
-			userId
-		}, { _id: 1 }).lean() //get id only
-		const applicant = await PostJob.updateMany(
-			{ status: "pending" },
-			{
-				updateId: new mongoose.Types.ObjectId(applicantId)
-			}
-			[
-			{
-				$match: {
-					userId: new mongoose.Types.ObjectId(employerId)
-				}
-			},
-			{
-				$lookup: {
-					from: "jobapplications",
-					let: { "jobId": _id },
-					pipeline: [
-						{
-							$match: {
-								$expr: { $eq: ["$jobId", "$$jobId"] }
-							}
-						}
-					],
-					as: "applications"
-				}
-			},
-			{
-				$set: {
-					status: {
-						$cond: {
-							if: { $eq: ["$applications.applicantId", "updateId"] }, then: "shortlisted", else: "pending"
-						}
-					}
-				}
-			}
+		const applicationId = req.params.id
 
-			])
-		if (!applicant) {
+		const application = await JobApplication.findOneAndUpdate(
+			{
+				_id: new mongoose.Types.ObjectId(applicationId),
+				status: "pending"
+			},
+			{
+				$set: { status: "shortlisted" }
+			},
+			{ new: true }
+		)
+
+		if (!application) {
 			return res.status(404).json({
 				status: 0,
-				message: "No applicant are applied"
+				message: "Application not found or already processed"
 			})
 		}
 
 		return res.status(200).json({
 			status: 1,
-			message: "Job approved successfully"
+			message: "Applicant shortlisted successfully",
+			application
 		})
+
 	} catch (error) {
-		res.status(500).json({
+		return res.status(500).json({
 			status: 0,
-			message: "Failed to shorlist",
+			message: "Failed to shortlist",
 			error: error.message
 		})
 	}

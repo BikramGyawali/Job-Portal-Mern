@@ -396,119 +396,7 @@ export const getApplicant = async (req, res) => {
 
 // get all applicants
 
-// export const getAllApplicant = async (req, res) => {
-// 	try {
-// 		const id = req.user.id
-// 		const jobs = await PostJob.aggregate([
-// 			{
-// 				$match: {
-// 					userId: new mongoose.Types.ObjectId(id)
-// 				}
-// 			},
-// 			{
-// 				$lookup: {
-// 					from: "jobapplications",
 
-// 					let: { jobId: "$_id" },
-
-// 					pipeline: [
-// 						{
-// 							$match: {
-// 								$expr: { $eq: ["$jobId", "$$jobId"] }
-// 							}
-// 						}
-// 					],
-// 					as: "applications"
-
-// 				}
-// 			},
-// 			{
-// 				$unwind: {
-// 					path: "$applications",
-// 					preserveNullAndEmptyArrays: true
-// 				}
-// 			},
-// 			{
-// 				$lookup: {
-// 					from: "jobseekerprofiles",
-// 					let: { applicantId: "$applications.applicantId" },
-// 					pipeline: [
-// 						{
-// 							$match: {
-// 								$expr: { $eq: ["$_id", "$$applicantId"] }
-// 							}
-// 						}
-// 					],
-// 					as: "applications.applicantProfile"
-// 				}
-// 			},
-// 			{
-// 				$unwind: {
-// 					path: "$applications.applicantProfile",
-// 					preserveNullAndEmptyArrays: true
-// 				}
-// 			},
-// 			{
-// 				$group: {
-// 					_id: "$_id",
-// 					jobTitle: { $first: "$jobTitle" },
-// 					applications: { $push: "$applications" },
-// 					applicantsPerJob: { $sum: 1 }
-// 				}
-// 			},
-// 			{
-// 				$group: {
-// 					_id: null,
-// 					jobs: {
-// 						$push: {
-// 							jobId: "$_id",
-// 							jobTitle: "$jobTitle",
-// 							applications: "$applications",
-// 							applicantsPerJob: "$applicantsPerJob"
-// 						}
-// 					},
-// 					totalApplicants: { $sum: "$applicantsPerJob" }
-// 				}
-// 			},
-// 			{
-// 				$addFields: {
-// 					jobs: {
-// 						$map: {
-// 							input: "$jobs",
-// 							as: "job",
-// 							in: {
-// 								jobId: "$$job.jobId",
-// 								jobTitle: "$$job.jobTitle",
-// 								applicantsPerJob: "$$job.applicantsPerJob",
-// 								applications: {
-// 									$ifNull: ["$$job.applications", []]
-// 								}
-// 							}
-// 						}
-// 					}
-// 				}
-// 			}
-// 		]);
-
-// 		if (!jobs.length) {
-// 			return res.status(400).json({
-// 				status: 0,
-// 				message: "No Jobs to fetch"
-// 			})
-// 		}
-// 		return res.status(200).json({
-// 			status: 1,
-// 			message: "Fetch all applicants",
-// 			jobs
-// 		})
-// 	} catch (error) {
-// 		return res.status(500).json({
-// 			status: 0,
-// 			message: "Error in fetching",
-// 			error: error.message
-// 		})
-// 	}
-// }
 
 export const getAllApplicant = async (req, res) => {
 	try {
@@ -607,6 +495,71 @@ export const getAllApplicant = async (req, res) => {
 		return res.status(500).json({
 			status: 0,
 			message: "Error in fetching",
+			error: error.message
+		})
+	}
+}
+
+//shortlisted
+
+export const ShortlistApplicant = async (req, res) => {
+	try {
+		const userId = req.user.id;
+		const applicantId = req.params.id;
+		const employerId = await EmployerProfile.findOne({
+			userId
+		}, { _id: 1 }).lean() //get id only
+		const applicant = await PostJob.updateMany(
+			{ status: "pending" },
+			{
+				updateId: new mongoose.Types.ObjectId(applicantId)
+			}
+			[
+			{
+				$match: {
+					userId: new mongoose.Types.ObjectId(employerId)
+				}
+			},
+			{
+				$lookup: {
+					from: "jobapplications",
+					let: { "jobId": _id },
+					pipeline: [
+						{
+							$match: {
+								$expr: { $eq: ["$jobId", "$$jobId"] }
+							}
+						}
+					],
+					as: "applications"
+				}
+			},
+			{
+				$set: {
+					status: {
+						$cond: {
+							if: { $eq: ["$applications.applicantId", "updateId"] }, then: "shortlisted", else: "pending"
+						}
+					}
+				}
+			}
+
+			])
+		if (!applicant) {
+			return res.status(404).json({
+				status: 0,
+				message: "No applicant are applied"
+			})
+		}
+
+		return res.status(200).json({
+			status: 1,
+			message: "Job approved successfully"
+		})
+	} catch (error) {
+		res.status(500).json({
+			status: 0,
+			message: "Failed to shorlist",
 			error: error.message
 		})
 	}

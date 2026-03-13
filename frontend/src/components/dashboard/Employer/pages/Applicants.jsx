@@ -26,16 +26,18 @@ function Applicants() {
 				const formatted = []
 
 				allJobs.forEach((job) => {
-					const { jobTitle, applications } = job
+					const { jobTitle, applications, jobId } = job
 
 					const safeApplications = Array.isArray(applications) ? applications : []
 
 					safeApplications.forEach((application) => {
 						const { applicantProfile, appliedAt, status } = application
-						const { fname, mname, sname, email, phone } = applicantProfile || {}
+						const { fname, mname, sname, email, phone, _id } = applicantProfile || {}
 
 						formatted.push({
 							"S.N": "",
+							"jobId": jobId,
+							"applicantId": _id,
 							"Job Title": jobTitle || "N/A",
 							"Applicant Name": fname ? `${fname} ${sname}` : "N/A",
 							"Phone": phone || "N/A",

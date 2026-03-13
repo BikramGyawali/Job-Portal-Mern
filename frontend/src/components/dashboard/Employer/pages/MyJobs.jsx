@@ -24,7 +24,7 @@ function MyJobs() {
 
 			if (response?.success) {
 				const jobs = response.jobs;
-			
+
 
 				const transformjobs = jobs.map((job, index) => {
 

@@ -276,3 +276,31 @@ export const getAllApplicants = async () => {
 		}
 	}
 }
+
+
+
+//service for the shortlisted
+
+export const shortlistApplicant = async (applicationId) => {
+	try {
+		const response = await api.patch(`/employer/shortlist/${applicationId}`)
+
+		if (response.data?.status === 1) {
+			return {
+				success: true,
+				message: response.data.message
+			}
+		}
+
+		return {
+			success: false,
+			message: response.data?.message
+		}
+
+	} catch (error) {
+		return {
+			success: false,
+			message: error?.response?.data?.message || "Failed to shortlist"
+		}
+	}
+}

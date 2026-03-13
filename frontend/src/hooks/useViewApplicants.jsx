@@ -1,32 +1,64 @@
-import React from 'react'
+
 import { useState } from 'react'
-import { toast } from 'react-toastify';
+import { toast } from 'react-toastify'
+import { shortlistApplicant } from '../services/jobService'
 
-function useViewApplicants() {
-	const [viewApplicant, setViewApplicant] = useState(null);
+function useViewApplicants(onStatusUpdate) {
+	const [viewApplicant, setViewApplicant] = useState(null)
+	const [actionLoading, setActionLoading] = useState(false)
+
 	const handleView = (row) => {
-		if (!row) {
-			toast.error("Something went wrong")
-			return;
-		}
-		const applicantData = row?.fullData?.applicantId || row?.fullData;
-		// console.log(applicantData);
-
-
-		if (!applicantData) {
-			toast.error("Not Data Found");
-			return;
-		}
+		if (!row) { toast.error("Something went wrong"); return }
+		const applicantData = row?.fullData?.applicantId || row?.fullData
+		if (!applicantData) { toast.error("No Data Found"); return }
 		setViewApplicant(applicantData)
 	}
-	const closeView = () => {
-		setViewApplicant(null)
+
+	const closeView = () => setViewApplicant(null)
+
+	const handleShortList = async (row) => {
+		if (!row?.applicationId) {
+			toast.error("Application ID missing")
+			return
+		}
+
+		try {
+			setActionLoading(true)
+			const res = await shortlistApplicant(row.applicationId)
+
+			if (res.success) {
+				toast.success(res.message)
+
+
+				if (typeof onStatusUpdate === "function") {
+					onStatusUpdate(row.applicationId, "shortlisted")
+				}
+			} else {
+				toast.error(res.message || "Shortlist failed")
+			}
+		} catch (err) {
+			toast.error("Something went wrong")
+		} finally {
+			setActionLoading(false)
+		}
 	}
+
+	const handleReject = async (row) => {
+		if (!row?.applicationId) {
+			toast.error("Application ID missing")
+			return
+		}
+		// same pattern when reject is ready
+		console.log("reject:", row.applicationId)
+	}
+
 	return {
 		handleView,
 		viewApplicant,
-		closeView
-
+		closeView,
+		handleShortList,
+		handleReject,
+		actionLoading
 	}
 }
 

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+
+import React, { useState, useEffect, useCallback } from 'react'
 import DashTable from '../../../common/DashTable'
 import { ApplicantHead } from '../../../../data/employers/DashboardData'
 import { getAllApplicants } from '../../../../services/jobService'
@@ -9,67 +10,78 @@ function Applicants() {
 	const [applicants, setApplicants] = useState([])
 	const [totalApplicants, setTotalApplicants] = useState(0)
 	const [loading, setLoading] = useState(true)
-	const { viewApplicant, handleView, closeView } = useViewApplicants()
 
-	useEffect(() => {
-		const fetchAllApplicants = async () => {
-			try {
-				setLoading(true)
+	const fetchAllApplicants = useCallback(async () => {
+		try {
+			setLoading(true)
+			const res = await getAllApplicants()
+			if (!res?.success) return
 
-				const res = await getAllApplicants()
+			setTotalApplicants(res.totalApplicants || 0)
 
-				if (!res?.success) return
+			const allJobs = res.jobs || []
+			const formatted = []
 
-				setTotalApplicants(res.totalApplicants || 0)
+			allJobs.forEach((job) => {
+				const { jobTitle, applications } = job
+				const safeApplications = Array.isArray(applications) ? applications : []
 
-				const allJobs = res.jobs || []
-				const formatted = []
+				safeApplications.forEach((application) => {
+					const { applicantProfile, appliedAt, status, _id } = application
+					const { fname, sname, email, phone } = applicantProfile || {}
 
-				allJobs.forEach((job) => {
-					const { jobTitle, applications, jobId } = job
-
-					const safeApplications = Array.isArray(applications) ? applications : []
-
-					safeApplications.forEach((application) => {
-						const { applicantProfile, appliedAt, status, _id } = application
-						const { fname, mname, sname, email, phone, } = applicantProfile || {}
-
-						formatted.push({
-							"S.N": "",
-
-							"Job Title": jobTitle || "N/A",
-							"Applicant Name": fname ? `${fname} ${sname}` : "N/A",
-							"Phone": phone || "N/A",
-							"Email": email || "N/A",
-							"Applied At": appliedAt
-								? new Date(appliedAt).toLocaleDateString("en-US", {
-									year: "numeric",
-									month: "short",
-									day: "numeric"
-								})
-								: "N/A",
-							"Status": status || "pending",
-							"Actions": ["view", "shortlist", "reject"],
-							fullData: applicantProfile,
-							applicationId: _id
-						})
+					formatted.push({
+						"S.N": "",
+						"Job Title": jobTitle || "N/A",
+						"Applicant Name": fname ? `${fname} ${sname}` : "N/A",
+						"Phone": phone || "N/A",
+						"Email": email || "N/A",
+						"Applied At": appliedAt
+							? new Date(appliedAt).toLocaleDateString("en-US", {
+								year: "numeric",
+								month: "short",
+								day: "numeric"
+							})
+							: "N/A",
+						"Status": status || "pending",
+						"Actions": ["view", "shortlist", "reject"],
+						fullData: applicantProfile,
+						applicationId: _id
 					})
 				})
+			})
 
-				setApplicants(formatted)
-
-			} catch (err) {
-				console.error("Failed to load applicants:", err)
-			} finally {
-				setLoading(false)
-			}
+			setApplicants(formatted)
+		} catch (err) {
+			console.error("Failed to load applicants:", err)
+		} finally {
+			setLoading(false)
 		}
-
-		fetchAllApplicants()
 	}, [])
 
-	const handleShortList = (row) => console.log("shortlisted", row)
-	const handleReject = (row) => console.log("rejected", row)
+	useEffect(() => {
+		fetchAllApplicants()
+	}, [fetchAllApplicants])
+
+	
+	const handleStatusUpdate = useCallback((applicationId, newStatus) => {
+		setApplicants(prev =>
+			prev.map(row =>
+				row.applicationId === applicationId
+					? { ...row, "Status": newStatus }
+					: row
+			)
+		)
+	}, [])
+
+	const {
+		viewApplicant,
+		handleView,
+		closeView,
+		handleShortList,
+		handleReject,
+		actionLoading
+	} = useViewApplicants(handleStatusUpdate)
 
 	const actionHandler = {
 		view: handleView,
@@ -85,7 +97,7 @@ function Applicants() {
 		<div className="flex flex-col gap-2">
 			<div className="flex items-center justify-between px-2">
 				<h2 className="text-xl font-semibold text-gray-800">All Applicants</h2>
-				<h3 className="bg-blue-100 text-blue-700  p-1 rounded-full ">
+				<h3 className="bg-blue-100 text-blue-700 p-1 rounded-full">
 					Total Applicants: {totalApplicants}
 				</h3>
 			</div>
@@ -93,7 +105,6 @@ function Applicants() {
 			<DashTable
 				headData={ApplicantHead}
 				bodyData={applicants}
-				// title="All Applicants"
 				actionHandler={actionHandler}
 			/>
 

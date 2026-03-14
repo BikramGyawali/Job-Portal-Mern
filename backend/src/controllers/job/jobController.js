@@ -595,3 +595,75 @@ export const rejectApplicant = async (req, res) => {
 		})
 	}
 }
+
+// jobapplied for the jobseeker
+
+export const appliedJob = async (req, res) => {
+	try {
+		const userId = req.user.id
+
+		const jobs = await JobseekerProfile.aggregate([
+			{
+				$match: {
+					userId: new mongoose.Types.ObjectId(userId)
+				}
+			},
+			{
+				$lookup: {
+					from: "jobapplications",
+					localField: "_id",
+					foreignField: "applicantId",
+					as: "applications"
+				}
+			},
+			{
+				$unwind: {
+					path: "$applications",
+					preserveNullAndEmptyArrays: false
+				}
+			},
+			{
+				$lookup: {
+					from: "postjobs",
+					localField: "applications.jobId",
+					foreignField: "_id",
+					as: "applications.jobDetails"
+				}
+			},
+			{
+				$unwind: {
+					path: "$applications.jobDetails",
+					preserveNullAndEmptyArrays: false
+				}
+			},
+			{
+				$group: {
+					_id: "$_id",
+					applications: { $push: "$applications" },
+					totalApplied: { $sum: 1 }
+				}
+			}
+		])
+
+		if (!jobs.length || !jobs[0]?.applications?.length) {
+			return res.status(404).json({
+				status: 0,
+				message: "No jobs found"
+			})
+		}
+
+		return res.status(200).json({
+			status: 1,
+			message: "All jobs fetched",
+			totalApplied: jobs[0].totalApplied,
+			jobs: jobs[0].applications
+		})
+
+	} catch (error) {
+		return res.status(500).json({
+			status: 0,
+			message: "Failed to fetch",
+			error: error.message
+		})
+	}
+}

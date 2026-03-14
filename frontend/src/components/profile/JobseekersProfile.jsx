@@ -11,6 +11,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ProfileContext } from "../../context/ProfileContext";
 import api from '../../utils/axiosInstance';
+import { toast } from "react-toastify";
 
 
 const createEmptyEntry = (fields) =>
@@ -248,10 +249,10 @@ function JobseekersProfile() {
 
 		const response = await Profile(formData, "jobseeker");
 
-		
-	
+
+
 		if (response?.status === 1) {
-		
+
 			// update profile context
 			setGlobalProfile(response.profile);
 
@@ -265,10 +266,14 @@ function JobseekersProfile() {
 				}
 			});
 
-			alert("Profile created successfully.");
-			navigate("/jobseekers", { replace: true });
+			toast.success("Profile created successfully.",
+				{
+					onClose: () => navigate("/jobseekers", { replace: true })
+				}
+			);
+
 		} else {
-			alert(response?.message || "Failed to create profile");
+			toast.error(response?.message || "Failed to create profile");
 		}
 
 

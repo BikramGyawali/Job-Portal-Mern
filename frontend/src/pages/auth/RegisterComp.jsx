@@ -10,6 +10,7 @@ import { ValidateUtil } from '../../utils/ValidationUtil';
 import { contactLoginValidate } from '../../utils/contactLoginValidate';
 // import axios from 'axios';
 import { signupUser } from '../../utils/userapi';
+import { toast } from 'react-toastify';
 
 function RegisterComp() {
 	const { state } = useLocation();
@@ -56,32 +57,31 @@ function RegisterComp() {
 
 
 			if (res.status === 1) {
-				// console.log(res);
-				if (role === "employer") {
-					navigate("/employer-profile", { replace: true });
-				} else if (role === "jobseeker") {
-					navigate("/jobseeker-profile", { replace: true });
-				}
-				// alert(res.message)
+				const redirectPath = role === "employer" ? "/employer-profile" : "jobseeker-profile"
+				toast.success(res.message || "Register Successfully",
+					{ onClose: () => navigate(redirectPath, { replace: true }) }
+				)
+
+				// Reset form
+				setForm({
+					email: "",
+					pass: "",
+					cPass: "",
+					company: ""
+				});
+
 
 			}
 			else {
 				// console.log(res);
-				alert(res.message)
+				toast.error(res.message || "Registration failed")
 
 			}
 		} catch (error) {
-			console.log(error);
-			alert(error.response?.data?.message || "Signup failed");
+
+			toast.error(error.response?.data?.message || "Signup failed");
 
 		}
-		// Reset form
-		setForm({
-			email: "",
-			pass: "",
-			cPass: "",
-			company: ""
-		});
 
 		// Navigate after state updates
 

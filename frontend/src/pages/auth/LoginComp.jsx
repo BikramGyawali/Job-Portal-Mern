@@ -7,6 +7,7 @@ import { contactLoginValidate } from '../../utils/contactLoginValidate';
 import { loginUser } from '../../utils/userapi';
 import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
+import { toast } from 'react-toastify';
 
 // import { ValidateUtil } from '../utils/ValidationUtil';
 
@@ -46,26 +47,6 @@ function LoginComp({ LoginData }) {
 		console.log(res);
 
 
-		// if (res.status === 1) {
-		// 	// update local auth state so ProtectedRoute works without reload
-		// 	dispatch({
-		// 		type: "LOGIN",
-		// 		payload: {
-		// 			role: res.role,
-		// 			user: res.user,
-		// 			isProfileCompleted: res.isProfileCompleted,
-		// 		},
-		// 	});
-		// 	// user route to profile page if the profile is not completed
-		// 	if (!res.isProfileCompleted) {
-		// 		navigate(`/${res.role}-profile`, { replace: true });
-		// 	} else {
-		// 		navigate(`/${res.role}`, { replace: true });
-		// 	}
-		// } else {
-		// 	alert(res.message)
-		// }
-
 		if (res.status === 1) {
 			dispatch({
 				type: "LOGIN",
@@ -75,18 +56,23 @@ function LoginComp({ LoginData }) {
 					isProfileCompleted: res.isProfileCompleted,
 				},
 			});
+			toast.success("Login Successfully", {
+				onClose: () => navigate(`/${res.role}`, { replace: true })
+			})
 
-			// always redirect to dashboard Route
-			navigate(`/${res.role}`, { replace: true });
+
+			setForm({
+				email: "",
+				pass: ""
+			});
+		}
+		else {
+			toast.error(res.message || "Login Failed")
 		}
 
-		alert(res.message);
 
 
-		setForm({
-			email: "",
-			pass: ""
-		});
+
 
 
 

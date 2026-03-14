@@ -8,6 +8,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/AuthContext';
 import { ProfileContext } from '../../context/ProfileContext';
 import api from '../../utils/axiosInstance';
+import { toast } from 'react-toastify';
 
 function EmployersProfile() {
 	const { state, dispatch } = useContext(AuthContext);
@@ -74,11 +75,16 @@ function EmployersProfile() {
 				}
 			});
 
-			alert("Profile created successfully.");
-			navigate("/employers", { replace: true });
+			toast.success("Profile created successfully.",
+				{
+					onClose: () => navigate("/employers", { replace: true })
+
+				}
+			);
+
 		}
 		else {
-			alert(response?.message || "Failed to create profile");
+			toast.error(response?.message || "Failed to create profile");
 		}
 	}
 

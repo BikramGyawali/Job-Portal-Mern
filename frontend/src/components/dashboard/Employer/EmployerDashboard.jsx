@@ -3,6 +3,8 @@ import DasCard from '../../common/DasCard'
 import DashBoxCard from '../../common/DashBoxCard'
 import DashTable from '../../common/DashTable'
 import { DashboardCardData, DashboardTableBody, DashboardTableHeadData } from '../../../data/employers/DashboardData'
+import ViewApplicant from '../../common/ViewApplicant'
+import Applicants from './pages/Applicants'
 
 function EmployerDashboard() {
 
@@ -10,11 +12,7 @@ function EmployerDashboard() {
 		<div>
 			<div className='flex flex-col gap-5'>
 				<DashBoxCard cardData={DashboardCardData} />
-				<DashTable
-					title="Recent Applications"
-					headData={DashboardTableHeadData}
-					bodyData={DashboardTableBody}
-				/>
+				<Applicants />
 			</div>
 		</div>
 	)

@@ -50,14 +50,14 @@ function RejectJobModal({ job, onClose, onSuccess }) {
 
 				<div className="flex justify-end gap-3 mt-4">
 					<button
-						className="px-4 py-2 bg-gray-400 rounded"
+						className="px-4 py-2 bg-gray-400 rounded cursor-pointer"
 						onClick={onClose}
 					>
 						Cancel
 					</button>
 
 					<button
-						className="px-4 py-2 bg-red-600 text-white rounded"
+						className="px-4 py-2 bg-red-600 text-white rounded cursor-pointer"
 						onClick={submitReject}
 						disabled={loading}
 					>

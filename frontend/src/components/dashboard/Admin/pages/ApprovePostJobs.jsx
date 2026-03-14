@@ -1,111 +1,99 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useCallback } from 'react'
 import DashTable from '../../../common/DashTable'
-import { JobData, JobHeads } from '../../../../data/admin/Dashboarddata'
+import { JobHeads } from '../../../../data/admin/Dashboarddata'
 import { JobPostContext } from '../../../../context/JobPostContext'
 import { approvedJobsService, rejectJobsService } from '../../../../services/jobService'
-
 import JobDetails from '../../../common/JobDetails'
 import RejectJobModal from '../../../common/RejectModal'
 import useViewJob from '../../../../hooks/useViewJob'
+import ConfirmModal from '../../../common/ConfirmModel'
+import useConfirm from '../../../../hooks/useConfirm'
+import { toast } from 'react-toastify'
 
 function ApprovePostJobs() {
 	const { pendingJobs, fetchPendingJobs } = useContext(JobPostContext)
 	const [transformedJobs, setTransformedJobs] = useState([])
 	const [loading, setLoading] = useState(false)
-	const [message, setMessage] = useState("")
-	const { viewJob, closeView, handleView } = useViewJob();
+	const [rejectJobData, setRejectJobData] = useState(null)
+	const { viewJob, closeView, handleView } = useViewJob()
+	const { showConfirm, confirmProps } = useConfirm()
 
-	const [rejectJobData, setRejectJobData] = useState(null);
 	useEffect(() => {
 		fetchPendingJobs()
 	}, [])
 
 	useEffect(() => {
-		const storeData = async () => {
-			const transformed = await pendingJobs.filter(job => !job.isApproved).map((job, index) => ({
-
+		const transformed = pendingJobs
+			.filter(job => !job.isApproved)
+			.map((job) => ({
 				"Company Name": job.companyName,
 				"Job Title": job.jobTitle,
 				"Experience": job.experience,
-				Actions: ["view", "approve", "reject"],
+				"Actions": ["view", "approve", "reject"],
 				_id: job._id,
 				fullData: job
-
 			}))
-			setTransformedJobs(transformed)
-		}
-		storeData()
+		setTransformedJobs(transformed)
 	}, [pendingJobs])
-	// console.log(pendingJobs);
 
-	const handleApprove = async (row) => {
-		if (!window.confirm(`Approve job : ${row['Job Title']}?`)) return
+	const processApprove = useCallback(async (row) => {
 		setLoading(true)
 		try {
 			const result = await approvedJobsService(row._id)
 			if (result.success) {
-				setMessage("Job Approve Successfully")
+				toast.success("Job approved successfully")
 				setTransformedJobs(prev => prev.filter(j => j._id !== row._id))
-				setTimeout(() => setMessage(""), 3000);
-			}
-			else {
-				setMessage(`${result.error}`)
+			} else {
+				toast.error(result.error || "Failed to approve job")
 			}
 		} catch (error) {
-			setMessage(` Error: ${error.message}`)
+			toast.error(`Error: ${error.message}`)
 		} finally {
 			setLoading(false)
 		}
+	}, [])
+
+	const handleApprove = (row) => {
+		showConfirm({
+			title: "Approve Job",
+			message: `Are you sure you want to approve "${row["Job Title"]}"?`,
+			confirmText: "Yes, Approve",
+			cancelText: "Cancel",
+			type: "success",
+			onConfirm: () => processApprove(row)
+		})
 	}
-	const handleReject = async (row) => {
 
+	const handleReject = (row) => {
 		setRejectJobData(row.fullData)
-
 	}
 
 	const actionHandler = {
 		approve: handleApprove,
 		reject: handleReject,
 		view: handleView
-
 	}
-
-
-
 
 	return (
 		<div className="p-6">
-			{/* Message */}
-			{message && (
-				<div
-					className={`mb-4 p-4 rounded-lg text-center font-semibold ${message.includes('Approve')
-						? 'bg-green-100 text-green-800'
-						: 'bg-red-100 text-red-800'
-						}`}
-				>
-					{message}
-				</div>
-			)}
-
-
 			<DashTable
 				headData={JobHeads}
 				bodyData={transformedJobs}
 				title={`Pending Jobs (${transformedJobs.length})`}
 				actionHandler={actionHandler}
 				isLoading={loading}
-
 			/>
 
-			{viewJob && (
+			<ConfirmModal {...confirmProps} />
 
+			{viewJob && (
 				<JobDetails
 					job={viewJob}
 					showClose={true}
 					onClose={closeView}
 				/>
-
 			)}
+
 			{rejectJobData && (
 				<RejectJobModal
 					job={rejectJobData}

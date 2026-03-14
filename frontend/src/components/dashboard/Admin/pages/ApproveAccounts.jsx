@@ -1,98 +1,119 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useCallback } from 'react'
 import DashTable from '../../../common/DashTable'
-import { DashboardBodyData, DashboardTableHeadData } from '../../../../data/admin/Dashboarddata'
+import { DashboardTableHeadData } from '../../../../data/admin/Dashboarddata'
 import { ProfileContext } from '../../../../context/ProfileContext'
 import { updateProfileApporvalService } from '../../../../services/profileApproval'
 import { ViewProfileModal } from '../../../common/ViewProfileModal'
+import ConfirmModal from '../../../common/ConfirmModel'
+import useConfirm from '../../../../hooks/useConfirm'
+import { toast } from 'react-toastify'
 
 function ApproveAccounts() {
 	const { fetchPendingProfile, pendingProfile } = useContext(ProfileContext)
 	const [transformedProfile, setTransformedProfile] = useState([])
+	const [viewData, setViewData] = useState(null)
+	const { showConfirm, confirmProps } = useConfirm()
 
 	useEffect(() => {
 		fetchPendingProfile()
 	}, [])
 
 	useEffect(() => {
-		const storedData = async () => {
-			const transform = pendingProfile
-				.filter(profile => profile.approvalStatus !== 'approve')
-				.map((profile, i) => ({
-					"Name": profile.name || profile.email,
-					"Email": profile.email,
-					"Role": profile.role,
-					Actions: ["view", "approve", "reject"],
-					_id: profile._id,
-					fullData: profile
-
-				}))
-			setTransformedProfile(transform);
-
-		}
-		storedData()
+		const transform = pendingProfile
+			.filter(profile => profile.approvalStatus !== 'approve')
+			.map((profile) => ({
+				"Name": profile.name || profile.email,
+				"Email": profile.email,
+				"Role": profile.role,
+				"Actions": ["view", "approve", "reject"],
+				_id: profile._id,
+				fullData: profile
+			}))
+		setTransformedProfile(transform)
 	}, [pendingProfile])
-	// console.log(transformedProfile);
 
-
-	const [message, setMessage] = useState("")
-
-	const handleApprove = async (row) => {
-		if (!window.confirm(`Approve : ${row['Name']}?`)) return
+	const processApprove = useCallback(async (row) => {
 		try {
 			const result = await updateProfileApporvalService(row._id, 'approve')
 			if (result.status) {
-				setMessage("Profile approved successfully")
+				toast.success("Profile approved successfully")
 				fetchPendingProfile()
 			} else {
-				setMessage("Failed to approve profile")
+				toast.error("Failed to approve profile")
 			}
 		} catch (error) {
-			setMessage("Error approving profile")
+			toast.error("Error approving profile")
 		}
-	}
-	const handleReject = async (row) => {
-		if (!window.confirm(`Reject : ${row['Name']}?`)) return
+	}, [fetchPendingProfile])
+
+	const processReject = useCallback(async (row) => {
 		try {
 			const result = await updateProfileApporvalService(row._id, 'reject')
 			if (result.status) {
-				setMessage("Profile rejected")
+				toast.success("Profile rejected successfully")
 				fetchPendingProfile()
 			} else {
-				setMessage("Failed to reject profile")
+				toast.error("Failed to reject profile")
 			}
 		} catch (error) {
-			setMessage("Error rejecting profile")
+			toast.error("Error rejecting profile")
 		}
+	}, [fetchPendingProfile])
+
+	const handleApprove = (row) => {
+		showConfirm({
+			title: "Approve Account",
+			message: `Are you sure you want to approve ${row["Name"]}?`,
+			confirmText: "Yes, Approve",
+			cancelText: "Cancel",
+			type: "success",
+			onConfirm: () => processApprove(row)
+		})
 	}
-	const [viewData, setViewData] = useState(null)
+
+	const handleReject = (row) => {
+		showConfirm({
+			title: "Reject Account",
+			message: `Are you sure you want to reject ${row["Name"]}? This action cannot be undone.`,
+			confirmText: "Yes, Reject",
+			cancelText: "No, Cancel",
+			type: "danger",
+			onConfirm: () => processReject(row)
+		})
+	}
+
 	const handleView = (row) => {
 		setViewData(row.fullData)
 	}
-	// console.log(viewData);
 
 	const closeView = () => setViewData(null)
+
 	const actionHandler = {
 		approve: handleApprove,
 		reject: handleReject,
 		view: handleView
-
 	}
+
 	return (
 		<div>
-			{
-				message &&
-				(
-					<div className={`mb-4 p-4 rounded-lg text-center font-semibold ${message.toLowerCase().includes('failed') || message.toLowerCase().includes('error') ? 'bg-red-100 text-red-800' : 'bg-green-100 text-green-800'}`}>{message}
-					</div>
-				)}
+			<DashTable
+				headData={DashboardTableHeadData}
+				bodyData={transformedProfile}
+				title={`Pending Profiles (${transformedProfile.length})`}
+				actionHandler={actionHandler}
+			/>
 
-			<DashTable headData={DashboardTableHeadData} bodyData={transformedProfile} title={`Pending Profile( ${transformedProfile.length})`} actionHandler={actionHandler} />
+			<ConfirmModal {...confirmProps} />
 
-
-			{viewData && (<ViewProfileModal profile={viewData} role={viewData.role} onClose={closeView} />)}
+			{viewData && (
+				<ViewProfileModal
+					profile={viewData}
+					role={viewData.role}
+					onClose={closeView}
+				/>
+			)}
 		</div>
 	)
 }
-
 
 export default ApproveAccounts

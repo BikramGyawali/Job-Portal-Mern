@@ -156,7 +156,8 @@ export const JMyJobs = async () => {
 		if (response.data?.status === 1) {
 			return {
 				success: true,
-				jobs: response.data.jobs
+				jobs: response.data.jobs,
+				totalJobs: response.data?.totalJobs
 			}
 		}
 		return {

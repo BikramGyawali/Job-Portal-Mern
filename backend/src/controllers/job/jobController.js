@@ -271,66 +271,224 @@ export const EMyJobs = async (req, res) => {
 
 //job list controller for jobseeker
 
+// export const JJobList = async (req, res) => {
+// 	const id = req.user.id;
+// 	console.log("Logged in user id:", id);
+// 	try {
+// 		const user = await JobseekerProfile.findOne({
+// 			// userId: new mongoose.Types.ObjectId(id)
+// 			userId: id
+// 		});
+
+
+// 		if (!user) {
+// 			return res.status(404).json({
+// 				status: 0,
+// 				message: "No user details found"
+// 			});
+// 		}
+
+
+// 		const formattedSkills = user.skills.map(skill => {
+// 			const cleaned = skill
+// 				.toLowerCase()
+// 				.replace(/[-_/]/g, " ");
+
+// 			return new RegExp(cleaned, "i");
+// 		});
+
+// 		const result = await PostJob.find({
+// 			skills: { $in: formattedSkills },
+// 			status: "approved"
+// 		}).lean();
+
+// 		if (!result.length) {
+// 			return res.status(404).json({
+// 				status: 0,
+// 				message: "No Jobs found according to your skills"
+// 			});
+// 		}
+// 		const applications = await JobApplication.find({
+// 			applicantId: id
+// 		})
+// 		const appliedJob = applications.map(app => app.jobId.toString()); //toString to conver the object id into string
+// 		const jobWithAppliedStatus = result.map(job => ({
+// 			...job,
+// 			alreadyApplied: appliedJob.includes(job._id.toString())
+// 		}))
+// 		const jobWithCompany = await addCompanyName(jobWithAppliedStatus)
+
+// 		return res.status(200).json({
+// 			status: 1,
+// 			message: "Jobs fetched successfully",
+// 			jobs: jobWithCompany
+// 		});
+
+// 	} catch (error) {
+// 		return res.status(500).json({
+// 			status: 0,
+// 			message: "Failed to fetch jobs"
+// 		});
+// 	}
+// };
 export const JJobList = async (req, res) => {
-	const id = req.user.id;
-	console.log("Logged in user id:", id);
+	const id = req.user.id
+
 	try {
-		const user = await JobseekerProfile.findOne({
-			// userId: new mongoose.Types.ObjectId(id)
-			userId: id
-		});
+		const result = await JobseekerProfile.aggregate([
+
+			{
+				$match: {
+					userId: new mongoose.Types.ObjectId(id)
+				}
+			},
 
 
-		if (!user) {
-			return res.status(404).json({
-				status: 0,
-				message: "No user details found"
-			});
-		}
+			{
+				$lookup: {
+					from: "postjobs",
+					let: { skills: "$skills" },
+					pipeline: [
+						{
+							$match: {
+								$expr: {
+									$and: [
+										{ $eq: ["$status", "approved"] },
+										{
+											$gt: [
+												{
+													$size: {
+														$filter: {
+															input: "$skills",
+															as: "jobSkill",
+															cond: {
+																$in: [
+																	{ $toLower: "$$jobSkill" },
+																	{
+																		$map: {
+																			input: "$$skills",
+																			as: "s",
+																			in: { $toLower: "$$s" }
+																		}
+																	}
+																]
+															}
+														}
+													}
+												},
+												0
+											]
+										}
+									]
+								}
+							}
+						}
+					],
+					as: "matchedJobs"
+				}
+			},
 
 
-		const formattedSkills = user.skills.map(skill => {
-			const cleaned = skill
-				.toLowerCase()
-				.replace(/[-_/]/g, " ");
+			{
+				$unwind: {
+					path: "$matchedJobs",
+					preserveNullAndEmptyArrays: false
+				}
+			},
 
-			return new RegExp(cleaned, "i");
-		});
 
-		const result = await PostJob.find({
-			skills: { $in: formattedSkills },
-			status: "approved"
-		}).lean();
+			{
+				$lookup: {
+					from: "jobapplications",
+					let: {
+						jobId: "$matchedJobs._id",
+						applicantId: "$_id"
+					},
+					pipeline: [
+						{
+							$match: {
+								$expr: {
+									$and: [
+										{ $eq: ["$jobId", "$$jobId"] },
+										{ $eq: ["$applicantId", "$$applicantId"] }
+									]
+								}
+							}
+						}
+					],
+					as: "application"
+				}
+			},
 
-		if (!result.length) {
+
+			{
+				$lookup: {
+					from: "employerprofiles",
+					localField: "matchedJobs.userId",
+					foreignField: "userId",
+					as: "employerProfile"
+				}
+			},
+			{
+				$unwind: {
+					path: "$employerProfile",
+					preserveNullAndEmptyArrays: true
+				}
+			},
+
+
+			{
+				$addFields: {
+					"matchedJobs.alreadyApplied": {
+						$gt: [{ $size: "$application" }, 0]
+
+					},
+					"matchedJobs.companyName": {
+						$ifNull: [
+							"$employerProfile.cname",
+							{
+								$ifNull: [
+									"$employerProfile.companyName",
+									"N/A"
+								]
+							}
+						]
+					}
+				}
+			},
+
+
+			{
+				$group: {
+					_id: null,
+					jobs: { $push: "$matchedJobs" },
+					totalJobs: { $sum: 1 }
+				}
+			}
+		])
+
+		if (!result.length || !result[0]?.jobs?.length) {
 			return res.status(404).json({
 				status: 0,
 				message: "No Jobs found according to your skills"
-			});
+			})
 		}
-		const applications = await JobApplication.find({
-			applicantId: id
-		})
-		const appliedJob = applications.map(app => app.jobId.toString()); //toString to conver the object id into string
-		const jobWithAppliedStatus = result.map(job => ({
-			...job,
-			alreadyApplied: appliedJob.includes(job._id.toString())
-		}))
-		const jobWithCompany = await addCompanyName(jobWithAppliedStatus)
 
 		return res.status(200).json({
 			status: 1,
 			message: "Jobs fetched successfully",
-			jobs: jobWithCompany
-		});
+			totalJobs: result[0].totalJobs,
+			jobs: result[0].jobs
+		})
 
 	} catch (error) {
 		return res.status(500).json({
 			status: 0,
-			message: "Failed to fetch jobs"
-		});
+			message: "Failed to fetch jobs",
+			error: error.message
+		})
 	}
-};
+}
 
 
 

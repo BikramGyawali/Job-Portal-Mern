@@ -220,7 +220,16 @@ export const EMyJobs = async (req, res) => {
 			},
 			{
 				$addFields: {
-					applicationCount: { $size: "$applications" }
+					applicationCount: {
+						$size:
+						{
+							$filter: {
+								input: "$applications",
+								as: "app",
+								cond: { $ne: ["$$app.status", "rejected"] }
+							}
+						}
+					}
 				}
 			},
 			{

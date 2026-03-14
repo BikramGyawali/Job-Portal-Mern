@@ -1,88 +1,85 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom';
-
+import React, { useContext, useEffect, useState, useCallback } from 'react'
 import DashTable from '../../../common/DashTable'
 import { MyJobsTableHead } from '../../../../data/employers/DashboardData'
 import { EMyJobs } from '../../../../services/jobService'
 import { ProfileContext } from '../../../../context/ProfileContext'
 import RejectionReasonView from '../../../common/RejectionReasonView'
 import { calculateJobDates } from '../../../../utils/JobDataUtils'
-
-import ViewApplicant from '../../../common/ViewApplicant';
+import ViewApplicant from '../../../common/ViewApplicant'
 
 function MyJobs() {
 	const { profile } = useContext(ProfileContext)
+	const [jobs, setJobs] = useState([])
 
-	const [applicantCount, setApplicantCount] = useState(0);
+	const fetchJobs = useCallback(async () => {
+		if (!profile?._id) return
+		const response = await EMyJobs(profile._id)
+		if (response?.success) {
+			setJobs(response.jobs)
+		}
+	}, [profile?._id])
 
-	const [jobs, setJobs] = useState([]);
 	useEffect(() => {
-		const fetchJobs = async () => {
-			if (!profile?._id) return;
+		fetchJobs()
+	}, [fetchJobs])
 
-			const response = await EMyJobs(profile._id);
+	const handleApplicantCountUpdate = useCallback((jobId) => {
+		setJobs(prev =>
+			prev.map(job =>
+				job._id === jobId
+					? { ...job, applicationCount: Math.max(0, job.applicationCount - 1) }
+					: job
+			)
+		)
+	}, [])
 
-			if (response?.success) {
-				const jobs = response.jobs;
+	const handleEdit = (row) => console.log("Edit", row)
+	const handleDelete = (row) => console.log("Delete", row)
 
-
-				const transformjobs = jobs.map((job, index) => {
-					// setApplicantCount(job.applicantCount)
-  const applicants= <ViewApplicant applicantCount={job.applicantCount} />
-					const { formattedDate, remainingDays } = calculateJobDates(
-						job.postingDate,
-						job.postingPeriod
-					)
-					let statusLabel;
-
-					if (job.status === "approved") {
-						statusLabel = "Active";
-					} else if (job.status === "rejected") {
-						statusLabel = "Rejected";
-					} else {
-						statusLabel = "Pending";
-					}
-					return {
-						// "S.N": index + 1,
-						"_id": job._id,
-						"Job Title": job.jobTitle,
-						"Posted at": formattedDate,
-						"Expires In": remainingDays > 0 ? `${remainingDays} days` : "Expired",
-						"Applicants": job.applicationCount
-							> 0 ? `${job.applicationCount
-							}` : "0",
-						"View All / Reason": job.status === "rejected"
-							? <RejectionReasonView reason={job.rejectionReason} />
-							: job.applicationCount > 0 ? <ViewApplicant jobId={job._id} /> : null,
-						"Status": statusLabel,
-						"Actions": ["edit", "delete"]
-					};
-				});
-				setJobs(transformjobs);
-			}
-		};
-
-		fetchJobs();
-	}, [profile]);
-	// console.log(jobs);
-
-	const handleEdit = (row) => {
-		console.log(profile);
-		// console.log("Edit", row);
-
-	}
-	const handleDelete = (row) => {
-		console.log("Delete", row);
-
-	}
 	const actionHandler = {
 		edit: handleEdit,
 		delete: handleDelete
 	}
+
+	const transformJobs = jobs.map((job) => {
+		const { formattedDate, remainingDays } = calculateJobDates(
+			job.postingDate,
+			job.postingPeriod
+		)
+
+		const statusLabel =
+			job.status === "approved" ? "Active" :
+				job.status === "rejected" ? "Rejected" :
+					"Pending"
+
+		return {
+			"_id": job._id,
+			"Job Title": job.jobTitle,
+			"Posted at": formattedDate,
+			"Expires In": remainingDays > 0 ? `${remainingDays} days` : "Expired",
+			"Applicants": job.applicationCount > 0 ? `${job.applicationCount}` : "0",
+			"View All / Reason": job.status === "rejected"
+				? <RejectionReasonView reason={job.rejectionReason} />
+				: job.applicationCount > 0
+					? <ViewApplicant
+						jobId={job._id}
+						applicantCount={job.applicationCount}
+						onCountUpdate={handleApplicantCountUpdate}
+					/>
+					: null,
+			"Status": statusLabel,
+			"Actions": ["edit", "delete"]
+		}
+	})
+
 	return (
 		<div>
-			<DashTable headData={MyJobsTableHead} bodyData={jobs} title="My Jobs" actionHandler={actionHandler} />
-
+			<DashTable
+				headData={MyJobsTableHead}
+				bodyData={transformJobs}
+				title="My Jobs"
+				actionHandler={actionHandler}
+			/>
 		</div>
 	)
 }

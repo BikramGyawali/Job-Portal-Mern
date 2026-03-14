@@ -50,13 +50,13 @@ function ConfirmModal({ isOpen, title, message, confirmText, cancelText, onConfi
 				<div className="flex gap-3 justify-end mt-2">
 					<button
 						onClick={onCancel}
-						className="px-5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium transition"
+						className="px-5 py-2 rounded-xl bg-gray-100 hover:bg-gray-200 text-gray-700 text-sm font-medium transition cursor-pointer"
 					>
 						{cancelText || "Cancel"}
 					</button>
 					<button
 						onClick={onConfirm}
-						className={`px-5 py-2 rounded-xl text-sm font-medium transition ${confirmClass}`}
+						className={`px-5 py-2 rounded-xl text-sm font-medium transition  cursor-pointer ${confirmClass}`}
 					>
 						{confirmText || "Confirm"}
 					</button>

@@ -1,7 +1,5 @@
 import { useState } from 'react'
 
-
-
 function useConfirm() {
 	const [confirmState, setConfirmState] = useState({
 		isOpen: false,

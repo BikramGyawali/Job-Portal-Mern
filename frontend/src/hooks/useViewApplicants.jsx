@@ -1,11 +1,13 @@
-
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { rejectApplicant, shortlistApplicant } from '../services/jobService'
+import useConfirm from './useConfirm'
+
 
 function useViewApplicants(onStatusUpdate) {
 	const [viewApplicant, setViewApplicant] = useState(null)
 	const [actionLoading, setActionLoading] = useState(false)
+	const { showConfirm, confirmProps } = useConfirm()
 
 	const handleView = (row) => {
 		if (!row) { toast.error("Something went wrong"); return }
@@ -22,14 +24,26 @@ function useViewApplicants(onStatusUpdate) {
 			return
 		}
 
+		const applicantName = row?.["Applicant Name"] || "this applicant"
+
+	
+		showConfirm({
+			title: "Shortlist Applicant",
+			message: `Are you sure you want to shortlist ${applicantName}?`,
+			confirmText: "Yes, Shortlist",
+			cancelText: "Cancel",
+			type: "success",
+			onConfirm: () => processShortlist(row)
+		})
+	}
+
+	const processShortlist = async (row) => {
 		try {
 			setActionLoading(true)
 			const res = await shortlistApplicant(row.applicationId)
 
 			if (res.success) {
 				toast.success(res.message)
-
-
 				if (typeof onStatusUpdate === "function") {
 					onStatusUpdate(row.applicationId, "shortlisted")
 				}
@@ -43,29 +57,40 @@ function useViewApplicants(onStatusUpdate) {
 		}
 	}
 
-	const handleReject = async (row) => {
-		console.log(row?.applicationId);
-
+	const handleReject = (row) => {
 		if (!row?.applicationId) {
 			toast.error("Application ID missing")
 			return
 		}
+
+		const applicantName = row?.["Applicant Name"] || "this applicant"
+
+		showConfirm({
+			title: "Reject Applicant",
+			message: `Are you sure you want to reject ${applicantName}? This action cannot be undone.`,
+			confirmText: "Yes, Reject",
+			cancelText: "No, Cancel",
+			type: "danger",
+			onConfirm: () => processReject(row)
+		})
+	}
+
+	const processReject = async (row) => {
 		try {
-			setActionLoading(true);
-			const res = await rejectApplicant(row?.applicationId);
+			setActionLoading(true)
+			const res = await rejectApplicant(row.applicationId)
+
 			if (res.success) {
 				toast.success(res.message)
 				if (typeof onStatusUpdate === "function") {
-					onStatusUpdate(row?.applicationId, "rejected")
+					onStatusUpdate(row.applicationId, "rejected")
 				}
+			} else {
+				toast.error(res.message || "Rejection failed")
 			}
-			else {
-				toast.error(res.message)
-			}
-		} catch (error) {
+		} catch (err) {
 			toast.error("Something went wrong")
-		}
-		finally {
+		} finally {
 			setActionLoading(false)
 		}
 	}
@@ -76,7 +101,8 @@ function useViewApplicants(onStatusUpdate) {
 		closeView,
 		handleShortList,
 		handleReject,
-		actionLoading
+		actionLoading,
+		confirmProps      
 	}
 }
 

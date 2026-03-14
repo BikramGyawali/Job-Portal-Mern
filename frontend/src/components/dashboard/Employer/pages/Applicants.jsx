@@ -63,7 +63,7 @@ function Applicants() {
 		fetchAllApplicants()
 	}, [fetchAllApplicants])
 
-	
+
 	const handleStatusUpdate = useCallback((applicationId, newStatus) => {
 		setApplicants(prev =>
 			prev.map(row =>

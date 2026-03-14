@@ -288,7 +288,8 @@ export const shortlistApplicant = async (applicationId) => {
 		if (response.data?.status === 1) {
 			return {
 				success: true,
-				message: response.data.message
+				message: response.data?.message,
+				application: response.data?.application
 			}
 		}
 
@@ -300,7 +301,32 @@ export const shortlistApplicant = async (applicationId) => {
 	} catch (error) {
 		return {
 			success: false,
+			message: error?.response?.data?.message || "Failed to shotlist"
+		}
+	}
+}
+
+
+// service for reject applicant 
+
+export const rejectApplicant = async (applicationId) => {
+	try {
+		const res = await api.patch(`employer/rejectapplicant/${applicationId}`);
+		if (res.data?.status === 1) {
+			return {
+				success: true,
+				message: "Reject Applicant Successfully",
+				application: res.data?.application
+			}
+		}
+		return {
+			success: false,
+			message: res.data?.message
+		}
+	} catch (error) {
+		return {
+			success: false,
 			message: error?.response?.data?.message || "Failed to shortlist"
 		}
 	}
-}     
+}

@@ -1,7 +1,7 @@
 
 import { useState } from 'react'
 import { toast } from 'react-toastify'
-import { shortlistApplicant } from '../services/jobService'
+import { rejectApplicant, shortlistApplicant } from '../services/jobService'
 
 function useViewApplicants(onStatusUpdate) {
 	const [viewApplicant, setViewApplicant] = useState(null)
@@ -44,12 +44,30 @@ function useViewApplicants(onStatusUpdate) {
 	}
 
 	const handleReject = async (row) => {
+		console.log(row?.applicationId);
+
 		if (!row?.applicationId) {
 			toast.error("Application ID missing")
 			return
 		}
-		// same pattern when reject is ready
-		console.log("reject:", row.applicationId)
+		try {
+			setActionLoading(true);
+			const res = await rejectApplicant(row?.applicationId);
+			if (res.success) {
+				toast.success(res.message)
+				if (typeof onStatusUpdate === "function") {
+					onStatusUpdate(row?.applicationId, "rejected")
+				}
+			}
+			else {
+				toast.error(res.message)
+			}
+		} catch (error) {
+			toast.error("Something went wrong")
+		}
+		finally {
+			setActionLoading(false)
+		}
 	}
 
 	return {

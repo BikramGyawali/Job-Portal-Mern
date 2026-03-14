@@ -550,7 +550,8 @@ export const rejectApplicant = async (req, res) => {
 		},
 			{
 				$set: { status: "rejected" }
-			}
+			},
+			{ new: true }
 
 
 		)
@@ -570,7 +571,7 @@ export const rejectApplicant = async (req, res) => {
 	} catch (error) {
 		return res.status(500).json({
 			status: 0,
-			message: "Failed to shortlist",
+			message: "Failed to reject",
 			error: error.message
 		})
 	}

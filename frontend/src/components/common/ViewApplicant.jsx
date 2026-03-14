@@ -140,7 +140,7 @@ function ViewApplicant({ jobId }) {
 							: "N/A",
 						"Status": status || "pending",
 						"Actions": ["view", "shortlist", "reject"],
-						fullData: applicantId,     // ← profile data for ViewProfileModal
+						fullData: applicantId,
 						applicationId: _id         // ← JobApplication._id for shortlist/reject
 					}
 				})
@@ -157,7 +157,6 @@ function ViewApplicant({ jobId }) {
 		fetchApplicants()
 	}, [open, jobId])
 
-	// Pass fetchApplicants as refresh so after shortlist table reloads
 	const { handleView, viewApplicant, closeView, handleShortList, handleReject } =
 		useViewApplicants(fetchApplicants)
 
@@ -185,7 +184,7 @@ function ViewApplicant({ jobId }) {
 							<h2 className="font-bold text-lg">Applicants</h2>
 							<button
 								onClick={() => setOpen(false)}
-								className="px-3 py-1 bg-gray-300 rounded"
+								className="px-3 py-1 bg-gray-300 rounded cursor-pointer"
 							>
 								Close
 							</button>

@@ -45,7 +45,7 @@ export function ViewProfileModal({ profile, role, onClose }) {
 
 				{role === 'jobseeker' ? <DownloadButton onDownload={handleDownload} /> : null}
 				<div className="mt-6 flex justify-end">
-					<button className="px-4 py-2 bg-gray-500 text-white rounded-lg" onClick={onClose}>Close</button>
+					<button className="px-4 py-2 bg-gray-500 text-white rounded-lg cursor-pointer" onClick={onClose}>Close</button>
 				</div>
 			</div>
 		</div>

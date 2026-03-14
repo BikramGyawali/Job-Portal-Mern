@@ -538,3 +538,40 @@ export const ShortlistApplicant = async (req, res) => {
 		})
 	}
 }
+
+// reject applicant
+
+export const rejectApplicant = async (req, res) => {
+	try {
+		const applicationId = req.params.id;
+		const application = await JobApplication.findOneAndUpdate({   // the findoneandupdate allow to use the arbitarty value like status
+			_id: new mongoose.Types.ObjectId(applicationId),
+			status: "pending"
+		},
+			{
+				$set: { status: "rejected" }
+			}
+
+
+		)
+		if (!application) {
+			return res.status(404).json({
+				status: 0,
+				message: "Application not found or already processed"
+			})
+		}
+
+		return res.status(200).json({
+			status: 1,
+			message: "Applicant Rejeccted successfully",
+			application
+		})
+
+	} catch (error) {
+		return res.status(500).json({
+			status: 0,
+			message: "Failed to shortlist",
+			error: error.message
+		})
+	}
+}

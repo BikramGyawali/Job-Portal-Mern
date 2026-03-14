@@ -303,4 +303,4 @@ export const shortlistApplicant = async (applicationId) => {
 			message: error?.response?.data?.message || "Failed to shortlist"
 		}
 	}
-}
+}     

@@ -10,7 +10,7 @@ function AppliedJobs() {
 	const [jobs, setJobs] = useState([])
 	const [loading, setLoading] = useState(true)
 	const [selectedJob, setSelectedJob] = useState(null)
-
+	const [totalApplied, setTotalApplied] = useState(0)
 	const fetchAppliedJobs = useCallback(async () => {
 		try {
 			setLoading(true)
@@ -18,10 +18,12 @@ function AppliedJobs() {
 
 			if (!res.success) {
 				toast.error(res.message)
+
 				return
 			}
+			setTotalApplied(res.totalApplied)
 			const alljobs = res.jobs;
-			console.log(alljobs);
+
 
 			const formatted = alljobs.map((application, index) => ({
 
@@ -77,6 +79,8 @@ function AppliedJobs() {
 				headData={AppliedJobsHead}
 				bodyData={jobs}
 				actionHandler={actionHandler}
+				total={totalApplied}
+
 			/>
 
 			{selectedJob && (

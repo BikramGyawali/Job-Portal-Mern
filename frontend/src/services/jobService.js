@@ -130,7 +130,7 @@ export const EMyJobs = async () => {
 				success: true,
 				jobs: response.data.jobs[0].jobs,
 
-				totalJobs:response.data.jobs[0].totalJobs
+				totalJobs: response.data.jobs[0].totalJobs
 			}
 		}
 		return {

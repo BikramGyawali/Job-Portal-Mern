@@ -2,6 +2,7 @@ import { createContext, useEffect, useState } from "react";
 import api from '../utils/axiosInstance'
 import { getApprovedJobsService, getPendingJobsService, JMyJobs } from "../services/jobService";
 import { calculateJobDates } from "../utils/JobDataUtils";
+import { useCallback } from "react";
 export const JobPostContext = createContext();
 
 export const JobPostProvider = ({ children }) => {
@@ -9,11 +10,14 @@ export const JobPostProvider = ({ children }) => {
 	const [pendingJobs, setPendingJobs] = useState([])
 	const [loading, setLoading] = useState(true)
 	const [myJobs, setMyJobs] = useState([]);
-	const fetchMyJobs = async () => {
+	const [totalJobs, setTotalJobs] = useState(0)
+
+	const fetchMyJobs = useCallback(async () => {
 		setLoading(true)
 		try {
 			const result = await JMyJobs()
 			const jobs = result.jobs
+			setTotalJobs(result.totalJobs)
 			if (result.success) {
 				// setMyJobs(result.jobs)
 				const transformedJob = jobs.map((job, i) => {
@@ -40,7 +44,7 @@ export const JobPostProvider = ({ children }) => {
 		finally {
 			setLoading(false)
 		}
-	}
+	}, [])
 
 	const fetchApprovedJobs = async () => {
 		setLoading(true)
@@ -77,7 +81,7 @@ export const JobPostProvider = ({ children }) => {
 	return (
 		<JobPostContext.Provider value={{
 			jobs, loading, fetchApprovedJobs, addJob, fetchPendingJobs, fetchMyJobs, myJobs,
-			pendingJobs
+			pendingJobs, totalJobs
 		}}>
 			{children}
 		</JobPostContext.Provider>

@@ -11,8 +11,8 @@ import useViewJob from "../../../../hooks/useViewJob";
 import JobDetails from "../../../common/JobDetails";
 
 function JobListing() {
-	const { fetchMyJobs, myJobs } = useContext(JobPostContext)
-	const { viewJob, handleView, closeView, handleApply,loading } = useViewJob()
+	const { fetchMyJobs, myJobs, totalJobs } = useContext(JobPostContext)
+	const { viewJob, handleView, closeView, handleApply, loading } = useViewJob()
 	useEffect(() => {
 		fetchMyJobs();
 	}, [])
@@ -26,7 +26,7 @@ function JobListing() {
 	return (
 		<div>
 
-			<DashTable title="Job Listing" headData={DashboardHeadData} bodyData={myJobs} actionHandler={actionHandler} />
+			<DashTable title="Job Listing" headData={DashboardHeadData} bodyData={myJobs} actionHandler={actionHandler} total={totalJobs} />
 			{viewJob && (
 				<JobDetails onClose={closeView} job={viewJob} showApply={true} showClose={true} onApply={handleApply} loading={loading} />
 			)

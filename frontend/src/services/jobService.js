@@ -330,3 +330,30 @@ export const rejectApplicant = async (applicationId) => {
 		}
 	}
 }
+
+// get applied jobs 
+export const getAppliedJobs = async () => {
+	try {
+		const response = await api.get("/jobseeker/appliedjobs")
+
+		if (response.data?.status === 1) {
+			return {
+				success: true,
+				message: response.data.message,
+				jobs: response.data.jobs,
+				totalApplied: response.data.totalApplied
+			}
+		}
+
+		return {
+			success: false,
+			message: response.data?.message || "No jobs found"
+		}
+
+	} catch (error) {
+		return {
+			success: false,
+			message: error?.response?.data?.message || "Failed to fetch applied jobs"
+		}
+	}
+}

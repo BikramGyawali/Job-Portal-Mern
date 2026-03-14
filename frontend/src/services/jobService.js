@@ -128,7 +128,9 @@ export const EMyJobs = async () => {
 		if (response.data?.status === 1) {
 			return {
 				success: true,
-				jobs: response.data.jobs
+				jobs: response.data.jobs[0].jobs,
+
+				totalJobs:response.data.jobs[0].totalJobs
 			}
 		}
 		return {
@@ -350,6 +352,30 @@ export const getAppliedJobs = async () => {
 			message: response.data?.message || "No jobs found"
 		}
 
+	} catch (error) {
+		return {
+			success: false,
+			message: error?.response?.data?.message || "Failed to fetch applied jobs"
+		}
+	}
+}
+
+//delete job post 
+
+export const deleteJobPost = async (jobId) => {
+	try {
+		const res = await api.delete(`/employer/deletejobpost/${jobId}`)
+		if (res.data?.status === 1) {
+			return {
+				success: true,
+				message: "Delete Job Successfully",
+				job: res.data?.job
+			}
+		}
+		return {
+			success: false,
+			message: res.data?.message
+		}
 	} catch (error) {
 		return {
 			success: false,

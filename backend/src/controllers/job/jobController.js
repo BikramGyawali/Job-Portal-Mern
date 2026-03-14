@@ -233,6 +233,13 @@ export const EMyJobs = async (req, res) => {
 				}
 			},
 			{
+				$group: {
+					_id: null,
+					totalJobs: { $sum: 1 },
+					jobs: { $push: "$$ROOT" }
+				}
+			},
+			{
 				$project: {
 					applications: 0
 				}

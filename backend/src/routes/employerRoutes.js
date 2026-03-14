@@ -16,7 +16,8 @@ employerroutes.get("/profile", verifyAuth, getEProfile)
 employerroutes.get("/myjobs", verifyAuth, EMyJobs)
 employerroutes.patch("/shortlist/:id", verifyAuth, ShortlistApplicant)
 employerroutes.patch("/rejectapplicant/:id", verifyAuth, rejectApplicant)
-employerroutes.delete("/deletjobpost/:id",verifyAuth,deleteJobPost)
+employerroutes.delete("/deletejobpost/:id",verifyAuth,deleteJobPost)
+
 
 
 employerroutes.get(

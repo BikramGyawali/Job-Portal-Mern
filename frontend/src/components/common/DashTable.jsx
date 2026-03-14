@@ -11,8 +11,8 @@ import {
 import { BsPen } from "react-icons/bs"
 import { MdDeleteForever, MdModeEdit } from "react-icons/md"
 
-function DashTable({ title, headData, bodyData, actionHandler }) {
-	const isActive = title === "Recent Applications"
+function DashTable({ title, headData, bodyData, actionHandler, total }) {
+	// const isActive = title === "Recent Applications"
 
 	const getActionStyle = (action) => {
 		switch (action.toLowerCase()) {
@@ -40,8 +40,8 @@ function DashTable({ title, headData, bodyData, actionHandler }) {
 
 			<div className="flex justify-between mb-4">
 				<p className="text-[20px] font-semibold">{title}</p>
-				<p className={isActive ? "text-[20px] font-semibold cursor-pointer hover:underline" : "hidden"}>
-					View All
+				<p className={total ? "text-[20px] font-semibold cursor-pointer hover:underline" : "hidden"}>
+					Total	{total}
 				</p>
 			</div>
 

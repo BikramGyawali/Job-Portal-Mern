@@ -9,6 +9,7 @@ import ViewApplicant from '../../../common/ViewApplicant'
 import useConfirm from '../../../../hooks/useConfirm'
 import { toast } from 'react-toastify'
 import ConfirmModal from '../../../common/ConfirmModel'
+import { useActionData } from 'react-router-dom'
 
 function MyJobs() {
 	const { profile } = useContext(ProfileContext)
@@ -27,7 +28,7 @@ function MyJobs() {
 	useEffect(() => {
 		fetchJobs()
 	}, [fetchJobs])
-
+	//function to update applicant count
 	const handleApplicantCountUpdate = useCallback((jobId) => {
 		setJobs(prev =>
 			prev.map(job =>
@@ -38,13 +39,32 @@ function MyJobs() {
 		)
 	}, [])
 
+	// 	// //function to update the total jobs
+
+	// 	const handleJobsUpdate = useCallback((jobId) => {
+	// 		setJobs(prev =>
+	// 			prev.filter(job =>
+	// 				job._id !== jobId
+	// 			)
+	// 		)
+	// 		setJobs(prev =>
+	// 			prev.map(job =>
+	// 				job._id == jobId ? {
+	// 					...job,
+
+	// 					setTotalJobs(prev=> Math.max(0, prev - 1))
+	// } : job
+	// 			)
+	// 		)
+	// 	}, [])
+
 	const handleEdit = (row) => console.log("Edit", row)
 	const handleDelete = (row) => {
-		const jobTitle = row.JobTitle
+
 		// const result 
 		showConfirm({
-			title: "Delete Job",
-			message: `Are you sure to delete ${jobTitle} Post`,
+			title: `Delete "${row["Job Title"]}"`,
+			message: `Are you sure to delete "${row["Job Title"]}"  Post Permanently`,
 			confirmText: "Yes,Delete",
 			type: "danger",
 			onConfirm: () => processDelete(row)
@@ -55,6 +75,8 @@ function MyJobs() {
 			const result = await deleteJobPost(row._id);
 			if (result.success) {
 				toast.success(result?.message)
+				setJobs(prev => prev.filter(job => job._id !== row._id))
+				setTotalJobs(prev => Math.max(0, prev - 1))
 			} else {
 				toast.error(result?.message)
 			}

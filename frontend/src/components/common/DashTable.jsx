@@ -40,7 +40,7 @@ function DashTable({ title, headData, bodyData, actionHandler, total }) {
 
 			<div className="flex justify-between mb-4">
 				<p className="text-[20px] font-semibold">{title}</p>
-				<p className={total ? "text-[20px] font-semibold cursor-pointer hover:underline" : "hidden"}>
+				<p className={total ? "text-[20px] font-semibold  bg-blue-100  text-blue-600 rounded-2xl p-2 " : "hidden"}>
 					Total	{total}
 				</p>
 			</div>

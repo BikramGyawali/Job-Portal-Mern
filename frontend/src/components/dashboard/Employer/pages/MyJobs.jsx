@@ -13,7 +13,7 @@ import ViewApplicant from '../../../common/ViewApplicant';
 function MyJobs() {
 	const { profile } = useContext(ProfileContext)
 
-
+	const [applicantCount, setApplicantCount] = useState(0);
 
 	const [jobs, setJobs] = useState([]);
 	useEffect(() => {
@@ -27,8 +27,8 @@ function MyJobs() {
 
 
 				const transformjobs = jobs.map((job, index) => {
-
-
+					// setApplicantCount(job.applicantCount)
+  const applicants= <ViewApplicant applicantCount={job.applicantCount} />
 					const { formattedDate, remainingDays } = calculateJobDates(
 						job.postingDate,
 						job.postingPeriod

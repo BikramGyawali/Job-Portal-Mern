@@ -8,10 +8,10 @@ import { ViewProfileModal } from './ViewProfileModal'
 import { getApplicants } from '../../services/jobService'
 import ConfirmModal from './ConfirmModel'
 
-function ViewApplicant({ jobId }) {
+function ViewApplicant({ jobId, applicantCount }) {
 	const [open, setOpen] = useState(false)
 	const [applicants, setApplicants] = useState([]);
-
+	const [applicantNumber, setApplicantNumber] = useState(applicantCount)
 
 	const fetchApplicants = useCallback(async () => {
 		try {
@@ -22,7 +22,7 @@ function ViewApplicant({ jobId }) {
 
 				const formatted = raw.map((app) => {
 					const { jobId: jobDetails, applicantId, appliedAt, status, _id } = app
-					const { fname, sname, email, phone } = applicantId || {}
+					const { fname, sname, email } = applicantId || {}
 
 					return {
 						"Job Title": jobDetails?.jobTitle || "N/A",
@@ -59,7 +59,9 @@ function ViewApplicant({ jobId }) {
 		if (newStatus === "rejected") {
 			setApplicants(prev =>
 				prev.filter(row => row.applicationId !== applicationId)
+				// setTotalApplicants(prev => prev - 1)
 			)
+			setApplicantNumber(prev => prev - 1)
 		}
 		else {
 			setApplicants(prev =>

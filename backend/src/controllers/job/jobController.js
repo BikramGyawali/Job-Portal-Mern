@@ -369,8 +369,13 @@ export const applyJob = async (req, res) => {
 export const getApplicant = async (req, res) => {
 	const id = req.params.id
 	try {
-		const applicants = await JobApplication.find({ jobId: id }).populate("applicantId").populate("jobId", "jobTitle")  //populate helps us to get the actual data by the reference id 
-		console.log(applicants);
+		const applicants = await JobApplication.find({
+			jobId: id,
+			status: { $ne: "rejected" }    // filter out rejected
+		})
+			.populate("applicantId")
+			.populate("jobId", "jobTitle")  //populate helps us to get the actual data by the reference id 
+			.lean()
 
 		if (!applicants.length) {
 			return res.status(404).json({
@@ -378,11 +383,13 @@ export const getApplicant = async (req, res) => {
 				message: "There are no applicants for this job"
 			})
 		}
+
 		return res.status(200).json({
 			status: 1,
 			message: "All jobs applicant are fetched",
 			applicants
 		})
+
 	} catch (error) {
 		return res.status(500).json({
 			status: 0,
@@ -393,10 +400,7 @@ export const getApplicant = async (req, res) => {
 }
 
 
-
 // get all applicants
-
-
 
 export const getAllApplicant = async (req, res) => {
 	try {
@@ -415,7 +419,13 @@ export const getAllApplicant = async (req, res) => {
 					pipeline: [
 						{
 							$match: {
-								$expr: { $eq: ["$jobId", "$$jobId"] }
+								$expr: { $eq: ["$jobId", "$$jobId"] },
+							}
+						},
+						{
+							// FILTER OUT rejected applications at DB level
+							$match: {
+								status: { $ne: "rejected" }
 							}
 						}
 					],

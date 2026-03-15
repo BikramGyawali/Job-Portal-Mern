@@ -18,6 +18,10 @@ function ViewApplicant({ jobId, applicantCount, onCountUpdate }) {
 	const fetchApplicants = useCallback(async () => {
 		try {
 			const res = await getApplicants(jobId)
+			console.log("FULL RES:", res)
+			console.log("RES.APPLICANTS:", res?.applicants)
+			console.log("RES.APPLICANTS.DATA:", res?.applicants?.data)
+			console.log("RAW APPLICANTS:", res?.applicants?.data?.applicants)
 			if (res?.success) {
 				const raw = res.applicants.data.applicants
 				const formatted = raw.map((app) => {
@@ -38,6 +42,7 @@ function ViewApplicant({ jobId, applicantCount, onCountUpdate }) {
 						"Status": status || "pending",
 						"Actions": ["view", "shortlist", "reject"],
 						fullData: applicantId,
+						// fullData: app,
 						applicationId: _id
 					}
 				})
@@ -123,6 +128,8 @@ function ViewApplicant({ jobId, applicantCount, onCountUpdate }) {
 							actionHandler={actionHandler}
 						/>
 
+
+						<ConfirmModal {...confirmProps} />
 						{viewApplicant && (
 							<ViewProfileModal
 								profile={viewApplicant}
@@ -130,8 +137,6 @@ function ViewApplicant({ jobId, applicantCount, onCountUpdate }) {
 								onClose={closeView}
 							/>
 						)}
-
-						<ConfirmModal {...confirmProps} />
 					</div>
 				</div>
 			)}

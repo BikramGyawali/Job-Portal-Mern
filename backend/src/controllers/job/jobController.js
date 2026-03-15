@@ -547,8 +547,11 @@ export const getApplicant = async (req, res) => {
 			jobId: id,
 			status: { $ne: "rejected" }    // filter out rejected
 		})
-			.populate("applicantId")
 			.populate("jobId", "jobTitle")  //populate helps us to get the actual data by the reference id 
+			.populate({
+				path: "applicantId",
+				select: "-__v"
+			})
 			.lean()
 
 		if (!applicants.length) {

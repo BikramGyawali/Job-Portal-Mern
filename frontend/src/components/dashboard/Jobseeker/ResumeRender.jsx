@@ -8,7 +8,7 @@ function ResumeRender({ sections }) {
 				if (!sec.data || (Array.isArray(sec.data) && sec.data.length === 0)) return null;
 
 				return (
-					<div className="justify-center p-1" key={i}>
+					<div className=" p-1" key={i}>
 
 						{sec.section !== 'Personal Header' && (
 							<>

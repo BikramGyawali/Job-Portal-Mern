@@ -57,7 +57,7 @@ function RegisterComp() {
 
 
 			if (res.status === 1) {
-				const redirectPath = role === "employer" ? "/employer-profile" : "jobseeker-profile"
+				const redirectPath = role === "employer" ? "/employer-profile" : "/jobseeker-profile"
 				toast.success(res.message || "Register Successfully",
 					{ onClose: () => navigate(redirectPath, { replace: true }) }
 				)
@@ -112,7 +112,7 @@ function RegisterComp() {
 
 					<form onSubmit={handleSubmit} className="w-full">
 						{/* Company Name only for employers */}
-						{role === "employer" && (
+						{/* {role === "employer" && (
 							<>
 								<label className="text-lg font-semibold mb-1" htmlFor="company">
 									Company Name
@@ -129,7 +129,7 @@ function RegisterComp() {
 									<p className="text-red-600 text-[14px] ">*{error.company}</p>
 								)}
 							</>
-						)}
+						)} */}
 
 						{/* Email */}
 						<label className="text-lg font-semibold mb-1" htmlFor="email">

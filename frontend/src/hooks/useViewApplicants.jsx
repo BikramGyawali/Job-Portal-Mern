@@ -11,7 +11,9 @@ function useViewApplicants(onStatusUpdate) {
 
 	const handleView = (row) => {
 		if (!row) { toast.error("Something went wrong"); return }
-		const applicantData = row?.fullData?.applicantId || row?.fullData
+		console.log(row?.fullData);
+		const applicantData = row?.fullData
+
 		if (!applicantData) { toast.error("No Data Found"); return }
 		setViewApplicant(applicantData)
 	}
@@ -26,7 +28,7 @@ function useViewApplicants(onStatusUpdate) {
 
 		const applicantName = row?.["Applicant Name"] || "this applicant"
 
-	
+
 		showConfirm({
 			title: "Shortlist Applicant",
 			message: `Are you sure you want to shortlist ${applicantName}?`,
@@ -102,7 +104,7 @@ function useViewApplicants(onStatusUpdate) {
 		handleShortList,
 		handleReject,
 		actionLoading,
-		confirmProps      
+		confirmProps
 	}
 }
 

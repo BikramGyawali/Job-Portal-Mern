@@ -6,7 +6,7 @@ export const ValidateUtil = (form, fields = []) => {
 	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 	const phoneRegex = /^(98|97|96)[0-9]{8}$/; // adjust length if needed
 	const textOnly = /^[A-Za-z\s]+$/; // allow letters and spaces
-	const panCardCheck = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+	const panCardCheck = /^[0-9]{9}$/;
 	const officePhoneCheck = /^\d{2}-\d{7}$/;
 	const websiteCheck = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/.*)?$/;
 
@@ -47,7 +47,7 @@ export const ValidateUtil = (form, fields = []) => {
 
 
 		// 3 Email validation
-		if (f.name === "email" && value && !emailRegex.test(value)) {
+		if (f.name === "email" || f.type === "email" && value && !emailRegex.test(value)) {
 			error[f.name] = "Invalid email format";
 			valid = false;
 		}

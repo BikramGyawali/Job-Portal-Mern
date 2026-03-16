@@ -13,6 +13,8 @@ export function ViewProfileModal({ profile, role, onClose }) {
 	console.log(profile, role);
 
 	const sections = role === 'jobseeker' ? ProfileToCV(profile?.profileData || profile) : null;
+	console.log(sections);
+
 
 	const handleDownload = () => {
 		downloadResume(resumeRef)

@@ -39,24 +39,6 @@ function MyJobs() {
 		)
 	}, [])
 
-	// 	// //function to update the total jobs
-
-	// 	const handleJobsUpdate = useCallback((jobId) => {
-	// 		setJobs(prev =>
-	// 			prev.filter(job =>
-	// 				job._id !== jobId
-	// 			)
-	// 		)
-	// 		setJobs(prev =>
-	// 			prev.map(job =>
-	// 				job._id == jobId ? {
-	// 					...job,
-
-	// 					setTotalJobs(prev=> Math.max(0, prev - 1))
-	// } : job
-	// 			)
-	// 		)
-	// 	}, [])
 
 	const handleEdit = (row) => console.log("Edit", row)
 	const handleDelete = (row) => {
@@ -90,7 +72,7 @@ function MyJobs() {
 		delete: handleDelete
 	}
 
-	console.log(totalJobs);
+	// console.log(totalJobs);
 	const transformJobs = jobs.map((job) => {
 
 		const { formattedDate, remainingDays } = calculateJobDates(

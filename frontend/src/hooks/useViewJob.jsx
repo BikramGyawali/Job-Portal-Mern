@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { applyJob } from '../services/jobService';
 import { toast } from 'react-toastify';
 
-function useViewJob() {
+function useViewJob(onApplySuccess) {
 	const [viewJob, setViewJob] = useState(null)
 	const [loading, setLoading] = useState(null)
 	const [selectedJob, setSelectedJob] = useState(null)
@@ -40,6 +40,7 @@ function useViewJob() {
 				toast.error("Job data missing");
 				return;
 			}
+			console.log("hello");
 
 			const result = await applyJob(job._id);
 
@@ -53,6 +54,9 @@ function useViewJob() {
 				setSelectedJob(prev =>
 					prev?._id === job._id ? { ...prev, alreadyApplied: true } : prev
 				)
+				if (typeof onApplySuccess === "function") {
+					onApplySuccess(job._id)
+				}
 
 			} else {
 				toast.error(result.message || "Apply failed");
@@ -64,7 +68,7 @@ function useViewJob() {
 			setLoading(false);
 		}
 	};
-	
+
 
 
 	return {

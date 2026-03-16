@@ -11,11 +11,27 @@ import useViewJob from "../../../../hooks/useViewJob";
 import JobDetails from "../../../common/JobDetails";
 
 function JobListing() {
+	const [jobs, setJobs] = useState([])
 	const { fetchMyJobs, myJobs, totalJobs } = useContext(JobPostContext)
-	const { viewJob, handleView, closeView, handleApply, loading } = useViewJob()
 	useEffect(() => {
 		fetchMyJobs();
 	}, [])
+	useEffect(() => {
+		if (myJobs?.length) {
+			setJobs(myJobs)
+		}
+	}, [myJobs])
+	const handleApplySuccess = (jobId) => {
+		setJobs(prev =>
+			prev.map(j =>
+				(j._id === jobId || j.fullData?._id === jobId)
+					? { ...j, alreadyApplied: true, fullData: { ...j.fullData, alreadyApplied: true } }
+					: j
+			)
+		)
+	}
+
+	const { viewJob, handleView, closeView, handleApply, loading } = useViewJob(handleApplySuccess)
 
 
 
@@ -26,11 +42,22 @@ function JobListing() {
 	return (
 		<div>
 
-			<DashTable title="Job Listing" headData={DashboardHeadData} bodyData={myJobs} actionHandler={actionHandler} total={totalJobs} />
-			{viewJob && (
+			<DashTable title="Job Listing" headData={DashboardHeadData} bodyData={jobs} actionHandler={actionHandler} total={totalJobs} />
+			{/* {viewJob && (
 				<JobDetails onClose={closeView} job={viewJob} showApply={true} showClose={true} onApply={handleApply} loading={loading} />
 			)
-			}
+			} */}
+			{viewJob && (
+				<JobDetails
+					key={viewJob._id + viewJob.alreadyApplied}
+					job={viewJob}
+					showApply={true}
+					showClose={true}
+					onApply={() => handleApply(viewJob)}
+					onClose={closeView}
+					loading={loading}
+				/>
+			)}
 		</div>
 
 	);

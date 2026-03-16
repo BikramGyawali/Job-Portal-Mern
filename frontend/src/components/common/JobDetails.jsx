@@ -100,7 +100,7 @@ function JobDetails({
 						{showApply && (
 							// 
 							<ButtonComp
-								name={loading ? "Applying..." : "Apply"}
+								name={loading ? "Applying..." :job.alreadyApplied?"Already Applied" : "Apply"}
 								click={onApply}
 								disable={loading || job.alreadyApplied}
 							/>

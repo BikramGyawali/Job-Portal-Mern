@@ -4,7 +4,7 @@ function ButtonComp({ name, click, disable }) {
 	return (
 		<button
 			type="submit"
-			className="bg-blue-600 text-white py-2 px-3 rounded-xl cursor-pointer hover:bg-blue-700 transition w-full"
+			className={`bg-blue-600 text-white py-2 px-3 rounded-xl hover:bg-blue-700 transition w-full ${!disable}? cursor-pointer : cursor-crosshair`}
 			onClick={click}
 			disabled={disable}
 		>

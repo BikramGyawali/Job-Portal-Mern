@@ -43,10 +43,6 @@ function JobListing() {
 		<div>
 
 			<DashTable title="Job Listing" headData={DashboardHeadData} bodyData={jobs} actionHandler={actionHandler} total={totalJobs} />
-			{/* {viewJob && (
-				<JobDetails onClose={closeView} job={viewJob} showApply={true} showClose={true} onApply={handleApply} loading={loading} />
-			)
-			} */}
 			{viewJob && (
 				<JobDetails
 					key={viewJob._id + viewJob.alreadyApplied}

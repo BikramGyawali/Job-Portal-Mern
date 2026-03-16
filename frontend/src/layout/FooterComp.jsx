@@ -51,37 +51,37 @@ export function FooterComp() {
 					</div>
 
 
-					<div className="grid grid-cols-4  gap-8 w-full md:w-[50%] lg:w-[60%]">
+					<div className="grid grid-cols-3 ml-9 gap-8 w-full md:w-[50%] lg:w-[60%]">
 
 						<div>
 							<FooterTitle title="About" />
 							<FooterLinkGroup col>
-								<FooterLink href="#">JobSeekers</FooterLink>
-								<FooterLink href="#">Employers</FooterLink>
+								<FooterLink href="/jobseeker">JobSeekers</FooterLink>
+								<FooterLink href="/employer">Employers</FooterLink>
 							</FooterLinkGroup>
 						</div>
 
 						<div>
 							<FooterTitle title="Follow us" />
 							<FooterLinkGroup col>
-								<FooterLink href="#">Github</FooterLink>
-								<FooterLink href="#">Discord</FooterLink>
+								<FooterLink href="https://github.com/BikramGyawali/">Github</FooterLink>
+								<FooterLink href="https://facebook.com/BikramGyawali/">Facebook</FooterLink>
 							</FooterLinkGroup>
 						</div>
 
-						<div>
+						{/* <div>
 							<FooterTitle title="Legal" />
 							<FooterLinkGroup col>
 								<FooterLink href="#">Privacy Policy</FooterLink>
 								<FooterLink href="#">Terms & Conditions</FooterLink>
 							</FooterLinkGroup>
-						</div>
+						</div> */}
 
 						<div>
 							<FooterTitle title="Quick Links" />
 							<FooterLinkGroup col>
-								<FooterLink href="#">Contact Us</FooterLink>
-								<FooterLink href="#">About Us</FooterLink>
+								<FooterLink href="/contact">Contact Us</FooterLink>
+								<FooterLink href="/about">About Us</FooterLink>
 							</FooterLinkGroup>
 						</div>
 
@@ -92,14 +92,14 @@ export function FooterComp() {
 
 				{/* BOTTOM COPYRIGHT + ICONS */}
 				<div className="flex flex-col-reverse items-center justify-between gap-4 sm:flex-row">
-					<FooterCopyright href="#" by="Hamro Job™" year={currentYear} />
+					<FooterCopyright href="/home" by="Hamro Job™" year={currentYear} />
 
-					<div className="flex space-x-6">
-						<FooterIcon href="#" icon={BsFacebook} />
-						<FooterIcon href="#" icon={BsInstagram} />
-						<FooterIcon href="#" icon={BsTwitter} />
-						<FooterIcon href="#" icon={BsGithub} />
-						<FooterIcon href="#" icon={BsDribbble} />
+					<div className="flex space-x-6 mr-6">
+						<FooterIcon href="https://facebook.com/BikramGyawali/" icon={BsFacebook} />
+						<FooterIcon href="https://instagram.com/" icon={BsInstagram} />
+						<FooterIcon href="https://twiter.com/" icon={BsTwitter} />
+						<FooterIcon href="https://github.com/BikramGyawali/" icon={BsGithub} />
+						{/* <FooterIcon href="https://github.com/" icon={BsDribbble} /> */}
 					</div>
 				</div>
 			</div>

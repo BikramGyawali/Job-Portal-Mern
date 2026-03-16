@@ -866,3 +866,80 @@ export const deleteJobPost = async (req, res) => {
 		})
 	}
 }
+
+
+
+// edit job for the employer
+
+// export const editJobs = async (req, res) => {
+// 	try {
+// 		const jobId = req.params.jobId;
+
+// 		const { jobTitle, openings } = req.body;
+// 		const updateData={
+// 			jobTitle,openings
+// 		}
+// 		const updateJobs = await PostJob.updateOne({
+// 			_id: jobId
+// 		}, updateData)
+// 		if (!updateJobs) {
+// 			return res.status(404).json({
+// 				status: 0,
+// 				message: "Error in update of the jobs"
+// 			})
+// 		}
+
+// 		return res.status(200).json({
+// 			status: 1,
+// 			message: "Job Edit successfully"
+// 		})
+// 	} catch (error) {
+// 		return res.status(500).json({
+// 			status: 0,
+// 			message: "Job update error ",
+// 			error: error.message
+// 		})
+// 	}
+
+
+// }
+export const editJobs = async (req, res) => {
+	try {
+		const jobId = req.params.jobId
+
+		const allowedFields = [
+			'jobTitle', 'openings', 'mainCategory', 'subCategory',
+			'jobLevel', 'desiredCandidate', 'educationLevel', 'experience',
+			'district', 'municipality', 'location', 'salaryCurrency',
+			'salaryPeriod', 'salaryRange', 'license', 'vehicle',
+			'skills', 'jobDescription', 'jobSpecification'
+		]
+
+		// pick only allowed fields from req.body
+		const updateData = {}
+		allowedFields.forEach(field => {
+			if (req.body[field] !== undefined) {
+				updateData[field] = req.body[field]
+			}
+		})
+
+		if (Object.keys(updateData).length === 0) {
+			return res.status(400).json({ status: 0, message: "No valid fields to update" })
+		}
+
+		const updatedJob = await PostJob.findOneAndUpdate(
+			{ _id: jobId, userId: req.user._id },
+			{ $set: updateData },
+			{ new: true }
+		)
+
+		if (!updatedJob) {
+			return res.status(404).json({ status: 0, message: "Job not found or unauthorized" })
+		}
+
+		return res.status(200).json({ status: 1, message: "Job updated successfully", data: updatedJob })
+
+	} catch (error) {
+		return res.status(500).json({ status: 0, message: "Job update error", error: error.message })
+	}
+}

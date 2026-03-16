@@ -16,18 +16,7 @@ function ButtonComp({ name, click, disable }) {
             {name}
         </button>
     )
-=======
-	return (
-		<button
-			type="submit"
-			className="bg-blue-600 text-white py-2 px-3 rounded-xl  hover:bg-blue-700 transition w-full cursor-pointer"
-			onClick={click}
-			disabled={disable}
-		>
-			{name}
-		</button>
-	)
->>>>>>> 142094a60e5453d7e2803c2ef240bfddba6b6cf0
+	
 }
 
 export default ButtonComp

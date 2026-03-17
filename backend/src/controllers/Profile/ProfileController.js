@@ -277,6 +277,7 @@ export const EProfileController = async (req, res) => {
 			if (dupKey === 'email') message = 'Email already exists';
 			if (dupKey === 'phone') message = 'Phone number already exists';
 			if (dupKey === 'userId') message = 'Profile for this user already exists';
+			if (dupKey === "pancard") message = 'Pancard already exists'
 			return res.status(409).json({ status: 0, message });
 		}
 		if (err && err.name === 'ValidationError') {

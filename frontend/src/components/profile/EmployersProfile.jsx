@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { employerProfile } from '../../data/employers/employerProfile';
 import ReusableForm from '../form/ReusableForm';
 import { ValidateUtil } from '../../utils/ValidationUtil';
@@ -22,14 +22,14 @@ function EmployersProfile() {
 			return acc;
 		}, {});
 	const [profile, setProfile] = useState(createEmptyEntry(employerProfile))
-	const [error, setError] = useState({})
+	const [profileError, setProfileError] = useState({})
 	const handleChange = (e) => {
 		const { name, value, files, type } = e.target;
 		if (type === 'file') {
 			const file = files?.[0] ?? null;
 			if (file && !['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
-				setError({ image: 'Only JPG/JPEG/PNG images are accepted' });
-				alert('Only JPG/JPEG/PNG images are accepted');
+				setProfileError({ image: 'Only JPG/JPEG/PNG images are accepted' });
+				
 				return;
 			}
 		}
@@ -41,10 +41,14 @@ function EmployersProfile() {
 		}))
 
 	}
+	useEffect(() => {
+		const { error } = ValidateUtil(profile, employerProfile);
+		setProfileError(error)
+	}, [profile])
 	const handleSubmit = async (e) => {
 		if (e) e.preventDefault()
 		const { valid, error } = ValidateUtil(profile, employerProfile);
-		setError(error);
+		setProfileError(error);
 
 		if (!valid) {
 			return
@@ -95,7 +99,7 @@ function EmployersProfile() {
 			<h2 className="text-2xl font-bold mb-4 text-center ">Company Profile</h2>
 			<ReusableForm
 				form={profile}
-				errors={error}
+				errors={profileError}
 				onChange={handleChange}
 				onSubmit={handleSubmit}
 				fields={employerProfile}

@@ -30,7 +30,7 @@ export const employerProfile = [
 	{
 		label: "PAN card ",
 		name: "panCard",
-		type: "text",
+		type: "number",
 		required: true,
 		placeholder: "123456789"
 	},
@@ -38,9 +38,9 @@ export const employerProfile = [
 	{
 		label: "Office Phone Number",
 		name: "officePhone",
-		type: "text",
+		type: "number",
 		required: true,
-		placeholder: "01-4000000"
+		placeholder: "014000000"
 	},
 
 	{
@@ -97,7 +97,7 @@ export const employerProfile = [
 	{
 		label: "Mobile Number",
 		name: "phone",
-		type: "text",
+		type: "number",
 		required: true,
 		placeholder: "9745989898"
 	},

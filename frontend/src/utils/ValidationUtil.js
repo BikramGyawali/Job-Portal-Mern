@@ -10,7 +10,7 @@ export const ValidateUtil = (form, fields = []) => {
 		phone: /^(98|97|96)[0-9]{8}$/,
 		text: /^[A-Za-z\s]+$/,
 		pan: /^[0-9]{9}$/,
-		officePhone: /^\d{2}-\d{7}$/,
+		officePhone: /^\d{10}$/,
 		website: /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/.*)?$/,
 		social: /^(https?:\/\/)?(www\.)?(facebook|instagram|linkedin|pinterest|reddit|snapchat|tiktok|twitter|youtube)\.com(\/.*)?$/i,
 	};
@@ -104,9 +104,9 @@ export const ValidateUtil = (form, fields = []) => {
 			valid = false;
 		}
 
-		// . OFFICE PHONE
-		if (f.name === "officePhone" && !patterns.officePhone.test(value)) {
-			error[f.name] = "Invalid office phone format (XX-XXXXXXX)";
+		// // . OFFICE PHONE
+		if (f.name === "officePhone" && value && !patterns.officePhone.test(value)) {
+			error[f.name] = " office phone must have 10 digits";
 			valid = false;
 		}
 

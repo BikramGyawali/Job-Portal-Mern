@@ -22,9 +22,9 @@ function RegisterComp() {
 		email: "",
 		pass: "",
 		cPass: "",
-		company: ""
+
 	});
-	const [error, setError] = useState({});
+	const [signupError, setSignupError] = useState({});
 
 	// Determine role (fallback to jobseeker if missing)
 	const role = roleFromState || "jobseeker";
@@ -32,17 +32,22 @@ function RegisterComp() {
 
 
 	const handleChange = (e) => {
-		setForm({
-			...form,
-			[e.target.name]: e.target.value
-		});
+		const { name, value } = e.target;
+		setForm((prev) => ({
+			...prev,
+			[name]: value
+		}))
 	};
+	useEffect(() => {
+		const { error } = contactLoginValidate(form)
+		setSignupError(error)
+	}, [form])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
 		const { error: validateError, valid } = contactLoginValidate(form, role)
-		setError(validateError);
+		setSignupError(validateError);
 
 		// Only navigate if valid
 		if (!valid) return;
@@ -143,7 +148,7 @@ function RegisterComp() {
 							value={form.email}
 							className="w-full text-base p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
 						/>
-						{error.email && <p className="text-red-600 text-[14px] ">*{error.email}</p>}
+						{signupError.email && <p className="text-red-600 text-[14px] ">*{signupError.email}</p>}
 
 						{/* Password & Confirm Password */}
 						{RegisterData.map((item, i) => (
@@ -161,8 +166,8 @@ function RegisterComp() {
 										onChange={handleChange}
 										value={form[item.name]}
 									/>
-									{error[item.name] && (
-										<p className="text-red-600 text-[14px] ">*{error[item.name]}</p>
+									{signupError[item.name] && (
+										<p className="text-red-600 text-[14px] ">*{signupError[item.name]}</p>
 									)}
 
 									<button

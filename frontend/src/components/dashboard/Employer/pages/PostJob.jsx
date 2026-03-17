@@ -83,8 +83,11 @@ function PostJob() {
 	// 		/>
 	// 	</div>
 	// )
+	
+return(
 
 	<PostJobForm mode='create'/>
+)
 }
 
 export default PostJob

@@ -134,8 +134,8 @@ function MyJobs() {
 								setJobs(prev =>
 									prev.map(j => j._id === updatedJob._id ? updatedJob : j)
 								);
+								setShowModel(false);
 							}}
-							// setShowModel(false);
 							close={() => setShowModel(false)}
 						/>
 					</div>

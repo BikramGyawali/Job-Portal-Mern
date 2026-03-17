@@ -60,12 +60,13 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 				result = await postJobService(job);
 			}
 			if (result.success) {
-				if (mode === "creat") {
+				if (mode === "create") {
 
 					addJob(result.job);
 					setJob(createEmptyEntry(CreateJobsData))
-					setMessage("Job is post successfully");
 					toast.success(result.message)
+					setMessage("Job is post successfully");
+
 				}
 				else {
 					onSuccess && onSuccess(result.job)

@@ -1,191 +1,125 @@
+
+
 export const ValidateUtil = (form, fields = []) => {
 	let valid = true;
 	const error = {};
 
 	// Regex patterns
-	const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	const phoneRegex = /^(98|97|96)[0-9]{8}$/; // adjust length if needed
-	const textOnly = /^[A-Za-z\s]+$/; // allow letters and spaces
-	const panCardCheck = /^[0-9]{9}$/;
-	const officePhoneCheck = /^\d{2}-\d{7}$/;
-	const websiteCheck = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/.*)?$/;
+	const patterns = {
+		email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+		phone: /^(98|97|96)[0-9]{8}$/,
+		text: /^[A-Za-z\s]+$/,
+		pan: /^[0-9]{9}$/,
+		officePhone: /^\d{2}-\d{7}$/,
+		website: /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/.*)?$/,
+		social: /^(https?:\/\/)?(www\.)?(facebook|instagram|linkedin|pinterest|reddit|snapchat|tiktok|twitter|youtube)\.com(\/.*)?$/i,
+	};
 
-	const mediaLink = /^(https?:\/\/)?(www\.)?(facebook|instagram|linkedin|pinterest|reddit|snapchat|tiktok|twitter|youtube)\.com(\/.*)?$/i;
-
-
-	// Get today's date for date validation
 	const today = new Date().toISOString().split("T")[0];
 
-	// Loop through each field
-	fields.forEach(f => {
+	fields.forEach((f) => {
 		const value = form[f.name]?.toString().trim() || "";
 
-
-
-		// 1 Required fields
+		//  REQUIRED
 		if (f.required && !value) {
 			error[f.name] = `${f.label} is required`;
 			valid = false;
-			return; // skip further checks for this field
+			return;
 		}
 
-		// 2 Text only validation
-		if ('fname' in form && form.fname?.trim() && !textOnly.test(form.fname)) {
-			error.fname = "First name must be text";
+		// Skip further checks if empty and not required
+		if (!value) return;
+
+		//  TEXT VALIDATION
+		if (
+			(f.type === "text" || f.type === "textarea") &&
+			!patterns.text.test(value)
+		) {
+			error[f.name] = `${f.label} must contain only text`;
 			valid = false;
 		}
 
-		// Second Name
-		if ('sname' in form && form.sname?.trim() && !textOnly.test(form.sname)) {
-			error.sname = "Second name must be text";
-			valid = false;
-		}
-		if ('mname' in form && form.mname?.trim() && !textOnly.test(form.mname)) {
-			error.mname = "Middle name must be text";
-			valid = false;
-		}
-
-
-		// 3 Email validation
-		if (f.name === "email" || f.type === "email" && value && !emailRegex.test(value)) {
+		//  EMAIL
+		if (f.type === "email" && !patterns.email.test(value)) {
 			error[f.name] = "Invalid email format";
 			valid = false;
 		}
 
-		// 4 Phone validation
-		if (f.name === "phone" && value) {
-
+		//  PHONE
+		if (f.name === "phone") {
 			if (value.length !== 10) {
-				error[f.name] = "Phone must be exactly 10 digits";
+				error.phone = "Phone must be exactly 10 digits";
 				valid = false;
-			}
-
-			else if (!phoneRegex.test(value)) {
-				error[f.name] = "Phone must start with 97 or 98";
+			} else if (!patterns.phone.test(value)) {
+				error.phone = "Phone must start with 96, 97, or 98";
 				valid = false;
 			}
 		}
 
-		// 5 Date validation (DOB or Start Date cannot be in future)
-		if (f.type === "date" && value) {
+		//  DATE
+		if (f.type === "date") {
 			if ((f.name === "dob" || f.name === "sdate") && value > today) {
 				error[f.name] = `${f.label} cannot be in the future`;
 				valid = false;
 			}
 		}
 
-		// 6 Message field
-		if (f.name === "message") {
-			if (typeof form.message !== "string") {
-				error.message = "Message must be text";
-				valid = false;
-			}
+		//  NUMBER
+		if (f.type === "number" && isNaN(value)) {
+			error[f.name] = `${f.label} must be a number`;
+			valid = false;
 		}
 
-		// 7 Password validation
+		//  SELECT (MULTIPLE)
+		if (f.type === "select" && f.multiple && form[f.name]?.length === 0) {
+			error[f.name] = `Please select at least one ${f.label}`;
+			valid = false;
+		}
+
+		//  PASSWORD
 		if (f.name === "pass") {
-			if (!value) {
-				error.pass = "Password is required";
-				valid = false;
-			} else if (value.length < 6) {
+			if (value.length < 6) {
 				error.pass = "Password must be at least 6 characters";
 				valid = false;
 			}
 		}
 
-		// 8 Confirm Password validation
+		//  CONFIRM PASSWORD
 		if (f.name === "cPass") {
-			if (!value) {
-				error.cPass = "Confirm password is required";
-				valid = false;
-			} else if (form.pass && value !== form.pass) {
+			if (value !== form.pass) {
 				error.cPass = "Passwords do not match";
 				valid = false;
 			}
 		}
 
-		// district
-		if ('currentDistrict' in form && form.currentDistrict?.trim() && !textOnly.test(form.currentDistrict)) {
-			error.currentDistrict = "District Name must be text";
-			valid = false;
-		}
-		//municipality
-		if ('currentMunicipality' in form && form.currentMunicipality?.trim() && !textOnly.test(form.currentMunicipality)) {
-			error.currentMunicipality = "Municipality Name must be text";
-			valid = false;
-		}
-		if ('currentCity' in form && form.currentCity?.trim() && !textOnly.test(form.currentCity)) {
-			error.currentCity = " City Name must be text";
-			valid = false;
-		}
-		if ('perCity' in form && form.perCity?.trim() && !textOnly.test(form.perCity)) {
-			error.perCity = " City Name must be text";
-			valid = false;
-		}
-		if ('perDistrict' in form && form.perDistrict?.trim() && !textOnly.test(form.perDistrict)) {
-			error.perDistrict = " District Name must be text";
-			valid = false;
-		}
-		if ('perMunicipality' in form && form.perMunicipality?.trim() && !textOnly.test(form.perMunicipality)) {
-			error.perMunicipality = " Municipality Name must be text";
+		// . SOCIAL LINK
+		if (f.name === "socialUrl" && !patterns.social.test(value)) {
+			error[f.name] = "Invalid social media link";
 			valid = false;
 		}
 
-		//
-		if ('position' in form && form.position?.trim() && !textOnly.test(form.position)) {
-			error.position = " Position must be text";
-			valid = false;
-		}
-		if ('institution' in form && form.institution?.trim() && !textOnly.test(form.institution)) {
-			error.institution = " Institution/College Name must be text";
+		// . PAN CARD
+		if (f.name === "panCard" && !patterns.pan.test(value)) {
+			error[f.name] = "Invalid PAN format";
 			valid = false;
 		}
 
-
-		//url check
-		if (f.name === 'socialUrl' && value && !mediaLink.test(value)) {
-			error[f.name] = "Invalid social media link format";
+		// . OFFICE PHONE
+		if (f.name === "officePhone" && !patterns.officePhone.test(value)) {
+			error[f.name] = "Invalid office phone format (XX-XXXXXXX)";
 			valid = false;
 		}
 
-		//for empolyers
-
-		if (f.name === 'panCard' && value && !panCardCheck.test(value)) {
-			error[f.name] = "Invalid Pan card format";
+		// . WEBSITE
+		if (f.name === "companyWebsite" && !patterns.website.test(value)) {
+			error[f.name] = "Invalid website format";
 			valid = false;
 		}
-
-		//office Phone
-
-		if (f.name === 'officePhone' && value && !officePhoneCheck.test(value)) {
-			error[f.name] = "Invalid format";
-			valid = false;
-		}
-		// if (f.type === 'textarea' && value && !textOnly.test(value)) {
-		// 	error[f.name] = "Must be text",
-		// 		valid = false
-		// }
-		if (f.name === 'companyWebsite' && value && !websiteCheck.test(value)) {
-			error[f.name] = "Invalid webiste format";
-			valid = false;
-		}
-		//company address
-		if ('companyaddress' in form && form.companyaddress?.trim() && !textOnly.test(form.companyaddress)) {
-			error.companyaddress = "Company Address must be text";
-			valid = false;
-		}
-		//for dashboard jobtitle 
-		if ('jobTitle' in form && form.jobTitle?.trim() && !textOnly.test(form.jobTitle)) {
-			error.jobTitle = "Job Title must be text";
-			valid = false;
-		}
-
 	});
-	//grade validation
-	// Grading validation
+
+	// . GRADING (CUSTOM LOGIC OUTSIDE LOOP)
 	if (form.gradingType === "CGPA") {
 		const gpa = parseFloat(form.score);
-
 		if (isNaN(gpa) || gpa <= 0 || gpa > 4) {
 			error.score = "CGPA must be between 0.1 and 4.0";
 			valid = false;
@@ -194,11 +128,11 @@ export const ValidateUtil = (form, fields = []) => {
 
 	if (form.gradingType === "Percentage") {
 		const percent = parseFloat(form.score);
-
 		if (isNaN(percent) || percent <= 0 || percent > 100) {
 			error.score = "Percentage must be between 1 and 100";
 			valid = false;
 		}
 	}
+
 	return { valid, error };
 };

@@ -213,17 +213,6 @@ function ReusableForm({
 					</button>
 				)}
 
-				{
-					onClose && (
-						<button
-							className="bg-blue-600 text-white py-2 rounded-xl w-full hover:bg-blue-700"
-							// onClick={handlePrev}
-							disabled={isLoading}
-						>
-							Close
-						</button>
-					)
-				}
 				<button
 					type="submit"
 					className={`text-white py-2 rounded-xl w-full ${isLoading
@@ -234,6 +223,18 @@ function ReusableForm({
 				>
 					{submitButtonText}
 				</button>
+				{
+					onClose && (
+						<button
+							className="bg-gray-600 text-white py-2 rounded-xl w-full hover:bg-gray-700"
+							type="button"
+							onClick={onClose}
+							disabled={isLoading}
+						>
+							Close
+						</button>
+					)
+				}
 			</div>
 
 

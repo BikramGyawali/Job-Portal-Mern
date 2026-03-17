@@ -73,9 +73,9 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 					toast.success(result.message)
 					setMessage("Job Edit Successfully")
 				}
+				setLoading(false)
 				setTimeout(() => setMessage(''), 10000);  //this decide how long the message will be vissible 
 			} else {
-				setLoading(false)
 
 				// setMessage(`${result.error}`)
 				toast.error(result.message)

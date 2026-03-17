@@ -869,92 +869,73 @@ export const deleteJobPost = async (req, res) => {
 
 
 
-// edit job for the employer
-
+//edit job controller
 
 export const editJobs = async (req, res) => {
 	try {
-		const jobId = req.params._id
+		const jobId = req.params.jobId;
 		const userId = req.user.id;
+		console.log(userId);
+
 		const allowedFields = [
 			'jobTitle', 'openings', 'mainCategory', 'subCategory',
 			'jobLevel', 'desiredCandidate', 'educationLevel', 'experience',
 			'district', 'municipality', 'location', 'salaryCurrency',
 			'salaryPeriod', 'salaryRange', 'license', 'vehicle',
 			'skills', 'jobDescription', 'jobSpecification'
-		]
+		];
 
 
 
-		const checkJob = await PostJob.aggregate([
-			{
-				$match: {
-					_id: new mongoose.Types.ObjectId(jobId)
-				}
-			},
-			{
-				$lookup: {
-					from: "employerprofiles",
-					let: { employerId: "$userId" },
-					pipeline: [
-						{
-							$match: {
-								$expr: {
-									$and: [
-										{ $eq: ["$_id", "$$employerId"] }, // _id is from employerprofile and $$employerId is the userId of postjob
 
-										{
-											$eq: ["$userId", new mongoose.Types.ObjectId(userId)] // check the userId of the employer profile is equal to uerId of the req.user.id or tokken user id 
-										}
+		const job = await PostJob.findOne({
+			_id: jobId,
+			userId: userId
+		});
 
-									]
-								}
-							}
-						}
-					],
-					as: "employer"
-				}
-			},
-			{
-				$match: {
-					"employer.0": { $exists: true }
-				}
-			}
-		])
-		if (!checkJob.length) {
+		if (!job) {
 			return res.status(404).json({
 				status: 0,
 				message: "No job Found or unauthorized"
-				// error: error.message
-			})
+			});
 		}
 
 
-		// pick only allowed fields from req.body
-		const updateData = {}
+		const updateData = {};
 		allowedFields.forEach(field => {
 			if (req.body[field] !== undefined) {
-				updateData[field] = req.body[field]
+				updateData[field] = req.body[field];
 			}
-		})
+		});
 
 		if (Object.keys(updateData).length === 0) {
-			return res.status(400).json({ status: 0, message: "No valid fields to update" })
+			return res.status(400).json({
+				status: 0,
+				message: "No valid fields to update"
+			});
 		}
-		updateData.status = 'pending'
 
-		const updatedJob = await PostJob.findOneAndUpdate(
-			{ _id: jobId, userId: req.user._id },
+
+		updateData.status = "pending";
+
+
+		const updatedJob = await PostJob.findByIdAndUpdate(
+			jobId,
 			{ $set: updateData },
-			{ new: true, runValidators: true },
+			{ new: true, runValidators: true }
+		);
 
-		)
-
-
-		return res.status(200).json({ status: 1, message: "Job updated successfully", data: updatedJob })
+		return res.status(200).json({
+			status: 1,
+			message: "Job updated successfully",
+			data: updatedJob
+		});
 
 	} catch (error) {
-		return res.status(500).json({ status: 0, message: "Job update error", error: error.message })
+		return res.status(500).json({
+			status: 0,
+			message: "Job update error",
+			error: error.message
+		});
 	}
-}
-
+};

@@ -384,3 +384,28 @@ export const deleteJobPost = async (jobId) => {
 		}
 	}
 }
+
+
+//service for the edit jobs
+
+export const editJobs = async (jobId, data) => {
+	try {
+		const res = await api.patch(`/employer/${jobId}`, data);
+		if (res.data.status === 1) {
+			return {
+				success: true,
+				message: "Job edit successfully",
+				job: res.data.jobDetail
+			}
+		}
+		return {
+			success: false,
+			message: res.data?.message
+		}
+	} catch (error) {
+		return {
+			success: false,
+			message: error?.response?.data?.message || "Failed to update job"
+		}
+	}
+}

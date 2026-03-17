@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react'
 import DashTable from '../../../common/DashTable'
 import { MyJobsTableHead } from '../../../../data/employers/DashboardData'
-import { deleteJobPost, EMyJobs } from '../../../../services/jobService'
+import { deleteJobPost, editJobs, EMyJobs } from '../../../../services/jobService'
 import { ProfileContext } from '../../../../context/ProfileContext'
 import RejectionReasonView from '../../../common/RejectionReasonView'
 import { calculateJobDates } from '../../../../utils/JobDataUtils'
@@ -40,7 +40,27 @@ function MyJobs() {
 	}, [])
 
 
-	const handleEdit = (row) => console.log("Edit", row)
+	const handleEdit = async (row) => {
+		// showConfirm({
+		// 	title: `Edit "${row["Job Title"]}"`,
+		// 	message: `Are you sure to delete "${row["Job Title"]}"  Post Permanently`,
+		// 	confirmText: "Yes,Delete",
+		// 	type: "danger",
+		// 	onConfirm: () => processDelete(row)
+		// })
+		try {
+			const result = await editJobs(row._id);
+			if (result.success) {
+				toast.success(result?.message)
+				setJobs(result?.job)
+			}
+			else {
+				toast.error(result?.message)
+			}
+		} catch (error) {
+			toast.error("Something Went Wrong")
+		}
+	}
 	const handleDelete = (row) => {
 
 		// const result 

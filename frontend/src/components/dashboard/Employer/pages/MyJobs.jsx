@@ -125,8 +125,8 @@ function MyJobs() {
 			/>
 			<ConfirmModal {...confirmProps} />
 			{showModel && (
-				<div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-					<div className="bg-white p-6 rounded-xl w-[700px] max-h-[90vh] overflow-y-auto">
+				<div className="fixed inset-0 bg-black/40 flex justify-end items-center z-50">
+					<div className="bg-white p-6 m-4 rounded-xl w-[1000px] max-h-[95vh] overflow-y-auto">
 						<PostJobForm
 							mode='edit'
 							initialData={selectedJob}
@@ -134,9 +134,9 @@ function MyJobs() {
 								setJobs(prev =>
 									prev.map(j => j._id === updatedJob._id ? updatedJob : j)
 								);
-								setShowModel(false);
 							}}
-						// onClose={() => setShowModel(false)}
+							// setShowModel(false);
+							close={() => setShowModel(false)}
 						/>
 					</div>
 				</div>

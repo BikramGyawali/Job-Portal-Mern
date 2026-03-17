@@ -393,7 +393,7 @@ export const deleteJobPost = async (jobId) => {
 
 export const editJobs = async (jobId, data) => {
 	try {
-		const res = await api.patch(`/employer/${jobId}`, data);
+		const res = await api.patch(`/employer/editjob/${jobId}`, data);
 		if (res.data.status === 1) {
 			return {
 				success: true,

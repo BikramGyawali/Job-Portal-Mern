@@ -11,7 +11,7 @@ import { ValidateUtil } from '../../../utils/ValidationUtil';
 import ReusableForm from '../../form/ReusableForm';
 import { JobPostContext } from '../../../context/JobPostContext';
 
-function PostJobForm({ mode = "create", initialData = {}, onSuccess }) {
+function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 	const { addJob } = useContext(JobPostContext)
 	const [message, setMessage] = useState("")
 	const [loading, setLoading] = useState(false)
@@ -112,7 +112,7 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess }) {
 				currentEntryIndex={0}
 				isLoading={loading}
 				submitButtonText={loading ? mode === "edit" ? "Updating..." : "Posting" : mode === "edit" ? "Update Job" : "Post Job"}
-
+				onClose={close}
 
 			/>
 		</div>

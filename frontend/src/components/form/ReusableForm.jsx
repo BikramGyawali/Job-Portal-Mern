@@ -15,7 +15,8 @@ function ReusableForm({
 	setCurrentEntryIndex,
 	currentEntryIndex,
 	isLoading = false,
-	submitButtonText = "Submit"
+	submitButtonText = "Submit",
+	onClose
 }) {
 	const maxDate = new Date().toISOString().split("T")[0];
 
@@ -170,27 +171,27 @@ function ReusableForm({
 									placeholder={field.placeholder}
 									className="p-2 border rounded-xl"
 								/>
-							):field.type==="file"? (
-									<input
-										type={field.type}
-										name={field.name}
-										// value={form[field.name] !== undefined ? form[field.name] : ""}
+							) : field.type === "file" ? (
+								<input
+									type={field.type}
+									name={field.name}
+									// value={form[field.name] !== undefined ? form[field.name] : ""}
 
-										onChange={onChange}
-										placeholder={field.placeholder}
-										className="p-2 border rounded-xl"
-									/>
-								): (
-									<input
-										type={field.type}
-										name={field.name}
-										value={form[field.name] !== undefined ? form[field.name] : ""}
+									onChange={onChange}
+									placeholder={field.placeholder}
+									className="p-2 border rounded-xl"
+								/>
+							) : (
+								<input
+									type={field.type}
+									name={field.name}
+									value={form[field.name] !== undefined ? form[field.name] : ""}
 
-										onChange={onChange}
-										placeholder={field.placeholder}
-										className="p-2 border rounded-xl"
-									/>
-								)}
+									onChange={onChange}
+									placeholder={field.placeholder}
+									className="p-2 border rounded-xl"
+								/>
+							)}
 
 
 					{errors && errors[field.name] && (
@@ -212,12 +213,17 @@ function ReusableForm({
 					</button>
 				)}
 
-				{/* <button
-					type="submit"
-					className="bg-blue-600 text-white py-2 rounded-xl w-full hover:bg-blue-700"
-				>
-					{step === totalSteps ? "Finish" : "Next"}
-				</button> */}
+				{
+					onClose && (
+						<button
+							className="bg-blue-600 text-white py-2 rounded-xl w-full hover:bg-blue-700"
+							// onClick={handlePrev}
+							disabled={isLoading}
+						>
+							Close
+						</button>
+					)
+				}
 				<button
 					type="submit"
 					className={`text-white py-2 rounded-xl w-full ${isLoading
@@ -229,6 +235,7 @@ function ReusableForm({
 					{submitButtonText}
 				</button>
 			</div>
+
 
 			{/* ADD SECTION */}
 			{

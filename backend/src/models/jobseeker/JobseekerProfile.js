@@ -63,17 +63,7 @@ const profileSchema = new mongoose.Schema({
 		unique: true
 	},
 	currenDistrict: String,
-	// currentAddress: {
-	// 	district: String,
-	// 	municipality: String,
-	// 	city: String
-	// },
-
-	// permanentAddress: {
-	// 	district: String,
-	// 	municipality: String,
-	// 	city: String
-	// },
+	
 
 	dob: Date,
 	phone: {
@@ -93,7 +83,7 @@ const profileSchema = new mongoose.Schema({
 	vehicle: String,
 	jobType: String,
 	lookingFor: String,
-	cv: String,
+	// cv: String,
 
 	about: String,
 
@@ -112,21 +102,9 @@ const profileSchema = new mongoose.Schema({
 	socials: [socialSchema],
 	references: [referenceSchema],
 
-	// profileCompleted: {
-	// 	type: Boolean,
-	// 	default: false
-	// }
+	
 
 }, { timestamps: true });   //timestamp add extra two field as createdat and updatedat
 
-// profileSchema.pre("save", function (next) {
-// 	if (this.phone) {
-// 		this.phone =
-// 			this.phone.replace(/\D/g, "");
-// 	}
-// 	next();
-// })
-// profileSchema.index({ phone: 1 }, { unique: true });
-// profileSchema.index({ email: 1 }, { unique: true });
-// profileSchema.index({ userId: 1 }, { unique: true })
+
 export const JobseekerProfile = mongoose.model("JobseekerProfile", profileSchema);

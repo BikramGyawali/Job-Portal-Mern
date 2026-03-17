@@ -871,42 +871,11 @@ export const deleteJobPost = async (req, res) => {
 
 // edit job for the employer
 
-// export const editJobs = async (req, res) => {
-// 	try {
-// 		const jobId = req.params.jobId;
 
-// 		const { jobTitle, openings } = req.body;
-// 		const updateData={
-// 			jobTitle,openings
-// 		}
-// 		const updateJobs = await PostJob.updateOne({
-// 			_id: jobId
-// 		}, updateData)
-// 		if (!updateJobs) {
-// 			return res.status(404).json({
-// 				status: 0,
-// 				message: "Error in update of the jobs"
-// 			})
-// 		}
-
-// 		return res.status(200).json({
-// 			status: 1,
-// 			message: "Job Edit successfully"
-// 		})
-// 	} catch (error) {
-// 		return res.status(500).json({
-// 			status: 0,
-// 			message: "Job update error ",
-// 			error: error.message
-// 		})
-// 	}
-
-
-// }
 export const editJobs = async (req, res) => {
 	try {
-		const jobId = req.params.jobId
-
+		const jobId = req.params._id
+		const userId = req.user.id;
 		const allowedFields = [
 			'jobTitle', 'openings', 'mainCategory', 'subCategory',
 			'jobLevel', 'desiredCandidate', 'educationLevel', 'experience',
@@ -914,6 +883,52 @@ export const editJobs = async (req, res) => {
 			'salaryPeriod', 'salaryRange', 'license', 'vehicle',
 			'skills', 'jobDescription', 'jobSpecification'
 		]
+
+
+
+		const checkJob = await PostJob.aggregate([
+			{
+				$match: {
+					_id: new mongoose.Types.ObjectId(jobId)
+				}
+			},
+			{
+				$lookup: {
+					from: "employerprofiles",
+					let: { employerId: "$userId" },
+					pipeline: [
+						{
+							$match: {
+								$expr: {
+									$and: [
+										{ $eq: ["$_id", "$$employerId"] }, // _id is from employerprofile and $$employerId is the userId of postjob
+
+										{
+											$eq: ["$userId", new mongoose.Types.ObjectId(userId)] // check the userId of the employer profile is equal to uerId of the req.user.id or tokken user id 
+										}
+
+									]
+								}
+							}
+						}
+					],
+					as: "employer"
+				}
+			},
+			{
+				$match: {
+					"employer.0": { $exists: true }
+				}
+			}
+		])
+		if (!checkJob.length) {
+			return res.status(404).json({
+				status: 0,
+				message: "No job Found or unauthorized"
+				// error: error.message
+			})
+		}
+
 
 		// pick only allowed fields from req.body
 		const updateData = {}
@@ -926,16 +941,15 @@ export const editJobs = async (req, res) => {
 		if (Object.keys(updateData).length === 0) {
 			return res.status(400).json({ status: 0, message: "No valid fields to update" })
 		}
+		updateData.status = 'pending'
 
 		const updatedJob = await PostJob.findOneAndUpdate(
 			{ _id: jobId, userId: req.user._id },
 			{ $set: updateData },
-			{ new: true }
+			{ new: true, runValidators: true },
+
 		)
 
-		if (!updatedJob) {
-			return res.status(404).json({ status: 0, message: "Job not found or unauthorized" })
-		}
 
 		return res.status(200).json({ status: 1, message: "Job updated successfully", data: updatedJob })
 
@@ -943,3 +957,4 @@ export const editJobs = async (req, res) => {
 		return res.status(500).json({ status: 0, message: "Job update error", error: error.message })
 	}
 }
+

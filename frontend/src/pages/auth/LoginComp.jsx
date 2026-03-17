@@ -1,6 +1,6 @@
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import ButtonComp from '../../components/common/ButtonComp';
 import { contactLoginValidate } from '../../utils/contactLoginValidate';
@@ -20,28 +20,35 @@ function LoginComp({ LoginData }) {
 		email: "",
 		pass: ""
 	});
-	const [error, setError] = useState({
-		email: "",
-		pass: ""
-	});
+	const [loginError, setLoginError] = useState({});
 	const handleChange = (e) => {
-		setForm({
-			...form,
-			[e.target.name]: e.target.value
-		});
-	};
+		console.log(e.name);
 
+		const { name, value } = e.target
+		setForm((prev) => ({
+			...prev,
+			[name]: value
+		}))
+
+	};
+	useEffect(() => {
+		const { error } = contactLoginValidate(form);
+		setLoginError(error)
+
+
+	}, [form])
 	//for Validation
 
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
 		const { error, valid } = contactLoginValidate(form);
+
+		setLoginError(error)
+
 		// console.log(error.email);
 
 
-		setError(error)
 		if (!valid) return;
 		const res = await loginUser(form, role)
 		console.log(res);
@@ -118,7 +125,7 @@ function LoginComp({ LoginData }) {
 						name="email"
 						className="w-full text-base p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
 					/>
-					{error.email && <p className="text-red-600 text-[14px] ">*{error.email}</p>}
+					{loginError.email && <p className="text-red-600 text-[14px] ">*{loginError.email}</p>}
 
 					<label className="text-lg font-semibold mb-1 block">Password</label>
 					<div className="relative w-full">
@@ -130,7 +137,7 @@ function LoginComp({ LoginData }) {
 							name="pass"
 							className="w-full text-base p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
 						/>
-						{error.pass && <p className="text-red-600 text-[14px] ">*{error.pass}</p>}
+						{loginError.pass && <p className="text-red-600 text-[14px] ">*{loginError.pass}</p>}
 
 						<button
 							type="button"

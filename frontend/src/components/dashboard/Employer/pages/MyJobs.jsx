@@ -9,11 +9,15 @@ import ViewApplicant from '../../../common/ViewApplicant'
 import useConfirm from '../../../../hooks/useConfirm'
 import { toast } from 'react-toastify'
 import ConfirmModal from '../../../common/ConfirmModel'
-import { useActionData } from 'react-router-dom'
+
+
+import PostJobForm from '../PostJobForm'
 
 function MyJobs() {
 	const { profile } = useContext(ProfileContext)
 	const [jobs, setJobs] = useState([])
+	const [showModel, setShowModel] = useState(false);
+	const [selectedJob, setSelectJob] = useState(null)
 	const { showConfirm, confirmProps } = useConfirm()
 	const [totalJobs, setTotalJobs] = useState(0)
 	const fetchJobs = useCallback(async () => {
@@ -41,25 +45,10 @@ function MyJobs() {
 
 
 	const handleEdit = async (row) => {
-		// showConfirm({
-		// 	title: `Edit "${row["Job Title"]}"`,
-		// 	message: `Are you sure to delete "${row["Job Title"]}"  Post Permanently`,
-		// 	confirmText: "Yes,Delete",
-		// 	type: "danger",
-		// 	onConfirm: () => processDelete(row)
-		// })
-		try {
-			const result = await editJobs(row._id);
-			if (result.success) {
-				toast.success(result?.message)
-				setJobs(result?.job)
-			}
-			else {
-				toast.error(result?.message)
-			}
-		} catch (error) {
-			toast.error("Something Went Wrong")
-		}
+		const jobData = jobs.find(job => job._id === row._id);
+		setSelectJob(jobData);
+		setShowModel(true)
+
 	}
 	const handleDelete = (row) => {
 
@@ -135,6 +124,23 @@ function MyJobs() {
 				total={totalJobs}
 			/>
 			<ConfirmModal {...confirmProps} />
+			{showModel && (
+				<div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+					<div className="bg-white p-6 rounded-xl w-[700px] max-h-[90vh] overflow-y-auto">
+						<PostJobForm
+							mode='edit'
+							initialData={selectedJob}
+							onSuccess={(updatedJob) => {
+								setJobs(prev =>
+									prev.map(j => j._id === updatedJob._id ? updatedJob : j)
+								);
+								setShowModel(false);
+							}}
+						// onClose={() => setShowModel(false)}
+						/>
+					</div>
+				</div>
+			)}
 		</div>
 	)
 }

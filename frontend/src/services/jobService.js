@@ -10,16 +10,19 @@ export const postJobService = async (jobData) => {
 		if (response.data?.status === 1) {
 			return {
 				success: true,
-				job: response.data?.job
+				job: response.data?.job,
+				message: "Job Created Successfuly"
 			}
 		}
 		return {
 			success: false,
-			error: response.data?.message
+			error: response.data?.message,
+			message: "Failed to Create Job"
 		}
 	} catch (error) {
 		return {
 			success: false,
+			message: "Something went wrong",
 			error: error.message
 		}
 	}

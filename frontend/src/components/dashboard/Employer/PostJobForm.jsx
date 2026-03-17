@@ -35,22 +35,30 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 
 	const handleChange = (e) => {
 		const { name, value } = e.target;
-
-
-		setJob(prev => ({
-			...prev,
+		const updatedJob = {
+			...job,
 			[name]: value
-		}));
+		}
+		setJob(updatedJob)
+
+		const { error } = ValidateUtil(updatedJob, CreateJobsData);
+		// setJob(prev => ({
+		// 	...prev,
+		// 	[name]: value
+		// }));
+
+		setError(error);
 	}
 
-
+	useEffect(() => {
+		const { error } = ValidateUtil(job, CreateJobsData)
+		setError(error)
+	}, [job])
 	const handleSubmit = async (e) => {
 		if (e) e.preventDefault()
 		try {
-			const { error, valid } = ValidateUtil(job, CreateJobsData);
-			setError(error);
-			if (!valid)
-				return
+			// if (!valid)
+			// 	return
 			setLoading(true);
 			let result;
 			if (mode === "edit") {

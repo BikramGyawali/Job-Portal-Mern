@@ -8,7 +8,7 @@ import { postJobService } from '../../../../services/jobService';
 import PostJobForm from '../PostJobForm';
 
 function PostJob() {
-
+	const [showModel, setShowModel] = useState(false)
 	return (
 
 		<PostJobForm mode='create' />

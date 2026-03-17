@@ -135,21 +135,7 @@ function ReusableForm({
 						></textarea>
 
 					)
-						// : field.type === "checkbox" ? (
-						// 	<input
-						// 		type="checkbox"
-						// 		name={field.name}
-						// 		checked={!!form[field.name]}
-						// 		onChange={(e) =>
-						// 			onChange({
-						// 				target: { name: field.name, value: e.target.checked },
-						// 			})
-						// 		}
-						// 		className="h-5 w-5"
-						// 		placeholder={field.placeholder}
-						// 	/>
 
-						// ) 
 						: field.type === "date" ? (
 							<input
 								type="date"
@@ -205,7 +191,7 @@ function ReusableForm({
 			<div className="col-span-2 flex gap-5">
 				{step > 1 && (
 					<button
-						className="bg-blue-600 text-white py-2 rounded-xl w-full hover:bg-blue-700"
+						className="bg-blue-600 text-white py-2 rounded-xl w-full cursor-pointer hover:bg-blue-700"
 						onClick={handlePrev}
 						disabled={isLoading}
 					>
@@ -215,7 +201,7 @@ function ReusableForm({
 
 				<button
 					type="submit"
-					className={`text-white py-2 rounded-xl w-full ${isLoading
+					className={`text-white py-2 rounded-xl w-full cursor-pointer ${isLoading
 						? 'bg-gray-400 cursor-not-allowed'  //  Disabled style
 						: 'bg-blue-600 hover:bg-blue-700'
 						}`}
@@ -226,7 +212,8 @@ function ReusableForm({
 				{
 					onClose && (
 						<button
-							className="bg-gray-600 text-white py-2 rounded-xl w-full hover:bg-gray-700"
+							className="bg-gray-600 text-white py-2 rounded-xl cursor-pointer w-full   
+							hover:bg-gray-700"
 							type="button"
 							onClick={onClose}
 							disabled={isLoading}
@@ -245,7 +232,7 @@ function ReusableForm({
 						<button
 							type="button"
 							onClick={addSection}
-							className="bg-green-600 text-white py-2 rounded-xl w-full hover:bg-green-700"
+							className="bg-green-600 text-white py-2 rounded-xl cursor-pointer w-full hover:bg-green-700"
 						>
 							+ Add Another
 						</button>
@@ -254,7 +241,7 @@ function ReusableForm({
 							<button
 								type="button"
 								onClick={deleteSection}
-								className="bg-red-600 text-white py-2 rounded-xl w-full hover:bg-red-700"
+								className="bg-red-600 text-white py-2 rounded-xl  cursor-pointer w-full hover:bg-red-700"
 							>
 								- Delete
 							</button>

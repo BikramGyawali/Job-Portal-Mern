@@ -161,7 +161,10 @@ export const ValidateUtil = (form, fields = []) => {
 			error[f.name] = "Invalid format";
 			valid = false;
 		}
-
+		// if (f.type === 'textarea' && value && !textOnly.test(value)) {
+		// 	error[f.name] = "Must be text",
+		// 		valid = false
+		// }
 		if (f.name === 'companyWebsite' && value && !websiteCheck.test(value)) {
 			error[f.name] = "Invalid webiste format";
 			valid = false;

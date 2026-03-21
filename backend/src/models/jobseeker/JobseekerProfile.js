@@ -62,8 +62,9 @@ const profileSchema = new mongoose.Schema({
 		type: String,
 		unique: true
 	},
-	currenDistrict: String,
-	
+	currentDistrict: String,
+	currentMunicipality: String,
+
 
 	dob: Date,
 	phone: {
@@ -102,7 +103,7 @@ const profileSchema = new mongoose.Schema({
 	socials: [socialSchema],
 	references: [referenceSchema],
 
-	
+
 
 }, { timestamps: true });   //timestamp add extra two field as createdat and updatedat
 

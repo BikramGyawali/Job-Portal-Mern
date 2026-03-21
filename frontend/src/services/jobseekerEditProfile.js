@@ -9,9 +9,9 @@ export const jobseekerEditProfile = async (formData) => {
 			return {
 				success: true,
 				message: "Profile update successfully",
-				updatedProfle: res.data?.profileData
+				updatedProfile: res.data?.profile
 			}
-			
+
 		}
 		return {
 			success: false,

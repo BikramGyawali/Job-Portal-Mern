@@ -78,7 +78,7 @@ const mapAddDetailsFromProfile = (profile, fields) => {
 
 function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 	const { dispatch } = useContext(AuthContext);
-	const { setProfile: setGlobalProfile } = useContext(ProfileContext);
+	const { setProfile: setGlobalProfile, fetchProfile } = useContext(ProfileContext);
 	const navigate = useNavigate();
 
 	const [profile, setProfile] = useState(() =>
@@ -312,10 +312,16 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 
 		const formData = new FormData();
 
+		// Object.entries(profile).forEach(([key, value]) => {
+		// 	if (value !== null && value !== "") formData.append(key, value);
+		// });
 		Object.entries(profile).forEach(([key, value]) => {
-			if (value !== null && value !== "") formData.append(key, value);
+			if (value instanceof File) {
+				formData.append(key, value);               // ✅ file object
+			} else if (value !== null && value !== undefined) {
+				formData.append(key, String(value ?? "")); // ✅ include empty strings
+			}
 		});
-
 		formData.append("experience", JSON.stringify(experiences));
 		formData.append("education", JSON.stringify(educationList));
 		formData.append("trainings", JSON.stringify(
@@ -370,10 +376,13 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 		let response;
 		if (mode === "edit") {
 			response = await jobseekerEditProfile(formData);
+			console.log(response.updatedProfile);
+
 			if (response?.success) {
 				setGlobalProfile(response.updatedProfile);
+				await fetchProfile()
 				toast.success("Profile updated successfully.", {
-					onClose: () => navigate("/jobseekers", { replace: true }),
+					onClose: () => navigate("/jobseeker", { replace: true }),
 				});
 			} else {
 				toast.error(response?.message || "Failed to update profile");

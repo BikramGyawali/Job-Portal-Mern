@@ -18,8 +18,7 @@ export const ProfileProvider = ({ children }) => {
 	const [profile, setProfile] = useState(null)
 	const [pendingProfile, setPendingProfile] = useState([])
 	const [loading, setLoading] = useState(true);
-	useEffect(() => {
-		const fetchData = async () => {
+		const fetchProfile = async () => {
 			if (!authState.isAuth) {
 				setProfile(null)
 				setLoading(false)
@@ -44,7 +43,9 @@ export const ProfileProvider = ({ children }) => {
 			}
 
 		}
-		fetchData();
+	useEffect(() => {
+	
+		fetchProfile();
 	}, [authState.isAuth, authState.role])  //run if the user role is change and the state as login or logout chnages 
 
 	//for the pending profiles
@@ -52,7 +53,7 @@ export const ProfileProvider = ({ children }) => {
 		setLoading(true)
 		try {
 			const result = await getPendingProfilesService();
-			if (result.success) {	
+			if (result.success) {
 				setPendingProfile(result.profiles)
 			}
 
@@ -65,7 +66,7 @@ export const ProfileProvider = ({ children }) => {
 		}
 	}
 	return (
-		<ProfileContext.Provider value={{ profile, setProfile, loading, fetchPendingProfile, pendingProfile }}>
+		<ProfileContext.Provider value={{ profile, setProfile, loading, fetchPendingProfile, pendingProfile, fetchProfile }}>
 			{children}
 		</ProfileContext.Provider>
 	)

@@ -15,7 +15,7 @@ export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 	const menuData = role === "Jobseeker" ? JDashboardData : role == "Employer" ? EDashboardData : ADashboardSideData;
 	const { logout } = useContext(AuthContext)
 	const handleLogout = () => {
-		console.log("logout");
+		// console.log("logout");
 		logout();
 		navigate("/", { replace: true })
 	}
@@ -39,7 +39,7 @@ export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 									as={Link}
 									to={link}
 									icon={icon}
-									className={`rounded-md ${isActive ? "bg-blue-600 text-white" : "hover:bg-gray-700"}` }
+									className={`rounded-md ${isActive ? "bg-blue-600 text-white" : "hover:bg-gray-700"}`}
 									onClick={handleLogout}
 								>
 									{name}

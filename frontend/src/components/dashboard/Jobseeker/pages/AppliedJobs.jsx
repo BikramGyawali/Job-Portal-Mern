@@ -3,6 +3,7 @@ import DashTable from '../../../common/DashTable'
 import JobDetails from '../../../common/JobDetails'
 import { getAppliedJobs } from '../../../../services/jobService'
 import { toast } from 'react-toastify'
+import Loading from '../../../common/Loading'
 
 const AppliedJobsHead = ["S.N", "Job Title", "Job Level", "Applied At", "Status", "Actions"]
 
@@ -69,7 +70,7 @@ function AppliedJobs() {
 	}
 
 	if (loading) {
-		return <div className="p-6 text-gray-500">Loading applied jobs...</div>
+		return <Loading message='Loading Page ...' />
 	}
 
 	return (

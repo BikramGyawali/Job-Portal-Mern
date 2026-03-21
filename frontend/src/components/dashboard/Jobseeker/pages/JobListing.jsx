@@ -9,12 +9,19 @@ import DashTable from "../../../common/DashTable";
 import { JobPostContext } from "../../../../context/JobPostContext";
 import useViewJob from "../../../../hooks/useViewJob";
 import JobDetails from "../../../common/JobDetails";
+import Loading from "../../../common/Loading";
 
 function JobListing() {
 	const [jobs, setJobs] = useState([])
+	const [pageLoading, setPageLoading] = useState(true)
 	const { fetchMyJobs, myJobs, totalJobs } = useContext(JobPostContext)
 	useEffect(() => {
-		fetchMyJobs();
+		const load = async () => {
+			setPageLoading(true)
+			fetchMyJobs();
+			setPageLoading(false)
+		}
+		load()
 	}, [])
 	useEffect(() => {
 		if (myJobs?.length) {
@@ -38,6 +45,9 @@ function JobListing() {
 	const actionHandler = {
 		view: handleView,
 		apply: handleApply
+	}
+	if (pageLoading) {
+		return <Loading message="Loading Jobs.." />
 	}
 	return (
 		<div>

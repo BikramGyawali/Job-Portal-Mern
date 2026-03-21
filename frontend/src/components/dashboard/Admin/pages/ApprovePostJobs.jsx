@@ -9,6 +9,7 @@ import useViewJob from '../../../../hooks/useViewJob'
 import ConfirmModal from '../../../common/ConfirmModel'
 import useConfirm from '../../../../hooks/useConfirm'
 import { toast } from 'react-toastify'
+import Loading from '../../../common/Loading'
 
 function ApprovePostJobs() {
 	const { pendingJobs, fetchPendingJobs } = useContext(JobPostContext)
@@ -19,7 +20,12 @@ function ApprovePostJobs() {
 	const { showConfirm, confirmProps } = useConfirm()
 
 	useEffect(() => {
-		fetchPendingJobs()
+		setLoading(true)
+		const load = async () => {
+			await fetchPendingJobs()
+			setLoading(false)
+		}
+		load()
 	}, [])
 
 	useEffect(() => {
@@ -73,7 +79,9 @@ function ApprovePostJobs() {
 		reject: handleReject,
 		view: handleView
 	}
-
+	if (loading) {
+		return <Loading message='Loading Post' />
+	}
 	return (
 		<div className="p-6">
 			<DashTable

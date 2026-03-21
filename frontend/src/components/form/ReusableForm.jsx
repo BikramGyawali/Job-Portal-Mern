@@ -143,7 +143,7 @@ function ReusableForm({
 								value={form[field.name] !== undefined ? form[field.name] : ""}
 
 								onChange={onChange}
-								max={maxDate}
+								// max={maxDate}
 								placeholder={field.placeholder}
 								className="p-2 border rounded-xl"
 							/>

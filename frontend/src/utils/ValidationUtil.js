@@ -57,12 +57,12 @@ export const ValidateUtil = (form, fields = []) => {
 		}
 
 		//  DATE
-		if (f.type === "date") {
-			if ((f.name === "dob" || f.name === "sdate") && value > today) {
-				error[f.name] = `${f.label} cannot be in the future`;
-				valid = false;
-			}
+
+		if ((f.name === "dob" || f.name === "sdate") && value > today) {
+			error[f.name] = `${f.label} cannot be in the future`;
+			valid = false;
 		}
+
 
 		//  NUMBER
 		if (f.type === "number" && isNaN(value)) {

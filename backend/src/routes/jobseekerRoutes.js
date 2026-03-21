@@ -2,7 +2,7 @@ import express from "express";
 import { Router } from "express";
 import { LoginController, Signup } from "../controllers/User/UserController.js";
 import { verifyAuth, verifyRole } from "../middlewares/UserVerify/verifyMiddleware.js";
-import { JProfileController, getJProfile } from "../controllers/Profile/ProfileController.js";
+import { JProfileController, editProfile, getJProfile } from "../controllers/Profile/ProfileController.js";
 import { uploadImage, uploadCv } from "../middlewares/multerMiddleware.js";
 import { appliedJob, JJobList } from "../controllers/job/jobController.js";
 
@@ -14,6 +14,7 @@ jobseekerroutes.post("/profile", verifyAuth, uploadImage.single('image'), JProfi
 jobseekerroutes.get("/profile", verifyAuth, getJProfile)
 jobseekerroutes.get("/jjoblist", verifyAuth, verifyRole("jobseeker"), JJobList);
 jobseekerroutes.get("/appliedjobs", verifyAuth, verifyRole("jobseeker"), appliedJob)
+jobseekerroutes.patch("/editprofile", verifyAuth, uploadImage.single('image'), editProfile)
 jobseekerroutes.get(
 	"/dashboard",
 	verifyRole("jobseeker"),

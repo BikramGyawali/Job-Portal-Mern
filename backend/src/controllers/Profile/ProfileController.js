@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken"
 import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js"
 import { EmployerProfile } from "../../models/employer/EmployerProfile.js"
 import { User } from "../../models/LoginModel/SignupLogic.js"
+
 const app = express()
 app.use(express.json())
 dotenv.config();
@@ -312,5 +313,122 @@ export const getEProfile = async (req, res) => {
 	} catch (err) {
 		console.error(err);
 		res.status(500).json({ status: 0, message: err.message });
+	}
+}
+
+
+
+
+// jobseeker edit profile
+
+
+export const editProfile = async (req, res) => {
+	try {
+		const userId = req.user?.id;
+		if (!userId) return res.status(401).json(({
+			status: 0,
+			message: "Unauthorized:Token is missing"
+		}))
+		const profile = await JobseekerProfile.findOne({ userId });
+		if (!profile) {
+			return res.status(404).json({
+				status: 0,
+				message: "No Profile found"
+			})
+		}
+
+		const { email, phone } = req.body;
+		if (email) {
+			if (!validateEmail(email)) {
+				return res.status(400).json({
+					status: 0,
+					message: "Valid email is required"
+				})
+			}
+			const normalizeEmail = email.trim().toLowerCase()
+	
+			const emailExists = await JobseekerProfile.findOne({
+				email: { $regx: `^${normalizeEmail}`, $options: "i" },
+				userId: { $ne: userId }  //exclude currrent userid
+			})
+			if (emailExists) {
+				return res.status(409).json({
+					status: 0,
+					message: "Email already exists"
+				})
+		}
+		}
+		if (phone) {
+			const sanitizedPhone = phone.replace(/\D/g, "");
+			const phoneExists = await JobseekerProfile.findOne({
+				phone: sanitizedPhone,
+				userId: { $ne: userId }
+			})
+			if (phoneExists) {
+				return res.status(409).json({
+					status: 0,
+					message: "Phone number already exists"
+				})
+			}
+			req.body.phone = sanitizedPhone
+		}
+		const parseIfExists = (field) =>
+			req.body[field] ? JSON.parse(req.body[field]) : undefined;
+		const parsedFields = {
+			experience: parseIfExists("experience"),
+			education: parseIfExists("education"),
+			trainings: parseIfExists("trainings"),
+			skills: parseIfExists("skills"),
+			languages: parseIfExists("languages"),
+			socials: parseIfExists("socials"),
+			awards: parseIfExists("awards"),
+			references: parseIfExists("references"),
+		};
+		Object.keys(parsedFields).forEach(key => parsedFields[key] === undefined && delete parsedFields[key])
+
+		profile.set({
+			...req.body,
+			...parsedFields
+		})
+		if (req.file) {
+			try {
+				if (profile.image) {
+					const oldImagePath = path.join(process.cwd(), "public/uploads/images", profile.image)
+					if (fs.existsSync(oldImagePath)) {
+						fs.unlinkSync(oldImagePath)
+					}
+				}
+				const savedFileName = await saveImageBuffer(req.file)
+				if (savedFileName) {
+					profile.image = savedFileName;
+				}
+			} catch (error) {
+				console.log("Failed to upload image", e)
+			}
+		}
+		const updateProfile = await profile.save();
+		if (updateProfile) {
+			res.status(200).json({
+				status: 1,
+				message: "Pofile update successfully",
+				profileData: updateProfile
+			})
+		}
+	} catch (err) {
+		console.error(err);
+
+		if (err.code === 11000) {
+			const dupKey = Object.keys(err.keyValue || {})[0];
+			let message = "Duplicate value exists";
+			if (dupKey === "email") message = "Email already exists";
+			if (dupKey === "phone") message = "Phone number already exists";
+			return res.status(409).json({ status: 0, message });
+		}
+
+		if (err.name === "ValidationError") {
+			return res.status(400).json({ status: 0, message: err.message });
+		}
+
+		return res.status(500).json({ status: 0, message: err.message });
 	}
 }

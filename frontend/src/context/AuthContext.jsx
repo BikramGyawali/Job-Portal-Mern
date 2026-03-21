@@ -1,30 +1,123 @@
+// import React from 'react'
+// import { useReducer, useEffect } from 'react'
+// import { createContext } from 'react'
+// import api from '../utils/axiosInstance'
+
+// export const AuthContext = createContext()
+// const initialState = {
+// 	isAuth: false,
+// 	role: null,
+// 	user: null,
+// 	isProfileCompleted: false,
+// 	isLoading:true
+// }
+// const authReducer = (state, action) => {
+// 	switch (action.type) {
+// 		case "LOGIN":
+// 			return {
+// 				isAuth: true,
+// 				role: action.payload.role,
+// 				user: action.payload.user,
+// 				isProfileCompleted: action.payload.isProfileCompleted,
+// 				isLoading:false
+// 			}
+// 		case "LOGOUT":
+// 			return {initialState,
+// 				isLoading:false
+// 			};
+// 		default:
+// 			return state
+// 	}
+// }
+// export function AuthProvider({ children }) {
+// 	const [state, dispatch] = useReducer(authReducer, initialState)
+
+// 	useEffect(() => {
+// 		const checkAuth = async () => {
+// 			try {
+// 				const res = await api.get("/auth/me");
+// 				if (res.data?.status === 1) {
+
+
+// 					const user = res.data.user ?? null;
+// 					dispatch({
+// 						type: "LOGIN",
+// 						payload: {
+// 							role: user?.role || res.data.role,
+// 							user: user || null,
+// 							isProfileCompleted: res.data.isProfileCompleted ?? user?.isProfileCompleted ?? false
+// 						}
+// 					});
+// 				} else {
+// 					dispatch({ type: "LOGOUT" });
+// 				}
+// 			} catch {
+// 				dispatch({ type: "LOGOUT" });
+// 			}
+// 		};
+// 		checkAuth();
+// 	}, []);
+
+// 	const logout = async () => {
+// 		try {
+// 			await api.post('/auth/logout');  //this api will clear the cookies 
+// 		} catch (e) {
+// 			// ignore
+// 		}
+// 		dispatch({ type: 'LOGOUT' });
+// 	}
+
+// 	return (
+
+// 		<AuthContext.Provider value={{ state, dispatch, logout }}>
+// 			{children}
+// 		</AuthContext.Provider>
+
+
+// 	)
+// }
+
 import React from 'react'
 import { useReducer, useEffect } from 'react'
 import { createContext } from 'react'
 import api from '../utils/axiosInstance'
 
 export const AuthContext = createContext()
+
 const initialState = {
 	isAuth: false,
 	role: null,
 	user: null,
-	isProfileCompleted: false
+	isProfileCompleted: false,
+	isLoading: true,
 }
+
 const authReducer = (state, action) => {
 	switch (action.type) {
 		case "LOGIN":
 			return {
+				...state,
 				isAuth: true,
 				role: action.payload.role,
 				user: action.payload.user,
-				isProfileCompleted: action.payload.isProfileCompleted
+				isProfileCompleted: action.payload.isProfileCompleted,
+				isLoading: false,
 			}
 		case "LOGOUT":
-			return initialState;
+			return {
+				...initialState,
+				isLoading: false,
+			}
+		case "STOP_LOADING":
+			return {
+				...state,
+				isLoading: false,
+			}
 		default:
 			return state
 	}
 }
+
 export function AuthProvider({ children }) {
 	const [state, dispatch] = useReducer(authReducer, initialState)
 
@@ -33,22 +126,13 @@ export function AuthProvider({ children }) {
 			try {
 				const res = await api.get("/auth/me");
 				if (res.data?.status === 1) {
-
-					// normalize payload similar to login response
-					// dispatch({
-					// 	type: "LOGIN",
-					// 	payload: {
-					// 		role: res.data.role || res.data.user?.role,
-					// 		user: res.data.user || (res.data.user ? res.data.user : { _id: res.data.user?.id, email: res.data.user?.email }),
-					// 		isProfileCompleted: res.data.isProfileCompleted ?? res.data.user?.isProfileCompleted ?? false,
-					// 	},
 					const user = res.data.user ?? null;
 					dispatch({
 						type: "LOGIN",
 						payload: {
 							role: user?.role || res.data.role,
 							user: user || null,
-							isProfileCompleted: res.data.isProfileCompleted ?? user?.isProfileCompleted ?? false
+							isProfileCompleted: res.data.isProfileCompleted ?? user?.isProfileCompleted ?? false,
 						}
 					});
 				} else {
@@ -63,7 +147,7 @@ export function AuthProvider({ children }) {
 
 	const logout = async () => {
 		try {
-			await api.post('/auth/logout');  //this api will clear the cookies 
+			await api.post('/auth/logout');
 		} catch (e) {
 			// ignore
 		}
@@ -71,12 +155,14 @@ export function AuthProvider({ children }) {
 	}
 
 	return (
-
 		<AuthContext.Provider value={{ state, dispatch, logout }}>
-			{children}
+
+			{state.isLoading
+				? <div className="flex items-center justify-center min-h-screen">
+					<div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+				</div>
+				: children
+			}
 		</AuthContext.Provider>
-
-
 	)
 }
-

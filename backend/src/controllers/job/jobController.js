@@ -271,66 +271,7 @@ export const EMyJobs = async (req, res) => {
 
 //job list controller for jobseeker
 
-// export const JJobList = async (req, res) => {
-// 	const id = req.user.id;
-// 	console.log("Logged in user id:", id);
-// 	try {
-// 		const user = await JobseekerProfile.findOne({
-// 			// userId: new mongoose.Types.ObjectId(id)
-// 			userId: id
-// 		});
 
-
-// 		if (!user) {
-// 			return res.status(404).json({
-// 				status: 0,
-// 				message: "No user details found"
-// 			});
-// 		}
-
-
-// 		const formattedSkills = user.skills.map(skill => {
-// 			const cleaned = skill
-// 				.toLowerCase()
-// 				.replace(/[-_/]/g, " ");
-
-// 			return new RegExp(cleaned, "i");
-// 		});
-
-// 		const result = await PostJob.find({
-// 			skills: { $in: formattedSkills },
-// 			status: "approved"
-// 		}).lean();
-
-// 		if (!result.length) {
-// 			return res.status(404).json({
-// 				status: 0,
-// 				message: "No Jobs found according to your skills"
-// 			});
-// 		}
-// 		const applications = await JobApplication.find({
-// 			applicantId: id
-// 		})
-// 		const appliedJob = applications.map(app => app.jobId.toString()); //toString to conver the object id into string
-// 		const jobWithAppliedStatus = result.map(job => ({
-// 			...job,
-// 			alreadyApplied: appliedJob.includes(job._id.toString())
-// 		}))
-// 		const jobWithCompany = await addCompanyName(jobWithAppliedStatus)
-
-// 		return res.status(200).json({
-// 			status: 1,
-// 			message: "Jobs fetched successfully",
-// 			jobs: jobWithCompany
-// 		});
-
-// 	} catch (error) {
-// 		return res.status(500).json({
-// 			status: 0,
-// 			message: "Failed to fetch jobs"
-// 		});
-// 	}
-// };
 export const JJobList = async (req, res) => {
 	const id = req.user.id
 

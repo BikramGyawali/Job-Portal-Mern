@@ -7,9 +7,7 @@ import { configDotenv } from "dotenv";
 
 configDotenv();
 
-// const app = express();
-// app.use(express.json());
-// app.use(cookieParser());
+
 
 const JWT_KEY = process.env.JWT_KEY;
 

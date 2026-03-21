@@ -85,7 +85,7 @@ export const ProfileFields = [
 	{
 		name: "phone",
 		label: "Mobile Number",
-		type: "text",
+		type: "number",
 		required: true,
 		placeholder: "Eg. 9812345678"
 	},

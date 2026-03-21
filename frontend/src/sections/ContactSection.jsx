@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaPaperPlane } from 'react-icons/fa';
 import { HiMail, HiPhone, HiLocationMarker } from "react-icons/hi";
 import { ValidateUtil } from '../utils/ValidationUtil';
 
 function ContactSection() {
+
+	const [contactError, setContactError] = useState({})
 	const [form, setForm] = useState({
 		fname: "",
 		sname: "",
@@ -17,8 +19,8 @@ function ContactSection() {
 	const ContactData = [
 		{ name: "fname", label: "First Name", placeHolder: "Your First Name", type: "text", required: true },
 		{ name: "sname", label: "Second Name", placeHolder: "Your Second Name", type: "text", required: true },
-		{ name: "email", label: "Email", placeHolder: "Your Email", type: "text", required: true },
-		{ name: "phone", label: "Contact", placeHolder: "Your Phone Number", type: "text", required: true },
+		{ name: "email", label: "Email", placeHolder: "Your Email", type: "email", required: true },
+		{ name: "phone", label: "Contact", placeHolder: "Your Phone Number", type: "number", required: true },
 		{ name: "message", label: "Message", placeHolder: "Your Message", type: "textarea", required: true },
 	];
 
@@ -29,6 +31,11 @@ function ContactSection() {
 		});
 
 	};
+
+	useEffect(() => {
+		const { error } = ValidateUtil(form, ContactData);
+		setContactError(error)
+	}, [form])
 
 
 
@@ -81,7 +88,7 @@ function ContactSection() {
 										className='p-2 text-[15px] bg-white border rounded-2xl focus:text-black'
 
 									/>)}
-							{error[item.name] && (<p className="text-red-600 text-[14px]">{error[item.name]}</p>)}
+							{contactError[item.name] && (<p className="text-red-600 text-[14px]">{contactError[item.name]}</p>)}
 
 						</div>
 					))}

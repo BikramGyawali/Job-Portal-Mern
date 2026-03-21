@@ -8,6 +8,7 @@ import { getAllApplicants } from '../../../../services/jobService'
 import useViewApplicants from '../../../../hooks/useViewApplicants'
 import { ViewProfileModal } from '../../../common/ViewProfileModal'
 import ConfirmModal from '../../../common/ConfirmModel'
+import LoadingComp from '../../../common/LoadingComp'
 
 
 function Applicants() {
@@ -101,7 +102,7 @@ function Applicants() {
 	}
 
 	if (loading) {
-		return <div className="p-6 text-gray-500">Loading applicants...</div>
+		<LoadingComp />
 	}
 
 	return (

@@ -81,6 +81,7 @@ import React from 'react'
 import { useReducer, useEffect } from 'react'
 import { createContext } from 'react'
 import api from '../utils/axiosInstance'
+import LoadingComp from '../components/common/LoadingComp'
 
 export const AuthContext = createContext()
 
@@ -158,9 +159,7 @@ export function AuthProvider({ children }) {
 		<AuthContext.Provider value={{ state, dispatch, logout }}>
 
 			{state.isLoading
-				? <div className="flex items-center justify-center min-h-screen">
-					<div className="w-10 h-10 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
-				</div>
+				?<LoadingComp/>
 				: children
 			}
 		</AuthContext.Provider>

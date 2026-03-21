@@ -12,6 +12,7 @@ import ConfirmModal from '../../../common/ConfirmModel'
 
 
 import PostJobForm from '../PostJobForm'
+import Loading from '../../../common/Loading'
 
 function MyJobs() {
 	const { profile } = useContext(ProfileContext)
@@ -19,14 +20,17 @@ function MyJobs() {
 	const [showModel, setShowModel] = useState(false);
 	const [selectedJob, setSelectJob] = useState(null)
 	const { showConfirm, confirmProps } = useConfirm()
+	const [loading, setLoading] = useState(true)
 	const [totalJobs, setTotalJobs] = useState(0)
 	const fetchJobs = useCallback(async () => {
 		if (!profile?._id) return
+		setLoading(true)
 		const response = await EMyJobs(profile._id)
 		if (response?.success) {
 			setJobs(response.jobs)
 			setTotalJobs(response.totalJobs)
 		}
+		setLoading(false)
 	}, [profile?._id])
 
 	useEffect(() => {
@@ -113,7 +117,7 @@ function MyJobs() {
 			"Actions": ["edit", "delete"]
 		}
 	})
-
+	if (loading) { return <Loading message='My Jobs...' minHeight='min-h-[400px]' /> }
 	return (
 		<div>
 			<DashTable

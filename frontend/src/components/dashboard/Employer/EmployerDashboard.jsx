@@ -1,12 +1,19 @@
-import React from 'react'
-import DasCard from '../../common/DasCard'
+
+import React, { useState, useEffect } from 'react'
 import DashBoxCard from '../../common/DashBoxCard'
-import DashTable from '../../common/DashTable'
-import { DashboardCardData, DashboardTableBody, DashboardTableHeadData } from '../../../data/employers/DashboardData'
-import ViewApplicant from '../../common/ViewApplicant'
 import Applicants from './pages/Applicants'
+import Loading from '../../common/Loading'
+import { DashboardCardData } from '../../../data/employers/DashboardData'
 
 function EmployerDashboard() {
+	const [isLoading, setIsLoading] = useState(true)
+
+	useEffect(() => {
+		const timer = setTimeout(() => setIsLoading(false), 500)
+		return () => clearTimeout(timer)
+	}, [])
+
+	if (isLoading) return <Loading message="Loading dashboard..." minHeight="min-h-screen" />
 
 	return (
 		<div>

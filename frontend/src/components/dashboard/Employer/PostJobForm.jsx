@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react'
-
-
-
 import { useContext } from 'react';
-
 import { editJobs, postJobService } from '../../../services/jobService';
 import { toast } from 'react-toastify';
 import { CreateJobsData } from '../../../data/employers/DashboardData';
 import { ValidateUtil } from '../../../utils/ValidationUtil';
 import ReusableForm from '../../form/ReusableForm';
 import { JobPostContext } from '../../../context/JobPostContext';
+import Loading from '../../common/Loading';
 
 function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 	const { addJob } = useContext(JobPostContext)
@@ -42,7 +39,7 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 		setJob(updatedJob)
 
 		const { error } = ValidateUtil(updatedJob, CreateJobsData);
-		
+
 
 		setError(error);
 	}
@@ -88,6 +85,14 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 		} catch (error) {
 			toast.error("Something went wrong")
 		}
+	}
+	if (loading) {
+		return (
+			<Loading
+				message={mode === "edit" ? "Updating job..." : "Posting job..."}
+				minHeight="min-h-[400px]"
+			/>
+		)
 	}
 	return (
 		<div className="p-6 bg-white rounded-xl shadow ">

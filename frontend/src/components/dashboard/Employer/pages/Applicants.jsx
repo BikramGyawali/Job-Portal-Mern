@@ -8,7 +8,8 @@ import { getAllApplicants } from '../../../../services/jobService'
 import useViewApplicants from '../../../../hooks/useViewApplicants'
 import { ViewProfileModal } from '../../../common/ViewProfileModal'
 import ConfirmModal from '../../../common/ConfirmModel'
-import LoadingComp from '../../../common/LoadingComp'
+
+import Loading from '../../../common/Loading'
 
 
 function Applicants() {
@@ -102,7 +103,7 @@ function Applicants() {
 	}
 
 	if (loading) {
-		<LoadingComp />
+		return <Loading message='Loading Applicants...' minHeight='min-h-[400px]' />
 	}
 
 	return (

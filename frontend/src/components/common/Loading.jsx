@@ -1,8 +1,9 @@
+// src/components/common/Loading.jsx
 import React from 'react'
 
-function LoadingComp() {
+function Loading({ message = "Loading...", minHeight = "min-h-screen" }) {
 	return (
-		<div className="flex items-center justify-center min-h-screen bg-white">
+		<div className={`flex items-center justify-center ${minHeight} bg-white`}>
 			<div className="flex flex-col items-center gap-4">
 
 				{/* Spinner */}
@@ -14,7 +15,7 @@ function LoadingComp() {
 				{/* Text */}
 				<div className="flex flex-col items-center gap-1">
 					<p className="text-blue-600 font-semibold text-lg tracking-wide">
-						Loading
+						{message}
 					</p>
 					<div className="flex gap-1">
 						<span className="w-2 h-2 bg-blue-400 rounded-full animate-bounce [animation-delay:0ms]" />
@@ -25,8 +26,7 @@ function LoadingComp() {
 
 			</div>
 		</div>
-
 	)
 }
 
-export default LoadingComp
+export default Loading

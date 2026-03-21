@@ -166,7 +166,7 @@ export const CreateJobsData = [
 	// ----- DATES -----
 	{
 		label: "Posting Date",
-		name: "postingDate",
+		name: "sdate",
 		type: "date",
 		required: true,
 	},

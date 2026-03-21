@@ -3,6 +3,7 @@ import { useContext } from 'react'
 import { JobPostContext } from '../context/JobPostContext'
 import { CardComp } from '../components/common/CardComp'
 import { useEffect } from 'react'
+import Loading from '../components/common/Loading'
 
 
 function JobList() {
@@ -13,7 +14,7 @@ function JobList() {
 	}, [])  // run every time when home page is open
 
 
-	if (loading) return <p>Loading......</p>
+	if (loading) return <Loading message='Loading...' minHeight='min-h-[100px]' />
 	return (
 		<div className=' grid gap-4 p-6 md:grid-cols-4 sm:grid-cols-2'>
 			{jobs.map((job, i) => (

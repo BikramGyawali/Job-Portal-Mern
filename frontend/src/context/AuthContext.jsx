@@ -83,7 +83,7 @@ export function AuthProvider({ children }) {
 		<AuthContext.Provider value={{ state, dispatch, logout }}>
 
 			{state.isLoading
-				? <Loading message='Authnticating....' />
+				? <Loading message='Loading....' />
 				: children
 			}
 		</AuthContext.Provider>

@@ -346,17 +346,17 @@ export const editProfile = async (req, res) => {
 				})
 			}
 			const normalizeEmail = email.trim().toLowerCase()
-	
+
 			const emailExists = await JobseekerProfile.findOne({
-				email: { $regx: `^${normalizeEmail}`, $options: "i" },
-				userId: { $ne: userId }  //exclude currrent userid
-			})
+				email: { $regex: `^${normalizeEmail}$`, $options: "i" },
+				userId: { $ne: userId }  // exclude current user
+			});
 			if (emailExists) {
 				return res.status(409).json({
 					status: 0,
 					message: "Email already exists"
 				})
-		}
+			}
 		}
 		if (phone) {
 			const sanitizedPhone = phone.replace(/\D/g, "");

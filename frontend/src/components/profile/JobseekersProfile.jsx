@@ -12,6 +12,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import { ProfileContext } from "../../context/ProfileContext";
 import { toast } from "react-toastify";
+import { jobseekerEditProfile } from "../../services/jobseekerEditProfile";
 
 const createEmptyEntry = (fields) =>
 	fields.reduce((acc, f) => {
@@ -20,16 +21,86 @@ const createEmptyEntry = (fields) =>
 		else acc[f.name] = "";
 		return acc;
 	}, {});
+//convert existing prorfile in form
+const mapProfileToForm = (profile, fields) => {
+	if (!profile) return createEmptyEntry(fields);
+	return fields.reduce((acc, f) => {
+		acc[f.name] = profile[f.name] ?? (f.type === "checkbox" ? false : f.type === "file" ? null : "");
+		return acc;
+	}, {});
+};
+//add other enteries like education and profile
+const mapArrayToEntries = (arr, fields) => {
+	if (!arr || arr.length === 0) return [createEmptyEntry(fields)];
+	return arr.map((item) =>
+		fields.reduce((acc, f) => {
+			acc[f.name] = item[f.name] ?? (f.type === "checkbox" ? false : "");
+			return acc;
+		}, {})
+	);
+};
 
-function JobseekersProfile() {
+//for add sections
+const mapAddDetailsFromProfile = (profile, fields) => {
+	if (!profile) return [createEmptyEntry(fields)];
+
+	const trainings = profile.trainings || [];
+	const awards = profile.awards || [];
+	const socials = profile.socials || [];
+	const references = profile.references || [];
+	const skills = profile.skills || [];
+	const languages = profile.languages || [];
+
+	// Use the max length to create entries
+	const maxLen = Math.max(
+		trainings.length, awards.length, socials.length,
+		references.length, 1
+	);
+
+	return Array.from({ length: maxLen }, (_, i) => ({
+		trainingTitle: trainings[i]?.title || "",
+		trainingYear: trainings[i]?.year || "",
+		trainingInstitution: trainings[i]?.institution || "",
+		awardTitle: awards[i]?.title || "",
+		awardInstitution: awards[i]?.institution || "",
+		socialName: socials[i]?.name || "",
+		referenceName: references[i]?.name || "",
+		referencePosition: references[i]?.position || "",
+		referenceEmail: references[i]?.email || "",
+		referenceCompany: references[i]?.company || "",
+		skills: i === 0 ? skills.join(", ") : "",
+		language: languages[i]?.name || "",
+		languageReading: languages[i]?.reading || "",
+		languageWriting: languages[i]?.writing || "",
+		languageSpeaking: languages[i]?.speaking || "",
+	}));
+};
+
+function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 	const { dispatch } = useContext(AuthContext);
 	const { setProfile: setGlobalProfile } = useContext(ProfileContext);
 	const navigate = useNavigate();
 
-	const [profile, setProfile] = useState(createEmptyEntry(ProfileFields));
-	const [experiences, setExperiences] = useState([createEmptyEntry(Experience)]);
-	const [educationList, setEducationList] = useState([createEmptyEntry(Education)]);
-	const [addDetailsList, setAddDetailsList] = useState([createEmptyEntry(JAddDetails)]);
+	const [profile, setProfile] = useState(() =>
+		mode === 'edit' ? mapProfileToForm(existingProfile, ProfileFields) : createEmptyEntry(ProfileFields));
+	const [experiences, setExperiences] = useState(() =>
+		mode === "edit"
+			? mapArrayToEntries(existingProfile?.experience, Experience)
+			: [createEmptyEntry(Experience)]
+	);
+
+	const [educationList, setEducationList] = useState(() =>
+		mode === "edit"
+			? mapArrayToEntries(existingProfile?.education, Education)
+			: [createEmptyEntry(Education)]
+	);
+
+	const [addDetailsList, setAddDetailsList] = useState(() =>
+		mode === "edit"
+			? mapAddDetailsFromProfile(existingProfile, JAddDetails)
+			: [createEmptyEntry(JAddDetails)]
+	);
+
 	const [profileError, setProfileError] = useState({});
 
 	const [step, setStep] = useState(1);
@@ -294,23 +365,37 @@ function JobseekersProfile() {
 			}));
 		formData.append("languages", JSON.stringify(languages));
 
-		const response = await Profile(formData, "jobseeker");
 
-		if (response?.status === 1) {
-			setGlobalProfile(response.profile);
-			dispatch({
-				type: "LOGIN",
-				payload: {
-					role: response.user.role,
-					user: response.user,
-					isProfileCompleted: true,
-				},
-			});
-			toast.success("Profile created successfully.", {
-				onClose: () => navigate("/jobseekers", { replace: true }),
-			});
+		//for different service call
+		let response;
+		if (mode === "edit") {
+			response = await jobseekerEditProfile(formData);
+			if (response?.success) {
+				setGlobalProfile(response.updatedProfile);
+				toast.success("Profile updated successfully.", {
+					onClose: () => navigate("/jobseekers", { replace: true }),
+				});
+			} else {
+				toast.error(response?.message || "Failed to update profile");
+			}
 		} else {
-			toast.error(response?.message || "Failed to create profile");
+			response = await Profile(formData, "jobseeker");
+			if (response?.status === 1) {
+				setGlobalProfile(response.profile);
+				dispatch({
+					type: "LOGIN",
+					payload: {
+						role: response.user.role,
+						user: response.user,
+						isProfileCompleted: true,
+					},
+				});
+				toast.success("Profile created successfully.", {
+					onClose: () => navigate("/jobseekers", { replace: true }),
+				});
+			} else {
+				toast.error(response?.message || "Failed to create profile");
+			}
 		}
 	};
 
@@ -372,6 +457,7 @@ function JobseekersProfile() {
 								: 0
 				}
 				multipleEntries={true}
+				submitButtonText={mode === 'edit' ? "Update Profile" : undefined}
 			/>
 		</div>
 	);

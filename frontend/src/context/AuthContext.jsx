@@ -24,6 +24,7 @@ const authReducer = (state, action) => {
 				...state,
 				isAuth: true,
 				role: action.payload.role,
+				email:action.payload.email,
 				user: action.payload.user,
 				isProfileCompleted: action.payload.isProfileCompleted,
 				isLoading: false,

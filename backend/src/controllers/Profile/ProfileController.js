@@ -343,21 +343,21 @@ export const editProfile = async (req, res) => {
 			if (!validateEmail(email)) {
 				return res.status(400).json({ status: 0, message: "Valid email is required" });
 			}
-			const normalizeEmail = email.trim().toLowerCase();
-			const emailExists = await JobseekerProfile.findOne({
-				email: { $regex: `^${normalizeEmail}$`, $options: "i" },
-				userId: { $ne: userId }
-			});
-			if (emailExists) {
-				return res.status(409).json({ status: 0, message: "Email already exists" });
-			}
+			// const normalizeEmail = email.trim().toLowerCase();
+			// const emailExists = await JobseekerProfile.findOne({
+			// 	email: { $regex: `^${normalizeEmail}$`, $options: "i" },
+			// 	userId: { $ne: userId }
+			// });
+			// if (emailExists) {
+			// 	return res.status(409).json({ status: 0, message: "Email already exists" });
+			// }
 		}
 
 		if (phone) {
 			const sanitizedPhone = phone.replace(/\D/g, "");
 			const phoneExists = await JobseekerProfile.findOne({
 				phone: sanitizedPhone,
-				userId: { $ne: userId }
+				userId: { $ne: userId }  //exced currebt user profile
 			});
 			if (phoneExists) {
 				return res.status(409).json({ status: 0, message: "Phone number already exists" });

@@ -60,6 +60,7 @@ function LoginComp({ LoginData }) {
 				payload: {
 					role: res.role,
 					user: res.user,
+					email: res.email,
 					isProfileCompleted: res.isProfileCompleted,
 				},
 			});

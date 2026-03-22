@@ -77,12 +77,22 @@ const mapAddDetailsFromProfile = (profile, fields) => {
 };
 
 function JobseekersProfile({ mode = 'create', existingProfile = null }) {
-	const { dispatch } = useContext(AuthContext);
+	const { dispatch, state } = useContext(AuthContext);
 	const { setProfile: setGlobalProfile, fetchProfile } = useContext(ProfileContext);
 	const navigate = useNavigate();
+	console.log(state);
 
-	const [profile, setProfile] = useState(() =>
-		mode === 'edit' ? mapProfileToForm(existingProfile, ProfileFields) : createEmptyEntry(ProfileFields));
+	const [profile, setProfile] = useState(() => {
+		if (mode === 'edit') {
+			return mapProfileToForm(existingProfile, ProfileFields)
+		}
+
+		const empty = createEmptyEntry(ProfileFields)
+		return {
+			...empty,
+			email: state?.user?.email || ""
+		}
+	})
 	const [experiences, setExperiences] = useState(() =>
 		mode === "edit"
 			? mapArrayToEntries(existingProfile?.experience, Experience)
@@ -396,6 +406,7 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 					payload: {
 						role: response.user.role,
 						user: response.user,
+
 						isProfileCompleted: true,
 					},
 				});
@@ -432,6 +443,7 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 				onChange={changeHandler}
 				onSubmit={handleSubmit}
 				fields={currentStep.fields}
+				readonlyFields={['email']}
 				step={step}
 				setStep={setStep}
 				totalSteps={totalSteps}

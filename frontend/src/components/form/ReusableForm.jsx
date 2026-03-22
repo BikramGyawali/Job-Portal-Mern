@@ -16,7 +16,8 @@ function ReusableForm({
 	currentEntryIndex,
 	isLoading = false,
 	submitButtonText = "Submit",
-	onClose
+	onClose,
+	readonlyFields = []
 }) {
 	const maxDate = new Date().toISOString().split("T")[0];
 
@@ -153,9 +154,13 @@ function ReusableForm({
 									type="email"
 									name={field.name}
 									value={form[field.name] !== undefined ? form[field.name] : ""}
-									onChange={onChange}
+									onChange={readonlyFields.includes(field.name) ? undefined : onChange}
+									readOnly={readonlyFields.includes(field.name)}
 									placeholder={field.placeholder}
-									className="p-2 border rounded-xl"
+									className={`p-2 border rounded-xl ${readonlyFields.includes(field.name)
+										? "bg-gray-100 text-black cursor-not-allowed"  //  visual indicator
+										: ""
+										}`}
 								/>
 							) : field.type === "file" ? (
 								<input
@@ -173,9 +178,13 @@ function ReusableForm({
 									name={field.name}
 									value={form[field.name] !== undefined ? form[field.name] : ""}
 
-									onChange={onChange}
+									onChange={readonlyFields.includes(field.name) ? undefined : onChange}
+									readOnly={readonlyFields.includes(field.name)}
 									placeholder={field.placeholder}
-									className="p-2 border rounded-xl"
+									className={`p-2 border rounded-xl ${readonlyFields.includes(field.name)
+										? "bg-gray-100 text-gray-500 cursor-not-allowed"  //  visual indicator
+										: ""
+										}`}
 								/>
 							)}
 

@@ -322,259 +322,7 @@ export const getEProfile = async (req, res) => {
 // jobseeker edit profile
 
 
-// export const editProfile = async (req, res) => {
-// 	try {
-// 		const userId = req.user?.id;
-// 		if (!userId) return res.status(401).json(({
-// 			status: 0,
-// 			message: "Unauthorized:Token is missing"
-// 		}))
-// 		const profile = await JobseekerProfile.findOne({ userId });
-// 		if (!profile) {
-// 			return res.status(404).json({
-// 				status: 0,
-// 				message: "No Profile found"
-// 			})
-// 		}
 
-// 		const { email, phone } = req.body;
-// 		if (email) {
-// 			if (!validateEmail(email)) {
-// 				return res.status(400).json({
-// 					status: 0,
-// 					message: "Valid email is required"
-// 				})
-// 			}
-// 			const normalizeEmail = email.trim().toLowerCase()
-
-// 			const emailExists = await JobseekerProfile.findOne({
-// 				email: { $regex: `^${normalizeEmail}$`, $options: "i" },
-// 				userId: { $ne: userId }  // exclude current user
-// 			});
-// 			if (emailExists) {
-// 				return res.status(409).json({
-// 					status: 0,
-// 					message: "Email already exists"
-// 				})
-// 			}
-// 		}
-// 		if (phone) {
-// 			const sanitizedPhone = phone.replace(/\D/g, "");
-// 			const phoneExists = await JobseekerProfile.findOne({
-// 				phone: sanitizedPhone,
-// 				userId: { $ne: userId }
-// 			})
-// 			if (phoneExists) {
-// 				return res.status(409).json({
-// 					status: 0,
-// 					message: "Phone number already exists"
-// 				})
-// 			}
-// 			req.body.phone = sanitizedPhone
-// 		}
-// 		const {
-// 			experience,
-// 			education,
-// 			trainings,
-// 			skills,
-// 			languages,
-// 			socials,
-// 			awards,
-// 			references,
-// 			...restBody
-// 		} = req.body;
-// 		const parseIfExists = (field) =>
-// 			req.body[field] ? JSON.parse(req.body[field]) : undefined;
-// 		const parsedFields = {
-// 			experience: parseIfExists("experience"),
-// 			education: parseIfExists("education"),
-// 			trainings: parseIfExists("trainings"),
-// 			skills: parseIfExists("skills"),
-// 			languages: parseIfExists("languages"),
-// 			socials: parseIfExists("socials"),
-// 			awards: parseIfExists("awards"),
-// 			references: parseIfExists("references"),
-// 		};
-// 		Object.keys(parsedFields).forEach(key => parsedFields[key] === undefined && delete parsedFields[key])
-
-// 		if (restBody.dob) {
-// 			restBody.dob = new Date(restBody.dob).toISOString().split("T")[0]
-// 		}
-// 		profile.set({
-// 			...restBody,
-// 			...parsedFields
-// 		})
-// 		if (req.file) {
-// 			try {
-// 				if (profile.image) {
-// 					const oldImagePath = path.join(process.cwd(), "public/uploads/images", profile.image)
-// 					if (fs.existsSync(oldImagePath)) {
-// 						fs.unlinkSync(oldImagePath)
-// 					}
-// 				}
-// 				const savedFileName = await saveImageBuffer(req.file)
-// 				if (savedFileName) {
-// 					profile.image = savedFileName;
-// 				}
-// 			} catch (error) {
-// 				console.log("Failed to upload image", e)
-// 			}
-// 		}
-// 		const updateProfile = await profile.save();
-// 		if (updateProfile) {
-// 			res.status(200).json({
-// 				status: 1,
-// 				message: "Pofile update successfully",
-// 				profile: updateProfile
-// 			})
-// 		}
-// 	} catch (err) {
-// 		console.error(err);
-
-// 		if (err.code === 11000) {
-// 			const dupKey = Object.keys(err.keyValue || {})[0];
-// 			let message = "Duplicate value exists";
-// 			if (dupKey === "email") message = "Email already exists";
-// 			if (dupKey === "phone") message = "Phone number already exists";
-// 			return res.status(409).json({ status: 0, message });
-// 		}
-
-// 		if (err.name === "ValidationError") {
-// 			return res.status(400).json({ status: 0, message: err.message });
-// 		}
-
-// 		return res.status(500).json({ status: 0, message: err.message });
-// 	}
-// }
-// export const editProfile = async (req, res) => {
-// 	try {
-// 		const userId = req.user?.id;
-// 		if (!userId) return res.status(401).json({
-// 			status: 0,
-// 			message: "Unauthorized: Token is missing"
-// 		});
-
-// 		const profile = await JobseekerProfile.findOne({ userId });
-// 		if (!profile) {
-// 			return res.status(404).json({ status: 0, message: "No Profile found" });
-// 		}
-
-// 		const { email, phone } = req.body;
-
-// 		if (email) {
-// 			if (!validateEmail(email)) {
-// 				return res.status(400).json({ status: 0, message: "Valid email is required" });
-// 			}
-// 			const normalizeEmail = email.trim().toLowerCase();
-// 			const emailExists = await JobseekerProfile.findOne({
-// 				email: { $regex: `^${normalizeEmail}$`, $options: "i" },
-// 				userId: { $ne: userId }
-// 			});
-// 			if (emailExists) {
-// 				return res.status(409).json({ status: 0, message: "Email already exists" });
-// 			}
-// 		}
-
-// 		if (phone) {
-// 			const sanitizedPhone = phone.replace(/\D/g, "");
-// 			const phoneExists = await JobseekerProfile.findOne({
-// 				phone: sanitizedPhone,
-// 				userId: { $ne: userId }
-// 			});
-// 			if (phoneExists) {
-// 				return res.status(409).json({ status: 0, message: "Phone number already exists" });
-// 			}
-// 			req.body.phone = sanitizedPhone;
-// 		}
-
-// 		// ✅ Destructure JSON fields out — keep only plain fields in restBody
-// 		const {
-// 			experience,
-// 			education,
-// 			trainings,
-// 			skills,
-// 			languages,
-// 			socials,
-// 			awards,
-// 			references,
-// 			...restBody
-// 		} = req.body;
-
-// 		// ✅ Parse JSON fields only if they exist
-// 		const parseIfExists = (field) => {
-// 			try {
-// 				return field ? JSON.parse(field) : undefined;
-// 			} catch {
-// 				return undefined;
-// 			}
-// 		};
-
-// 		const parsedFields = {
-// 			experience: parseIfExists(experience),
-// 			education: parseIfExists(education),
-// 			trainings: parseIfExists(trainings),
-// 			skills: parseIfExists(skills),
-// 			languages: parseIfExists(languages),
-// 			socials: parseIfExists(socials),
-// 			awards: parseIfExists(awards),
-// 			references: parseIfExists(references),
-// 		};
-
-// 		// Remove undefined keys
-// 		Object.keys(parsedFields).forEach(
-// 			(key) => parsedFields[key] === undefined && delete parsedFields[key]
-// 		);
-
-// 		// ✅ Merge clean plain fields + parsed arrays
-// 		profile.set({
-// 			...restBody,
-// 			...parsedFields
-// 		});
-
-// 		// Handle image update
-// 		if (req.file) {
-// 			try {
-// 				if (profile.image) {
-// 					const oldImagePath = path.join(process.cwd(), "public/uploads/images", profile.image);
-// 					if (fs.existsSync(oldImagePath)) {
-// 						fs.unlinkSync(oldImagePath);
-// 					}
-// 				}
-// 				const savedFileName = await saveImageBuffer(req.file);
-// 				if (savedFileName) {
-// 					profile.image = savedFileName;
-// 				}
-// 			} catch (e) {
-// 				console.error("Failed to upload image", e);
-// 			}
-// 		}
-
-// 		const updatedProfile = await profile.save();
-
-// 		return res.status(200).json({
-// 			status: 1,
-// 			message: "Profile updated successfully",
-// 			profile: updatedProfile   // ✅ matches frontend expectation
-// 		});
-
-// 	} catch (err) {
-// 		console.error(err);
-
-// 		if (err.code === 11000) {
-// 			const dupKey = Object.keys(err.keyValue || {})[0];
-// 			let message = "Duplicate value exists";
-// 			if (dupKey === "email") message = "Email already exists";
-// 			if (dupKey === "phone") message = "Phone number already exists";
-// 			return res.status(409).json({ status: 0, message });
-// 		}
-
-// 		if (err.name === "ValidationError") {
-// 			return res.status(400).json({ status: 0, message: err.message });
-// 		}
-
-// 		return res.status(500).json({ status: 0, message: err.message });
-// 	}
-// };
 export const editProfile = async (req, res) => {
 	try {
 		const userId = req.user?.id;
@@ -653,11 +401,11 @@ export const editProfile = async (req, res) => {
 
 		// Only include defined parsed fields
 		const cleanRestBody = {};
-Object.keys(restBody).forEach((key) => {
-    if (restBody[key] !== undefined && restBody[key] !== null) {
-        cleanRestBody[key] = restBody[key];  // ✅ keeps "" so it overwrites old value
-    }
-});
+		Object.keys(restBody).forEach((key) => {
+			if (restBody[key] !== undefined && restBody[key] !== null) {
+				cleanRestBody[key] = restBody[key];  // ✅ keeps "" so it overwrites old value
+			}
+		});
 		// ✅ Handle image — save new image first if uploaded
 		let imageFileName = profileExists.image; // keep old image by default
 		if (req.file) {
@@ -677,16 +425,16 @@ Object.keys(restBody).forEach((key) => {
 
 		// findOneAndUpdate — updates ALL fields including previously empty ones
 		const updatedProfile = await JobseekerProfile.findOneAndUpdate(
-    { userId },
-    {
-        $set: {
-            ...cleanRestBody,    //  includes empty strings
-            ...parsedFields,
-            image: imageFileName
-        }
-    },
-    { new: true, runValidators: true }
-);
+			{ userId },
+			{
+				$set: {
+					...cleanRestBody,    //  includes empty strings
+					...parsedFields,
+					image: imageFileName
+				}
+			},
+			{ new: true, runValidators: true }
+		);
 
 		return res.status(200).json({
 			status: 1,

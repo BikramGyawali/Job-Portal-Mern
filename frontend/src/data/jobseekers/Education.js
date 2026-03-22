@@ -51,8 +51,9 @@ export const Education = [
 		name: "gradingType",
 		type: "select",
 		required: true,
-		options: ["CGPA"]
-		// placeholder: "Cgpa"
+		options: ["CGPA"],
+		default: "CGPA",
+		placeholder: "CGPA"
 	},
 
 	{

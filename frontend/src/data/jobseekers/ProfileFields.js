@@ -47,33 +47,33 @@ export const ProfileFields = [
 		placeholder: "Eg. Kathmandu Metropolitan City"
 	},
 
-	{
-		name: "currentCity",
-		label: "City / Tole",
-		type: "text",
-		placeholder: "Eg. Baneshwor"
-	},
+	// {
+	// 	name: "currentCity",
+	// 	label: "City / Tole",
+	// 	type: "text",
+	// 	placeholder: "Eg. Baneshwor"
+	// },
 
-	{
-		name: "perDistrict",
-		label: "Permanent District",
-		type: "text",
-		placeholder: "Eg. Lalitpur"
-	},
+	// {
+	// 	name: "perDistrict",
+	// 	label: "Permanent District",
+	// 	type: "text",
+	// 	placeholder: "Eg. Lalitpur"
+	// },
 
-	{
-		name: "perMunicipality",
-		label: "Permanent Municipality",
-		type: "text",
-		placeholder: "Eg. Godawari Municipality"
-	},
+	// {
+	// 	name: "perMunicipality",
+	// 	label: "Permanent Municipality",
+	// 	type: "text",
+	// 	placeholder: "Eg. Godawari Municipality"
+	// },
 
-	{
-		name: "perCity",
-		label: "Permanent City / Tole",
-		type: "text",
-		placeholder: "Eg. Imadol"
-	},
+	// {
+	// 	name: "perCity",
+	// 	label: "Permanent City / Tole",
+	// 	type: "text",
+	// 	placeholder: "Eg. Imadol"
+	// },
 
 	{
 		name: "dob",

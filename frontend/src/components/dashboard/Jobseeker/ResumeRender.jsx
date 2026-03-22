@@ -5,6 +5,7 @@ function ResumeRender({ sections }) {
 	return (
 		<div className="grid grid-cols-1 gap-5">
 			{sections.map((sec, i) => {
+				{ sec.data }
 				if (!sec.data || (Array.isArray(sec.data) && sec.data.length === 0)) return null;
 
 				return (
@@ -28,10 +29,11 @@ function ResumeRender({ sections }) {
 										src={sec.data.profileImage}
 										alt={sec.data.name}
 										className="h-[200px] w-auto
-											
+										
 											border-2 border-black p-1.5 rounded"
 									/>
 								)}
+								{/* console.log(sec.data); */}
 								<div className="flex flex-col gap-1 justify-center text-[17px] text-justify">
 									{sec.data.name && <h1 className='text-[22px] font-bold'>{sec.data.name}</h1>}
 									{/* {sec.data.address && <h2>Address: {sec.data.address}</h2>} */}
@@ -41,6 +43,7 @@ function ResumeRender({ sections }) {
 										Contact: {sec.data.contact}</h1>}
 									{sec.data.dateOfBirth && <h2>Date of Birth: {sec.data.dateOfBirth}</h2>}
 									{sec.data.experience && <h2>Experience: {sec.data.experience}</h2>}
+									{sec.data.address && <h2>Address : {sec.data.address}</h2>}
 								</div>
 							</div>
 						)}

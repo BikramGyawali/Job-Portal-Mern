@@ -10,11 +10,14 @@ export const ProfileToCV = (profile) => {
 			data: {
 				name: getFullName(profile) || profile?.cname || '',
 				profileImage: profile?.image ? `${apiUrl}/uploads/images/${profile.image}` : null,
-				address: profile?.currentAddress || {},
+				address: `${profile?.currentDistrict},${profile?.
+					currentMunicipality} ` || {}
+				,
 				contact: profile?.phone || '',
 				email: profile?.email || '',
 				dateOfBirth: profile?.dob ? new Date(profile.dob).toDateString() : '',
 				experience: profile?.experience?.length ? `${profile.experience.length} Year(s)` : 'Fresher'
+				// currentDistrict:profile?.currentDistrict
 			}
 		},
 		{

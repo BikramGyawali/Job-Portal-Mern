@@ -331,7 +331,7 @@ export const editProfile = async (req, res) => {
 			message: "Unauthorized: Token is missing"
 		});
 
-		// ✅ Check profile exists
+
 		const profileExists = await JobseekerProfile.findOne({ userId });
 		if (!profileExists) {
 			return res.status(404).json({ status: 0, message: "No Profile found" });
@@ -365,7 +365,7 @@ export const editProfile = async (req, res) => {
 			req.body.phone = sanitizedPhone;
 		}
 
-		// ✅ Destructure JSON string fields out of req.body
+		//  Destructure JSON string fields out of req.body
 		const {
 			experience,
 			education,
@@ -378,7 +378,7 @@ export const editProfile = async (req, res) => {
 			...restBody
 		} = req.body;
 
-		// ✅ Safely parse JSON fields
+		//  Safely parse JSON fields
 		const parseIfExists = (field) => {
 			try {
 				return field ? JSON.parse(field) : undefined;
@@ -387,7 +387,7 @@ export const editProfile = async (req, res) => {
 			}
 		};
 
-		const parsedFields = {};
+
 		const parsed = {
 			experience: parseIfExists(experience),
 			education: parseIfExists(education),
@@ -399,14 +399,22 @@ export const editProfile = async (req, res) => {
 			references: parseIfExists(references),
 		};
 
+
+		const parsedFields = {}
+		Object.keys(parsed).forEach((key) => {
+			if (parsed[key] !== undefined) {
+				parsedFields[key] = parsed[key]
+			}
+		})
 		// Only include defined parsed fields
+		// const dateFields=["dob"]
 		const cleanRestBody = {};
 		Object.keys(restBody).forEach((key) => {
 			if (restBody[key] !== undefined && restBody[key] !== null) {
-				cleanRestBody[key] = restBody[key];  // ✅ keeps "" so it overwrites old value
+				cleanRestBody[key] = restBody[key];  //  keeps "" so it overwrites old value
 			}
 		});
-		// ✅ Handle image — save new image first if uploaded
+		//  Handle image — save new image first if uploaded
 		let imageFileName = profileExists.image; // keep old image by default
 		if (req.file) {
 			try {

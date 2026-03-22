@@ -70,11 +70,11 @@ function ResumeRender({ sections }) {
 											{obj.institution
 												? `${obj.institution}${obj.boardOrUniversity ? ', ' + obj.boardOrUniversity : ''}${obj.location ? ', ' + obj.location : ''
 												}`
-												: obj.employmentType
-													? `${obj.employmentType}${obj.location ? ' - ' + obj.location : ''}`
+												: obj.position
+													? `${obj.employmentType}${obj.industry ? ' - ' + obj.industry : ''}`
 													: obj.language
-														? `Reading: ${obj.reading}, Writing: ${obj.writing}, Speaking: ${obj.speaking}`
-														: obj.contact
+														? `${obj.language} ,Reading: ${obj.reading}, Writing: ${obj.writing}, Speaking: ${obj.speaking}`
+														: obj.company
 															? `${obj.designation ? obj.designation + ', ' : ''}${obj.company}, Contact: ${obj.contact}`
 															: ''}
 										</p>

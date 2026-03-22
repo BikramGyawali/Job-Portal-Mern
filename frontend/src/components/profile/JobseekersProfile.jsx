@@ -134,7 +134,7 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 		const { error } = ValidateUtil(targetForm, targetFields);
 		setProfileError(error);
 	}, [step, expIndex, eduIndex, addIndex]);
-	// ✅ Real-time single field validation using ValidateUtil
+	//  Real-time single field validation using ValidateUtil
 	const validateField = (name, value, fields) => {
 		const partialForm = { ...targetForm, [name]: value };
 		const { error } = ValidateUtil(partialForm, fields);
@@ -317,9 +317,9 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 		// });
 		Object.entries(profile).forEach(([key, value]) => {
 			if (value instanceof File) {
-				formData.append(key, value);               // ✅ file object
+				formData.append(key, value);               //  file object
 			} else if (value !== null && value !== undefined) {
-				formData.append(key, String(value ?? "")); // ✅ include empty strings
+				formData.append(key, String(value ?? "")); //  include empty strings
 			}
 		});
 		formData.append("experience", JSON.stringify(experiences));

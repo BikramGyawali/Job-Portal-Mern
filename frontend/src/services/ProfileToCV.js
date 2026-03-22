@@ -47,6 +47,7 @@ export const ProfileToCV = (profile) => {
 				company: exp?.orgname || '',
 				position: exp?.position || '',
 				employmentType: exp?.jlevel || '',
+				industry: exp?.industry || "",
 				startYear: exp?.sdate ? new Date(exp.sdate).getFullYear() : '',
 				endYear: exp?.edate ? new Date(exp.edate).getFullYear() : 'Running',
 				role: exp?.role || '',

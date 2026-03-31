@@ -67,6 +67,7 @@ export function DashboardNav({ onMenuClick, role = "Employer" }) {
 				<marquee
 					behavior="scroll"
 					direction="left"
+					loop='infinite'
 					className="font-semibold text-sm md:text-lg"
 				>
 					Welcome {userName} to Hamro Job.  You are logged in as {role} .

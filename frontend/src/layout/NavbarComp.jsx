@@ -1,5 +1,7 @@
 import React from "react";
-import logo from "../assets/image/logo.png";
+
+import newLogo from "../assets/image/fornav.jpeg"
+// import newLogo from "../assets/image/hehe.jpg"
 import { Navbar, NavbarBrand, NavbarCollapse, NavbarToggle } from "flowbite-react";
 import { Link, useLocation } from "react-router-dom";
 
@@ -20,8 +22,10 @@ function NavbarComp() {
 			<Navbar fluid rounded className="!bg-white ">
 				<NavbarBrand as={Link} to="/">
 					<img
-						src={logo}
-						className="mr-2 h-10 w-10 sm:h-12 sm:w-12 rounded-full object-cover"
+						// src={logo}
+						src={newLogo}
+						className="mr-2 h-15 w-full sm:h-12 sm:w-12  "
+
 						alt="Company Logo"
 					/>
 					<span className="self-center whitespace-nowrap text-2xl font-bold text-gray-800">

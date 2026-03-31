@@ -1,10 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
-import logo from "../../../../assets/image/logo.png";
+
 import { DashboardHeadData, jobData, JobListingData, ListingTitle } from "../../../../data/jobseekers/DashboardData";
-import ButtonComp from "../../../common/ButtonComp";
-import { useLocation } from "react-router-dom";
-import { ProfileContext } from "../../../../context/ProfileContext";
-import { JMyJobs } from "../../../../services/jobService";
+
 import DashTable from "../../../common/DashTable";
 import { JobPostContext } from "../../../../context/JobPostContext";
 import useViewJob from "../../../../hooks/useViewJob";

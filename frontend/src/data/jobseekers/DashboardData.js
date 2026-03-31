@@ -70,7 +70,7 @@ export const jobData = [
 ];
 
 //for cv 
-import logo from "../../assets/image/logo.png";
+import logo from "../../assets/image/fornav.jpeg";
 export const CVSections = [
 	{
 		section: "Personal Header",

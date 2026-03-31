@@ -19,7 +19,8 @@ import {
 	BsTwitter,
 } from "react-icons/bs";
 
-import logo from "../assets/image/logo.png";
+import newLogo from "../assets/image/fotorlogo.jpeg"
+
 
 export function FooterComp() {
 	const currentTime = new Date();
@@ -34,10 +35,12 @@ export function FooterComp() {
 					<div className="flex flex-col gap-4 w-full md:w-[50%] lg:w-[40%]">
 						<div className="flex items-center gap-3">
 							<FooterBrand
-								href="#"
-								src={logo}
+								href="/"
+								// src={logo}
+								src={newLogo}
 								alt="Hamro Job Logo"
 								name="Hamro Job"
+								className="mr-2 h-full w-full sm:h-12 sm:w-12 rounded-full object-cover"
 							/>
 
 						</div>

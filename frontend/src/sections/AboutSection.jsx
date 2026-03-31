@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from "../assets/image/logo.png";
+import logo from "../assets/image/another.jpeg";
 import InfoSection from '../components/common/InfoSection'
 import BackgroundSection from '../components/common/BackgroundSection';
 

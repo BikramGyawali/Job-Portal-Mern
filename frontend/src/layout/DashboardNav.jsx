@@ -8,7 +8,7 @@ import {
 	Navbar,
 	NavbarBrand,
 } from "flowbite-react";
-import logo from "../assets/image/newLogo.png";
+import logo from "../assets/image/fornav.jpeg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { NavbarData } from "../data/employers/edashboardData";
 import { JNavbarData } from "../data/jobseekers/JDashboardData";
@@ -45,7 +45,7 @@ export function DashboardNav({ onMenuClick, role = "Employer" }) {
 			: state.user?.name || "User";
 
 	return (
-		<Navbar className="!bg-gray-200 !dark:bg-black text-black shadow px-4 py-2 flex items-center justify-between">
+		<Navbar className="!bg-white/10 !dark:bg-black text-black shadow px-4 py-2 flex items-center justify-between">
 
 			<button
 				onClick={onMenuClick}
@@ -56,7 +56,7 @@ export function DashboardNav({ onMenuClick, role = "Employer" }) {
 
 
 			<NavbarBrand as={Link} to={dashLink} className="flex items-center" replace>
-				<img src={logo} className="mr-3 h-6 sm:h-9" alt="Logo" />
+				<img src={logo} className="mr-3 h-6 object-contain sm:h-9" alt="Logo" />
 				<span className="self-center whitespace-nowrap text-xl font-semibold">
 					Hamro Job
 				</span>

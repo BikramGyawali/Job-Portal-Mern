@@ -182,7 +182,7 @@ function ReusableForm({
 									readOnly={readonlyFields.includes(field.name)}
 									placeholder={field.placeholder}
 									className={`p-2 border rounded-xl ${readonlyFields.includes(field.name)
-										? "bg-gray-100 text-gray-500 cursor-not-allowed"  //  visual indicator
+										? "bg-gray-100 text-black cursor-not-allowed"  //  visual indicator
 										: ""
 										}`}
 								/>

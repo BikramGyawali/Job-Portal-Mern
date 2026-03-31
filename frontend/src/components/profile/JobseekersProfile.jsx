@@ -26,7 +26,7 @@ const mapProfileToForm = (profile, fields) => {
 	if (!profile) return createEmptyEntry(fields);
 	return fields.reduce((acc, f) => {
 		acc[f.name] = profile[f.name] ?? (f.type === "checkbox" ? false : f.type === "file" ? null : "");
-		return acc;
+		return acc;  // as the .reduce use to add the data with field in the emmpty object {}
 	}, {});
 };
 //add other enteries like education and profile
@@ -34,7 +34,7 @@ const mapArrayToEntries = (arr, fields) => {
 	if (!arr || arr.length === 0) return [createEmptyEntry(fields)];
 	return arr.map((item) =>
 		fields.reduce((acc, f) => {
-			acc[f.name] = item[f.name] ?? (f.type === "checkbox" ? false : "");
+			acc[f.name] = item[f.name] ?? (f.type === "checkbox" ? false : "");  //?? means it there is no value in left side use right side value
 			return acc;
 		}, {})
 	);
@@ -55,9 +55,11 @@ const mapAddDetailsFromProfile = (profile, fields) => {
 	const maxLen = Math.max(
 		trainings.length, awards.length, socials.length,
 		references.length, 1
-	);
+	);  // for creating the entry as this give the number of object or entries 
 
-	return Array.from({ length: maxLen }, (_, i) => ({
+
+	//array from to create an array
+	return Array.from({ length: maxLen }, (_, i) => ({  // - means undefined and i means index
 		trainingTitle: trainings[i]?.title || "",
 		trainingYear: trainings[i]?.year || "",
 		trainingInstitution: trainings[i]?.institution || "",
@@ -80,9 +82,9 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 	const { dispatch, state } = useContext(AuthContext);
 	const { setProfile: setGlobalProfile, fetchProfile } = useContext(ProfileContext);
 	const navigate = useNavigate();
-	console.log(state);
+	// console.log(state);
 
-	const [profile, setProfile] = useState(() => {
+	const [profile, setProfile] = useState(() => {  //lazy use state so it run only one when mount
 		if (mode === 'edit') {
 			return mapProfileToForm(existingProfile, ProfileFields)
 		}
@@ -322,17 +324,15 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 
 		const formData = new FormData();
 
-		// Object.entries(profile).forEach(([key, value]) => {
-		// 	if (value !== null && value !== "") formData.append(key, value);
-		// });
-		Object.entries(profile).forEach(([key, value]) => {
+
+		Object.entries(profile).forEach(([key, value]) => {  //convert to array of key,value
 			if (value instanceof File) {
 				formData.append(key, value);               //  file object
 			} else if (value !== null && value !== undefined) {
 				formData.append(key, String(value ?? "")); //  include empty strings
 			}
 		});
-		formData.append("experience", JSON.stringify(experiences));
+		formData.append("experience", JSON.stringify(experiences));    //convert into string
 		formData.append("education", JSON.stringify(educationList));
 		formData.append("trainings", JSON.stringify(
 			addDetailsList
@@ -386,7 +386,7 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 		let response;
 		if (mode === "edit") {
 			response = await jobseekerEditProfile(formData);
-			console.log(response.updatedProfile);
+			// console.log(response.updatedProfile);
 
 			if (response?.success) {
 				setGlobalProfile(response.updatedProfile);

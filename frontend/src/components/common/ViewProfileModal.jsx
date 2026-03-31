@@ -7,13 +7,13 @@ import DownloadButton from './DownloadButton';
 import { useRef } from 'react';
 import { downloadResume } from '../../utils/downloadresume.js';
 
-export function ViewProfileModal({ profile, role, onClose }) {
+export function ViewProfileModal({ profile, role, onClose, showButton = true }) {
 	const resumeRef = useRef()
 	if (!profile) return null;
 	console.log(profile, role);
 
 	const sections = role === 'jobseeker' ? ProfileToCV(profile?.profileData || profile) : null;
-	console.log(sections[0].data);
+	// console.log(sections[0].data);
 
 
 	const handleDownload = () => {
@@ -45,7 +45,8 @@ export function ViewProfileModal({ profile, role, onClose }) {
 					</div>
 				)}
 
-				{role === 'jobseeker' ? <DownloadButton onDownload={handleDownload} /> : null}
+				{/* {role === 'jobseeker' ? <DownloadButton onDownload={handleDownload} /> : null} */}
+				{showButton ? <DownloadButton onDownload={handleDownload} /> : null}
 				<div className="mt-6 flex justify-end">
 					<button className="px-4 py-2 bg-gray-500 text-white rounded-lg cursor-pointer" onClick={onClose}>Close</button>
 				</div>

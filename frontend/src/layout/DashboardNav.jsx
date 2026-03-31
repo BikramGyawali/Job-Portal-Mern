@@ -28,10 +28,11 @@ export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 			, { replace: true }
 		)
 	}
+	const dashLink = role === "Jobseeker" ? "/jobseeker" : role === "Employer" ? "/employe" : "/admin"
 	const { pathname } = useLocation();
 	const myData = role === 'Jobseeker' ? JNavbarData : NavbarData;
 	const apiUrl = import.meta.env.VITE_API_URL || window.location.origin;
-	const avatarSrc = profile?.image ? `${apiUrl}/uploads/images/${profile.image}` : null;
+	const avatarSrc = profile?.image ? `${apiUrl}/uploads/images/${profile.image}` : `https://cdn-icons-png.flaticon.com/512/17003/17003310.png`;
 	return (
 		<Navbar className="bg-[#1E2939] text-white shadow px-4 py-2 flex items-center justify-between">
 
@@ -43,7 +44,7 @@ export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 			</button>
 
 			{/* Brand */}
-			<NavbarBrand as={Link} to="/" className="flex items-center">
+			<NavbarBrand as={Link} to={dashLink} className="flex items-center" replace>
 				<img src={logo} className="mr-3 h-6 sm:h-9" alt="Logo" />
 				<span className="self-center whitespace-nowrap text-xl font-semibold">
 					Hamro Job
@@ -59,6 +60,7 @@ export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 							alt="User settings"
 							img={avatarSrc}
 							rounded
+							className="hover:cursor-pointer"
 						/>
 					}
 				>
@@ -70,7 +72,7 @@ export function DashboardNav({ onMenuClick, role = 'Employer' }) {
 						{profile?.currentAddress && (
 							<span className="block text-sm">{profile.currentAddress.district ? `${profile.currentAddress.district}${profile.currentAddress.city ? ', ' + profile.currentAddress.city : ''}` : profile.currentAddress}</span>
 						)}
-						<DropdownItem onClick={handleLogout} className="bg-linear-to-r from-indigo-500 to-purple-500 mt-1 rounded-2xl !text-white text-center  text-bold w-[60%] ">Sign out</DropdownItem>
+						<DropdownItem onClick={handleLogout} className="bg-linear-to-r from-indigo-500 to-purple-500 mt-1 rounded-2xl !text-white text-center justify-center  text-bold w-[70%] ">Sign out</DropdownItem>
 					</DropdownHeader>
 				</Dropdown>
 			</div>

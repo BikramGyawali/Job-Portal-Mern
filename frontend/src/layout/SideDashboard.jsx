@@ -21,7 +21,7 @@ export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 	}
 	const renderMenu = (closeOnClick = false) => (
 		<SidebarItems>
-			<p className="text-center text-[15px] sm:text-2xl md:text-3xl font-extrabold tracking-wide   ">
+			<p className="text-center text-[15px] text-linear-to-r from-indigo-500 to-purple-500   sm:text-2xl md:text-3xl font-extrabold tracking-wide dark:text-white   ">
 				{role} Dashboard
 			</p>
 
@@ -39,7 +39,7 @@ export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 									as={Link}
 									to={link}
 									icon={icon}
-									className={`rounded-md ${isActive ? "bg-blue-600 text-white" : "hover:bg-gray-700"}`}
+									className={`rounded-md ${isActive ? "bg-blue-600 text-white" : "hover:bg-green-500 dark:hover:bg-gray-700"}`}
 									onClick={handleLogout}
 								>
 									{name}
@@ -53,7 +53,7 @@ export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 								as={Link}
 								to={link}
 								icon={icon}
-								className={`rounded-md ${isActive ? "bg-blue-600 text-white" : "hover:bg-gray-700"}`}
+								className={`rounded-md ${isActive ? "bg-green-400 dark:bg-blue-600 text-white hover:bg-green-500" : "hover:bg-green-500"}`}
 								onClick={closeOnClick ? onClose : undefined}
 							>
 								{name}
@@ -72,7 +72,11 @@ export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 								// to="/link"
 								icon={icon}
 								label={name}
-								className={`rounded-md ${collapseActive ? "bg-blue-600 text-white" : ""}`}
+								// className={`rounded-md ${collapseActive ? "bg-blue-600 text-white" : ""}`}
+								className={`rounded-md ${isActive
+									? "bg-green-400 dark:bg-blue-600 text-white hover:bg-green-500 "
+									: "text-black dark:text-white hover:bg-green-500  dark:hover:bg-gray-700"
+									}`}
 							>
 								{children.map((child, j) => {
 									const childActive = pathname === child.link;
@@ -82,8 +86,12 @@ export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 											href={child.link}
 											as={Link}
 											to={child.link}
-											className={`rounded-md ml-4 ${childActive ? "bg-blue-500 text-white" : "hover:bg-gray-700"}`}
-											onClick={closeOnClick ? onClose : undefined}
+											// className={`rounded-md ml-4 ${childActive ? "bg-blue-500 text-white" : "hover:bg-gray-700"}`}
+											// onClick={closeOnClick ? onClose : undefined}
+											className={`rounded-md ml-4 ${childActive
+												? "bg-green-400 dark:bg-blue-600 text-white hover:bg-green-500 "
+												: "text-black dark:text-white  hover:bg-green-500 hover:text-white dark:hover:bg-gray-700"
+												}`}
 										>
 											{child.name}
 										</SidebarItem>
@@ -103,7 +111,11 @@ export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 		<>
 
 			<div className="hidden lg:block w-64">
-				<Sidebar aria-label="Dashboard sidebar" className="bg-[#1E2939] text-white h-screen">
+				{/* <Sidebar aria-label="Dashboard sidebar" className="bg-[#1E2939] text-white h-screen"> */}
+				<Sidebar
+					aria-label="Dashboard sidebar"
+					className="bg-white dark:bg-[#1E2939] text-black dark:text-white h-screen"
+				>
 					{renderMenu(false)}
 				</Sidebar>
 			</div>
@@ -112,7 +124,7 @@ export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 			<div className="lg:hidden">
 				<Sidebar
 					aria-label="Dashboard sidebar (mobile)"
-					className={`bg-[#1E2939] text-white h-screen fixed top-0 left-0 z-50 w-64 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+					className={`bg-white dark:bg-[#1E2939] text-black dark:text-white h-screen fixed top-0 left-0 z-50 w-64 transform transition-transform duration-300 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
 				>
 
 					<div className="flex justify-end p-2">

@@ -129,6 +129,7 @@ function Applicants() {
 					profile={viewApplicant}
 					role="jobseeker"
 					onClose={closeView}
+					showButton={true}
 				/>
 			)}
 		</div>

@@ -135,6 +135,7 @@ function ViewApplicant({ jobId, applicantCount, onCountUpdate }) {
 								profile={viewApplicant}
 								role="jobseeker"
 								onClose={closeView}
+								showButton={false}
 							/>
 						)}
 					</div>

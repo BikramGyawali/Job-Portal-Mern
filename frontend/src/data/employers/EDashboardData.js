@@ -15,7 +15,7 @@ export const EDashboardData = [
 		name: "Job Board",
 		icon: HiFlag,
 		children: [
-			{ name: "Dashboard", link: "/employer/job-board" },
+			// { name: "Dashboard", link: "/employer/job-board" },
 			{ name: "My Jobs", link: "/employer/my-jobs" },
 			{ name: "Post a Job", link: "/employer/post-job" },
 			{ name: "All Applicants", link: "/employer/applicants" },

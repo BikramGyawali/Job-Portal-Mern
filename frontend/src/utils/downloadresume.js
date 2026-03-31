@@ -10,7 +10,7 @@ export const downloadResume = async (resumeRef) => {
 	const element = resumeRef.current;
 
 	try {
-		
+
 		const canvas = await html2canvas(element, {
 			scale: 3,  //fpr dpi
 			useCORS: true,
@@ -38,7 +38,7 @@ export const downloadResume = async (resumeRef) => {
 
 		for (let page = 0; page < pageCount; page++) {
 			if (page > 0) pdf.addPage()
-			pdf.addImage(imgData, 'PNG', 0, -(page * pdfHeight), imgWidth, imgHeight, '', 'FAST')
+			pdf.addImage(imgData, 'PNG', 4, -(page * pdfHeight), imgWidth, imgHeight, '', 'FAST')
 		}
 
 		pdf.save('HamroJob_Resume.pdf')

@@ -7,7 +7,7 @@ function DasCard({ data, role }) {
 	// console.log(role,link);
 
 	const finalLink = `/${role}${link}`
-	console.log(finalLink);
+	// console.log(finalLink);
 
 
 

@@ -13,14 +13,14 @@ const DownloadResume = () => {
 	const resumeRef = useRef();
 	const sections = ProfileToCV(profile);
 
-	
+
 	const handleDownload = () => {
 		downloadResume(resumeRef)
 	}
 	return (
 		<div className="p-3 mt-3 mx-3">
 			{/* Resume Container */}
-			<div
+			{/* <div
 				ref={resumeRef}
 				style={{   // style for the pdf page 
 					backgroundColor: '#ffffff',
@@ -32,9 +32,23 @@ const DownloadResume = () => {
 
 			>
 				<ResumeRender sections={sections} />
+			</div> */}
+			<div
+				ref={resumeRef}
+				style={{
+					width: '794px',
+					minHeight: '1123px',
+					// padding: '40px',
+					backgroundColor: '#ffffff',
+					fontFamily: 'Arial, sans-serif',
+					boxSizing: 'border-box',
+					// margin: '0 auto',
+				}}
+			>
+				<ResumeRender sections={sections} />
 			</div>
 
-		
+
 			<div className="mt-5 flex justify-center">
 				<DownloadButton onDownload={handleDownload} />
 			</div>

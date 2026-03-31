@@ -14,7 +14,8 @@ function ResumeRender({ sections }) {
 						{sec.section !== 'Personal Header' && (
 							<>
 								<h1 className='text-[18px] font-semibold'>{sec.section}</h1>
-								<hr className='mb-2 border-black' />
+								{/* <hr className='mb-4 border-black border-1' />   */}
+								{/* arrow line for the headers */}
 							</>
 						)}
 

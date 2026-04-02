@@ -6,6 +6,7 @@ export const ValidateUtil = (form, fields = []) => {
 
 	// Regex patterns
 	const patterns = {
+		textareaPattern: /^[A-Za-z][A-Za-z0-9\s.,!?@#&()\-:;'"\/\n]*$/,
 		email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
 		phone: /^(98|97|96)[0-9]{8}$/,
 		text: /^[A-Za-z\s]+$/,
@@ -32,13 +33,31 @@ export const ValidateUtil = (form, fields = []) => {
 
 		//  TEXT VALIDATION
 		if (
-			(f.type === "text" || f.type === "textarea") &&
+			(f.type === "text") &&
 			!patterns.text.test(value)
 		) {
 			error[f.name] = `${f.label} must contain only text`;
 			valid = false;
 		}
+		// for text area 
 
+		if (f.type === "textarea") {
+			if (!patterns.textareaPattern.test(value)) {
+				error[f.name] = `${f.label} must start with a letter and contain valid characters`
+				valid = false
+			}
+			else if (value.length < 20) {
+				error[f.name] = `${f.label} must be at least 20 characters`
+				valid = false
+			}
+			else if (value.length > 2000) {
+				error[f.name] = `${f.label} must not exceed 2000 characters`
+				valid = false
+			} else if (/(.)\1{9,}/.test(value)) {
+				error[f.name] = `${f.label} contains invalid repeated characters`
+				valid = false
+			}
+		}
 		//  EMAIL
 		if (f.type === "email" && !patterns.email.test(value)) {
 			error[f.name] = "Invalid email format";
@@ -67,6 +86,9 @@ export const ValidateUtil = (form, fields = []) => {
 		//  NUMBER
 		if (f.type === "number" && isNaN(value)) {
 			error[f.name] = `${f.label} must be a number`;
+			valid = false;
+		} else if (value <= 0) {
+			error[f.name] = `${f.label} must be greater than 0`;
 			valid = false;
 		}
 

@@ -205,7 +205,7 @@ function ReusableForm({
 				<button
 					type="submit"
 					disabled={isLoading}
-					className={`w-full sm:w-auto flex-1 py-2.5 px-6 font-semibold rounded-xl transition-all duration-200 ${isLoading
+					className={`w-full sm:w-auto flex-1 py-2.5 px-6 font-semibold rounded-xl transition-all duration-200 cursor-pointer  ${isLoading
 						? 'bg-gray-300 text-gray-500 cursor-not-allowed'
 						: 'bg-blue-600 text-white hover:bg-blue-700 active:scale-95'
 						}`}
@@ -226,7 +226,7 @@ function ReusableForm({
 						type="button"
 						onClick={onClose}
 						disabled={isLoading}
-						className="w-full sm:w-auto flex-1 py-2.5 px-6 bg-gray-600 text-white font-semibold rounded-xl hover:bg-gray-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+						className="w-full sm:w-auto flex-1 py-2.5 px-6 bg-gray-600 text-white font-semibold rounded-xl hover:bg-gray-700 cursor-pointer transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
 					>
 						Close
 					</button>

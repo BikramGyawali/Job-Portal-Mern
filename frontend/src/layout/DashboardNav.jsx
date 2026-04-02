@@ -44,14 +44,14 @@ export function DashboardNav({ onMenuClick, role = "Employer" }) {
 			? `${profile.fname || profile.cname || ""} ${profile.mname ?? ""} ${profile.sname ?? ""}`.trim()
 			: state.user?.name || "User";
 
-	// let currentTime = new Date().getHours();
-	// currentTime = currentTime + 5;
-	// console.log(currentTime);
+	const getGreeting = () => {
+		const hour = new Date().getHours()
 
-	// const currentHours = currentTime == 12 ? 12 ? currentTime > 12 ? currentTime % 12 : currentTime
-	// console.log(currentHours);
-
-	// const timeMessage = currentTime < 12
+		if (hour >= 5 && hour < 12) return "Good Morning"
+		if (hour >= 12 && hour < 17) return "Good Afternoon"
+		if (hour >= 17 && hour < 21) return "Good Evening"
+		return "Good Night"
+	}
 
 
 
@@ -81,7 +81,7 @@ export function DashboardNav({ onMenuClick, role = "Employer" }) {
 					loop='infinite'
 					className="font-semibold text-sm md:text-lg"
 				>
-					Welcome {userName} to Hamro Job.  You are logged in as {role} .
+					{getGreeting()} {userName}. 		Welcome to Hamro Job.  You are logged in as {role} .
 				</marquee>
 			</div>
 

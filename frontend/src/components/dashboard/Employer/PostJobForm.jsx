@@ -54,7 +54,7 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 		setJob(updatedJob)
 
 		const { error } = ValidateUtil(updatedJob, CreateJobsData);
-  const{postingDate,...restError}=error
+		const { postingDate, ...restError } = error
 
 		setError(restError);
 	}

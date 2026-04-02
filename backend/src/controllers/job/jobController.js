@@ -819,7 +819,7 @@ export const editJobs = async (req, res) => {
 		console.log(userId);
 
 		const allowedFields = [
-			'jobTitle', 'openings', 'mainCategory', 'subCategory',
+			'jobTitle', 'openings', 'mainCategory', 'subCategory', 'postingDate',
 			'jobLevel', 'desiredCandidate', 'educationLevel', 'experience',
 			'district', 'municipality', 'location', 'salaryCurrency',
 			'salaryPeriod', 'salaryRange', 'license', 'vehicle',

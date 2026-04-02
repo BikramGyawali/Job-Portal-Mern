@@ -29,9 +29,7 @@ function ResumeRender({ sections }) {
 									<img
 										src={sec.data.profileImage}
 										alt={sec.data.name}
-										className="h-[200px] w-auto
-										
-											border-2 border-black p-1.5 rounded"
+										className="h-30 w-30 sm:w-34 sm:h-34 md:w-38 md:h-38 lg:h-41 lg:w-41 object-cover rounded border-2 border-black p-1"
 									/>
 								)}
 								{/* console.log(sec.data); */}

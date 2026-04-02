@@ -81,7 +81,7 @@ export const contactLoginValidate = (form, role = null) => {
 			error.cPass = "Confirm password is required";
 			valid = false;
 		} else if (form.pass && form.cPass !== form.pass) {
-			error.cPass = "Passwords do not match";
+			error.cPass = "Passwords should match";
 			valid = false;
 		}
 	}

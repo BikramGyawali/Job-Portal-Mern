@@ -44,6 +44,17 @@ export function DashboardNav({ onMenuClick, role = "Employer" }) {
 			? `${profile.fname || profile.cname || ""} ${profile.mname ?? ""} ${profile.sname ?? ""}`.trim()
 			: state.user?.name || "User";
 
+	// let currentTime = new Date().getHours();
+	// currentTime = currentTime + 5;
+	// console.log(currentTime);
+
+	// const currentHours = currentTime == 12 ? 12 ? currentTime > 12 ? currentTime % 12 : currentTime
+	// console.log(currentHours);
+
+	// const timeMessage = currentTime < 12
+
+
+
 	return (
 		<Navbar className="!bg-white/10 !dark:bg-black text-black shadow px-4 py-2 flex items-center justify-between">
 

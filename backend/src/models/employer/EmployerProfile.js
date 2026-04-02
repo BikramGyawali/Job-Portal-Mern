@@ -30,7 +30,7 @@ const employerProfileSchema = new schema({
 		type: String,
 
 		required: true,
-	
+
 	},
 	companyIntro: String
 

@@ -19,7 +19,7 @@ export const Signup = async (req, res, role) => {
 
 		const exists = await User.findOne({ email });
 		if (exists) {
-			return res.status(200).json({ status: 0, message: "Email already exists" });
+			return res.status(200).json({ status: 0, message: "Email already registered" });
 		}
 
 		const hashedPassword = await hash(pass, 10);

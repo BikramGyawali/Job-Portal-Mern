@@ -166,9 +166,9 @@ export const CreateJobsData = [
 	// ----- DATES -----
 	{
 		label: "Posting Date",
-		name: "sdate",
+		name: "postingDate",
 		type: "date",
-		required: true,
+		required: false,
 	},
 	{
 		label: "Posting Period",

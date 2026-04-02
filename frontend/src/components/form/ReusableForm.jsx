@@ -1,272 +1,3 @@
-// import React from "react";
-// import Select from 'react-select'
-// function ReusableForm({
-// 	form,
-// 	errors,
-// 	onChange,
-// 	onSubmit,
-// 	fields,
-// 	step,
-// 	setStep,
-// 	totalSteps,
-// 	deleteSection,
-// 	addSection,
-// 	entriesCount,
-// 	setCurrentEntryIndex,
-// 	currentEntryIndex,
-// 	isLoading = false,
-// 	submitButtonText = "Submit",
-// 	onClose,
-// 	readonlyFields = []
-// }) {
-// 	const maxDate = new Date().toISOString().split("T")[0];
-
-// 	const handlePrev = (e) => {
-// 		e.preventDefault();
-// 		if (step > 1) setStep(step - 1);
-// 	};
-
-// 	const handleNextOrSubmit = (e) => {
-// 		e.preventDefault();
-// 		onSubmit(e);
-// 	};
-
-// 	return (
-// 		<form
-// 			onSubmit={handleNextOrSubmit} encType="multipart/form-data"
-// 			className="grid grid-cols-1 sm:grid-cols-2 gap-4 backdrop-blur-lg bg-white/10 shadow-lg shadow-gray-700 rounded-2xl p-8 w-full border border-white/10 duration-500 "
-// 		>
-// 			{/* MULTIPLE ENTRY INDEX BUTTONS */}
-// 			{entriesCount > 1 && (
-// 				<div className="col-span-2 flex gap-2">
-// 					{Array.from({ length: entriesCount }).map((_, idx) => (
-// 						<button
-// 							key={idx}
-// 							type="button"
-// 							onClick={() => setCurrentEntryIndex(idx)}
-// 							className={`px-3 py-1 rounded-xl ${idx === currentEntryIndex
-// 								? "bg-blue-600 text-white"
-// 								: "bg-gray-200 text-gray-700"
-// 								}`}
-// 						>
-// 							{idx + 1}
-// 						</button>
-// 					))}
-// 				</div>
-// 			)}
-
-// 			{/* FIELDS */}
-// 			{fields.map((field, i) => (
-// 				<div
-// 					key={i}
-// 					className={`flex flex-col gap-1 ${field.type === "textarea" || field.type === "file"
-// 						? "col-span-2"
-// 						: "col-span-1"
-// 						}`}
-// 				>
-// 					<label className="text-[16px] font-medium">
-// 						{field.label} {field.required && "*"}
-// 					</label>
-
-
-// 					{field.type === "select" ? (
-// 						field.multiple ? (
-
-// 							<Select
-// 								isMulti
-// 								name={field.name}
-// 								options={field.options?.map(opt => ({
-// 									value: opt,
-// 									label: opt
-// 								}))}
-// 								value={(form[field.name] || []).map(val => ({
-// 									value: val,
-// 									label: val
-// 								}))}
-// 								onChange={
-// 									(selectedOptions) => {
-// 										const values = selectedOptions
-// 											? selectedOptions.map(option => option.value)
-// 											: [];
-
-// 										onChange({
-// 											target: {
-// 												name: field.name,
-// 												value: values
-// 											}
-// 										});
-// 									}}
-// 								className="basic-multi-select"
-// 								classNamePrefix="select"
-// 							/>
-// 						) : (
-
-// 							<Select
-// 								name={field.name}
-// 								options={field.options?.map(opt => ({
-// 									value: opt,
-// 									label: opt
-// 								}))}
-// 								value={
-// 									form[field.name]
-// 										? { value: form[field.name], label: form[field.name] }
-// 										: null
-// 								}
-// 								onChange={(selectedOption) =>
-// 									onChange({
-// 										target: {
-// 											name: field.name,
-// 											value: selectedOption ? selectedOption.value : ""
-// 										}
-// 									})
-// 								}
-// 								className="basic-single-select"
-// 								classNamePrefix="select"
-// 							/>
-// 						)
-// 					) : field.type === "textarea" ? (
-// 						<textarea
-// 							name={field.name}
-// 							value={form[field.name] !== undefined ? form[field.name] : ""}
-
-// 							onChange={onChange}
-// 							placeholder={field.placeholder}
-// 							rows="4"
-// 							className="p-2 border rounded-xl resize-none"
-// 						></textarea>
-
-// 					)
-
-// 						: field.type === "date" ? (
-// 							<input
-// 								type="date"
-// 								name={field.name}
-// 								value={form[field.name] !== undefined ? form[field.name] : ""}
-
-// 								onChange={onChange}
-// 								// max={maxDate}
-// 								placeholder={field.placeholder}
-// 								className="p-2 border rounded-xl"
-// 							/>
-// 						)
-// 							: field.type === "email" ? (
-// 								<input
-// 									type="email"
-// 									name={field.name}
-// 									value={form[field.name] !== undefined ? form[field.name] : ""}
-// 									onChange={readonlyFields.includes(field.name) ? undefined : onChange}
-// 									readOnly={readonlyFields.includes(field.name)}
-// 									placeholder={field.placeholder}
-// 									className={`p-2 border rounded-xl ${readonlyFields.includes(field.name)
-// 										? "bg-gray-100 text-black cursor-not-allowed"  //  visual indicator
-// 										: ""
-// 										}`}
-// 								/>
-// 							) : field.type === "file" ? (
-// 								<input
-// 									type={field.type}
-// 									name={field.name}
-// 									// value={form[field.name] !== undefined ? form[field.name] : ""}
-
-// 									onChange={onChange}
-// 									placeholder={field.placeholder}
-// 									className="p-2 border rounded-xl"
-// 								/>
-// 							) : (
-// 								<input
-// 									type={field.type}
-// 									name={field.name}
-// 									value={form[field.name] !== undefined ? form[field.name] : ""}
-
-// 									onChange={readonlyFields.includes(field.name) ? undefined : onChange}
-// 									readOnly={readonlyFields.includes(field.name)}
-// 									placeholder={field.placeholder}
-// 									className={`p-2 border rounded-xl ${readonlyFields.includes(field.name)
-// 										? "bg-gray-100 text-black cursor-not-allowed"  //  visual indicator
-// 										: ""
-// 										}`}
-// 								/>
-// 							)}
-
-
-// 					{errors && errors[field.name] && (
-// 						<p className="text-red-600 text-sm">{errors[field.name]}</p>
-// 					)}
-// 				</div>
-// 			))
-// 			}
-
-// 			{/* BUTTONS */}
-// 			<div className="col-span-2 flex gap-5">
-// 				{step > 1 && (
-// 					<button
-// 						className="bg-blue-600 text-white py-2 rounded-xl w-full cursor-pointer hover:bg-blue-700"
-// 						onClick={handlePrev}
-// 						disabled={isLoading}
-// 					>
-// 						Previous
-// 					</button>
-// 				)}
-
-// 				<button
-// 					type="submit"
-// 					className={`text-white py-2 rounded-xl w-full cursor-pointer ${isLoading
-// 						? 'bg-gray-400 cursor-not-allowed'  //  Disabled style
-// 						: 'bg-blue-600 hover:bg-blue-700'
-// 						}`}
-// 					disabled={isLoading}
-// 				>
-// 					{submitButtonText}
-// 				</button>
-// 				{
-// 					onClose && (
-// 						<button
-// 							className="bg-gray-600 text-white py-2 rounded-xl cursor-pointer w-full   
-// 							hover:bg-gray-700"
-// 							type="button"
-// 							onClick={onClose}
-// 							disabled={isLoading}
-// 						>
-// 							Close
-// 						</button>
-// 					)
-// 				}
-// 			</div>
-
-
-// 			{/* ADD SECTION */}
-// 			{
-// 				addSection && (
-// 					<div className="col-span-2 flex gap-2">
-// 						<button
-// 							type="button"
-// 							onClick={addSection}
-// 							className="bg-green-600 text-white py-2 rounded-xl cursor-pointer w-full hover:bg-green-700"
-// 						>
-// 							+ Add Another
-// 						</button>
-
-// 						{entriesCount > 1 && deleteSection && (
-// 							<button
-// 								type="button"
-// 								onClick={deleteSection}
-// 								className="bg-red-600 text-white py-2 rounded-xl  cursor-pointer w-full hover:bg-red-700"
-// 							>
-// 								- Delete
-// 							</button>
-// 						)}
-// 					</div>
-// 				)
-// 			}
-
-// 		</form >
-// 	);
-// }
-
-// export default ReusableForm;
-
-
-
 
 import React from "react";
 import Select from 'react-select'
@@ -397,16 +128,7 @@ function ReusableForm({
 								rows="4"
 								className="w-full p-3 text-sm border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400"
 							/>
-							// ) : field.type === "date" ? (
-							// 	<input
-							// 		type="date"
-							// 		name={field.name}
-							// 		value={form[field.name] !== undefined ? form[field.name] : ""}
-							// 		onChange={onChange}
-							// 		placeholder={field.placeholder}
-							// 		className="w-full p-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
-							// 	/>
-							// ) 
+
 						) : field.type === "date" ? (
 							<input
 								type="date"
@@ -416,9 +138,12 @@ function ReusableForm({
 										? new Date(form[field.name]).toISOString().split("T")[0]
 										: ""
 								}
-								onChange={onChange}
-								placeholder={field.placeholder}
-								className="w-full p-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+								onChange={readonlyFields.includes(field.name) ? undefined : onChange}
+								readOnly={readonlyFields.includes(field.name)}
+								className={`w-full p-3 text-sm border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 ${readonlyFields.includes(field.name)
+									? "bg-gray-100 text-gray-500 cursor-not-allowed"
+									: ""
+									}`}
 							/>
 						) : field.type === "email" ? (
 							<input
@@ -458,7 +183,7 @@ function ReusableForm({
 
 						{errors && errors[field.name] && (
 							<p className="text-red-500 text-xs font-medium flex items-center gap-1">
-								<span>⚠</span>
+								<span>*</span>
 								{errors[field.name]}
 							</p>
 						)}

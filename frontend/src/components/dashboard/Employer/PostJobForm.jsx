@@ -9,6 +9,8 @@ import { JobPostContext } from '../../../context/JobPostContext';
 import Loading from '../../common/Loading';
 
 function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
+
+	const getTodayDate = () => new Date().toISOString().split("T")[0]
 	const { addJob } = useContext(JobPostContext)
 	const [message, setMessage] = useState("")
 	const [loading, setLoading] = useState(false)
@@ -20,13 +22,26 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 			else acc[f.name] = "";
 			return acc;
 		}, {});
-	const [job, setJob] = useState(() =>
-		mode === "edit" ? initialData : createEmptyEntry(CreateJobsData)
+	const [job, setJob] = useState(() => {
+		if (mode === "edit") {
+			return { ...initialData, postingDate: getTodayDate() }
+		} else {
+			return {
+				...createEmptyEntry(CreateJobsData),
+				postingDate: getTodayDate()
+			}
+		}
+	}
 	)
 	const [error, setError] = useState({});
 	useEffect(() => {
 		if (mode === "edit" && initialData) {
-			setJob(initialData)
+			setJob({ ...initialData, postingDate: getTodayDate() })
+		} else {
+			setJob({
+				...createEmptyEntry(CreateJobsData),
+				postingDate: getTodayDate()
+			})
 		}
 	}, [initialData, mode])
 
@@ -39,9 +54,9 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 		setJob(updatedJob)
 
 		const { error } = ValidateUtil(updatedJob, CreateJobsData);
+  const{postingDate,...restError}=error
 
-
-		setError(error);
+		setError(restError);
 	}
 
 	useEffect(() => {
@@ -122,6 +137,7 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 				setCurrentEntryIndex={() => { }}
 				currentEntryIndex={0}
 				isLoading={loading}
+				readonlyFields={['postingDate']}
 				submitButtonText={loading ? mode === "edit" ? "Updating..." : "Posting" : mode === "edit" ? "Update Job" : "Post Job"}
 				onClose={close}
 

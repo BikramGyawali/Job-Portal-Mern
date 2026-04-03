@@ -64,13 +64,7 @@ export const Education = [
 		placeholder: "3.6"
 	},
 
-	// {
-	// 	label: "CGPA Scale",
-	// 	name: "cgpaScale",
-	// 	type: "select",
-	// 	required: false,
-	// 	options: ["4.0 Points", "10 Points"]
-	// },
+	
 
 	{
 		label: "Joined Year",

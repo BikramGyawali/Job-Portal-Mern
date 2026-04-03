@@ -343,7 +343,7 @@ export const editProfile = async (req, res) => {
 			if (!validateEmail(email)) {
 				return res.status(400).json({ status: 0, message: "Valid email is required" });
 			}
-			
+
 		}
 
 		if (phone) {
@@ -431,12 +431,23 @@ export const editProfile = async (req, res) => {
 				$set: {
 					...cleanRestBody,    //  includes empty strings
 					...parsedFields,
-					image: imageFileName
+					image: imageFileName,
+
 				}
 			},
 			{ new: true, runValidators: true }
 		);
-
+		// if (!updatedProfile) {
+		// 	return res.status(404).json({ status: 0, message: "Profile not found" });
+		// }
+		// await User.findByIdAndUpdate(
+		// 	userId,
+		// 	{
+		// 		$set: {
+		// 			approvalStatus: "pending"
+		// 		}
+		// 	}, { new: true }
+		// )   //code to change the profile status while update
 		return res.status(200).json({
 			status: 1,
 			message: "Profile updated successfully",

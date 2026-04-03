@@ -44,10 +44,7 @@ export const loginUser = async (formData, role) => {
 		return response.data;
 
 	} catch (error) {
-		// if (error.message) {
-		// 	return error.response.data
-		// }
-		// throw error
+		
 		return error?.response?.data ?? { status: 0, message: error.message || "Login failed" };
 	}
 };

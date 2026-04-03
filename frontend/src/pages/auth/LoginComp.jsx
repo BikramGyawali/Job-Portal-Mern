@@ -22,7 +22,7 @@ function LoginComp({ LoginData }) {
 	});
 	const [loginError, setLoginError] = useState({});
 	const handleChange = (e) => {
-		console.log(e.name);
+		// console.log(e);
 
 		const { name, value } = e.target
 		setForm((prev) => ({
@@ -40,53 +40,92 @@ function LoginComp({ LoginData }) {
 	//for Validation
 
 
+	// const handleSubmit = async (e) => {
+	// 	e.preventDefault();
+	// 	const { error, valid } = contactLoginValidate(form);
+
+	// 	setLoginError(error)
+
+	// 	// console.log(error.email);
+
+
+	// 	if (!valid) return;
+	// 	const res = await loginUser(form, role)
+	// 	console.log(res);
+
+
+	// 	if (res.status === 1) {
+	// 		dispatch({
+	// 			type: "LOGIN",
+	// 			payload: {
+	// 				role: res.role,
+	// 				user: res.user,
+	// 				email: res.email,
+	// 				isProfileCompleted: res.isProfileCompleted,
+	// 			},
+	// 		});
+	// 		toast.success("Login Successfully", {
+	// 			onClose: () => navigate(`/${res.role}`, { replace: true })
+	// 		})
+
+
+	// 		setForm({
+	// 			email: "",
+	// 			pass: ""
+	// 		});
+	// 	}
+	// 	else {
+	// 		console.log("eror");
+
+	// 		toast.error(res.message || "Login Failed")
+	// 	}
+
+
+
+
+
+
+
+	// };
+
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
 		const { error, valid } = contactLoginValidate(form);
-
-		setLoginError(error)
-
-		// console.log(error.email);
-
+		setLoginError(error);
 
 		if (!valid) return;
-		const res = await loginUser(form, role)
-		console.log(res);
 
+		try {
+			const res = await loginUser(form, role);
+			console.log(res);
 
-		if (res.status === 1) {
-			dispatch({
-				type: "LOGIN",
-				payload: {
-					role: res.role,
-					user: res.user,
-					email: res.email,
-					isProfileCompleted: res.isProfileCompleted,
-				},
-			});
-			toast.success("Login Successfully", {
-				onClose: () => navigate(`/${res.role}`, { replace: true })
-			})
+			if (res?.status === 1) {
+				dispatch({
+					type: "LOGIN",
+					payload: {
+						role: res.role,
+						user: res.user,
+						email: res.email,
+						isProfileCompleted: res.isProfileCompleted,
+					},
+				});
 
+				toast.success("Login Successfully", {
+					onClose: () => navigate(`/${res.role}`, { replace: true })
+				});
 
-			setForm({
-				email: "",
-				pass: ""
-			});
+				setForm({
+					email: "",
+					pass: ""
+				});
+			} else {
+				toast.error(res?.message || "Login Failed");
+			}
+		} catch (error) {
+			toast.error("Something went wrong");
 		}
-		else {
-			toast.error(res.message || "Login Failed")
-		}
-
-
-
-
-
-
-
 	};
-
-
 
 	return (
 		<div className="flex items-center justify-center w-screen h-screen gap-6 px-4">
@@ -153,7 +192,7 @@ function LoginComp({ LoginData }) {
 
 
 
-						<ButtonComp name="Login" />
+						<ButtonComp name="Login" type='submit' />
 
 					</div>
 				</form>

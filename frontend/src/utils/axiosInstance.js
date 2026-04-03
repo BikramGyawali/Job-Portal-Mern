@@ -1,25 +1,41 @@
-import axios from "axios";
 
+
+
+import axios from "axios";
 
 const api = axios.create({
 	baseURL: "http://localhost:3000",
-	withCredentials: true,
+	withCredentials: true,  // sends cookies with every request
 	headers: {
-		"Content_Type": "application/json"
+		"Content-Type": "application/json"
 	}
 })
+
+const loginUrls = [
+	'/jobseeker/login',
+	'/employer/login',
+	'/admin/login'
+]
+
+const loginPaths = ['/jobseekers', '/employers', '/admin-login']
 
 api.interceptors.response.use(
 	res => res,
 	err => {
+		const isLoginRequest = loginUrls.some(url => err.config?.url?.includes(url))
+		const isAuthMe = err.config?.url === '/auth/me'
+		const isAlreadyOnLoginPage = loginPaths.includes(window.location.pathname)
 
-		const loginPaths = ['/jobseekers', '/employers', '/admin-login'];
-		if (err.response?.status === 401) {
-			if (err.config?.url !== '/auth/me' && !loginPaths.includes(window.location.pathname)) {
-				window.location.replace('/jobseekers');
-			}
+		if (
+			err.response?.status === 401 &&
+			!isAuthMe &&
+			!isLoginRequest &&
+			!isAlreadyOnLoginPage
+		) {
+			window.location.replace('/jobseekers')
 		}
-		return Promise.reject(err);
+
+		return Promise.reject(err)
 	}
 );
 

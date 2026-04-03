@@ -84,8 +84,22 @@ export const LoginController = async (req, res, type) => {
 
 
 		const isMatch = await compare(pass, user.password);
+		// if (!isMatch) {
+		// 	return res.status(401).json({ status: 0, message: "Invalid password" });
+		// }
 		if (!isMatch) {
-			return res.status(401).json({ status: 0, message: "Invalid password" });
+			return res
+				.clearCookie("token", {
+		httpOnly: true,
+		sameSite: "lax",
+		secure: false,
+		path: "/"
+	})
+				.status(401)
+				.json({
+					status: 0,
+					message: "Invalid password"
+				});
 		}
 
 		const token = jwt.sign({

@@ -47,33 +47,7 @@ export const ProfileFields = [
 		placeholder: "Eg. Kathmandu Metropolitan City"
 	},
 
-	// {
-	// 	name: "currentCity",
-	// 	label: "City / Tole",
-	// 	type: "text",
-	// 	placeholder: "Eg. Baneshwor"
-	// },
 
-	// {
-	// 	name: "perDistrict",
-	// 	label: "Permanent District",
-	// 	type: "text",
-	// 	placeholder: "Eg. Lalitpur"
-	// },
-
-	// {
-	// 	name: "perMunicipality",
-	// 	label: "Permanent Municipality",
-	// 	type: "text",
-	// 	placeholder: "Eg. Godawari Municipality"
-	// },
-
-	// {
-	// 	name: "perCity",
-	// 	label: "Permanent City / Tole",
-	// 	type: "text",
-	// 	placeholder: "Eg. Imadol"
-	// },
 
 	{
 		name: "dob",
@@ -135,12 +109,7 @@ export const ProfileFields = [
 		options: ["Full Time", "Part Time"]
 	},
 
-	// {
-	// 	name: "salary",
-	// 	label: "Expected Salary",
-	// 	type: "text",
-	// 	placeholder: "Eg. 25000"
-	// },
+	
 
 	{
 		name: "about",

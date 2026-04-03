@@ -87,11 +87,11 @@ export const employerProfile = [
 	},
 
 	{
-		label: "Contact Person Full Name",
+		label: "HR Name",
 		name: "fname",
 		type: "text",
 		required: true,
-		placeholder: "Enter Contact Person full name"
+		placeholder: "Enter HR full name (Bikram Gyawali)"
 	},
 
 	{

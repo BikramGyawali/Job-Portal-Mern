@@ -21,7 +21,13 @@ function EmployersProfile() {
 			else acc[f.name] = "";
 			return acc;
 		}, {});
-	const [profile, setProfile] = useState(createEmptyEntry(employerProfile))
+	const [profile, setProfile] = useState(() => {
+		const empty = createEmptyEntry(employerProfile);
+		return {
+			...empty,
+			email: state?.user?.email
+		}
+	})
 	const [profileError, setProfileError] = useState({})
 	const handleChange = (e) => {
 		const { name, value, files, type } = e.target;
@@ -29,7 +35,7 @@ function EmployersProfile() {
 			const file = files?.[0] ?? null;
 			if (file && !['image/jpeg', 'image/jpg', 'image/png'].includes(file.type)) {
 				setProfileError({ image: 'Only JPG/JPEG/PNG images are accepted' });
-				
+
 				return;
 			}
 		}
@@ -110,7 +116,7 @@ function EmployersProfile() {
 				entriesCount={1}
 				setCurrentEntryIndex={() => { }}
 				currentEntryIndex={0}
-
+				readonlyFields={['email']}
 
 			/>
 		</div>

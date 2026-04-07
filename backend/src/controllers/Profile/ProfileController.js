@@ -182,7 +182,7 @@ export const EProfileController = async (req, res) => {
 		// ensure authenticated user id is present
 		const userId = req.user?.id;
 		if (!userId) return res.status(401).json({ status: 0, message: "Unauthorized: missing user id" });
-		let { email, phone } = req.body;
+		let { email, phone, panCard } = req.body;
 		const existingProfile = await EmployerProfile.findOne({ userId: userId });
 
 		if (existingProfile) {
@@ -214,7 +214,20 @@ export const EProfileController = async (req, res) => {
 			}
 			req.body.phone = sanitizedPhone;
 		}
+		if (panCard) {
+			const existingByPan = await EmployerProfile.findOne({
+				panCard: panCard
+			});
 
+			if (existingByPan) {
+				if (existingByPan.userId?.toString() !== userId) {
+					return res.status(409).json({
+						status: 0,
+						message: "PAN card already exists"
+					});
+				}
+			}
+		}
 		const companyName = req.body.companyName || req.body.cname || null;
 
 		let profile;
@@ -274,7 +287,7 @@ export const EProfileController = async (req, res) => {
 		console.error(err);
 		if (err && err.code === 11000) {
 			const dupKey = Object.keys(err.keyValue || {})[0];
-			let message = "Duplicate value exists";
+			var message = "Duplicate value exists";
 			if (dupKey === 'email') message = 'Email already exists';
 			if (dupKey === 'phone') message = 'Phone number already exists';
 			if (dupKey === 'userId') message = 'Profile for this user already exists';

@@ -31,7 +31,7 @@ function AppliedJobs() {
 
 				// "S.N": ,
 				"Job Title": application.jobDetails?.jobTitle || "N/A",
-				"Job Level": application.jobDetails?.jlevel || "N/A",
+				"Job Level": application.jobDetails?.jobLevel || "N/A",
 				"Status": application.status || "pending",
 				"Applied At": application.appliedAt ? new Date(application.appliedAt).toLocaleDateString("en-Us", {
 					year: "numeric",

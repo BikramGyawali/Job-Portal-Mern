@@ -38,9 +38,9 @@ export const employerProfile = [
 	{
 		label: "Office Phone Number",
 		name: "officePhone",
-		type: "number",
+		type: "text",
 		required: true,
-		placeholder: "014000000"
+		placeholder: "01-4000000"
 	},
 
 	{

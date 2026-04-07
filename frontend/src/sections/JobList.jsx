@@ -16,7 +16,7 @@ function JobList() {
 
 	if (loading) return <Loading message='Loading...' minHeight='min-h-[100px]' />
 	return (
-		<div className=' grid gap-4 p-6 md:grid-cols-4 sm:grid-cols-2'>
+		<div className=' grid gap-4 p-6 md:grid-cols-4 sm:grid-cols-2 '>
 			{jobs.map((job, i) => (
 				<CardComp key={i} job={job} />
 			))}

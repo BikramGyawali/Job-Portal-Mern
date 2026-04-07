@@ -35,7 +35,7 @@ function EmployerDashboard() {
 
 	const DashboardCardData = [{
 		number: jobs,
-		content: "Total Job Post",
+		content: "Total Job Posts",
 		link: "/my-jobs"
 	},
 	{

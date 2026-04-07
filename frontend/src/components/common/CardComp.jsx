@@ -23,7 +23,7 @@ export const CardComp = ({ job }) => {
 	}
 
 	return (
-		<Card className="max-w-md !bg-white transition-transform duration-300 hover:scale-105 ">
+		<Card className="max-w-md !bg-white transition-transform duration-300 hover:scale-105  ">
 			<h5 className="text-2xl font-bold tracking-wide text-gray-900">
 				{job.jobTitle}
 			</h5>

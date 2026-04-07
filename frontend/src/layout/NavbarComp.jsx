@@ -19,7 +19,7 @@ function NavbarComp() {
 
 	return (
 		<div className="sticky top-0 z-50 shadow-md">
-			<Navbar fluid rounded className="!bg-white ">
+			<Navbar fluid rounded className="!bg-[#F8FAFC] ">
 				<NavbarBrand as={Link} to="/">
 					<img
 						// src={logo}

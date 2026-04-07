@@ -51,13 +51,13 @@ export const ADashboardSideData = [
 	{
 		type: "item",
 		icons: HiUser,
-		name: "Register Approve",
+		name: "Register Approval",
 		link: "/admin/approve-account"
 	},
 	{
 		type: "item",
 		icons: HiUser,
-		name: "Jobs Post",
+		name: "Jobs Approval",
 		link: "/admin/approve-jobs"
 	},
 	{

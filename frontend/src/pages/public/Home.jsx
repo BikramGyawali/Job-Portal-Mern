@@ -13,10 +13,10 @@ function Home() {
 	return (
 		<>
 			<BackgroundSection title={title} explain={explain} />
-			<div className=' grid grid-row-2 items-center justify-center mt-2'>
+			<div className=' grid grid-row-2 items-center justify-center mt-2 bg-[#F8FAFC] '>
 				<p className='text-3xl font-bold text-fuchsia-600 text-center'>Featured Jobs</p>
 				{/*  */}
-				<JobList/>
+				<JobList />
 			</div>
 			<HomeSection />
 

@@ -175,7 +175,7 @@ export const CreateJobsData = [
 		name: "postingPeriod",
 		type: "select",
 		required: true,
-		options: ["7 Days", "15 Days", "30 Days", "45 Days"],
+		options: ["1 Days", "7 Days", "15 Days", "30 Days", "45 Days"],
 	},
 
 	// ----- JOB DETAILS -----

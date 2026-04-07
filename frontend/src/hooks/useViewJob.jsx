@@ -20,7 +20,7 @@ function useViewJob(onApplySuccess) {
 			toast.error("Job data not found");
 			return;
 		}
-		console.log(jobData);
+		// console.log(jobData);
 
 		setSelectedJob(jobData)
 		setViewJob(jobData);
@@ -46,14 +46,18 @@ function useViewJob(onApplySuccess) {
 
 			if (result.success) {
 				toast.success(result.message);
+				// const jobs = result?.jobs
+				// console.log();
 
-
-				setViewJob(prev =>
-					prev?._id === job._id ? { ...prev, alreadyApplied: true } : prev
-				)
-				setSelectedJob(prev =>
-					prev?._id === job._id ? { ...prev, alreadyApplied: true } : prev
-				)
+				// const newdata = job.filter(prev => prev._id !== jobs._id)
+				// setViewJob(prev =>
+				// 	prev?._id === job._id ? { ...prev, alreadyApplied: true } : prev
+				// )
+				// setViewJob(newdata)
+				// setSelectedJob(prev =>
+				// 	prev?._id === job._id ? { ...prev, alreadyApplied: true } : prev
+				// )
+				closeView()
 				if (typeof onApplySuccess === "function") {
 					onApplySuccess(job._id)
 				}

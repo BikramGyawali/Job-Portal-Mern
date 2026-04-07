@@ -63,7 +63,7 @@ export const PostJobController = async (req, res) => {
 
 export const approvedJob = async (req, res) => {
 	try {
-		const jobs = await PostJob.find({ status: "approved" }).populate('userId', 'email role').sort({ approvalDate: -1 }).limit(12).lean() //using the useid i will get the email and role
+		const jobs = await PostJob.find({ status: "approved", expire: false }).populate('userId', 'email role').sort({ approvalDate: -1 }).limit(12).lean() //using the useid i will get the email and role
 		if (jobs.length === 0) {
 			return res.status(404).json({
 				status: 0,
@@ -94,7 +94,7 @@ export const approvedJob = async (req, res) => {
 
 export const pendingJob = async (req, res) => {
 	try {
-		const jobs = await PostJob.find({ status: "pending" }).populate('userId', 'email role').sort({ approvalDate: -1 }).lean() //using the useid i will get the email and role and show in the reverse order
+		const jobs = await PostJob.find({ status: "pending", expire: false }).populate('userId', 'email role').sort({ approvalDate: -1 }).lean() //using the useid i will get the email and role and show in the reverse order
 		if (jobs.length === 0) {
 			return res.status(404).json({
 				status: 0,
@@ -202,7 +202,7 @@ export const rejectJob = async (req, res) => {
 //joblist for employers
 export const EMyJobs = async (req, res) => {
 	const id = req.user.id;
-	console.log(id);
+	// console.log(id);
 
 	try {
 		const jobs = await PostJob.aggregate([
@@ -292,9 +292,11 @@ export const JJobList = async (req, res) => {
 					pipeline: [
 						{
 							$match: {
+
 								$expr: {
 									$and: [
 										{ $eq: ["$status", "approved"] },
+										{ $eq: ["$expire", false] },
 										{
 											$gt: [
 												{
@@ -361,7 +363,13 @@ export const JJobList = async (req, res) => {
 				}
 			},
 
-
+			{
+				$match: {
+					$expr: {
+						$eq: [{ $size: "$application" }, 0]
+					}
+				}
+			},
 			{
 				$lookup: {
 					from: "employerprofiles",
@@ -461,6 +469,7 @@ export const applyJob = async (req, res) => {
 		const application = await JobApplication.create({
 			jobId, applicantId: profile._id
 		})
+
 		return res.status(200).json({
 			status: 1,
 			message: "Job Applied Successfully"

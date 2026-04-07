@@ -66,6 +66,10 @@ const postJob = new schema({
 		type: String,
 		default: null
 	},
+	expire: {
+		type: Boolean,
+		default: false
+	},
 	approvalDate: Date,
 	createdAt: {
 		type: Date,
@@ -75,5 +79,17 @@ const postJob = new schema({
 		type: Date,
 		default: Date.now
 	}
-}, { timestamps: true })
+}, { timestamps: true });
+postJob.pre("save", function (next) {
+	const today = new Date();
+
+	const days = parseInt(this.postingPeriod); // gets 7 from "7 Days"
+
+	const expiryDate = new Date(this.postingDate);
+	expiryDate.setDate(expiryDate.getDate() + days);
+
+	this.expire = today > expiryDate;
+
+	next();
+});
 export const PostJob = mongoose.model("PostJob", postJob)

@@ -98,9 +98,9 @@ function JobDetails({
 
 					<div className="pt-4 w-fit flex   gap-8 justify-items-center">
 						{showApply && (
-							// 
+
 							<ButtonComp
-								name={loading ? "Applying..." :job.alreadyApplied?"Already Applied" : "Apply"}
+								name={loading ? "Applying..." : job.alreadyApplied ? "Already Applied" : "Apply"}
 								click={onApply}
 								disable={loading || job.alreadyApplied}
 							/>

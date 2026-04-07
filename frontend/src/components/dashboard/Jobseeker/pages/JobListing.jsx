@@ -25,12 +25,19 @@ function JobListing() {
 			setJobs(myJobs)
 		}
 	}, [myJobs])
+	// const handleApplySuccess = (jobId) => {
+	// 	setJobs(prev =>
+	// 		prev.map(j =>
+	// 			(j._id === jobId || j.fullData?._id === jobId)
+	// 				? { ...j, alreadyApplied: true, fullData: { ...j.fullData, alreadyApplied: true } }
+	// 				: j
+	// 		)
+	// 	)
+	// }
 	const handleApplySuccess = (jobId) => {
 		setJobs(prev =>
-			prev.map(j =>
-				(j._id === jobId || j.fullData?._id === jobId)
-					? { ...j, alreadyApplied: true, fullData: { ...j.fullData, alreadyApplied: true } }
-					: j
+			prev.filter(j =>
+				j._id !== jobId && j.fullData?._id !== jobId
 			)
 		)
 	}

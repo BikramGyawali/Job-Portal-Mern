@@ -56,7 +56,9 @@ function Applicants() {
 					})
 				})
 			})
-
+			formatted.sort((a, b) => {
+				return new Date(a["Applied At"]) - new Date(b["Applied At"])
+			})
 			setApplicants(formatted)
 		} catch (err) {
 			console.error("Failed to load applicants:", err)

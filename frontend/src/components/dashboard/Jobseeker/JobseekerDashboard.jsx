@@ -34,7 +34,7 @@ function JobseekerDashboard() {
 	})
 	const dashboardCardData = [
 		{
-			number: appliedJobs,
+			number: appliedJobs || 0,
 			content: "Total Applied Jobs",
 			link: "/applied-jobs"
 		},

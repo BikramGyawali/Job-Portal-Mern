@@ -42,6 +42,7 @@ import { ProfileProvider } from "./context/ProfileContext";
 import { JobPostProvider } from "./context/JobPostContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PageNotFound from "./pages/public/PageNotFound";
 
 
 export default function App() {
@@ -113,7 +114,10 @@ export default function App() {
 
 								{/* legacy /dashboard route -> redirect to jobseeker dashboard layout (silence unmatched warning) */}
 								<Route path="/dashboard" element={<DashboardLayout role="Jobseeker" />} />
-								{/* <Route path="/employers" element={<Employers />} /> */}
+
+								{/* for page not found  */}
+								<Route path='*' element={<PageNotFound />} />
+
 							</Routes>
 						</BrowserRouter>
 					</JobPostProvider>

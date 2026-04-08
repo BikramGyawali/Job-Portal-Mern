@@ -83,6 +83,7 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 	const { setProfile: setGlobalProfile, fetchProfile } = useContext(ProfileContext);
 	const navigate = useNavigate();
 	// console.log(state);
+	console.log(state?.user?.email);
 
 	const [profile, setProfile] = useState(() => {  //lazy use state so it run only one when mount
 		if (mode === 'edit') {
@@ -92,7 +93,7 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 		const empty = createEmptyEntry(ProfileFields)
 		return {
 			...empty,
-			email: state?.user?.email || ""
+			email: state?.user?.email
 		}
 	})
 	const [experiences, setExperiences] = useState(() =>

@@ -15,11 +15,10 @@ export const CardComp = ({ job }) => {
 	// console.log(authSate);
 
 	const handleApply = () => {
-		if (authSate.isAuth) {
-			navigate('/jobseekers', { state: { from: `/jobs/${job.id}` } })
-			return
 
-		}
+		navigate('/jobseeker')
+		// console.log("hello");
+
 	}
 
 	return (

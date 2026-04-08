@@ -771,6 +771,33 @@ export const appliedJob = async (req, res) => {
 				}
 			},
 			{
+				$lookup: {
+					from: "employerprofiles",
+					localField: "applications.jobDetails.userId",
+					foreignField: "userId",
+					as: "applications.employerInfo"
+				}
+			},
+			{
+				$unwind: {
+					path: "$applications.employerInfo",
+					preserveNullAndEmptyArrays: true
+				}
+			},
+			{
+				$addFields: {
+					"applications.jobDetails.companyName": {
+						$ifNull: [
+							"$applications.employerInfo.companyName",
+							"N/A"
+						]
+					}
+				}
+			},
+			{
+				$unset: "applications.employerInfo"
+			},
+			{
 				$group: {
 					_id: "$_id",
 					applications: { $push: "$applications" },

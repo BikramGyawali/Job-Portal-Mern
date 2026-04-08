@@ -3,7 +3,7 @@ import { Router } from "express";
 import { LoginController, Signup } from "../controllers/User/UserController.js";
 import { verifyAuth, verifyRole } from "../middlewares/UserVerify/verifyMiddleware.js";
 import { JProfileController, editProfile, getJProfile } from "../controllers/Profile/ProfileController.js";
-import { uploadImage, uploadCv } from "../middlewares/multerMiddleware.js";
+import { uploadImage } from "../middlewares/multerMiddleware.js";
 import { appliedJob, JJobList } from "../controllers/job/jobController.js";
 
 const jobseekerroutes = Router();

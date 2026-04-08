@@ -41,6 +41,7 @@ export const Signup = async (req, res, role) => {
 			sameSite: "lax",
 			secure: false,
 			maxAge: 24 * 60 * 60 * 1000
+			// maxAge: 1 * 1000
 		});
 		return res.status(200).json({
 			status: 1,
@@ -90,11 +91,11 @@ export const LoginController = async (req, res, type) => {
 		if (!isMatch) {
 			return res
 				.clearCookie("token", {
-		httpOnly: true,
-		sameSite: "lax",
-		secure: false,
-		path: "/"
-	})
+					httpOnly: true,
+					sameSite: "lax",
+					secure: false,
+					path: "/"
+				})
 				.status(401)
 				.json({
 					status: 0,
@@ -114,6 +115,7 @@ export const LoginController = async (req, res, type) => {
 			sameSite: "lax",
 			secure: false,
 			maxAge: 24 * 60 * 60 * 1000
+			// maxAge: 60 * 1000
 		})
 		res.status(200).json({
 			status: 1,

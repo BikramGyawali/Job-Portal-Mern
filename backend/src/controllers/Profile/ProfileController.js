@@ -33,13 +33,13 @@ const validateEmail = (email) => {
 // Jobseeker Profile - create
 export const JProfileController = async (req, res) => {
 	try {
-		// ensure authenticated user id is present
+
 		const userId = req.user?.id;
 		if (!userId) return res.status(401).json({ status: 0, message: "Unauthorized: missing user id" });
 
 		const { email, phone } = req.body;
 
-		// ensure there isn't already a profile for this user
+		// already profile xa kinai check garni
 		const existingProfile = await JobseekerProfile.findOne({ userId: userId });
 
 		if (existingProfile) {
@@ -75,7 +75,7 @@ export const JProfileController = async (req, res) => {
 			req.body.phone = sanitizedPhone;
 		}
 
-		// create profile without image first
+		// create profile without image first  //json.Parse convert json into object or value
 		const experience = req.body.experience ? JSON.parse(req.body.experience) : [];
 		const education = req.body.education ? JSON.parse(req.body.education) : [];
 		const trainings = req.body.trainings ? JSON.parse(req.body.trainings) : [];
@@ -125,7 +125,7 @@ export const JProfileController = async (req, res) => {
 					await profile.save()
 				}
 			} catch (e) {
-				// log and continue
+
 				console.error("Failed to save image", e)
 			}
 		}
@@ -179,7 +179,7 @@ export const JProfileController = async (req, res) => {
 // Employer Profile - create
 export const EProfileController = async (req, res) => {
 	try {
-		// ensure authenticated user id is present
+
 		const userId = req.user?.id;
 		if (!userId) return res.status(401).json({ status: 0, message: "Unauthorized: missing user id" });
 		let { email, phone, panCard } = req.body;
@@ -194,7 +194,7 @@ export const EProfileController = async (req, res) => {
 
 		if (!email || !validateEmail(email)) return res.status(400).json({ status: 0, message: "Valid email is required" });
 
-		// normalize email for case-insensitive comparison
+
 		const normalizedEmail = email.trim().toLowerCase();
 		let existingByEmail = await EmployerProfile.findOne({ email: { $regex: `^${normalizedEmail}$`, $options: 'i' } });
 		if (existingByEmail) {
@@ -334,8 +334,6 @@ export const getEProfile = async (req, res) => {
 
 // jobseeker edit profile
 
-
-
 export const editProfile = async (req, res) => {
 	try {
 		const userId = req.user?.id;
@@ -363,7 +361,7 @@ export const editProfile = async (req, res) => {
 			const sanitizedPhone = phone.replace(/\D/g, "");
 			const phoneExists = await JobseekerProfile.findOne({
 				phone: sanitizedPhone,
-				userId: { $ne: userId }  //exced currebt user profile
+				userId: { $ne: userId }  //not equal so it will not check current profile
 			});
 			if (phoneExists) {
 				return res.status(409).json({ status: 0, message: "Phone number already exists" });

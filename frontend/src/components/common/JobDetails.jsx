@@ -33,7 +33,7 @@ function JobDetails({
 
 					<div className="border-b pb-4">
 						<h2 className="text-3xl font-bold text-gray-900">
-							Company Name:		{job.companyName || "Company Name"}
+							Company Name:		{job.companyName || job.cname || "Company Name"}
 						</h2>
 						<h3 className="text-gray-600 mt-1">
 							Hiring Now

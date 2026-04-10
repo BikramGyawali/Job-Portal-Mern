@@ -9,6 +9,7 @@ import { ValidateUtil } from '../../../utils/ValidationUtil';
 import ReusableForm from '../../form/ReusableForm';
 import { JobPostContext } from '../../../context/JobPostContext';
 import Loading from '../../common/Loading';
+import { useNavigate } from 'react-router-dom';
 
 const getTodayDate = () => new Date().toISOString().split("T")[0]
 
@@ -31,6 +32,7 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 	const [message, setMessage] = useState("")
 	const [loading, setLoading] = useState(false)
 	const initialized = useRef(false)  // prevent infinite loop
+	const navigate = useNavigate()
 
 	const [job, setJob] = useState(() => {
 		const base = mode === "edit" ? { ...initialData } : createEmptyEntry(CreateJobsData)
@@ -86,8 +88,12 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 				if (mode === "create") {
 					addJob(result.job)
 					setJob({ ...createEmptyEntry(CreateJobsData), postingDate: getTodayDate() })
-					toast.success(result.message)
+					toast.success(result.message, {
+						onClose: () => navigate('/employer/my-jobs', { replace: true })
+					})
 					setMessage("Job posted successfully")
+
+
 				} else {
 					onSuccess && onSuccess(result.job)
 					toast.success(result.message)

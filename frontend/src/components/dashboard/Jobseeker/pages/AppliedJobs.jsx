@@ -4,13 +4,15 @@ import JobDetails from '../../../common/JobDetails'
 import { getAppliedJobs } from '../../../../services/jobService'
 import { toast } from 'react-toastify'
 import Loading from '../../../common/Loading'
+import useViewJob from '../../../../hooks/useViewJob'
 
 const AppliedJobsHead = ["S.N", "Job Title", "Job Level", "Applied At", "Status", "Actions"]
 
 function AppliedJobs() {
 	const [jobs, setJobs] = useState([])
 	const [loading, setLoading] = useState(true)
-	const [selectedJob, setSelectedJob] = useState(null)
+	// const [selectedJob, setSelectedJob] = useState(null)
+	const { viewJob, closeView, handleView } = useViewJob()
 	const [totalApplied, setTotalApplied] = useState(0)
 	const fetchAppliedJobs = useCallback(async () => {
 		try {
@@ -55,15 +57,17 @@ function AppliedJobs() {
 		fetchAppliedJobs()
 	}, [fetchAppliedJobs])
 
-	const handleView = (row) => {
-		if (!row?.fullData) {
-			toast.error("Job data not found")
-			return
-		}
-		setSelectedJob(row.fullData)
-	}
+	// const handleView = (row) => {
+	// 	console.log(row.fullData);
+	// 	if (!row?.fullData) {
+	// 		toast.error("Job data not found")
+	// 		return
+	// 	}
+	// 	setSelectedJob(row.fullData)
 
-	const closeView = () => setSelectedJob(null)
+	// }
+
+	// const closeView = () => setSelectedJob(null)
 
 	const actionHandler = {
 		view: handleView
@@ -84,9 +88,9 @@ function AppliedJobs() {
 
 			/>
 
-			{selectedJob && (
+			{viewJob && (
 				<JobDetails
-					job={selectedJob}
+					job={viewJob}
 					showClose={true}
 					onClose={closeView}
 					onApply={false}

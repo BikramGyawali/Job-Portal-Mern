@@ -58,11 +58,26 @@ export const PostJobController = async (req, res) => {
 	}
 }
 
+export const updateExpiredJobs = async () => {
+	const jobs = await PostJob.find({ expire: false });
+
+	for (const job of jobs) {
+		const days = parseInt(job.postingPeriod);
+		const expiryDate = new Date(job.postingDate);
+		expiryDate.setDate(expiryDate.getDate() + days);
+
+		if (new Date() > expiryDate) {
+			job.expire = true;
+			await job.save();
+		}
+	}
+};
 
 //for getting all approved job for home page 
 
 export const approvedJob = async (req, res) => {
 	try {
+		await updateExpiredJobs();
 		const jobs = await PostJob.find({ status: "approved", expire: false }).populate('userId', 'email role').sort({ approvalDate: -1 }).limit(12).lean() //using the useid i will get the email and role
 		if (jobs.length === 0) {
 			return res.status(404).json({
@@ -94,6 +109,7 @@ export const approvedJob = async (req, res) => {
 
 export const pendingJob = async (req, res) => {
 	try {
+		await updateExpiredJobs();
 		const jobs = await PostJob.find({ status: "pending", expire: false }).populate('userId', 'email role').sort({ approvalDate: -1 }).lean() //using the useid i will get the email and role and show in the reverse order
 		if (jobs.length === 0) {
 			return res.status(404).json({
@@ -274,7 +290,7 @@ export const EMyJobs = async (req, res) => {
 
 export const JJobList = async (req, res) => {
 	const id = req.user.id
-
+	await updateExpiredJobs();
 	try {
 		const result = await JobseekerProfile.aggregate([
 

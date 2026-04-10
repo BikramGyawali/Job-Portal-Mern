@@ -16,6 +16,8 @@ function useViewJob(onApplySuccess) {
 		}
 
 		const jobData = row?.fullData ?? row;
+		console.log(row);
+
 		if (!jobData || !jobData._id) {
 			toast.error("Job data not found");
 			return;

@@ -46,7 +46,7 @@ export const JobPostProvider = ({ children }) => {
 		}
 	}, [])
 
-	const fetchApprovedJobs = async () => {
+	const fetchApprovedJobs = useCallback(async () => {
 		setLoading(true)
 		try {
 			const result = await getApprovedJobsService();
@@ -59,21 +59,24 @@ export const JobPostProvider = ({ children }) => {
 		finally {
 			setLoading(false)
 		}
-	}
-	const fetchPendingJobs = async () => {
+	}, [])
+	const fetchPendingJobs = useCallback(async () => {
 		setLoading(true)
 		try {
 			const result = await getPendingJobsService();
 			if (result.success) {
 				setPendingJobs(result.jobs)
+			} else {
+				setPendingJobs([])
 			}
 		} catch (error) {
 			console.error("failed to fecth data:" + error)
+			setPendingJobs([])
 		}
 		finally {
 			setLoading(false)
 		}
-	}
+	}, [])
 	const addJob = (newJob) => {
 		setJobs(prev => [newJob, ...prev])   // the new job will be at top and the previous array is also store by including the new job array in a single array
 	}

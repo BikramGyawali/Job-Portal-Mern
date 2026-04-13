@@ -41,7 +41,7 @@ export function DashboardNav({ onMenuClick, role = "Employer" }) {
 
 	const userName =
 		profile
-			? `${profile.fname || profile.cname || ""} ${profile.mname ?? ""} ${profile.sname ?? ""}`.trim()
+			? role === "Employer" ? `${profile.cname || profile.companyName || ""}` : `${profile.fname ?? ""} ${profile.mname ?? ""} ${profile.sname ?? ""}`.trim()
 			: state.user?.name || "User";
 
 	const getGreeting = () => {

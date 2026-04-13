@@ -24,7 +24,7 @@ function RejectJobModal({ job, onClose, onSuccess }) {
 		if (result.success) {
 			toast.success("Job rejected successfully");
 
-			onSuccess(job._id); // remove job from table
+			await onSuccess() // remove job from table
 
 			onClose();
 		} else {

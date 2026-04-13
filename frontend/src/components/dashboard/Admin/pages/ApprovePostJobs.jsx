@@ -10,6 +10,8 @@ import ConfirmModal from '../../../common/ConfirmModel'
 import useConfirm from '../../../../hooks/useConfirm'
 import { toast } from 'react-toastify'
 import Loading from '../../../common/Loading'
+import { useNavigate } from 'react-router-dom'
+import { set } from 'mongoose'
 
 function ApprovePostJobs() {
 	const { pendingJobs, fetchPendingJobs } = useContext(JobPostContext)
@@ -18,6 +20,7 @@ function ApprovePostJobs() {
 	const [rejectJobData, setRejectJobData] = useState(null)
 	const { viewJob, closeView, handleView } = useViewJob()
 	const { showConfirm, confirmProps } = useConfirm()
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		setLoading(true)
@@ -30,7 +33,7 @@ function ApprovePostJobs() {
 
 	useEffect(() => {
 		const transformed = pendingJobs
-			.filter(job => !job.isApproved)
+			.filter(job => job.status === "pending")
 			.map((job) => ({
 				"Company Name": job.companyName,
 				"Job Title": job.jobTitle,
@@ -43,12 +46,17 @@ function ApprovePostJobs() {
 	}, [pendingJobs])
 
 	const processApprove = useCallback(async (row) => {
+		console.log(row._id);
+
 		setLoading(true)
 		try {
 			const result = await approvedJobsService(row._id)
 			if (result.success) {
-				toast.success("Job approved successfully")
-				setTransformedJobs(prev => prev.filter(j => j._id !== row._id))
+				toast.success("Job approved successfully", {
+					onClose: () => navigate("/admin", { replace: true })
+				})
+				await fetchPendingJobs()
+
 			} else {
 				toast.error(result.error || "Failed to approve job")
 			}
@@ -57,7 +65,7 @@ function ApprovePostJobs() {
 		} finally {
 			setLoading(false)
 		}
-	}, [])
+	}, [fetchPendingJobs])
 
 	const handleApprove = (row) => {
 		showConfirm({
@@ -73,7 +81,11 @@ function ApprovePostJobs() {
 	const handleReject = (row) => {
 		setRejectJobData(row.fullData)
 	}
-
+	const handleRejectSuccess = useCallback(async () => {
+		setLoading(true);
+		await fetchPendingJobs();
+		setLoading(false)
+	}, [fetchPendingJobs])
 	const actionHandler = {
 		approve: handleApprove,
 		reject: handleReject,
@@ -106,11 +118,8 @@ function ApprovePostJobs() {
 				<RejectJobModal
 					job={rejectJobData}
 					onClose={() => setRejectJobData(null)}
-					onSuccess={(id) =>
-						setTransformedJobs(prev =>
-							prev.filter(j => j._id !== id)
-						)
-					}
+					onSuccess={handleRejectSuccess}
+
 				/>
 			)}
 		</div>
@@ -118,3 +127,6 @@ function ApprovePostJobs() {
 }
 
 export default ApprovePostJobs
+
+
+

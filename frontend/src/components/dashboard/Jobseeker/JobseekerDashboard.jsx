@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 
-import { JDashboardCardData } from '../../../data/jobseekers/DashboardData'
+// import { JDashboardCardData } from '../../../data/jobseekers/DashboardData'
 import DashBoxCard from '../../common/DashBoxCard'
 
 import JobListing from './pages/JobListing'

@@ -19,7 +19,8 @@ function ReusableForm({
 	isLoading = false,
 	submitButtonText = "Submit",
 	onClose,
-	readonlyFields = []
+	readonlyFields = [],
+	
 }) {
 	const maxDate = new Date().toISOString().split("T")[0];
 
@@ -204,8 +205,9 @@ function ReusableForm({
 
 				<button
 					type="submit"
-					disabled={isLoading}
-					className={`w-full sm:w-auto flex-1 py-2.5 px-6 font-semibold rounded-xl transition-all duration-200 cursor-pointer  ${isLoading
+					disabled={isLoading }
+
+					className={`w-full sm:w-auto flex-1 py-2.5 px-6 font-semibold rounded-xl transition-all duration-200 cursor-pointer  ${isLoading 
 						? 'bg-gray-300 text-gray-500 cursor-not-allowed'
 						: 'bg-blue-600 text-white hover:bg-blue-700 active:scale-95'
 						}`}

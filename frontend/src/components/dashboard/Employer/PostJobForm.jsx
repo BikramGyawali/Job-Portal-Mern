@@ -26,11 +26,12 @@ const stripPostingDateError = (error) => {
 	const { postingDate, ...rest } = error
 	return rest
 }
-
 function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
+	const originalJobRef = useRef(null)
 	const { addJob } = useContext(JobPostContext)
 	const [message, setMessage] = useState("")
 	const [loading, setLoading] = useState(false)
+
 	const initialized = useRef(false)  // prevent infinite loop
 	const navigate = useNavigate()
 
@@ -49,8 +50,12 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 		const base = mode === "edit" && initialData
 			? { ...initialData }
 			: createEmptyEntry(CreateJobsData)
+		const preparedJob = { ...base, postingDate: getTodayDate() }
+		setJob(preparedJob)
 
-		setJob({ ...base, postingDate: getTodayDate() })
+		if (mode === 'edit') {
+			originalJobRef.current = preparedJob
+		}
 	}, [])
 
 	// Validate on mount only — not on every job change
@@ -73,6 +78,15 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 		const { valid, error } = ValidateUtil(job, CreateJobsData)
 		setError(stripPostingDateError(error))
 		if (!valid) return
+
+		if (mode === "edit") {
+			const hasChanged = JSON.stringify(job) != JSON.stringify(originalJobRef.current)
+			if (!hasChanged) {
+				toast.info("No change detected")
+
+				return;
+			}
+		}
 
 		try {
 			setLoading(true)
@@ -151,6 +165,7 @@ function PostJobForm({ mode = "create", initialData = {}, onSuccess, close }) {
 				readonlyFields={['postingDate']}
 				submitButtonText={mode === "edit" ? "Update Job" : "Post Job"}
 				onClose={close}
+
 			/>
 		</div>
 	)

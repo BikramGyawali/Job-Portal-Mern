@@ -12,11 +12,11 @@ import logo from "../assets/image/fornav.jpeg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { NavbarData } from "../data/employers/edashboardData";
 import { JNavbarData } from "../data/jobseekers/JDashboardData";
-import { useContext } from "react";
+import { memo, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ProfileContext } from "../context/ProfileContext";
 
-export function DashboardNav({ onMenuClick, role = "Employer" }) {
+export const DashboardNav = memo(({ onMenuClick, role = "Employer" }) => {
 	const { state, logout } = useContext(AuthContext);
 	const { profile } = useContext(ProfileContext);
 	const navigate = useNavigate();
@@ -53,6 +53,7 @@ export function DashboardNav({ onMenuClick, role = "Employer" }) {
 		return "Good Night"
 	}
 
+	console.log("render");
 
 
 	return (
@@ -129,4 +130,5 @@ export function DashboardNav({ onMenuClick, role = "Employer" }) {
 			</div>
 		</Navbar>
 	);
-}
+})
+

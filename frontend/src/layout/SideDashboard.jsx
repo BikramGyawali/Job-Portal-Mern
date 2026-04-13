@@ -1,4 +1,4 @@
-import { Sidebar, SidebarItem, SidebarItemGroup, SidebarItems, SidebarCollapse } from "flowbite-react";
+import { Sidebar, SidebarItem, SidebarItemGroup, SidebarItems, SidebarCollapse, Button } from "flowbite-react";
 import { Link, replace, useLocation, useNavigate } from "react-router-dom";
 import { JDashboardData } from "../data/jobseekers/JDashboardData";
 // import { EDashboardData } from "../data/employers/edashboardData";
@@ -21,9 +21,9 @@ export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 	}
 	const renderMenu = (closeOnClick = false) => (
 		<SidebarItems>
-			<p className="text-center text-[15px] text-linear-to-r from-indigo-500 to-purple-500   sm:text-2xl md:text-3xl font-extrabold tracking-wide dark:text-white   ">
+			< p className="text-center text-[15px] text-linear-to-r from-indigo-500 to-purple-500   sm:text-2xl md:text-3xl font-extrabold tracking-wide dark:text-white   " >
 				{role} Dashboard
-			</p>
+			</p >
 
 			<SidebarItemGroup>
 				{menuData.map((item, i) => {
@@ -104,7 +104,7 @@ export function SideDashboard({ role = "Employer", isOpen, onClose }) {
 					return null;
 				})}
 			</SidebarItemGroup>
-		</SidebarItems>
+		</SidebarItems >
 	);
 
 	return (

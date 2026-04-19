@@ -6,7 +6,7 @@ import ResumeRender from '../dashboard/Jobseeker/ResumeRender';
 import DownloadButton from './DownloadButton';
 import { useRef } from 'react';
 import { downloadResume } from '../../utils/downloadresume.js';
-import { EmployerProfile } from '../../../../backend/src/models/employer/EmployerProfile.js';
+// import { EmployerProfile } from '../../../../backend/src/models/employer/EmployerProfile.js';
 import EmployerProfileView from './EmployerProfileView.jsx';
 
 export function ViewProfileModal({ profile, role, onClose, showButton = true }) {

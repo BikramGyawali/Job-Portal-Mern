@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react'
+
 import DashTable from '../../../common/DashTable'
 import { JobHeads } from '../../../../data/admin/Dashboarddata'
 import { JobPostContext } from '../../../../context/JobPostContext'
@@ -11,7 +12,7 @@ import useConfirm from '../../../../hooks/useConfirm'
 import { toast } from 'react-toastify'
 import Loading from '../../../common/Loading'
 import { useNavigate } from 'react-router-dom'
-import { set } from 'mongoose'
+
 
 function ApprovePostJobs() {
 	const { pendingJobs, fetchPendingJobs } = useContext(JobPostContext)

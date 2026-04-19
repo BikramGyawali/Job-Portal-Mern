@@ -10,8 +10,8 @@ import {
 } from "flowbite-react";
 import logo from "../assets/image/fornav.jpeg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { NavbarData } from "../data/employers/edashboardData";
-import { JNavbarData } from "../data/jobseekers/JDashboardData";
+// import { NavbarData } from "../data/employers/NavbarData";
+// import { JNavbarData } from "../data/jobseekers/JNavbarData";
 import { memo, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { ProfileContext } from "../context/ProfileContext";

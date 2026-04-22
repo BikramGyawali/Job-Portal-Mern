@@ -8,16 +8,7 @@ export default defineConfig({
 	plugins: [
 		react(),
 		tailwindcss(),
-		// manually copy _redirects to dist
-		{
-			name: "copy-redirects",
-			closeBundle() {
-				fs.copyFileSync(
-					resolve(__dirname, "public/_redirects"),
-					resolve(__dirname, "dist/_redirects")
-				);
-			},
-		},
+		
 	],
 	build: {
 		outDir: "dist",

@@ -19,7 +19,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-	origin: "https://hamrojob-backend.onrender.com/",
+	origin: "https://hamrojob.onrender.com",
 	credentials: true
 }));
 

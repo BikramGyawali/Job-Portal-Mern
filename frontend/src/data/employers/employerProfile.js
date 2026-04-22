@@ -17,7 +17,7 @@ export const employerProfile = [
 		label: "Company Email",
 		name: "email",
 		type: "email",
-		required: true,
+		// required: true,
 		placeholder: "xyzcompany@gmail.com"
 	},
 	{

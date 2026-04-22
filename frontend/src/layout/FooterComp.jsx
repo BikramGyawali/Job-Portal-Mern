@@ -68,7 +68,7 @@ export function FooterComp() {
 							<FooterTitle title="Follow us" />
 							<FooterLinkGroup col>
 								<FooterLink href="https://github.com/BikramGyawali/">Github</FooterLink>
-								<FooterLink href="https://facebook.com/BikramGyawali/">Facebook</FooterLink>
+								<FooterLink href="https://www.facebook.com/share/1B5eGDZdrQ/">Facebook</FooterLink>
 							</FooterLinkGroup>
 						</div>
 

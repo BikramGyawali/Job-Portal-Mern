@@ -38,8 +38,8 @@ export const Signup = async (req, res, role) => {
 
 		res.cookie("token", token, {
 			httpOnly: true,
-			sameSite: "lax",
-			secure: false,
+			sameSite: "none",
+			secure: true,
 			maxAge: 24 * 60 * 60 * 1000
 			// maxAge: 1 * 1000
 		});
@@ -92,8 +92,8 @@ export const LoginController = async (req, res, type) => {
 			return res
 				.clearCookie("token", {
 					httpOnly: true,
-					sameSite: "lax",
-					secure: false,
+					sameSite: "none",
+					secure: true,
 					path: "/"
 				})
 				.status(401)
@@ -112,8 +112,8 @@ export const LoginController = async (req, res, type) => {
 
 		res.cookie("token", token, {
 			httpOnly: true,
-			sameSite: "lax",
-			secure: false,
+			sameSite: "none",
+			secure: true,
 			maxAge: 24 * 60 * 60 * 1000
 			// maxAge: 60 * 1000
 		})

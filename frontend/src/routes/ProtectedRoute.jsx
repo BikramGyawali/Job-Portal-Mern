@@ -14,9 +14,9 @@ function ProtectedRoute({ allowedRole }) {
 	if (!state.isAuth) {
 		return <Navigate to={`/${roleLoginMap[allowedRole]}`} replace />;
 	}
-	if (!state.isProfileCompleted) {
-		return <Navigate to={`/${state.role}-profile`} replace />;
-	}
+	// if (!state.isProfileCompleted) {
+	// 	return <Navigate to={`/${state.role}-profile`} replace />;
+	// }
 	// if (state.isProfileCompleted) {
 	// 	return <Navigate to={`/${allowedRole}s`} replace />;
 	// }

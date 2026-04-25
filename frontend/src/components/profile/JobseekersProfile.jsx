@@ -93,12 +93,19 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 
 	})
 	useEffect(() => {
-		const freshProfile = createEmptyEntry(ProfileFields);
-		setProfile({
-			...freshProfile,
-			email: state?.user?.email
-		})
-	}, [state?.user?.email])
+		if (mode === "edit") {
+			setProfile(mapProfileToForm(existingProfile, ProfileFields));
+			return
+		}
+		if (state?.isLoading) return
+		if (state?.user?.email) {
+			const freshProfile = createEmptyEntry(ProfileFields);
+			setProfile({
+				...freshProfile,
+				email: state?.user?.email??""
+			})
+		}
+	}, [state?.user?.email, state?.isLoading, existingProfile])
 
 
 	const [experiences, setExperiences] = useState(() =>

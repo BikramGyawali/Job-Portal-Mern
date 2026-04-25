@@ -18,33 +18,38 @@ export const ProfileProvider = ({ children }) => {
 	const [profile, setProfile] = useState(null)
 	const [pendingProfile, setPendingProfile] = useState([])
 	const [loading, setLoading] = useState(true);
-		const fetchProfile = async () => {
-			if (!authState.isAuth) {
-				setProfile(null)
-				setLoading(false)
-				return
-			}
-			if (authState.role === "admin") {
-				setProfile(null);
-				setLoading(false);
-				return;
-			}
-			setLoading(true)
-			try {
-				const res = await api.get(`/${authState.role}/profile`);
-				console.log(res);
-
-				// API returns { status: 1, profile }
-				setProfile(res.data?.profile || null);
-			} catch (error) {
-				setProfile(null)
-			} finally {
-				setLoading(false)
-			}
-
+	const fetchProfile = async () => {
+		if (!authState.isAuth) {
+			setProfile(null)
+			setLoading(false)
+			return
 		}
+		if (authState.role === "admin") {
+			setProfile(null);
+			setLoading(false);
+			return;
+		}
+		if (!authState.isProfileCompleted) {
+			setProfile(null)
+			setLoading(false)
+			return
+		}
+		setLoading(true)
+		try {
+			const res = await api.get(`/${authState.role}/profile`);
+			console.log(res);
+
+			// API returns { status: 1, profile }
+			setProfile(res.data?.profile || null);
+		} catch (error) {
+			setProfile(null)
+		} finally {
+			setLoading(false)
+		}
+
+	}
 	useEffect(() => {
-	
+
 		fetchProfile();
 	}, [authState.isAuth, authState.role])  //run if the user role is change and the state as login or logout chnages 
 

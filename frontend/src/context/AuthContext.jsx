@@ -24,7 +24,7 @@ const authReducer = (state, action) => {
 				...state,
 				isAuth: true,
 				role: action.payload.role,
-				email:action.payload.email,
+				email: action.payload.email,
 				user: action.payload.user,
 				isProfileCompleted: action.payload.isProfileCompleted,
 				isLoading: false,
@@ -58,7 +58,9 @@ export function AuthProvider({ children }) {
 						payload: {
 							role: user?.role || res.data.role,
 							user: user || null,
-							isProfileCompleted: res.data.isProfileCompleted ?? user?.isProfileCompleted ?? false,
+							isProfileCompleted: res.data.isProfileCompleted
+								?? user?.isProfileCompleted
+								?? false,
 						}
 					});
 				} else {

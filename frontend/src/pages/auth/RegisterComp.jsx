@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import register from "../../assets/image/EResgister.png";
@@ -11,11 +11,13 @@ import { contactLoginValidate } from '../../utils/contactLoginValidate';
 // import axios from 'axios';
 import { signupUser } from '../../utils/userapi';
 import { toast } from 'react-toastify';
+import { AuthContext } from '../../context/AuthContext';
 
 function RegisterComp() {
 	const { state } = useLocation();
 	const roleFromState = state?.role;
 	const navigate = useNavigate();
+	const { dispatch } = useContext(AuthContext)
 
 	const [showPassword, setShowPassword] = useState(false);
 	const [form, setForm] = useState({
@@ -62,10 +64,15 @@ function RegisterComp() {
 
 
 			if (res.status === 1) {
-				const redirectPath = role === "employer" ? "/employer-profile" : "/jobseeker-profile"
-				toast.success(res.message || "Register Successfully",
-					{ onClose: () => navigate(redirectPath, { replace: true }) }
-				)
+
+				dispatch({
+					type: "LOGIN",
+					payload: {
+						role: res.user?.role || role,
+						user: res?.user || user,
+						isProfileCompeleted: false
+					}
+				})
 
 				// Reset form
 				setForm({
@@ -74,6 +81,10 @@ function RegisterComp() {
 					cPass: "",
 					company: ""
 				});
+				const redirectPath = role === "employer" ? "/employer-profile" : "/jobseeker-profile"
+				toast.success(res.message || "Register Successfully")
+				navigate(redirectPath, { replace: true })
+
 
 
 			}

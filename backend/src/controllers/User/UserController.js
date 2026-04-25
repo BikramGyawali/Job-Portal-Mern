@@ -17,7 +17,11 @@ export const Signup = async (req, res, role) => {
 	try {
 		const { email, pass } = req.body;
 
-
+ res.clearCookie("token", {
+            httpOnly: true,
+            sameSite: isProduction ? "none" : "lax",
+            secure: isProduction,
+        })
 
 		const exists = await User.findOne({ email });
 		if (exists) {

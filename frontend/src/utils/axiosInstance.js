@@ -24,6 +24,8 @@ api.interceptors.response.use(
 	res => res,
 	err => {
 		const isLoginRequest = loginUrls.some(url => err.config?.url?.includes(url))
+		const isSignupRequest = signupUrls.some(url =>
+			err.config?.url?.includes(url))
 		const isAuthMe = err.config?.url === '/auth/me'
 		const isAlreadyOnLoginPage = loginPaths.includes(window.location.pathname)
 
@@ -31,6 +33,7 @@ api.interceptors.response.use(
 			err.response?.status === 401 &&
 			!isAuthMe &&
 			!isLoginRequest &&
+			!isSignupRequest &&
 			!isAlreadyOnLoginPage
 		) {
 			window.location.replace('/jobseekers')

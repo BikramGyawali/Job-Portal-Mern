@@ -47,7 +47,7 @@ function RegisterComp() {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
+		dispatch({ type: "LOGOUT" })
 		const { error: validateError, valid } = contactLoginValidate(form, role)
 		setSignupError(validateError);
 

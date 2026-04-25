@@ -104,7 +104,7 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 			const freshProfile = createEmptyEntry(ProfileFields);
 			setProfile({
 				...freshProfile,
-				email: state?.user?.email??""
+				email: state?.user?.email ?? ""
 			})
 		}
 	}, [state?.user?.email, state?.isLoading, existingProfile])

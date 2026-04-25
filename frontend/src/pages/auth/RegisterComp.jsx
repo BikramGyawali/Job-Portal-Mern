@@ -99,7 +99,6 @@ function RegisterComp() {
 
 		}
 
-		// Navigate after state updates
 
 	};
 
@@ -127,25 +126,6 @@ function RegisterComp() {
 					</p>
 
 					<form onSubmit={handleSubmit} className="w-full">
-						{/* Company Name only for employers */}
-						{/* {role === "employer" && (
-							<>
-								<label className="text-lg font-semibold mb-1" htmlFor="company">
-									Company Name
-								</label>
-								<input
-									type="text"
-									placeholder="Your Company Name"
-									onChange={handleChange}
-									value={form.company}
-									name="company"
-									className="w-full text-base p-3 rounded-xl border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400 mb-4"
-								/>
-								{error.company && (
-									<p className="text-red-600 text-[14px] ">*{error.company}</p>
-								)}
-							</>
-						)} */}
 
 						{/* Email */}
 						<label className="text-lg font-semibold mb-1" htmlFor="email">

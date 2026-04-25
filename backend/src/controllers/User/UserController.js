@@ -100,7 +100,7 @@ export const LoginController = async (req, res, type) => {
 					httpOnly: true,
 					sameSite: isProduction ? "none" : "lax",
 
-					secure: true,
+					secure: isProduction,
 					path: "/"
 				})
 				.status(401)
@@ -121,7 +121,7 @@ export const LoginController = async (req, res, type) => {
 			httpOnly: true,
 			sameSite: isProduction ? "none" : "lax",
 
-			secure: true,
+			secure: isProduction,
 			maxAge: 24 * 60 * 60 * 1000
 			// maxAge: 60 * 1000
 		})

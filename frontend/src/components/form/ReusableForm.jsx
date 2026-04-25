@@ -153,7 +153,7 @@ function ReusableForm({
 								value={form[field.name] !== undefined ? form[field.name] : ""}
 								onChange={readonlyFields.includes(field.name) ? undefined : onChange}
 								readOnly={readonlyFields.includes(field.name)}
-								placeholder={field.placeholder}
+							
 								className={`w-full p-3 text-sm border rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 placeholder-gray-400 ${readonlyFields.includes(field.name)
 									? "bg-gray-100 text-gray-500 cursor-not-allowed border-gray-200"
 									: "border-gray-200"

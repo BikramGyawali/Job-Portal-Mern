@@ -23,14 +23,21 @@ function MyJobs() {
 	const [loading, setLoading] = useState(true)
 	const [totalJobs, setTotalJobs] = useState(0)
 	const fetchJobs = useCallback(async () => {
-		if (!profile?._id) return
-		setLoading(true)
-		const response = await EMyJobs(profile._id)
-		if (response?.success) {
-			setJobs(response.jobs)
-			setTotalJobs(response.totalJobs)
+		if (!profile?._id) {
+			setLoading(false)
+			return
 		}
-		setLoading(false)
+		setLoading(true)
+		try {
+			const response = await EMyJobs(profile._id)
+			if (response?.success) {
+				setJobs(response.jobs)
+				setTotalJobs(response.totalJobs)
+			}
+		} finally {
+
+			setLoading(false)
+		}
 	}, [profile?._id])
 
 	useEffect(() => {

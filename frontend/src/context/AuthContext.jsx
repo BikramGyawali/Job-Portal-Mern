@@ -58,7 +58,9 @@ export function AuthProvider({ children }) {
 						payload: {
 							role: user?.role || res.data.role,
 							user: user || null,
-							isProfileCompleted: res.data.isProfileCompleted ?? user?.isProfileCompleted ?? false,
+							isProfileCompleted: res.data.isProfileCompleted
+								?? user?.isProfileCompleted
+								?? false,
 						}
 					});
 				} else {

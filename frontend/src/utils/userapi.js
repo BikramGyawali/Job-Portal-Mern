@@ -1,7 +1,7 @@
 import axios from "axios";
 import api from "./axiosInstance";
 
-// const BASE_URL = "http://localhost:3000";
+
 
 export const signupUser = async (formData, role) => {
 	let url = "";
@@ -44,7 +44,7 @@ export const loginUser = async (formData, role) => {
 		return response.data;
 
 	} catch (error) {
-		
+
 		return error?.response?.data ?? { status: 0, message: error.message || "Login failed" };
 	}
 };

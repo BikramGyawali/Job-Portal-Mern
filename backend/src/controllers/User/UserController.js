@@ -1,3 +1,4 @@
+
 import express from "express";
 import cookieParser from "cookie-parser";
 import { hash, compare } from "bcrypt";
@@ -10,6 +11,7 @@ configDotenv();
 
 
 const JWT_KEY = process.env.JWT_KEY;
+const isProduction = process.env.NODE_ENV === "production"
 
 export const Signup = async (req, res, role) => {
 	try {
@@ -38,8 +40,8 @@ export const Signup = async (req, res, role) => {
 
 		res.cookie("token", token, {
 			httpOnly: true,
-			sameSite: "none",
-			secure: true,
+			sameSite: isProduction ? "none" : "lax",
+			secure: isProduction,
 			maxAge: 24 * 60 * 60 * 1000
 			// maxAge: 1 * 1000
 		});
@@ -92,7 +94,8 @@ export const LoginController = async (req, res, type) => {
 			return res
 				.clearCookie("token", {
 					httpOnly: true,
-					sameSite: "none",
+					sameSite: isProduction ? "none" : "lax",
+
 					secure: true,
 					path: "/"
 				})
@@ -112,7 +115,8 @@ export const LoginController = async (req, res, type) => {
 
 		res.cookie("token", token, {
 			httpOnly: true,
-			sameSite: "none",
+			sameSite: isProduction ? "none" : "lax",
+
 			secure: true,
 			maxAge: 24 * 60 * 60 * 1000
 			// maxAge: 60 * 1000
@@ -129,3 +133,4 @@ export const LoginController = async (req, res, type) => {
 		res.status(400).json({ status: 0, message: "Login failed", errorMessage: error.message });
 	}
 };
+

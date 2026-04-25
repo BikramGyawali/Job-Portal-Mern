@@ -85,17 +85,30 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 	// console.log(state);
 	console.log(state?.user?.email);
 
+
 	const [profile, setProfile] = useState(() => {  //lazy use state so it run only one when mount
 		if (mode === 'edit') {
 			return mapProfileToForm(existingProfile, ProfileFields)
 		}
 
-		const empty = createEmptyEntry(ProfileFields)
-		return {
-			...empty,
-			email: state?.user?.email
-		}
+		return createEmptyEntry(ProfileFields)
+
 	})
+	useEffect(() => {
+		if (mode === "edit") {
+			setProfile(mapProfileToForm(existingProfile, ProfileFields));
+			return
+		}
+		if (state?.isLoading) return
+		if (state?.user?.email) {
+			const freshProfile = createEmptyEntry(ProfileFields);
+			setProfile({
+				...freshProfile,
+				email: state?.user?.email??""
+			})
+		}
+	}, [state?.user?.email, state?.isLoading, existingProfile])
+
 	const [experiences, setExperiences] = useState(() =>
 		mode === "edit"
 			? mapArrayToEntries(existingProfile?.experience, Experience)

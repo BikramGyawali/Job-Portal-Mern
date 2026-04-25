@@ -53,7 +53,6 @@ export const DashboardNav = memo(({ onMenuClick, role = "Employer" }) => {
 		return "Good Night"
 	}
 
-	console.log("render");
 
 
 	return (

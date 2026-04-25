@@ -40,53 +40,6 @@ function LoginComp({ LoginData }) {
 	//for Validation
 
 
-	// const handleSubmit = async (e) => {
-	// 	e.preventDefault();
-	// 	const { error, valid } = contactLoginValidate(form);
-
-	// 	setLoginError(error)
-
-	// 	// console.log(error.email);
-
-
-	// 	if (!valid) return;
-	// 	const res = await loginUser(form, role)
-	// 	console.log(res);
-
-
-	// 	if (res.status === 1) {
-	// 		dispatch({
-	// 			type: "LOGIN",
-	// 			payload: {
-	// 				role: res.role,
-	// 				user: res.user,
-	// 				email: res.email,
-	// 				isProfileCompleted: res.isProfileCompleted,
-	// 			},
-	// 		});
-	// 		toast.success("Login Successfully", {
-	// 			onClose: () => navigate(`/${res.role}`, { replace: true })
-	// 		})
-
-
-	// 		setForm({
-	// 			email: "",
-	// 			pass: ""
-	// 		});
-	// 	}
-	// 	else {
-	// 		console.log("eror");
-
-	// 		toast.error(res.message || "Login Failed")
-	// 	}
-
-
-
-
-
-
-
-	// };
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -111,9 +64,8 @@ function LoginComp({ LoginData }) {
 					},
 				});
 
-				toast.success("Login Successfully", {
-					onClose: () => navigate(`/${res.role}`, { replace: true })
-				});
+				toast.success("Login Successfully");
+				navigate(`/${res.role}`, { replace: true })
 
 				setForm({
 					email: "",

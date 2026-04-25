@@ -47,31 +47,47 @@ const authReducer = (state, action) => {
 export function AuthProvider({ children }) {
 	const [state, dispatch] = useReducer(authReducer, initialState)
 
-	useEffect(() => {
-		const checkAuth = async () => {
-			try {
-				const res = await api.get("/auth/me");
-				if (res.data?.status === 1) {
-					const user = res.data.user ?? null;
-					dispatch({
-						type: "LOGIN",
-						payload: {
-							role: user?.role || res.data.role,
-							user: user || null,
-							isProfileCompleted: res.data.isProfileCompleted
-								?? user?.isProfileCompleted
-								?? false,
-						}
-					});
-				} else {
-					dispatch({ type: "LOGOUT" });
-				}
-			} catch {
-				dispatch({ type: "LOGOUT" });
+	const checkAuth = async () => {
+		try {
+			const res = await api.get("/auth/me")
+			if (res.data?.status === 1) {
+				const user = res.data.user ?? null
+				dispatch({
+					type: "LOGIN",
+					payload: {
+						role: user?.role || res.data.role,
+						user: user || null,
+						isProfileCompleted: res.data.isProfileCompleted
+							?? user?.isProfileCompleted
+							?? false,
+					}
+				})
+			} else {
+				dispatch({ type: "LOGOUT" })
 			}
-		};
-		checkAuth();
-	}, []);
+		} catch {
+			dispatch({ type: "LOGOUT" })
+		}
+	}
+
+	useEffect(() => {
+
+		checkAuth()
+
+
+		const handleVisibilityChange = () => {
+			if (document.visibilityState === 'visible') {
+				checkAuth()
+			}
+		}
+
+		document.addEventListener('visibilitychange', handleVisibilityChange)
+
+		return () => {
+			document.removeEventListener('visibilitychange', handleVisibilityChange)
+		}
+	}, [])
+
 
 	const logout = async () => {
 		try {

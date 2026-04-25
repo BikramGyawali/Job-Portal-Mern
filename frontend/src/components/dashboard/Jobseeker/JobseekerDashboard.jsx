@@ -7,9 +7,12 @@ import JobListing from './pages/JobListing'
 import Loading from '../../common/Loading'
 import { getAppliedJobs } from '../../../services/jobService'
 import { JobPostContext } from '../../../context/JobPostContext'
+import { AuthContext } from '../../../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 // import { DashboardCardData } from '../../../data/jobseeker/DashboardCardData'
 
 function JobseekerDashboard() {
+	const {state}= useContext(AuthContext)
 	const { totalJobs } = useContext(JobPostContext)
 
 

@@ -12,7 +12,7 @@ function EmployerDashboard() {
 	const [isLoading, setIsLoading] = useState(true)
 	const [applicants, setApplicants] = useState(0)
 	const [jobs, setJobs] = useState(0)
-	console.log(profile?._id)
+
 	useEffect(() => {
 		const applicantNum = async () => {
 			const res = await getAllApplicants()
@@ -25,8 +25,7 @@ function EmployerDashboard() {
 		totalMyJobs()
 		applicantNum()
 	}, [])
-	console.log(applicants);
-	console.log(jobs);
+
 	useEffect(() => {
 		const timer = setTimeout(() => setIsLoading(false), 500)
 		return () => clearTimeout(timer)

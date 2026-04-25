@@ -11,7 +11,7 @@ import api from '../../utils/axiosInstance';
 import { toast } from 'react-toastify';
 
 function EmployersProfile() {
-	const { state, dispatch } = useContext(AuthContext);
+	const { state, dispatch, logout } = useContext(AuthContext);
 	const { setProfile: setGlobalProfile } = useContext(ProfileContext);
 	const navigate = useNavigate();
 	const createEmptyEntry = (fields) =>
@@ -85,13 +85,9 @@ function EmployersProfile() {
 				}
 			});
 
-			toast.success("Profile created successfully.",
-				{
-					onClose: () => navigate("/employers", { replace: true })
-
-				}
-			);
-
+			toast.success("Profile created successfully.");
+			await logout();
+			navigate("/employers", { replace: true })
 		}
 		else {
 			toast.error(response?.message || "Failed to create profile");

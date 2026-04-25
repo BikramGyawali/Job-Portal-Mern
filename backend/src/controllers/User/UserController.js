@@ -17,11 +17,12 @@ export const Signup = async (req, res, role) => {
 	try {
 		const { email, pass } = req.body;
 
- res.clearCookie("token", {
-            httpOnly: true,
-            sameSite: isProduction ? "none" : "lax",
-            secure: isProduction,
-        })
+
+		res.clearCookie("token", {
+			httpOnly: true,
+			sameSite: isProduction ? "none" : "lax",
+			secure: isProduction,
+		})
 
 		const exists = await User.findOne({ email });
 		if (exists) {
@@ -100,7 +101,7 @@ export const LoginController = async (req, res, type) => {
 					httpOnly: true,
 					sameSite: isProduction ? "none" : "lax",
 
-					secure: true,
+					secure: isProduction,
 					path: "/"
 				})
 				.status(401)
@@ -121,7 +122,7 @@ export const LoginController = async (req, res, type) => {
 			httpOnly: true,
 			sameSite: isProduction ? "none" : "lax",
 
-			secure: true,
+			secure: isProduction,
 			maxAge: 24 * 60 * 60 * 1000
 			// maxAge: 60 * 1000
 		})

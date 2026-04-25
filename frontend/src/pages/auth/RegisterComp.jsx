@@ -55,6 +55,7 @@ function RegisterComp() {
 		if (!valid) return;
 
 		try {
+			dispatch({ type: "LOGOUT" })
 			const data = {
 				email: form.email,
 				pass: form.pass,

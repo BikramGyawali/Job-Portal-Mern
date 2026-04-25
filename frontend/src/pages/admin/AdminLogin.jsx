@@ -1,10 +1,22 @@
-import React from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import login from "../../assets/image/EmployeLogin.png";
 import NavbarComp from '../../layout/NavbarComp';
 import LoginComp from '../auth/LoginComp';
 import { FooterComp } from '../../layout/FooterComp';
+import { AuthContext } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function AdminLogin() {
+	const { logout, state } = useContext(AuthContext)
+	const navigate = useNavigate()
+	const hasLoggedOut = useRef(false)
+	useEffect(() => {
+
+		if (state.isAuth && !hasLoggedOut.current) {
+			hasLoggedOut.current = true
+			logout()
+		}
+	}, [])
 	const LoginData = {
 		title: "Welcome to Admin Dashboard",
 		explain: "Get started with Controlling all functionality.",

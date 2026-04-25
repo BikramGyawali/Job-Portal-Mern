@@ -79,7 +79,7 @@ const mapAddDetailsFromProfile = (profile, fields) => {
 };
 
 function JobseekersProfile({ mode = 'create', existingProfile = null }) {
-	const { dispatch, state } = useContext(AuthContext);
+	const { dispatch, state, logout } = useContext(AuthContext);
 	const { setProfile: setGlobalProfile, fetchProfile } = useContext(ProfileContext);
 	const navigate = useNavigate();
 	// console.log(state);
@@ -102,7 +102,7 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 			const freshProfile = createEmptyEntry(ProfileFields);
 			setProfile({
 				...freshProfile,
-				email: state?.user?.email??""
+				email: state?.user?.email ?? ""
 			})
 		}
 	}, [state?.user?.email, state?.isLoading, existingProfile])
@@ -404,9 +404,8 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 			if (response?.success) {
 				setGlobalProfile(response.updatedProfile);
 				await fetchProfile()
-				toast.success("Profile updated successfully.", {
-					onClose: () => navigate("/jobseeker", { replace: true }),
-				});
+				toast.success("Profile updated successfully.");
+				navigate("/jobseeker", { replace: true })
 			} else {
 				toast.error(response?.message || "Failed to update profile");
 			}
@@ -423,9 +422,9 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 						isProfileCompleted: true,
 					},
 				});
-				toast.success("Profile created successfully.", {
-					onClose: () => navigate("/jobseekers", { replace: true }),
-				});
+				toast.success("Profile created successfully.");
+				await logout();
+				navigate("/jobseekers", { replace: true })
 			} else {
 				toast.error(response?.message || "Failed to create profile");
 			}

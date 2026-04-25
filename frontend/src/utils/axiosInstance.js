@@ -3,8 +3,10 @@
 
 import axios from "axios";
 
+const isProduction = process.env.NODE_ENV;
 const api = axios.create({
-	baseURL: "https://hamrojob-backend.onrender.com" || "http://localhost:3000",
+
+	baseURL: isProduction ? "https://hamrojob-backend.onrender.com" : "http://localhost:3000",
 	// baseURL: "https://hamrojob-backend.onrender.com/",
 	withCredentials: true,  // sends cookies with every request
 	headers: {

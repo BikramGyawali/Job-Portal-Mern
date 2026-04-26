@@ -11,34 +11,29 @@ import Loading from "../../../common/Loading";
 function JobListing() {
 	const [jobs, setJobs] = useState([])
 	const [pageLoading, setPageLoading] = useState(true)
-	const { fetchMyJobs, myJobs, totalJobs } = useContext(JobPostContext)
+	const { fetchMyJobs, myJobs, totalJobs, message, setTotalJobs } = useContext(JobPostContext)
 	useEffect(() => {
 		const load = async () => {
 			setPageLoading(true)
-			fetchMyJobs();
+			await fetchMyJobs();
 			setPageLoading(false)
 		}
 		load()
 	}, [])
 	useEffect(() => {
-		if (myJobs?.length) {
+		if (myJobs !== undefined) {
 			setJobs(myJobs)
 		}
 	}, [myJobs])
-	// const handleApplySuccess = (jobId) => {
-	// 	setJobs(prev =>
-	// 		prev.map(j =>
-	// 			(j._id === jobId || j.fullData?._id === jobId)
-	// 				? { ...j, alreadyApplied: true, fullData: { ...j.fullData, alreadyApplied: true } }
-	// 				: j
-	// 		)
-	// 	)
-	// }
+
 	const handleApplySuccess = (jobId) => {
 		setJobs(prev =>
 			prev.filter(j =>
 				j._id !== jobId && j.fullData?._id !== jobId
 			)
+		)
+		setTotalJobs(prev => Math.max(0, prev - 1)
+
 		)
 	}
 
@@ -56,7 +51,7 @@ function JobListing() {
 	return (
 		<div>
 
-			<DashTable title="Job Listing" headData={DashboardHeadData} bodyData={jobs} actionHandler={actionHandler} total={totalJobs} />
+			<DashTable title="Job Listing" headData={DashboardHeadData} bodyData={jobs} actionHandler={actionHandler} total={totalJobs} message={message} />
 			{viewJob && (
 				<JobDetails
 					key={viewJob._id + viewJob.alreadyApplied}

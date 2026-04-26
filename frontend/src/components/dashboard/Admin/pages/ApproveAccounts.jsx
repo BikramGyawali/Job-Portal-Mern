@@ -11,11 +11,14 @@ import { toast } from 'react-toastify'
 import Loading from '../../../common/Loading'
 
 function ApproveAccounts() {
-	const { fetchPendingProfile, pendingProfile } = useContext(ProfileContext)
+	const { fetchPendingProfile, pendingProfile, message } = useContext(ProfileContext)
 	const [transformedProfile, setTransformedProfile] = useState([])
 	const [viewData, setViewData] = useState(null)
 	const { showConfirm, confirmProps } = useConfirm()
 	const [isLoading, setIsLoading] = useState(true)
+
+	console.log(message);
+
 
 	useEffect(() => {
 		setIsLoading(true)
@@ -112,6 +115,7 @@ function ApproveAccounts() {
 				bodyData={transformedProfile}
 				title={`Pending Profiles (${transformedProfile.length})`}
 				actionHandler={actionHandler}
+				message={message || "No pending profiles to review"}
 			/>
 
 			<ConfirmModal {...confirmProps} />

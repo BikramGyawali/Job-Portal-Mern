@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom'
 
 
 function ApprovePostJobs() {
-	const { pendingJobs, fetchPendingJobs } = useContext(JobPostContext)
+	const { pendingJobs, fetchPendingJobs,message } = useContext(JobPostContext)
 	const [transformedJobs, setTransformedJobs] = useState([])
 	const [loading, setLoading] = useState(false)
 	const [rejectJobData, setRejectJobData] = useState(null)
@@ -103,6 +103,7 @@ function ApprovePostJobs() {
 				title={`Pending Jobs (${transformedJobs.length})`}
 				actionHandler={actionHandler}
 				isLoading={loading}
+				message={message}
 			/>
 
 			<ConfirmModal {...confirmProps} />

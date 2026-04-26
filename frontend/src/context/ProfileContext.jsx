@@ -18,6 +18,7 @@ export const ProfileProvider = ({ children }) => {
 	const [profile, setProfile] = useState(null)
 	const [pendingProfile, setPendingProfile] = useState([])
 	const [loading, setLoading] = useState(true);
+	const [message, setMessage] = useState(null)
 	const fetchProfile = async () => {
 		if (!authState.isAuth) {
 			setProfile(null)
@@ -59,7 +60,17 @@ export const ProfileProvider = ({ children }) => {
 		try {
 			const result = await getPendingProfilesService();
 			if (result.success) {
-				setPendingProfile(result.profiles)
+				const profile = result.profiles || []
+				setPendingProfile(profile)
+
+			}
+			if (!result.success) {
+				setMessage("No pending profiles to review")
+
+
+			}
+			else {
+				setMessage(null)
 			}
 
 		} catch (error) {
@@ -71,7 +82,7 @@ export const ProfileProvider = ({ children }) => {
 		}
 	}
 	return (
-		<ProfileContext.Provider value={{ profile, setProfile, loading, fetchPendingProfile, pendingProfile, fetchProfile }}>
+		<ProfileContext.Provider value={{ profile, setProfile, loading, fetchPendingProfile, pendingProfile, fetchProfile, message }}>
 			{children}
 		</ProfileContext.Provider>
 	)

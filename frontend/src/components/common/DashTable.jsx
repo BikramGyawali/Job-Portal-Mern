@@ -11,7 +11,7 @@ import {
 import { BsPen } from "react-icons/bs"
 import { MdDeleteForever, MdModeEdit } from "react-icons/md"
 
-function DashTable({ title, headData, bodyData, actionHandler, total }) {
+function DashTable({ title, headData, bodyData, actionHandler, total, message }) {
 	// const isActive = title === "Recent Applications"
 
 	const getActionStyle = (action) => {
@@ -61,9 +61,9 @@ function DashTable({ title, headData, bodyData, actionHandler, total }) {
 						<TableRow className="!bg-white">
 							<TableCell
 								colSpan={headData.length}
-								className="!text-black text-center py-4"
+								className="text-gray-500 text-center py-4 font-medium"
 							>
-								No data available
+								{message || "No data Available"}
 							</TableCell>
 						</TableRow>
 					) : (

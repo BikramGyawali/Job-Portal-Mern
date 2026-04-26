@@ -14,13 +14,14 @@ function AppliedJobs() {
 	// const [selectedJob, setSelectedJob] = useState(null)
 	const { viewJob, closeView, handleView } = useViewJob()
 	const [totalApplied, setTotalApplied] = useState(0)
+	const [message,setMessage]=useState(null)
 	const fetchAppliedJobs = useCallback(async () => {
 		try {
 			setLoading(true)
 			const res = await getAppliedJobs()
 
 			if (!res.success) {
-				toast.error(res.message)
+				setMessage ("No applications yet! Start exploring jobs and apply today.")
 
 				return
 			}
@@ -47,7 +48,7 @@ function AppliedJobs() {
 			setJobs(formatted)
 
 		} catch (error) {
-			toast.error("Failed to fetch applied jobs")
+			// toast.error("Failed to fetch applied jobs")
 		} finally {
 			setLoading(false)
 		}
@@ -57,17 +58,7 @@ function AppliedJobs() {
 		fetchAppliedJobs()
 	}, [fetchAppliedJobs])
 
-	// const handleView = (row) => {
-	// 	console.log(row.fullData);
-	// 	if (!row?.fullData) {
-	// 		toast.error("Job data not found")
-	// 		return
-	// 	}
-	// 	setSelectedJob(row.fullData)
 
-	// }
-
-	// const closeView = () => setSelectedJob(null)
 
 	const actionHandler = {
 		view: handleView
@@ -85,6 +76,7 @@ function AppliedJobs() {
 				bodyData={jobs}
 				actionHandler={actionHandler}
 				total={totalApplied}
+				message={message}
 
 			/>
 

@@ -20,6 +20,7 @@ function MyJobs() {
 	const [showModel, setShowModel] = useState(false);
 	const [selectedJob, setSelectJob] = useState(null)
 	const { showConfirm, confirmProps } = useConfirm()
+	const [message, setMessage] = useState(null)
 	const [loading, setLoading] = useState(true)
 	const [totalJobs, setTotalJobs] = useState(0)
 	const fetchJobs = useCallback(async () => {
@@ -33,6 +34,9 @@ function MyJobs() {
 			if (response?.success) {
 				setJobs(response.jobs)
 				setTotalJobs(response.totalJobs)
+			}
+			if (!response?.success) {
+				setMessage("No job posts yet—create your first listing to start attracting candidates.")
 			}
 		} finally {
 
@@ -133,6 +137,7 @@ function MyJobs() {
 				title="My Jobs"
 				actionHandler={actionHandler}
 				total={totalJobs}
+				message={message}
 			/>
 			<ConfirmModal {...confirmProps} />
 			{showModel && (

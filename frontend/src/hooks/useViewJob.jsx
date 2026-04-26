@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { applyJob } from '../services/jobService';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 function useViewJob(onApplySuccess) {
 	const [viewJob, setViewJob] = useState(null)
 	const [loading, setLoading] = useState(null)
 	const [selectedJob, setSelectedJob] = useState(null)
 
-
+	const navigate = useNavigate()
 
 	const handleView = (row) => {
 		if (!row) {
@@ -42,23 +43,13 @@ function useViewJob(onApplySuccess) {
 				toast.error("Job data missing");
 				return;
 			}
-			console.log("hello");
+			// console.log("hello");
 
 			const result = await applyJob(job._id);
 
 			if (result.success) {
 				toast.success(result.message);
-				// const jobs = result?.jobs
-				// console.log();
-
-				// const newdata = job.filter(prev => prev._id !== jobs._id)
-				// setViewJob(prev =>
-				// 	prev?._id === job._id ? { ...prev, alreadyApplied: true } : prev
-				// )
-				// setViewJob(newdata)
-				// setSelectedJob(prev =>
-				// 	prev?._id === job._id ? { ...prev, alreadyApplied: true } : prev
-				// )
+				navigate("/jobseeker/applied-jobs", { replace: true })
 				closeView()
 				if (typeof onApplySuccess === "function") {
 					onApplySuccess(job._id)

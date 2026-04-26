@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import api from '../utils/axiosInstance'
+
 import { getApprovedJobsService, getPendingJobsService, JMyJobs } from "../services/jobService";
 import { calculateJobDates } from "../utils/JobDataUtils";
 import { useCallback } from "react";
@@ -11,16 +11,19 @@ export const JobPostProvider = ({ children }) => {
 	const [loading, setLoading] = useState(true)
 	const [myJobs, setMyJobs] = useState([]);
 	const [totalJobs, setTotalJobs] = useState(0)
+	const [message, setMessage] = useState(null)
 
 	const fetchMyJobs = useCallback(async () => {
 		setLoading(true)
+		setMyJobs([]);
+		setMessage(null)
 		try {
 			const result = await JMyJobs()
 			const jobs = result.jobs
 			setTotalJobs(result.totalJobs)
 			if (result.success) {
 				// setMyJobs(result.jobs)
-				const transformedJob = jobs.map((job, i) => {
+				const transformedJob = jobs.map((job) => {
 					const { remainingDays } = calculateJobDates(
 						job.postingDate,
 						job.postingPeriod
@@ -36,6 +39,9 @@ export const JobPostProvider = ({ children }) => {
 					}
 				})
 				setMyJobs(transformedJob)
+			}
+			if (!result.success) {
+				setMessage("No jobs found based on your skills.Try updating your profile.")
 			}
 		} catch (error) {
 			console.log(error);
@@ -68,6 +74,7 @@ export const JobPostProvider = ({ children }) => {
 				setPendingJobs(result.jobs)
 			} else {
 				setPendingJobs([])
+				setMessage("No pending jobs to review")
 			}
 		} catch (error) {
 			console.error("failed to fecth data:" + error)
@@ -84,7 +91,7 @@ export const JobPostProvider = ({ children }) => {
 	return (
 		<JobPostContext.Provider value={{
 			jobs, loading, fetchApprovedJobs, addJob, fetchPendingJobs, fetchMyJobs, myJobs,
-			pendingJobs, totalJobs
+			pendingJobs, totalJobs, message, setTotalJobs
 		}}>
 			{children}
 		</JobPostContext.Provider>

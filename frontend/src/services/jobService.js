@@ -353,7 +353,7 @@ export const getAppliedJobs = async () => {
 
 		return {
 			success: false,
-			message: response.data?.message || "No jobs found"
+			message: response.data?.message || "Havemnt"
 		}
 
 	} catch (error) {

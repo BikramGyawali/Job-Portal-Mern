@@ -16,12 +16,15 @@ function Applicants() {
 	const [applicants, setApplicants] = useState([])
 	const [totalApplicants, setTotalApplicants] = useState(0)
 	const [loading, setLoading] = useState(true)
-
+	const [message, setMessage] = useState(null)
 	const fetchAllApplicants = useCallback(async () => {
 		try {
 			setLoading(true)
 			const res = await getAllApplicants()
-			if (!res?.success) return
+			if (!res?.success) {
+				setMessage("No applicants yet—candidates will appear here once they apply.")
+			}
+
 
 			setTotalApplicants(res.totalApplicants || 0)
 
@@ -121,6 +124,7 @@ function Applicants() {
 				headData={ApplicantHead}
 				bodyData={applicants}
 				actionHandler={actionHandler}
+				message={message}
 			/>
 
 			{/* Confirm modal — controlled by useConfirm inside useViewApplicants */}

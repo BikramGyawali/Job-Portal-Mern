@@ -12,7 +12,7 @@ export const CardComp = ({ job }) => {
 
 	const { state: authSate } = useContext(AuthContext);
 	const navigate = useNavigate();
-	// console.log(authSate);
+	console.log(job);
 
 	const handleApply = () => {
 
@@ -32,7 +32,7 @@ export const CardComp = ({ job }) => {
 			</div>
 			<div className="flex flex-wrap items-center gap-2 text-gray-800">
 				<FontAwesomeIcon icon={faHourglassEnd} className="text-red-500" title="Deadline Passed" />
-				<span>{job.postingPeriod}</span>
+				<span>{job.expiredIn} Days </span>
 			</div>
 			<div className="flex flex-wrap gap-2">
 				<p className="text-lg bg-blue-400 p-2 text-white rounded-xl hover:bg-blue-500"> {job.desiredCandidate}</p>

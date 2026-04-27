@@ -5,12 +5,12 @@ import { CardComp } from '../components/common/CardComp'
 import { useEffect } from 'react'
 import Loading from '../components/common/Loading'
 import { calculateJobDates } from '../utils/JobDataUtils'
-import { useState } from 'react'
+
 
 
 function JobList() {
 	const { jobs, loading, fetchApprovedJobs } = useContext(JobPostContext)
-	const [newJobs, setNewJobs] = useState([])
+
 	useEffect(() => {
 		fetchApprovedJobs();
 
@@ -26,11 +26,11 @@ function JobList() {
 			"jobTitle": job.jobTitle,
 			"district": job.district,
 			"expiredIn": remainingDays > 0 ? `${remainingDays}` : "Expired",
-           "desiredCandidate":job.desiredCandidate,
-		   "experience":job.experience
+			"desiredCandidate": job.desiredCandidate,
+			"experience": job.experience
 		}
 	})
-	// setNewJobs(transformedJobs)
+
 	if (loading) return <Loading message='Loading...' minHeight='min-h-[100px]' />
 	return (
 		<div className=' grid gap-4 p-6 md:grid-cols-4 sm:grid-cols-2 '>

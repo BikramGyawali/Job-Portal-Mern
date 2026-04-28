@@ -19,13 +19,16 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-	origin: "https://hamrojob.onrender.com",
+	origin: [
+		"https://hamrojob.onrender.com",
+		"https://hamrojob.bikramgyawali.com.np"
+	],
 	credentials: true,
 	methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
 	allowedHeaders: ["Content-Type", "Authorization"]
 }));
 
-// app.options("*", cors());
+app.options("*", cors());
 app.use(express.urlencoded({ extended: true }));
 const PORT = process.env.PORT || 3000;
 

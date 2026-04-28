@@ -84,6 +84,7 @@ export const ProfileFields = [
 		name: "jobType",
 		label: "Preferred Job Type",
 		type: "text",
+		required: true,
 		placeholder: "Eg. Delivery, Receptionist, Accountant"
 	},
 
@@ -106,10 +107,11 @@ export const ProfileFields = [
 		name: "lookingFor",
 		label: "Looking For",
 		type: "select",
-		options: ["Full Time", "Part Time"]
+		options: ["Full Time", "Part Time"],
+		required: true
 	},
 
-	
+
 
 	{
 		name: "about",

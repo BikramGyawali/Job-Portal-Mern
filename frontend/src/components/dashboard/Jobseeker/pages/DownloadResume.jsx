@@ -19,30 +19,17 @@ const DownloadResume = () => {
 	}
 	return (
 		<div className="p-3 mt-3 mx-3">
-			{/* Resume Container */}
-			{/* <div
-				ref={resumeRef}
-				style={{   // style for the pdf page 
-					backgroundColor: '#ffffff',
-					color: '#111111',
-					fontFamily: 'Arial, sans-serif',
-					fontSize: '13px',
-					lineHeight: '1.4',
-				}}
 
-			>
-				<ResumeRender sections={sections} />
-			</div> */}
 			<div
 				ref={resumeRef}
 				style={{
 					width: '794px',
 					minHeight: '1123px',
-					// padding: '40px',
+
 					backgroundColor: '#ffffff',
 					fontFamily: 'Arial, sans-serif',
 					boxSizing: 'border-box',
-					// margin: '0 auto',
+
 				}}
 			>
 				<ResumeRender sections={sections} />

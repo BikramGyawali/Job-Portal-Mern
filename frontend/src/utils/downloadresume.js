@@ -1,18 +1,11 @@
-
-
-
-import jsPDF from 'jspdf'
-import html2canvas from 'html2canvas'
-
 export const downloadResume = async (resumeRef) => {
 	if (!resumeRef.current) return;
 
 	const element = resumeRef.current;
 
 	try {
-
 		const canvas = await html2canvas(element, {
-			scale: 3,  //fpr dpi
+			scale: 3,
 			useCORS: true,
 			allowTaint: true,
 			backgroundColor: '#ffffff',
@@ -34,11 +27,14 @@ export const downloadResume = async (resumeRef) => {
 		const pdfHeight = pdf.internal.pageSize.getHeight()
 		const imgWidth = pdfWidth
 		const imgHeight = (canvas.height * pdfWidth) / canvas.width
-		const pageCount = Math.ceil(imgHeight / pdfHeight)
+
+
+		const pageCount = Math.ceil((imgHeight - 0.5) / pdfHeight)
 
 		for (let page = 0; page < pageCount; page++) {
 			if (page > 0) pdf.addPage()
-			pdf.addImage(imgData, 'PNG', 4, -(page * pdfHeight), imgWidth, imgHeight, '', 'FAST')
+
+			pdf.addImage(imgData, 'PNG', 0, -(page * pdfHeight), imgWidth, imgHeight, '', 'FAST')
 		}
 
 		pdf.save('HamroJob_Resume.pdf')

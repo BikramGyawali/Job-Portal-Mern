@@ -100,11 +100,13 @@ function ResumeRender({ sections }) {
 						{/* KeyValue */}
 						{sec.type === 'keyValue' && (
 							<div className="flex flex-col gap-1 text-[15px]">
-								{sec.data.map((obj, j) => (
-									<p key={j}>
-										<strong>{obj.label}:</strong> {obj.value}
-									</p>
-								))}
+								{sec.data.filter(items => items.value !== null
+									&& items.value !== undefined && items.value !== ""
+								).map((obj, j) => (
+										<p key={j}>
+											<strong>{obj.label}:</strong> {obj.value}
+										</p>
+									))}
 							</div>
 						)}
 

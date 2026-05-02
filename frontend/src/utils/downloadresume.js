@@ -1,3 +1,5 @@
+import jsPDF from 'jspdf'
+import html2canvas from 'html2canvas'
 export const downloadResume = async (resumeRef) => {
 	if (!resumeRef.current) return;
 

@@ -37,7 +37,7 @@ export const ProfileToCV = (profile) => {
 				institution: edu?.institution || '',
 				boardOrUniversity: edu?.university || '',
 				location: ''
-			})) || [],
+			})).filter(edu => edu.degree || edu.institution) || [],
 
 		},
 		{
@@ -61,7 +61,7 @@ export const ProfileToCV = (profile) => {
 				year: t?.year,
 				title: t?.title,
 				provider: t?.institution
-			})) || []
+			})).filter(t => t.title) || []
 		},
 		{
 			section: "Skills",
@@ -76,7 +76,7 @@ export const ProfileToCV = (profile) => {
 				reading: l?.reading,
 				writing: l?.writing,
 				speaking: l?.speaking
-			})) || [],
+			})).filter(l => l.language) || [],
 		},
 		{
 			section: "Awards",
@@ -84,7 +84,7 @@ export const ProfileToCV = (profile) => {
 			data: profile?.awards?.map((a) => ({
 				title: a?.title,
 				provider: a?.institution,
-			})) || [],
+			})).filter(a => a.title) || [],
 		},
 
 		{
@@ -95,7 +95,7 @@ export const ProfileToCV = (profile) => {
 				{ label: "Job Type", value: profile?.jobType },
 				{ label: "License", value: profile?.license },
 				{ label: "Vehicle", value: profile?.vehicle },
-			],
+			].filter(items => items.value !== null && items.value !== undefined && items.value !== ""),
 		},
 
 		{

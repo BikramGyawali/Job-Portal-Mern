@@ -17,7 +17,8 @@ const app = express();
 const corsConfig = {
 	origin: [
 		"https://hamrojob.onrender.com",
-		"https://hamrojob.bikramgyawali.com.np"
+		"https://hamrojob.bikramgyawali.com.np",
+		"http://localhost:5173/jobseekers"
 	],
 	credentials: true,
 	methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],

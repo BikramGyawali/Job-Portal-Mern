@@ -18,7 +18,7 @@ const corsConfig = {
 	origin: [
 		"https://hamrojob.onrender.com",
 		"https://hamrojob.bikramgyawali.com.np",
-		"http://localhost:5173/jobseekers"
+		"http://localhost:5173"
 	],
 	credentials: true,
 	methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],

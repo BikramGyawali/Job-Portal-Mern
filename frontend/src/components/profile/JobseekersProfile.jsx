@@ -70,7 +70,7 @@ const mapAddDetailsFromProfile = (profile, fields) => {
 		referencePosition: references[i]?.position || "",
 		referenceEmail: references[i]?.email || "",
 		referenceCompany: references[i]?.company || "",
-		skills: i === 0 ? skills.join(", ") : "",
+		skills: i === 0 ? skills : [],
 		language: languages[i]?.name || "",
 		languageReading: languages[i]?.reading || "",
 		languageWriting: languages[i]?.writing || "",
@@ -377,10 +377,18 @@ function JobseekersProfile({ mode = 'create', existingProfile = null }) {
 				}))
 		));
 
-		const skill = addDetailsList.flatMap((d) =>
-			typeof d.skills === "string"
-				? d.skills.split(",").map((s) => s.trim()).filter(Boolean)
-				: []
+		const skill = addDetailsList.flatMap((d) => {
+
+			if (Array.isArray(d.skills)) {
+				return d.skills.filter(Boolean)
+			}
+
+			if (typeof d.skills === "string") {
+
+				return d.skills.split(",").map((s) => s.trim()).filter(Boolean)
+			}
+			return []
+		}
 		);
 		formData.append("skills", JSON.stringify(skill));
 

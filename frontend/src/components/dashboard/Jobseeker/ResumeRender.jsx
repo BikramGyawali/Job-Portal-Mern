@@ -103,23 +103,23 @@ function ResumeRender({ sections }) {
 								{sec.data.filter(items => items.value !== null
 									&& items.value !== undefined && items.value !== ""
 								).map((obj, j) => (
-										<p key={j}>
-											<strong>{obj.label}:</strong> {obj.value}
-										</p>
-									))}
+									<p key={j}>
+										<strong>{obj.label}:</strong> {obj.value}
+									</p>
+								))}
 							</div>
 						)}
 
 						{/* Tags */}
-						{sec.type === 'tags' && (
+						{sec.type === 'select' && (
 							<div className="flex flex-wrap gap-2 mt-1 ">
-								{sec.data.map((tag, j) => (
+								{sec.data.map((items, j) => (
 									<span
 										key={j}
 										className='text-[14px] bg-[#e2e8f0] border-black rounded px-3 py-2 '
 									>
 
-										{tag}
+										{items}
 									</span>
 								))}
 							</div>

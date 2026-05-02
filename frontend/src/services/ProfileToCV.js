@@ -65,7 +65,7 @@ export const ProfileToCV = (profile) => {
 		},
 		{
 			section: "Skills",
-			type: "tags",
+			type: "select",
 			data: profile?.skills || []
 		},
 		{

@@ -9,6 +9,7 @@ import employerroutes from "./src/routes/employerRoutes.js";
 import jobseekerroutes from "./src/routes/jobseekerRoutes.js";
 import authrouter from "./src/routes/auth.routes.js";
 import adminRoutes from "./src/routes/adminRoute.js";
+import { upload } from "./src/config/cloudinary.js";
 
 dotenv.config();
 
@@ -42,6 +43,14 @@ app.use("/admin", adminRoutes)
 app.use("/auth", authrouter)
 app.use("/job", jobroutes)
 app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
+//for cloudinary
+
+app.post("/uploadimage", upload.single('image'), (req, res) => {
+	const imageurl = req.file.path;
+	res.json({
+		image: imageurl
+	})
+})
 
 // Error handler
 app.use((err, req, res, next) => {

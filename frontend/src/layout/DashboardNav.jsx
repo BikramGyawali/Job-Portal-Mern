@@ -33,11 +33,9 @@ export const DashboardNav = memo(({ onMenuClick, role = "Employer" }) => {
 				? "/employer"
 				: "/admin";
 
-	const apiUrl = import.meta.env.VITE_API_URL || window.location.origin;
 
-	const avatarSrc = profile?.image
-		? `${apiUrl}/uploads/images/${profile.image}`
-		: `https://cdn-icons-png.flaticon.com/512/17003/17003310.png`;
+
+	const avatarSrc = profile?.image || `https://cdn-icons-png.flaticon.com/512/17003/17003310.png`;
 	console.log(avatarSrc);
 
 	const userName =

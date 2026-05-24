@@ -4,6 +4,7 @@ import { verifyAuth, verifyRole } from "../middlewares/UserVerify/verifyMiddlewa
 import { EProfileController, getEProfile } from "../controllers/Profile/ProfileController.js";
 import { uploadImage } from "../middlewares/multerMiddleware.js";
 import { deleteJobPost, editJobs, EMyJobs, rejectApplicant, ShortlistApplicant } from "../controllers/job/jobController.js";
+import { upload } from "../config/cloudinary.js";
 
 
 
@@ -11,7 +12,7 @@ const employerroutes = Router();
 
 employerroutes.post("/signup", (req, res) => Signup(req, res, "employer"));
 employerroutes.post("/login", (req, res) => LoginController(req, res, "employer"));
-employerroutes.post("/profile", verifyAuth, uploadImage.single("image"), EProfileController)
+employerroutes.post("/profile", verifyAuth, upload.single("image"), EProfileController)
 employerroutes.get("/profile", verifyAuth, getEProfile)
 employerroutes.get("/myjobs", verifyAuth, EMyJobs)
 employerroutes.patch("/shortlist/:id", verifyAuth, ShortlistApplicant)

@@ -8,7 +8,7 @@ export default function EmployerProfileView({ profile }) {
 
 			<div className="flex justify-center">
 				<img
-					src={data?.image ? `${apiUrl}/uploads/images/${data.image}` : "/default-company.png"}
+					src={data?.image || "/default-company.png"}
 					alt="Company Logo"
 					className="w-36 h-36 rounded-2xl object-cover border shadow p-2"
 				/>

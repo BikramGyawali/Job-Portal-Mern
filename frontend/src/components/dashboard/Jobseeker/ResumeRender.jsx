@@ -14,8 +14,7 @@ function ResumeRender({ sections }) {
 						{sec.section !== 'Personal Header' && (
 							<>
 								<h1 className='text-[18px] font-semibold'>{sec.section}</h1>
-								{/* <hr className='mb-4 border-black border-1' />   */}
-								{/* arrow line for the headers */}
+
 							</>
 						)}
 
@@ -32,10 +31,10 @@ function ResumeRender({ sections }) {
 										className="h-30 w-30 sm:w-34 sm:h-34 md:w-38 md:h-38 lg:h-41 lg:w-41 object-cover rounded border-2 border-black p-1"
 									/>
 								)}
-								{/* console.log(sec.data); */}
+
 								<div className="flex flex-col gap-1 justify-center text-[17px] text-justify">
 									{sec.data.name && <h1 className='text-[22px] font-bold'>{sec.data.name}</h1>}
-									{/* {sec.data.address && <h2>Address: {sec.data.address}</h2>} */}
+
 									{sec.data.email && <h1 >
 										Email: {sec.data.email}</h1>}
 									{sec.data.contact && <h1 >

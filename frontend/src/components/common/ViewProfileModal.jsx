@@ -29,11 +29,7 @@ export function ViewProfileModal({ profile, role, onClose, showButton = true }) 
 				{role === 'employer' ? (
 					<div>
 						<EmployerProfileView profile={profile} />
-						{/* <p><strong>Company Name:</strong> {profile.profileData?.companyName || profile.companyName}</p>
-						<p><strong>PAN:</strong> {profile.profileData?.panCard}</p>
-						<p><strong>Email:</strong> {profile.profileData?.email || profile.email}</p>
-						<p><strong>Phone:</strong> {profile.profileData?.phone || profile.phone}</p>
-						<p className="col-span-2"><strong>Intro:</strong> {profile.profileData?.companyIntro}</p> */}
+
 					</div>
 				) : (
 					<div ref={resumeRef} style={{   // style for the pdf page 

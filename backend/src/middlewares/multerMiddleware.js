@@ -22,32 +22,3 @@ export const uploadImage = multer({
 
 
 
-//for cv multer 
-// const cvUploadDir = path.join(process.cwd(), "public/uploads/cvs")
-// if (!fs.existsSync(cvUploadDir)) {
-// 	fs.mkdirSync(cvUploadDir, { recursive: true })
-// }
-
-// const cvStorage = multer.diskStorage({
-// 	destination: function (req, file, cb) {
-// 		cb(null, cvUploadDir)
-// 	},
-// 	filename: function (req, file, cb) {
-// 		const safeName = file.originalname.replace(/\s+/g, "-")
-// 		const newFileName = `${Date.now()}-${safeName}`
-// 		cb(null, newFileName)
-
-// 	}
-// })
-// const cvFileFilter = (req, file, cb) => {
-
-// 	if (file.mimetype !== "application/pdf") {
-// 		return cb(new Error("Only PDF files are accepted"), false)
-// 	}
-// 	cb(null, true)
-// }
-
-// export const uploadCv = multer({
-// 	storage: cvStorage,
-// 	fileFilter: cvFileFilter
-// })

@@ -38,6 +38,7 @@ export const DashboardNav = memo(({ onMenuClick, role = "Employer" }) => {
 	const avatarSrc = profile?.image
 		? `${apiUrl}/uploads/images/${profile.image}`
 		: `https://cdn-icons-png.flaticon.com/512/17003/17003310.png`;
+	console.log(avatarSrc);
 
 	const userName =
 		profile

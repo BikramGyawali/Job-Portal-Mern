@@ -11,19 +11,7 @@ const app = express()
 app.use(express.json())
 dotenv.config();
 const JWT_KEY = process.env.JWT_KEY;
-// Helper to write image buffer to disk and return filename
-// const saveImageBuffer = async (file) => {
-// 	if (!file || !file.buffer) return null;
-// 	const safeName = file.originalname.replace(/\s+/g, "-")  //replace space with -
-// 	const fileName = `${Date.now()}-${safeName}`
-// 	const uploadDir = path.join(process.cwd(), "public/uploads/images") //cwd->current workin directory
-// 	if (!fs.existsSync(uploadDir)) {
-// 		fs.mkdirSync(uploadDir, { recursive: true })
-// 	}
-// 	const filePath = path.join(uploadDir, fileName)
-// 	await fs.promises.writeFile(filePath, file.buffer)
-// 	return fileName
-// }
+
 
 const validateEmail = (email) => {
 	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);

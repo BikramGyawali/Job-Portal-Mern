@@ -1,7 +1,6 @@
 
 import express from "express"
-import fs from "fs"
-import path from "path"
+import { v2 as cloudinary } from "cloudinary" 
 import dotenv from "dotenv"
 import jwt from "jsonwebtoken"
 import { JobseekerProfile } from "../../models/jobseeker/JobseekerProfile.js"
@@ -13,18 +12,18 @@ app.use(express.json())
 dotenv.config();
 const JWT_KEY = process.env.JWT_KEY;
 // Helper to write image buffer to disk and return filename
-const saveImageBuffer = async (file) => {
-	if (!file || !file.buffer) return null;
-	const safeName = file.originalname.replace(/\s+/g, "-")  //replace space with -
-	const fileName = `${Date.now()}-${safeName}`
-	const uploadDir = path.join(process.cwd(), "public/uploads/images") //cwd->current workin directory
-	if (!fs.existsSync(uploadDir)) {
-		fs.mkdirSync(uploadDir, { recursive: true })
-	}
-	const filePath = path.join(uploadDir, fileName)
-	await fs.promises.writeFile(filePath, file.buffer)
-	return fileName
-}
+// const saveImageBuffer = async (file) => {
+// 	if (!file || !file.buffer) return null;
+// 	const safeName = file.originalname.replace(/\s+/g, "-")  //replace space with -
+// 	const fileName = `${Date.now()}-${safeName}`
+// 	const uploadDir = path.join(process.cwd(), "public/uploads/images") //cwd->current workin directory
+// 	if (!fs.existsSync(uploadDir)) {
+// 		fs.mkdirSync(uploadDir, { recursive: true })
+// 	}
+// 	const filePath = path.join(uploadDir, fileName)
+// 	await fs.promises.writeFile(filePath, file.buffer)
+// 	return fileName
+// }
 
 const validateEmail = (email) => {
 	return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -119,11 +118,11 @@ export const JProfileController = async (req, res) => {
 		// save image to disk only after profile is created
 		if (req.file) {
 			try {
-				const savedFileName = await saveImageBuffer(req.file)
-				if (savedFileName) {
-					profile.image = savedFileName
+				
+				
+					profile.image = req.file.path // cloudinary provide the path of the image
 					await profile.save()
-				}
+				
 			} catch (e) {
 
 				console.error("Failed to save image", e)
@@ -250,11 +249,10 @@ export const EProfileController = async (req, res) => {
 
 		if (req.file) {
 			try {
-				const savedFileName = await saveImageBuffer(req.file)
-				if (savedFileName) {
-					profile.image = savedFileName
+				
+					profile.image = req.file.path
 					await profile.save()
-				}
+				
 			} catch (e) {
 				console.error("Failed to save image", e)
 			}
@@ -423,13 +421,13 @@ export const editProfile = async (req, res) => {
 		if (req.file) {
 			try {
 				if (profileExists.image) {
-					const oldImagePath = path.join(process.cwd(), "public/uploads/images", profileExists.image);
-					if (fs.existsSync(oldImagePath)) {
-						fs.unlinkSync(oldImagePath);
-					}
+					const urlParts= profileExists.image.split("/");
+					const fileWithExt=urlParts[urlParts.length -1];
+					const fileName= fileWithExt.split(".")[0];
+					const publicId=`hamrojob/profiles/${fileName}`;
+					await cloudinary.uploader.destroy(publicId);
 				}
-				const savedFileName = await saveImageBuffer(req.file);
-				if (savedFileName) imageFileName = savedFileName;
+				 imageFileName = req.file.path;
 			} catch (e) {
 				console.error("Failed to upload image", e);
 			}

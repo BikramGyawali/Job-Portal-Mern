@@ -1,0 +1,17 @@
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /services
+Allow: /contact
+Allow: /jobs
+Allow: /register
+Allow: /login
+
+Disallow: /employer/dashboard
+Disallow: /jobseeker/dashboard
+Disallow: /admin/
+Disallow: /profile/edit
+Disallow: /applied-jobs
+Disallow: /saved-jobs
+
+Sitemap: https://hamrojob.bikramgyawali.com.np/sitemap.xml

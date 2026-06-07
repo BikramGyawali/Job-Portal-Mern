@@ -9,7 +9,7 @@ export const ProfileToCV = (profile) => {
 			type: "header",
 			data: {
 				name: getFullName(profile) || profile?.cname || '',
-				profileImage: profile?.image ? `${apiUrl}/uploads/images/${profile.image}` : null,
+				profileImage: profile?.image ? profile.image : null,
 				address: `${profile?.currentDistrict},${profile?.
 					currentMunicipality} ` || {}
 				,

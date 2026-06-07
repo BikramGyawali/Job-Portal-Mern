@@ -5,6 +5,8 @@ function ResumeRender({ sections }) {
 	return (
 		<div className="grid grid-cols-1 gap-5">
 			{sections.map((sec, i) => {
+				console.log(sec.data.profileImage);
+
 				{ sec.data }
 				if (!sec.data || (Array.isArray(sec.data) && sec.data.length === 0)) return null;
 

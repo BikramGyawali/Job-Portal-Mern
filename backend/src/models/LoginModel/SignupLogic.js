@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const schema = mongoose.Schema;
+
 const signupSchema = new schema({
 	email: {
 		type: String,
@@ -9,7 +10,7 @@ const signupSchema = new schema({
 	password: {
 		type: String,
 		required: true,
-		select: false   // to unselect the pass while populate
+		select: false
 	},
 	role: {
 		type: String,
@@ -25,8 +26,22 @@ const signupSchema = new schema({
 		enum: ["approve", "pending", "reject"],
 		default: "pending",
 		lowercase: true
+	},
+
+	isPremium: {
+		type: Boolean,
+		default: false
+	},
+	premiumSince: {
+		type: Date,
+		default: null
+	},
+	premiumExpiresAt: {
+		type: Date,
+		default: null
 	}
-})
-signupSchema.index({ approvalStatus: 1 })
+});
+
+signupSchema.index({ approvalStatus: 1 });
 
 export const User = mongoose.model('User', signupSchema);

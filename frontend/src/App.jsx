@@ -13,13 +13,13 @@ import RegisterComp from "./pages/auth/RegisterComp";
 
 import JobseekersProfile from "./components/profile/JobseekersProfile";
 import EmployersProfile from "./components/profile/EmployersProfile";
-// import { SideDashboard } from "./layout/SideDashboard";
+
 import DashboardLayout from "./layout/DashboardLayout";
 import JobseekerDashboard from "./components/dashboard/Jobseeker/JobseekerDashboard";
 import EditProfile from "./components/dashboard/Jobseeker/pages/EditProfile";
 
 import AppliedJobs from "./components/dashboard/Jobseeker/pages/AppliedJobs";
-import SavedJobs from "./components/dashboard/Jobseeker/pages/SavedJobs";
+
 import DownloadResume from "./components/dashboard/Jobseeker/pages/DownloadResume";
 
 
@@ -79,7 +79,7 @@ export default function App() {
 										<Route path="job-listing" element={<JobListing />} />
 										<Route path="download-resume" element={<DownloadResume />} />
 										<Route path="jobseekers" element={<Jobseekers />} />
-										{/* <Route path="job-listing" element={<JobListing />} /> */}
+									
 									</Route>
 								</Route>
 
@@ -112,7 +112,6 @@ export default function App() {
 
 
 
-								{/* legacy /dashboard route -> redirect to jobseeker dashboard layout (silence unmatched warning) */}
 								<Route path="/dashboard" element={<DashboardLayout role="Jobseeker" />} />
 
 								{/* for page not found  */}

@@ -2,7 +2,7 @@ export default function EmployerProfileView({ profile }) {
 	const data = profile?.profileData || profile || {};
 	const apiUrl = import.meta.env.VITE_API_URL || window.location.origin;
 
-	// const profileImage: data.image ? `${apiUrl}/uploads/images/${data.image}` : null;
+	
 	return (
 		<div className=" p-4 m-6">
 

@@ -16,12 +16,7 @@ export const signupUser = async (formData, role) => {
 
 		return response.data;
 	} catch (error) {
-		// Handle network errors or backend errors
-		// if (error.response && error.response.data) {
-		// 	return error.response.data; // Backend returned JSON
-		// } else {
-		// 	return { status: 0, message: error.message || "Signup failed" };
-		// }
+		
 		return error?.response?.data ?? { status: 0, message: error.message || "Signup failed" };
 	}
 };

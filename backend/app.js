@@ -43,7 +43,7 @@ app.use("/employer", employerroutes);
 app.use("/admin", adminRoutes)
 app.use("/auth", authrouter)
 app.use("/job", jobroutes)
-app.use("api/payment", paymentroutes)
+app.use("/payment", paymentroutes)
 app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
 //for cloudinary
 

@@ -59,7 +59,6 @@
 
 
 
-
 import React, { useState, useEffect, useContext } from 'react'
 import DashBoxCard from '../../common/DashBoxCard'
 import Applicants from './pages/Applicants'
@@ -67,9 +66,7 @@ import Loading from '../../common/Loading'
 import { ProfileContext } from '../../../context/ProfileContext'
 import { EMyJobs, getAllApplicants } from '../../../services/jobService'
 import api from '../../../utils/axiosInstance'
-// import AIRecruitment from './pages/AIRecruitment'
-import PremiumLock from './pages/PremiumLock'
-import AIRecruitment from './pages/AiRecruitment'
+import { useNavigate } from 'react-router-dom'
 
 function EmployerDashboard() {
 	const { profile } = useContext(ProfileContext)
@@ -78,6 +75,8 @@ function EmployerDashboard() {
 	const [jobs, setJobs] = useState(0)
 	const [isPremium, setIsPremium] = useState(false)
 	const [premiumExpiresAt, setPremiumExpiresAt] = useState(null)
+	const [showPopup, setShowPopup] = useState(false)
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		const applicantNum = async () => {
@@ -90,9 +89,16 @@ function EmployerDashboard() {
 		}
 		const checkPremium = async () => {
 			try {
-				const { data } = await api.get("/api/payment/status")
+				const { data } = await api.get("/payment/status")
 				setIsPremium(data.isPremium)
+				console.log(data);
+				
 				setPremiumExpiresAt(data.premiumExpiresAt)
+
+				// Show popup only if not premium
+				if (!data.isPremium) {
+					setShowPopup(true)
+				}
 			} catch (err) {
 				console.error("Premium check failed:", err)
 			}
@@ -120,9 +126,42 @@ function EmployerDashboard() {
 
 	return (
 		<div>
-			<div className='flex flex-col gap-5'>
+			{/* Premium Popup on load */}
+			{showPopup && (
+				<div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+					<div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+						<div className="text-5xl mb-3">⭐</div>
+						<h2 className="text-2xl font-bold text-gray-800 mb-2">
+							Unlock Premium Features
+						</h2>
+						<p className="text-gray-500 mb-4 text-sm">
+							You are on the free plan. Upgrade to unlock AI Recruitment and more.
+						</p>
+						<ul className="text-left text-sm text-gray-600 bg-yellow-50 rounded-xl p-4 mb-6 space-y-1">
+							<li>✓ AI Recruitment tools</li>
+							<li>✓ Featured badge on job posts</li>
+							<li>✓ Priority support</li>
+						</ul>
+						<div className="flex flex-col gap-3">
+							<button
+								onClick={() => { setShowPopup(false); navigate('/employer/premium') }}
+								className="w-full bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 rounded-xl transition"
+							>
+								⭐ Upgrade — NPR 999 / 30 days
+							</button>
+							<button
+								onClick={() => setShowPopup(false)}
+								className="w-full text-gray-400 hover:text-gray-600 text-sm underline"
+							>
+								Maybe later
+							</button>
+						</div>
+					</div>
+				</div>
+			)}
 
-				{/* Premium Status Banner — not clickable, just info */}
+			<div className='flex flex-col gap-5'>
+				{/* Premium Status Banner */}
 				{isPremium ? (
 					<div className="flex items-center gap-3 bg-yellow-50 border border-yellow-300 rounded-xl px-4 py-3">
 						<span className="text-2xl">⭐</span>
@@ -142,20 +181,6 @@ function EmployerDashboard() {
 				)}
 
 				<DashBoxCard cardData={DashboardCardData} role="employer" />
-
-				{/* AI Recruitment — locked or unlocked based on premium */}
-				<div>
-					<p className="text-xl font-bold text-gray-700 mb-3">
-						🤖 AI Recruitment
-						{!isPremium && (
-							<span className="ml-2 text-xs bg-gray-200 text-gray-500 px-2 py-1 rounded-full">
-								🔒 Premium
-							</span>
-						)}
-					</p>
-					{isPremium ? <AIRecruitment /> : <PremiumLock featureName="AI Recruitment" />}
-				</div>
-
 				<Applicants />
 			</div>
 		</div>

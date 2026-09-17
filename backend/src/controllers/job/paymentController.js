@@ -186,18 +186,34 @@ export const failedPayment = async (req, res) => {
 
 // ── CHECK PREMIUM STATUS (called on employer dashboard load) ──
 export const checkPremiumStatus = async (req, res) => {
+	console.log(req.user._id);
 	try {
 		const employer = await User.findById(req.user._id).select(
 			"isPremium premiumSince premiumExpiresAt"
 		);
 
-		// Auto-expire if past expiry date
-		if (employer.isPremium && employer.premiumExpiresAt < new Date()) {
+
+		if (!employer) {
+			return res.status(404).json({
+				message: "Employer not found",
+			});
+		}
+
+		const isPremium = employer.isPremium === true;
+		const premiumExpiresAt = employer.premiumExpiresAt;
+
+		// Auto-expire if premium expiry date has passed
+		if (
+			isPremium &&
+			premiumExpiresAt &&
+			premiumExpiresAt < new Date()
+		) {
 			await User.findByIdAndUpdate(req.user._id, {
 				isPremium: false,
 				premiumSince: null,
 				premiumExpiresAt: null,
 			});
+
 			return res.json({
 				isPremium: false,
 				expired: true,
@@ -205,15 +221,18 @@ export const checkPremiumStatus = async (req, res) => {
 			});
 		}
 
-		res.json({
-			isPremium: employer.isPremium,
+		return res.json({
+			isPremium,
 			premiumSince: employer.premiumSince,
-			premiumExpiresAt: employer.premiumExpiresAt,
+			premiumExpiresAt,
 			expired: false,
 		});
 	} catch (error) {
 		console.error("checkPremiumStatus error:", error);
-		res.status(500).json({ message: "Failed to check premium status" });
+		return res.status(500).json({
+			message: "Failed to check premium status",
+			error: error.message,
+		});
 	}
 };
 

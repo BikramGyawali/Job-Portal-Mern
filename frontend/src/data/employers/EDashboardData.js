@@ -19,6 +19,7 @@ export const EDashboardData = [
 			{ name: "My Jobs", link: "/employer/my-jobs" },
 			{ name: "Post a Job", link: "/employer/post-job" },
 			{ name: "All Applicants", link: "/employer/applicants" },
+			{ name: "AI Recuritment", link: "/employer/recruitment" }
 		],
 	},
 

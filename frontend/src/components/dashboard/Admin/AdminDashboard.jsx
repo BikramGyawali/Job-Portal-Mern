@@ -44,11 +44,11 @@ function AdminDashboard() {
 			content: "Pending Jobs",
 			link: "/approve-jobs"
 		},
-		{
-			number: `NPR ${totalRevenue.toLocaleString()}`,
-			content: "Total Revenue",
-			link: "/subscription-payments"
-		}
+		// {
+		// 	number: `NPR ${totalRevenue.toLocaleString()}`,
+		// 	content: "Total Revenue",
+		// 	link: "/subscription-payments"
+		// }
 
 	];
 

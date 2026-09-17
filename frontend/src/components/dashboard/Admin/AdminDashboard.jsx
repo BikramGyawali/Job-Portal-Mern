@@ -43,6 +43,11 @@ function AdminDashboard() {
 			number: pendingJobs?.filter((job) => !job.isApproved).length || 0,
 			content: "Pending Jobs",
 			link: "/approve-jobs"
+		},
+		{
+			number: `NPR ${totalRevenue.toLocaleString()}`,
+			content: "Total Revenue",
+			link: "/subscription-payments"
 		}
 
 	];

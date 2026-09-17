@@ -43,6 +43,7 @@ import { JobPostProvider } from "./context/JobPostContext";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PageNotFound from "./pages/public/PageNotFound";
+import Payments from "./components/dashboard/Admin/pages/Payment";
 
 
 export default function App() {
@@ -79,7 +80,7 @@ export default function App() {
 										<Route path="job-listing" element={<JobListing />} />
 										<Route path="download-resume" element={<DownloadResume />} />
 										<Route path="jobseekers" element={<Jobseekers />} />
-									
+
 									</Route>
 								</Route>
 
@@ -105,6 +106,7 @@ export default function App() {
 										<Route index element={<AdminDashboard />} />
 										<Route path="approve-account" element={<ApproveAccounts />} />
 										<Route path="approve-jobs" element={<ApprovePostJobs />} />
+										<Route path="subscription-payments" element={<Payments />} />
 										<Route path="admins" element={<AdminLogin />} />
 									</Route>
 								</Route>

@@ -1,5 +1,6 @@
 import { HiLogout, HiUser } from "react-icons/hi";
 import { HiChartPie } from "react-icons/hi2";
+import { MdPayment } from "react-icons/md";
 
 export const DashboardCardData = [
 
@@ -65,5 +66,13 @@ export const ADashboardSideData = [
 		icons: HiLogout,
 		name: "Logout",
 		link: "/"
+	},
+	{
+		type: "item",
+		icons: MdPayment,   
+		name: "Payments",
+		link: "subscription-payments"
 	}
 ]
+
+export const PaymentTableHeadData = ["Employer", "Email", "Amount", "Status", "Transaction ID", "Date", "Action"]

@@ -10,6 +10,7 @@ import jobseekerroutes from "./src/routes/jobseekerRoutes.js";
 import authrouter from "./src/routes/auth.routes.js";
 import adminRoutes from "./src/routes/adminRoute.js";
 import { upload } from "./src/config/cloudinary.js";
+import paymentroutes from "./src/routes/paymentRoutes.js";
 
 dotenv.config();
 
@@ -42,6 +43,7 @@ app.use("/employer", employerroutes);
 app.use("/admin", adminRoutes)
 app.use("/auth", authrouter)
 app.use("/job", jobroutes)
+app.use("api/payment", paymentroutes)
 app.use('/uploads', express.static(path.join(process.cwd(), 'public/uploads')));
 //for cloudinary
 

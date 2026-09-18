@@ -92,7 +92,7 @@ function EmployerDashboard() {
 				const { data } = await api.get("/payment/status")
 				setIsPremium(data.isPremium)
 				console.log(data);
-				
+
 				setPremiumExpiresAt(data.premiumExpiresAt)
 
 				// Show popup only if not premium
@@ -144,7 +144,7 @@ function EmployerDashboard() {
 						</ul>
 						<div className="flex flex-col gap-3">
 							<button
-								onClick={() => { setShowPopup(false); navigate('/employer/premium') }}
+								onClick={() => { setShowPopup(false); navigate('/employer/recruitment') }}
 								className="w-full bg-yellow-400 hover:bg-yellow-500 text-white font-bold py-3 rounded-xl transition"
 							>
 								⭐ Upgrade — NPR 999 / 30 days

@@ -30,6 +30,8 @@ function DashTable({ title, headData, bodyData, actionHandler, total, message })
 				return { Icon: null, colorClass: "text-red-400 hover:text-red-700" }
 			case "apply":
 				return { Icon: null, colorClass: "text-green-400 hover:text-green-700" }
+			case "toggle":
+				return { Icon: BsPen, colorClass: "text-green-400 hover:text-green-700" }
 			default:
 				return { Icon: BsPen, colorClass: "text-gray-400" }
 		}

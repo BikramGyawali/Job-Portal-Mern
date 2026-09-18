@@ -45,7 +45,9 @@ import "react-toastify/dist/ReactToastify.css";
 import PageNotFound from "./pages/public/PageNotFound";
 import Payments from "./components/dashboard/Admin/pages/Payment";
 import AIRecruitment from "./components/dashboard/Employer/pages/AiRecruitment";
-import PremiumLock from "./components/dashboard/Employer/pages/PremiumLock";
+
+import PaymentSuccess from "./pages/employer/PaymentSuccess";
+import PaymentFailed from "./pages/employer/PaymentFailed";
 
 
 export default function App() {
@@ -97,12 +99,12 @@ export default function App() {
 										<Route path="post-job" element={<PostJob />} />
 										<Route path="applicants" element={<Applicants />} />
 										<Route path="recruitment" element={<AIRecruitment />} />
-										<Route path="premium" element={<PremiumLock />} />
+
 									</Route>
 								</Route>
 
-		{/* <Route path="payment/success" element={<PaymentSuccess />} />
-<Route path="payment/failed" element={<PaymentFailed />} /> */}
+								<Route path="payment/success" element={<PaymentSuccess />} />
+								<Route path="payment/failed" element={<PaymentFailed />} />
 
 								<Route element={<ProtectedRoute allowedRole="admin" />} >
 

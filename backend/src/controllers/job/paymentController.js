@@ -23,7 +23,7 @@ const generateSignature = (message) => {
 // ── INITIATE PAYMENT ──────────────────────────────────────
 export const initiatePayment = async (req, res) => {
 	try {
-		const employer = await User.findById(req.user._id);
+		const employer = await User.findById(req.user.id);
 
 		// Block if already premium and not expired
 		if (employer.isPremium && employer.premiumExpiresAt > new Date()) {
@@ -35,12 +35,12 @@ export const initiatePayment = async (req, res) => {
 		const totalAmount = PREMIUM_AMOUNT;
 
 		// eSewa transaction_uuid: alphanumeric + hyphen only, must be unique
-		const transactionUUID = `hamrojob-${req.user._id}-${Date.now()}`;
+		const transactionUUID = `hamrojob-${req.user.id}-${Date.now()}`;
 		const productCode = ESEWA_MERCHANT_ID;
 
 		// Save pending payment in DB before redirecting
 		await Payment.create({
-			employer: req.user._id,
+			employer: req.user.id,
 			transactionUUID,
 			amount: totalAmount,
 			status: "pending",
@@ -58,8 +58,8 @@ export const initiatePayment = async (req, res) => {
 			product_code: productCode,
 			product_service_charge: "0",
 			product_delivery_charge: "0",
-			success_url: `${BACKEND_URL}/api/payment/verify`,
-			failure_url: `${BACKEND_URL}/api/payment/failed`,
+			success_url: `${BACKEND_URL}/payment/verify`,
+			failure_url: `${BACKEND_URL}/payment/failed`,
 			signed_field_names: "total_amount,transaction_uuid,product_code",
 			signature,
 			esewa_url: ESEWA_PAYMENT_URL,
@@ -186,9 +186,9 @@ export const failedPayment = async (req, res) => {
 
 // ── CHECK PREMIUM STATUS (called on employer dashboard load) ──
 export const checkPremiumStatus = async (req, res) => {
-	console.log(req.user._id);
+	console.log(req.user.id);
 	try {
-		const employer = await User.findById(req.user._id).select(
+		const employer = await User.findById(req.user.id).select(
 			"isPremium premiumSince premiumExpiresAt"
 		);
 
@@ -208,7 +208,7 @@ export const checkPremiumStatus = async (req, res) => {
 			premiumExpiresAt &&
 			premiumExpiresAt < new Date()
 		) {
-			await User.findByIdAndUpdate(req.user._id, {
+			await User.findByIdAndUpdate(req.user.id, {
 				isPremium: false,
 				premiumSince: null,
 				premiumExpiresAt: null,
@@ -261,52 +261,5 @@ export const getAllPayments = async (req, res) => {
 	} catch (error) {
 		console.error("getAllPayments error:", error);
 		res.status(500).json({ message: "Failed to fetch payments" });
-	}
-};
-
-// ── ADMIN: TOGGLE PREMIUM MANUALLY ───────────────────────
-export const togglePremium = async (req, res) => {
-	try {
-		const { employerId } = req.params;
-		const employer = await User.findById(employerId);
-
-		if (!employer) {
-			return res.status(404).json({ message: "Employer not found" });
-		}
-
-		const nowPremium = !employer.isPremium;
-		const paidAt = nowPremium ? new Date() : null;
-		const expiresAt = nowPremium
-			? new Date(Date.now() + PREMIUM_DAYS * 24 * 60 * 60 * 1000)
-			: null;
-
-		await User.findByIdAndUpdate(employerId, {
-			isPremium: nowPremium,
-			premiumSince: paidAt,
-			premiumExpiresAt: expiresAt,
-		});
-
-		// Log admin grant as a payment record
-		if (nowPremium) {
-			await Payment.create({
-				employer: employerId,
-				transactionUUID: `admin-${employerId}-${Date.now()}`,
-				transactionCode: "ADMIN_GRANTED",
-				amount: 0,
-				status: "success",
-				paidAt,
-				expiresAt,
-				grantedByAdmin: true,
-			});
-		}
-
-		res.json({
-			message: `Premium ${nowPremium ? "granted" : "revoked"} successfully`,
-			isPremium: nowPremium,
-			premiumExpiresAt: expiresAt,
-		});
-	} catch (error) {
-		console.error("togglePremium error:", error);
-		res.status(500).json({ message: "Failed to toggle premium" });
 	}
 };

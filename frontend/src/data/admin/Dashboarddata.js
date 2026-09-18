@@ -63,16 +63,16 @@ export const ADashboardSideData = [
 	},
 	{
 		type: "item",
+		icons: MdPayment,
+		name: "Payments",
+		link: "/admin/subscription-payments"
+	},
+	{
+		type: "item",
 		icons: HiLogout,
 		name: "Logout",
 		link: "/"
 	},
-	{
-		type: "item",
-		icons: MdPayment,   
-		name: "Payments",
-		link: "subscription-payments"
-	}
 ]
 
-export const PaymentTableHeadData = ["Employer", "Email", "Amount", "Status", "Transaction ID", "Date", "Action"]
+export const PaymentTableHeadData = ["Employer", "Email", "Amount", "Status", "Transaction ID", "Date"]

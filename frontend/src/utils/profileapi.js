@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "https://hamrojob-backend.onrender.com"
+// const BASE_URL = "https://hamrojob-backend.onrender.com"
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:3000"
 
 
 export const Profile = async (formData, role) => {

@@ -6,8 +6,8 @@ function PaymentFailed() {
 
 	return (
 		<div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-6">
-			<div className="bg-white rounded-2xl shadow-lg p-10 max-w-md w-full text-center">
-				<div className="text-7xl mb-4">❌</div>
+			<div className="bg-white rounded-2xl  p-10 max-w-md w-full text-center shadow-md hover:shadow-xl   transition-transform duration-500   hover:scale-101">
+				{/* <div className="text-7xl mb-4">❌</div> */}
 				<h1 className="text-3xl font-bold text-red-500 mb-2">Payment Failed</h1>
 				<p className="text-gray-600 mb-6">
 					Something went wrong. No amount has been deducted. Please try again.
@@ -24,13 +24,13 @@ function PaymentFailed() {
 				<div className="flex flex-col gap-3">
 					<button
 						onClick={() => navigate('/employer/recruitment')}
-						className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-xl transition"
+						className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-xl transition cursor-pointer"
 					>
 						Try Again
 					</button>
 					<button
 						onClick={() => navigate('/employer')}
-						className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl transition"
+						className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-3 rounded-xl transition cursor-pointer"
 					>
 						Back to Dashboard
 					</button>

@@ -20,8 +20,8 @@ function PaymentSuccess() {
 
 	return (
 		<div className="min-h-screen bg-[#F8FAFC] flex items-center justify-center p-6">
-			<div className="bg-white rounded-2xl shadow-lg p-10 max-w-md w-full text-center">
-				<div className="text-7xl mb-4">🎉</div>
+			<div className="bg-white rounded-2xl  p-10 max-w-md w-full text-center shadow-md hover:shadow-xl   transition-transform duration-500   hover:scale-101">
+				{/* <div className="text-7xl mb-4">🎉</div> */}
 				<h1 className="text-3xl font-bold text-green-600 mb-2">Payment Successful!</h1>
 				<p className="text-gray-600 mb-6">
 					Your premium plan is now active for <strong>30 days</strong>.
@@ -42,7 +42,7 @@ function PaymentSuccess() {
 				</p>
 				<button
 					onClick={() => navigate('/employer/recruitment')}
-					className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition"
+					className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition cursor-pointer"
 				>
 					Go to AI Recruitment Now
 				</button>

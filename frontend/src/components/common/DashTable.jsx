@@ -35,7 +35,7 @@ function DashTable({ title, headData, bodyData, actionHandler, total, message })
 			default:
 				return { Icon: BsPen, colorClass: "text-gray-400" }
 		}
-	}
+	}	
 
 	return (
 		<div className="p-4 rounded-2xl shadow-md min-w-full overflow-x-scroll">

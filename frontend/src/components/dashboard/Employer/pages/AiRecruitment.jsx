@@ -5,37 +5,37 @@ import { Link } from 'react-router-dom'
 
 const steps = [
 	{
-		icon: "📋",
+
 		title: "Post a Detailed Job",
 		desc: "Write a clear job description with required skills, experience, and responsibilities. The more specific you are, the better candidates you attract."
 	},
 	{
-		icon: "🤖",
+
 		title: "AI Screens Applicants",
 		desc: "Our AI engine automatically matches applicants based on their skills, experience, and profile completeness against your job requirements."
 	},
 	{
-		icon: "📊",
+
 		title: "Review Ranked Candidates",
 		desc: "Applicants are ranked by match score. You see the best fits first — saving hours of manual screening."
 	},
 	{
-		icon: "📄",
+
 		title: "Download CVs Instantly",
 		desc: "One-click download of system-generated CVs for any applicant directly from your dashboard."
 	},
 	{
-		icon: "✅",
+
 		title: "Shortlist or Reject",
 		desc: "Take action on applicants with a single click. Shortlisted candidates are notified automatically."
 	}
 ]
 
 const tips = [
-	{ icon: "💡", text: "Add specific skills when posting a job for better AI matching" },
-	{ icon: "📝", text: "Complete your company profile to attract more applicants" },
-	{ icon: "⚡", text: "Respond to applicants within 48 hours for best results" },
-	{ icon: "🎯", text: "Use clear job titles like 'React Developer' not just 'Developer'" },
+	{ text: "Add specific skills when posting a job for better AI matching" },
+	{ text: "Complete your company profile to attract more applicants" },
+	{ text: "Respond to applicants within 48 hours for best results" },
+	{ text: "Use clear job titles like 'React Developer' not just 'Developer'" },
 ]
 
 function AIRecruitment() {
@@ -91,7 +91,7 @@ function AIRecruitment() {
 	if (!isPremium) {
 		return (
 			<div className="flex items-center justify-center min-h-[60vh]">
-				<div className="text-center bg-white rounded-2xl shadow-lg p-10 max-w-md w-full">
+				<div className="text-center bg-white rounded-2xl shadow-lg p-10 max-w-md w-full shadow-md hover:shadow-xl   transition-transform duration-500   hover:scale-101">
 					<div className="text-6xl mb-4">🔒</div>
 					<h2 className="text-2xl font-bold text-gray-800 mb-2">
 						AI Recruitment is Locked
@@ -99,25 +99,25 @@ function AIRecruitment() {
 					<p className="text-gray-500 mb-6">
 						Upgrade to Premium to unlock AI Recruitment and all other features.
 					</p>
-					<div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-6 text-left">
-						<p className="text-yellow-700 font-semibold text-sm mb-2">
-							⭐ Premium includes:
+					<div className="  rounded-xl p-4 mb-6 text-left bg-linear-to-r from-indigo-500 to-purple-500 text-white">
+						<p className="text-white font-semibold text-sm mb-2">
+							Premium includes:
 						</p>
-						<ul className="text-yellow-600 text-sm space-y-1">
-							<li>✓ AI Recruitment tools</li>
-							<li>✓ Featured badge on job posts</li>
-							<li>✓ Priority support</li>
+						<ul className="text-white text-sm space-y-1">
+							<li>AI Recruitment tools</li>
+							<li> Featured badge on job posts</li>
+							<li> Priority support</li>
 						</ul>
 					</div>
 					<button
 						onClick={handlePayment}
 						disabled={payLoading}
-						className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition disabled:opacity-60"
+						className="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-xl transition disabled:opacity-60 cursor-pointer"
 					>
 						{payLoading ? "Redirecting to eSewa..." : "🟢 Pay NPR 999 with eSewa"}
 					</button>
-					<p className="text-xs text-gray-400 mt-3">
-						🔒 Secured by eSewa · Auto-expires after 30 days
+					<p className="text-sm text-balck-400 mt-3">
+						Secured by eSewa · Auto-expires after 30 days
 					</p>
 				</div>
 			</div>
@@ -129,12 +129,12 @@ function AIRecruitment() {
 		<div className="flex flex-col gap-6 p-4">
 
 			{/* Header */}
-			<div className="bg-gradient-to-r from-yellow-400 to-orange-400 rounded-2xl p-6 text-white">
+			<div className="bg-linear-to-r from-blue-400 to-green-400 rounded-2xl p-6 text-white">
 				<div className="flex items-center gap-3 mb-1">
-					<span className="text-3xl">🤖</span>
+
 					<h1 className="text-2xl font-bold">AI Recruitment</h1>
 					<span className="bg-white text-yellow-500 text-xs font-bold px-2 py-1 rounded-full">
-						⭐ Premium
+						Premium
 					</span>
 				</div>
 				<p className="text-yellow-100 text-sm">
@@ -143,71 +143,112 @@ function AIRecruitment() {
 			</div>
 
 			{/* How It Works */}
-			<div className="bg-white rounded-2xl shadow p-6">
-				<h2 className="text-lg font-bold text-gray-800 mb-4">
-					🔄 How AI Recruitment Works
-				</h2>
-				<div className="flex flex-col gap-4">
+			<section className="scroll-reveal rounded-3xl border border-gray-100 bg-white p-6 shadow-sm transition duration-300 hover:shadow-md md:p-7">
+				<div className="mb-6 flex items-start justify-between gap-4">
+					<div>
+						<p className="mb-1 text-xs font-semibold uppercase tracking-wider text-indigo-500">
+							Simple Process
+						</p>
+
+						<h2 className="text-xl font-bold text-gray-900">
+							How AI Recruitment Works
+						</h2>
+
+						<p className="mt-1 text-sm text-gray-500">
+							A simple workflow to help you move from job posting to candidate selection.
+						</p>
+					</div>
+
+
+				</div>
+
+				<div className="grid gap-4 md:grid-cols-3">
 					{steps.map((step, i) => (
-						<div key={i} className="flex gap-4 items-start">
-							<div className="bg-yellow-50 rounded-xl p-3 text-2xl flex-shrink-0">
-								{step.icon}
+						<div
+							key={i}
+							className="group relative rounded-2xl border border-gray-100 bg-gray-50 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-indigo-100 hover:bg-indigo-50/50 hover:shadow-md cursor-pointer"
+						>
+							<div className="mb-4 flex items-center justify-between">
+
+
+								<span className="text-sm font-bold text-gray-300 group-hover:text-indigo-400">
+									0{i + 1}
+								</span>
 							</div>
-							<div>
-								<p className="font-semibold text-gray-800 text-sm">
-									Step {i + 1} — {step.title}
-								</p>
-								<p className="text-gray-500 text-sm mt-1">{step.desc}</p>
-							</div>
+
+							<h3 className="text-sm font-bold text-gray-800">
+								{step.title}
+							</h3>
+
+							<p className="mt-2 text-sm leading-5 text-gray-500">
+								{step.desc}
+							</p>
 						</div>
 					))}
 				</div>
-			</div>
+			</section>
 
 			{/* Tips */}
-			<div className="bg-white rounded-2xl shadow p-6">
-				<h2 className="text-lg font-bold text-gray-800 mb-4">
-					💡 Tips to Get Better Results
-				</h2>
-				<div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+
+			<section className="scroll-reveal rounded-3xl border border-gray-100 bg-white p-6 shadow-sm transition duration-300 hover:shadow-md md:p-7">
+				<div className="mb-6">
+					<p className="mb-1 text-xs font-semibold uppercase tracking-wider text-indigo-500">
+						Hiring Tips
+					</p>
+
+					<h2 className="text-xl font-bold text-gray-900">
+						Get Better Recruitment Results
+					</h2>
+
+					<p className="mt-1 text-sm text-gray-500">
+						A few simple improvements can help you find more relevant candidates.
+					</p>
+				</div>
+
+				<div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
 					{tips.map((tip, i) => (
 						<div
 							key={i}
-							className="flex items-start gap-3 bg-blue-50 rounded-xl p-3">
-							<span className="text-xl">{tip.icon}</span>
-							<p className="text-sm text-blue-700">{tip.text}</p>
+							className="group flex cursor-pointer items-start gap-3 rounded-2xl border border-gray-100 bg-gray-50 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-indigo-100 hover:bg-indigo-50 hover:shadow-sm"
+						>
+							<div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white text-sm font-bold text-indigo-500 shadow-sm transition duration-300 group-hover:scale-110 group-hover:bg-indigo-100">
+								0{i + 1}
+							</div>
+
+							<p className="pt-1 text-sm leading-5 text-gray-600 group-hover:text-indigo-700">
+								{tip.text}
+							</p>
 						</div>
 					))}
 				</div>
-			</div>
-
+			</section>
 			{/* Quick Actions */}
 			<div className="bg-white rounded-2xl shadow p-6">
 				<h2 className="text-lg font-bold text-gray-800 mb-4">
-					⚡ Quick Actions
+					Quick Actions
 				</h2>
 				<div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
 					<Link
 						to="/employer/post-job"
 						className="bg-blue-600 hover:bg-blue-700 text-white text-center font-semibold py-3 rounded-xl transition text-sm">
-						📋 Post a New Job
+						Post a New Job
 					</Link>
 					<Link
-						href="/employer/applicants"
+						to="/employer/applicants"
 						className="bg-green-500 hover:bg-green-600 text-white text-center font-semibold py-3 rounded-xl transition text-sm"
 					>
-						👥 View Applicants
+						View Applicants
 					</Link>
 					<Link
-						href="/employer/my-jobs"
+						to="/employer/my-jobs"
 						className="bg-purple-500 hover:bg-purple-600 text-white text-center font-semibold py-3 rounded-xl transition text-sm"
 					>
-						💼 My Job Posts
+						My Job Posts
 					</Link>
 				</div>
 			</div>
 
-		</div>
+		</div >
 	)
 }
 
